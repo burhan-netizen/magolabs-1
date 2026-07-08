@@ -341,17 +341,19 @@ export default function Navbar({
                       <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-neutral-400">
                         {item.label}
                       </div>
-                      {/* Services Link */}
-                      <button
-                        onClick={() => handleNavClick('services')}
-                        className={`block w-full px-6 py-2 text-sm font-medium transition-colors rounded-lg text-left ${
-                          currentPage === 'services'
-                            ? 'bg-neutral-100 text-neutral-900 font-semibold'
-                            : 'text-neutral-500 hover:bg-neutral-50 hover:text-neutral-800'
-                        }`}
-                      >
-                        {t('nav.services.all')}
-                      </button>
+                      {/* Services Link - only for the Services dropdown */}
+                      {item.id === 'services' && (
+                        <button
+                          onClick={() => handleNavClick('services')}
+                          className={`block w-full px-6 py-2 text-sm font-medium transition-colors rounded-lg text-left ${
+                            currentPage === 'services'
+                              ? 'bg-neutral-100 text-neutral-900 font-semibold'
+                              : 'text-neutral-500 hover:bg-neutral-50 hover:text-neutral-800'
+                          }`}
+                        >
+                          {t('nav.services.all')}
+                        </button>
+                      )}
                       {item.subItems.map((sub) => (
                         <button
                           key={sub.id}
