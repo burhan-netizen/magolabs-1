@@ -102,29 +102,39 @@ function PreviewFrame({ project, onClose }: { project: ClientProject; onClose: (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-950/80 backdrop-blur-md">
       <div className="relative w-full max-w-5xl h-[85vh] bg-white rounded-2xl border border-neutral-200 shadow-2xl overflow-hidden flex flex-col">
         {/* Chrome bar */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-neutral-100 bg-neutral-50 shrink-0">
-          <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 border-b border-neutral-100 bg-neutral-50 shrink-0">
+          <div className="hidden sm:flex items-center gap-1.5 shrink-0">
             <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
           </div>
-          <div className="flex-1 flex justify-center">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-white border border-neutral-200 px-3 py-1 text-[11px] text-neutral-500 font-mono">
-              <Lock className="h-2.5 w-2.5" />
-              {project.domain}
+          <div className="flex-1 min-w-0 flex justify-center">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-white border border-neutral-200 px-3 py-1 text-[11px] text-neutral-500 font-mono min-w-0 max-w-full">
+              <Lock className="h-2.5 w-2.5 shrink-0" />
+              <span className="truncate">{project.domain}</span>
             </div>
           </div>
           <a
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-600 hover:text-blue-500 whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold text-blue-600 hover:text-blue-500 whitespace-nowrap shrink-0"
           >
             Open in new tab <ExternalLink className="h-3 w-3" />
           </a>
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="sm:hidden inline-flex items-center justify-center p-1.5 rounded-full border border-neutral-200 hover:bg-neutral-100 transition-colors shrink-0"
+            aria-label="Open in new tab"
+          >
+            <ExternalLink className="h-4 w-4 text-blue-600" />
+          </a>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full border border-neutral-200 hover:bg-neutral-100 transition-colors cursor-pointer ml-1"
+            className="p-1.5 rounded-full border border-neutral-200 hover:bg-neutral-100 transition-colors cursor-pointer shrink-0"
+            aria-label="Close preview"
           >
             <X className="h-4 w-4 text-neutral-500" />
           </button>
