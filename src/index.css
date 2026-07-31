@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans, "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif);
+  --font-display: var(--font-display, "Plus Jakarta Sans", system-ui, sans-serif);
+  --font-mono: var(--font-mono, "JetBrains Mono", ui-monospace, SFMono-Regular, monospace);
+  --color-accent: #2563EB;
+  --color-brand-black: #000000;
+  --color-light-gray: #F8F9FA;
+  --color-dark-gray: #1A1A1A;
+}
+
+/* Custom baseline styling for Mago Labs design system */
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #FFFFFF;
+  color: #000000;
+  position: relative;
+}
+
+/* Subtle, high-end animated film-grain noise overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: -150%;
+  left: -150%;
+  width: 300%;
+  height: 300%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain-animation 8s steps(10) infinite;
+}
+
+@keyframes grain-animation {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-4%, -10%); }
+  20% { transform: translate(-12%, 5%); }
+  30% { transform: translate(6%, -20%); }
+  40% { transform: translate(-5%, 20%); }
+  50% { transform: translate(-10%, 8%); }
+  60% { transform: translate(12%, 0%); }
+  70% { transform: translate(0%, 12%); }
+  80% { transform: translate(3%, 30%); }
+  90% { transform: translate(-8%, 8%); }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-panel-dark {
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@variant dark (&:where(.dark, .dark *));
+
+/* Night-owl dark mode overrides */
+.dark body {
+  background-color: #1A1A1A !important;
+  color: #F8F9FA !important;
+}
+
+/* Base structural containers and cards */
+.dark .bg-white {
+  background-color: #1F1F1F !important;
+}
+.dark .bg-neutral-50,
+.dark .bg-neutral-50\/20,
+.dark .bg-neutral-50\/25,
+.dark .bg-neutral-50\/50,
+.dark .bg-neutral-100 {
+  background-color: #262626 !important;
+}
+
+/* Borders */
+.dark .border-neutral-100,
+.dark .border-neutral-200,
+.dark .border-neutral-200\/50,
+.dark .border-neutral-200\/60,
+.dark .border-neutral-200\/80 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Typography adjustment for contrast */
+.dark .text-neutral-950 {
+  color: #FFFFFF !important;
+}
+.dark .text-neutral-900,
+.dark .text-neutral-800,
+.dark .text-neutral-700 {
+  color: #F3F4F6 !important;
+}
+.dark .text-neutral-600,
+.dark .text-neutral-500 {
+  color: #D1D5DB !important;
+}
+.dark .text-neutral-400 {
+  color: #9CA3AF !important;
+}
+
+/* Badge/Label elements like blue-50 */
+.dark .bg-blue-50,
+.dark .bg-blue-50\/80 {
+  background-color: #1C2539 !important; /* Fully opaque mixed slate-blue to prevent grid line bleed-through */
+}
+.dark .border-blue-100 {
+  border-color: rgba(37, 99, 235, 0.3) !important;
+}
+.dark .text-blue-600 {
+  color: #60A5FA !important;
+}
+
+/* Glass panels */
+.dark .glass-panel {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Specific component overrides for absolute premium quality */
+.dark #main-navbar.bg-white\/85 {
+  background-color: rgba(26, 26, 26, 0.85) !important;
+}
+.dark #mobile-drawer-overlay {
+  background-color: rgba(26, 26, 26, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark #services-dropdown-menu {
+  background-color: #262626 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark #desktop-nav button:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark #main-navbar button {
+  color: #D1D5DB;
+}
+.dark #main-navbar button:hover {
+  color: #FFFFFF;
+}
+
+/* Keep CTA buttons legible */
+.dark .bg-blue-600 {
+  background-color: #2563EB !important;
+}
+.dark .text-white {
+  color: #FFFFFF !important;
+}
+
+/* Keep the contact inputs readable in dark mode */
+.dark input, 
+.dark textarea,
+.dark select {
+  background-color: #262626 !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark input:focus, 
+.dark textarea:focus,
+.dark select:focus {
+  border-color: #2563EB !important;
+  outline: none;
+}
+
+/* Background Grid Overlays */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+/* Dots Grid */
+.grid-dots body::after {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  opacity: 0.75;
+}
+.dark.grid-dots body::after {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1.2px, transparent 1.2px);
+  opacity: 0.5;
+}
+
+/* Blueprint Grid */
+.grid-blueprint body::after {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.85;
+}
+.dark.grid-blueprint body::after {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  opacity: 0.6;
+}
+
+/* Clean grid */
+.grid-clean body::after {
+  opacity: 0;
+}
+
+/* Spotlight Cursor Halo */
+#cursor-spotlight-halo {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99;
+  background: radial-gradient(450px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px), color-mix(in srgb, var(--color-blue-600) 5%, transparent), transparent 80%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.cursor-halo-enabled #cursor-spotlight-halo {
+  opacity: 1;
+}
+.dark #cursor-spotlight-halo {
+  background: radial-gradient(450px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px), color-mix(in srgb, var(--color-blue-500) 8%, transparent), transparent 80%);
+}
+
+/* Styling for rendered Contentful "Body" rich text on the Insights detail page */
+.insight-body > * + * {
+  margin-top: 1.25em;
+}
+.insight-body h1, .insight-body h2, .insight-body h3 {
+  font-weight: 800;
+  color: #171717;
+  line-height: 1.3;
+}
+.dark .insight-body h1, .dark .insight-body h2, .dark .insight-body h3 {
+  color: #F8F9FA;
+}
+.insight-body h2 { font-size: 1.5em; }
+.insight-body h3 { font-size: 1.25em; }
+.insight-body a {
+  color: var(--color-blue-600);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.insight-body ul, .insight-body ol {
+  padding-left: 1.5em;
+}
+.insight-body ul { list-style: disc; }
+.insight-body ol { list-style: decimal; }
+.insight-body blockquote {
+  border-left: 3px solid var(--color-blue-600);
+  padding-left: 1em;
+  font-style: italic;
+  color: #525252;
+}
+.insight-body img {
+  border-radius: 1rem;
+  width: 100%;
+}
+.insight-body code {
+  background: #F3F4F6;
+  padding: 0.15em 0.4em;
+  border-radius: 0.35em;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+.dark .insight-body code {
+  background: #262626;
+}
+
+
+
