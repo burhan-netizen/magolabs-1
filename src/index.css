@@ -256,9 +256,12 @@ body::after {
 .logo-marquee-track:hover {
   animation-play-state: paused;
 }
+/* Fixed-pixel (not %) fade: a percentage-based stop eats roughly a whole
+   logo card at each edge on narrow/mobile widths, since the fade width
+   scales with the container instead of staying a thin edge vignette. */
 .logo-marquee-mask {
-  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+  mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
 }
 
 /* Styling for rendered Contentful "Body" rich text on the Insights detail page */
