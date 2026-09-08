@@ -128,7 +128,7 @@ export default function Contact({ onPageChange }: ContactProps) {
     <>
       <SEO
         title="Contact Burhan Kapasi & Mago Labs | Book Consultation"
-        description="Book a free digital strategy consultation. Submit your inquiry or contact us directly on phone at +91 9099245605 or email burhan@magolabs.in."
+        description="Discuss your project with Mago Labs. Submit your inquiry or contact us directly on phone at +91 9099245605 or email burhan@magolabs.in."
         path="contact"
         schemas={contactSchemas}
       />
@@ -281,7 +281,7 @@ export default function Contact({ onPageChange }: ContactProps) {
                       <div className="space-y-2 mb-6">
                         <span className="text-xs font-bold uppercase tracking-widest text-blue-600 flex items-center gap-1.5">
                           <Sparkles className="h-4 w-4" />
-                          Consultation Form
+                          Project Enquiry
                         </span>
                         <h3 className="text-xl font-bold text-neutral-900">Map Out Your Digital Strategy</h3>
                       </div>
@@ -415,7 +415,7 @@ export default function Contact({ onPageChange }: ContactProps) {
                           ) : (
                             <>
                               <Send className="h-5 w-5" />
-                              Request Free Strategy Call
+                              Discuss Your Project
                             </>
                           )}
                         </button>

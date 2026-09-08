@@ -87,6 +87,16 @@ export default function ContactCTA({
           <p className="text-xs text-neutral-500 pt-2">
             No obligation. Talk directly to Burhan Kapasi (Founder) to map out your digital growth.
           </p>
+
+          <button
+            onClick={() => {
+              onPageChange('work');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="text-sm font-semibold text-neutral-400 hover:text-white transition-colors cursor-pointer underline underline-offset-4 decoration-neutral-700 hover:decoration-white"
+          >
+            Or view our work first
+          </button>
         </motion.div>
       </div>
     </section>

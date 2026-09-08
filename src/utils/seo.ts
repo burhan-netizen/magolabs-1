@@ -106,9 +106,9 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
   },
   contact: {
     title: 'Contact Mago Labs | Web Design & SEO Company in Surat',
-    description: 'Get a free 30-minute speed and SEO audit of your current website from Surat\u2019s Mago Labs. Connect with us on WhatsApp or call +91 9099245605 to schedule your project consultation.',
-    ogTitle: 'Book Your Free Digital Strategy Consultation | Mago Labs, Surat',
-    ogDescription: 'Speak directly with Burhan Kapasi. Secure your bespoke digital consultation and custom pipeline mapping session.',
+    description: 'Discuss your project with Surat\u2019s Mago Labs. Connect with us on WhatsApp or call +91 9099245605 to talk through your website and digital strategy.',
+    ogTitle: 'Discuss Your Project | Mago Labs, Surat',
+    ogDescription: 'Speak directly with Burhan Kapasi about your website and digital strategy. No account managers, no runaround.',
     ogImage: 'https://www.magolabs.in/og-image-contact.jpg',
     ogType: 'website',
     twitterCard: 'summary_large_image'

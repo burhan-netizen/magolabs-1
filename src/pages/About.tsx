@@ -131,7 +131,7 @@ export default function About({ onPageChange }: AboutProps) {
                   Hi, I'm <strong>Burhan Kapasi</strong>. My journey started with a deep love for digital problem-solving and a realization: ambitious doctors, manufacturing enterprises, real estate consultants, and CA firms need more than just standard layouts. They need custom-built digital assets engineered to command authority and capture real enquiries.
                 </p>
                 <p>
-                  At <strong>Mago Labs</strong>, we elevate the digital standard. We write lightweight code, design from the ground up, and draft compelling, human-centered copywriting that resonates immediately with your target audience.
+                  At <strong>Mago Labs</strong>, we hold ourselves to a higher standard. We write lightweight code, design from the ground up, and draft compelling, human-centered copywriting that resonates immediately with your target audience.
                 </p>
                 <p>
                   What sets us apart is our absolute focus on your <strong>Return on Investment (ROI)</strong>. We analyze your commercial goals, study how your customers make decisions, and construct a high-converting web pipeline that translates traffic into tangible revenue.
@@ -206,7 +206,7 @@ export default function About({ onPageChange }: AboutProps) {
               </div>
               <h3 className="text-lg font-bold text-neutral-900">Our Vision</h3>
               <p className="text-xs sm:text-sm text-neutral-500 leading-relaxed">
-                To set the benchmark for high-performance design and growth advisory, showing companies globally that technical precision, bespoke visual styling, and dedicated personal service are the true cornerstones of digital dominance.
+To set the benchmark for high-performance design and growth advisory, showing businesses that technical precision, thoughtful visual design, and dedicated personal service are what actually drive long-term digital success.
               </p>
             </motion.div>
 

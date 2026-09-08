@@ -81,6 +81,22 @@ const QUESTIONS: QuizQuestion[] = [
 
 const MAX_SCORE = QUESTIONS.length * 3;
 
+// Each question already maps to one of the categories the brief asks to surface,
+// so the results screen can show a per-category read instead of only one blended number.
+const CATEGORY_LABELS: Record<string, string> = {
+  mobile: 'Mobile Experience',
+  speed: 'Performance',
+  action: 'Conversion',
+  local: 'SEO Visibility',
+  copy: 'Trust',
+};
+
+function categoryStatus(score: number): { label: string; color: string; dot: string } {
+  if (score >= 3) return { label: 'Strong', color: 'text-emerald-600', dot: 'bg-emerald-500' };
+  if (score >= 1.5) return { label: 'Needs Work', color: 'text-amber-600', dot: 'bg-amber-500' };
+  return { label: 'Weak', color: 'text-rose-600', dot: 'bg-rose-500' };
+}
+
 function getBand(pct: number) {
   if (pct >= 75) {
     return {
@@ -245,6 +261,22 @@ export default function SiteHealthCheck() {
                 {band!.title}
               </div>
               <p className="text-sm text-neutral-500 max-w-md leading-relaxed">{band!.tone}</p>
+            </div>
+
+            <div className="w-full max-w-md flex flex-wrap items-center justify-center gap-2">
+              {QUESTIONS.map((q, idx) => {
+                const status = categoryStatus(scores[idx]);
+                return (
+                  <span
+                    key={q.id}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-[11px] font-semibold text-neutral-600"
+                  >
+                    <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
+                    {CATEGORY_LABELS[q.id]}
+                    <span className={status.color}>· {status.label}</span>
+                  </span>
+                );
+              })}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-2">

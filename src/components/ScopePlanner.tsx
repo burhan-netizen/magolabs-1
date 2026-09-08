@@ -199,7 +199,7 @@ export default function ScopePlanner({ onApplyPlan }: ScopePlannerProps) {
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 text-blue-600 dark:text-blue-400 mb-2">
             <Sparkles className="h-3 w-3" />
-            <span className="text-[10px] font-bold uppercase tracking-wider">Free &amp; No Obligation</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider">No Obligation, Just a Direct Conversation</span>
           </div>
           <h3 className="text-xl font-extrabold text-neutral-900 dark:text-white">Mago Project Scope Planner</h3>
           <p className="text-xs text-neutral-500 dark:text-neutral-400">Assemble your bespoke digital blueprint step-by-step.</p>

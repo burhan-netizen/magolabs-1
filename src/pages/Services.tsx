@@ -23,7 +23,7 @@ export default function Services({ onPageChange }: ServicesProps) {
       bullets: [
         'Custom Design (Blank Canvas - No Templates)',
         'Tactile, Mobile-First Responsive Layout',
-        'High-Speed Page Optimization (90+ Google Speed)',
+        'Performance Engineered From the Ground Up',
         'Inbuilt Lead Triggers (WhatsApp, Click-to-Call, Forms)',
         'Clean, Highly Secure Code Structure',
         'Intuitive Content Management System',
@@ -217,7 +217,7 @@ export default function Services({ onPageChange }: ServicesProps) {
                         onClick={() => navigateTo('contact')}
                         className="inline-flex items-center justify-center rounded-full border border-neutral-200 hover:bg-neutral-50 px-6 py-3.5 text-sm font-bold text-neutral-800 shadow-sm hover:shadow-md transition-all cursor-pointer"
                       >
-                        Get Free Estimate
+                        Discuss Your Project
                       </motion.button>
                     </div>
                   </div>

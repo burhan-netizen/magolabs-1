@@ -5,7 +5,6 @@ import {
   PenTool,
   Sparkles,
   Smartphone,
-  Zap,
   CheckCircle2,
   ShieldCheck,
   TrendingUp,
@@ -25,7 +24,12 @@ import {
   Briefcase,
   ChevronRight,
   Plus,
-  Minus
+  Minus,
+  Eye,
+  ShieldAlert,
+  TrendingDown,
+  SearchX,
+  UserCheck
 } from 'lucide-react';
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -190,49 +194,6 @@ export default function Home({ onPageChange }: HomeProps) {
       title: 'Human Copy Written to Turn Traffic into Revenue',
       desc: 'Zero generic AI-generated fluff. We write persuasive, clear, trust-building copywriting that speaks directly to your ideal buyers\' pain points and guides them to take immediate action.',
       icon: PenTool,
-    },
-  ];
-
-  const benefits = [
-    {
-      title: 'Custom Design (Zero Templates)',
-      desc: 'We start with a blank canvas. Every visual element is tailor-made to represent your business authority and command trust from your ideal buyers.',
-      icon: Sparkles,
-    },
-    {
-      title: 'Mobile First Optimization',
-      desc: 'Over 65% of your search visits happen on phones. We test and design our layouts to look stunning and feel completely tactile on small screens.',
-      icon: Smartphone,
-    },
-    {
-      title: 'Lightning Fast (90+ Speed)',
-      desc: 'Fast websites make more money. We optimize every image, compress modern files, and secure top-tier speeds to reduce visitor bounce rates.',
-      icon: Zap,
-    },
-    {
-      title: 'SEO Ready Foundation',
-      desc: 'We integrate proper HTML structures, custom Google schemas, meta descriptions, and sitemaps from day one, helping you rank on Google faster.',
-      icon: CheckCircle2,
-    },
-    {
-      title: 'Google Maps Friendly',
-      desc: 'Perfect local alignment. Built-in map hooks, localized keyword signals, and direct alignment with Google Local Packs to drive nearby customers.',
-      icon: Compass,
-    },
-    {
-      title: 'Easy to Edit & Manage',
-      desc: 'No confusing dashboards. We deliver clean, intuitive backends so you can easily edit text, modify pricing, or add new images in under 2 minutes.',
-      icon: Cpu,
-    },
-    {
-      title: 'Bulletproof Security',
-      desc: 'We use secure hosting environments, modern frameworks, and automatic SSL setup. Zero standard hack vulnerability typical of template builders.',
-      icon: ShieldCheck,
-    },
-    {
-      title: 'Conversion Focused Layout',
-      desc: 'We place high-converting call-to-action triggers, direct WhatsApp links, click-to-call buttons, and lead forms exactly where users naturally look.',
-      icon: TrendingUp,
     },
   ];
 
@@ -407,6 +368,60 @@ export default function Home({ onPageChange }: HomeProps) {
           </motion.div>
         </div>
       </section>
+
+      {/* Problem Section: visitor pain points, stated plainly, before any pitch */}
+      <motion.section
+        id="problem-section"
+        className="py-24 bg-neutral-950 text-white font-sans relative overflow-hidden"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-100px' }}
+        transition={{ duration: 0.7, ease: [0.215, 0.61, 0.355, 1] }}
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <span className="text-xs font-bold uppercase tracking-widest text-rose-400">A Hard Truth</span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
+              Your website might be costing you customers.
+            </h2>
+          </div>
+
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            {[
+              { title: 'Visitors Don’t Understand What You Offer', desc: 'They land, get confused in five seconds, and leave without ever finding out what you actually do.', icon: Eye },
+              { title: 'Your Site Doesn’t Build Enough Trust', desc: 'No real proof, no clear credibility signals. Visitors have no reason to believe you’re the safer choice.', icon: ShieldAlert },
+              { title: 'Competitors Look More Credible Online', desc: 'When people compare you side by side, an outdated or generic site loses the decision before you even speak to them.', icon: TrendingDown },
+              { title: 'You’re Not Showing Up on Google', desc: 'People searching for exactly what you offer, in your own area, are finding someone else instead.', icon: SearchX },
+            ].map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={idx}
+                  variants={fadeUpItem}
+                  className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/20 transition-all space-y-4"
+                >
+                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-rose-500/10 text-rose-400">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-sm font-bold text-white">{item.title}</h3>
+                  <p className="text-xs text-neutral-400 leading-relaxed">{item.desc}</p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+
+          <p className="text-center text-neutral-400 text-sm sm:text-base mt-14 max-w-2xl mx-auto leading-relaxed">
+            Mago Labs fixes the digital gaps that stand between your business and your next customer.
+          </p>
+        </div>
+      </motion.section>
 
       {/* Social Proof Strip , added per the homepage redesign: proof needs to appear
           before claims, not after eight sections of them. */}
@@ -652,7 +667,8 @@ export default function Home({ onPageChange }: HomeProps) {
         </div>
       </motion.section>
 
-      {/* Why Choose Us Section */}
+      {/* Why Choose Us Section: 4 core pillars, with the fuller benefit list
+          folded in below as supporting proof rather than competing for attention. */}
       <section id="why-choose-us-overview" className="py-24 bg-white font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -665,21 +681,52 @@ export default function Home({ onPageChange }: HomeProps) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((bn, idx) => {
-              const Icon = bn.icon;
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-14">
+            {[
+              { title: 'Custom, Not Template', desc: 'Every website starts from a blank canvas, designed around your business, your audience, and your goals. Nothing copy-pasted.', icon: Sparkles },
+              { title: 'Built for Conversions', desc: 'Every layout decision and call-to-action is placed to guide visitors toward a call, a form, or a WhatsApp enquiry.', icon: TrendingUp },
+              { title: 'Built for Visibility', desc: 'Fast, search-friendly websites engineered to perform in the real world, so the customers searching for you can actually find you.', icon: Compass },
+              { title: 'Founder-Direct', desc: 'You work directly with the person doing the strategy, design, and development. No account managers, no runaround.', icon: UserCheck },
+            ].map((pillar, idx) => {
+              const Icon = pillar.icon;
               return (
                 <motion.div
                   key={idx}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.5, delay: idx * 0.08 }}
                   whileHover={{ y: -5, scale: 1.01, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
-                  className="p-6 rounded-xl border border-neutral-100 bg-neutral-50/50 hover:bg-white hover:border-neutral-200/80 hover:shadow-lg hover:shadow-neutral-200/30 transition-all duration-300 space-y-4 cursor-default"
+                  className="p-7 rounded-2xl border border-neutral-200/80 bg-neutral-50/40 hover:bg-white hover:border-neutral-300 hover:shadow-lg hover:shadow-neutral-200/40 transition-all duration-300 space-y-4"
                 >
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/15 text-blue-600">
-                    <Icon className="h-5 w-5" />
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
+                    <Icon className="h-6 w-6" />
                   </div>
-                  <h3 className="text-base font-bold text-neutral-900">{bn.title}</h3>
-                  <p className="text-xs text-neutral-500 leading-relaxed">{bn.desc}</p>
+                  <h3 className="text-lg font-bold text-neutral-900">{pillar.title}</h3>
+                  <p className="text-sm text-neutral-500 leading-relaxed">{pillar.desc}</p>
                 </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Supporting proof: the fuller benefit list, as smaller chips underneath the 4 pillars */}
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-10 border-t border-neutral-100">
+            {[
+              { label: 'Mobile-First Optimization', icon: Smartphone },
+              { label: 'SEO-Ready Foundation', icon: CheckCircle2 },
+              { label: 'Google Maps Friendly', icon: MapPin },
+              { label: 'Easy to Edit & Manage', icon: Cpu },
+              { label: 'Bulletproof Security', icon: ShieldCheck },
+            ].map((chip, idx) => {
+              const Icon = chip.icon;
+              return (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-neutral-50 border border-neutral-200/70 px-4 py-2 text-xs font-semibold text-neutral-600"
+                >
+                  <Icon className="h-3.5 w-3.5 text-blue-600" />
+                  {chip.label}
+                </span>
               );
             })}
           </div>
@@ -861,6 +908,19 @@ export default function Home({ onPageChange }: HomeProps) {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Why Now Section: the case for not sitting on a weak website, stated
+          plainly rather than with manufactured urgency or invented numbers. */}
+      <section id="why-now-section" className="py-20 bg-neutral-50 font-sans border-t border-neutral-200/50">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 leading-tight">
+            Your website is working for you — or against you.
+          </h2>
+          <p className="text-neutral-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+            Most customers look a business up online before they ever pick up the phone. A site that loads slowly, looks generic, or buries the point creates doubt at exactly the moment you need trust. There is no neutral outcome here: it is either helping people choose you, or quietly talking them out of it.
+          </p>
         </div>
       </section>
 

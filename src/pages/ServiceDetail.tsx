@@ -348,7 +348,7 @@ export default function ServiceDetail({ serviceId, onPageChange }: ServiceDetail
                   }}
                   className="inline-flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-500 px-6 py-3.5 text-sm font-bold text-white transition-all shadow-lg shadow-blue-600/10 cursor-pointer"
                 >
-                  Book Free Consultation
+                  Discuss Your Project
                 </motion.button>
                 <motion.a
                   whileHover={{ scale: 1.03 }}

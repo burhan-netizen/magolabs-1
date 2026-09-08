@@ -16,6 +16,9 @@ interface NavItem {
   label: string;
   id: PageId;
   tag?: string;
+  /** Element id to scroll to after navigating to `id`, for nav items that
+   *  point at a section of a page rather than the page itself. */
+  anchor?: string;
   subItems?: { label: string; id: PageId; tag?: string }[];
 }
 
@@ -53,15 +56,32 @@ export default function Navbar({
       ],
     },
     { label: t('nav.work'), id: 'work' as PageId },
+    { label: 'Why Mago', id: 'home' as PageId, anchor: 'why-choose-us-overview' },
     { label: t('nav.about'), id: 'about' as PageId },
     { label: t('nav.insights'), id: 'insights' as PageId },
     { label: t('nav.contact'), id: 'contact' as PageId },
   ];
 
-  const handleNavClick = (pageId: PageId) => {
-    onPageChange(pageId);
+  const handleNavClick = (pageId: PageId, anchorId?: string) => {
     setIsOpen(false);
     setOpenDropdown(null);
+
+    if (anchorId) {
+      if (currentPage === pageId) {
+        // Already on the right page, just scroll, no route transition to wait out.
+        document.getElementById(anchorId)?.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      onPageChange(pageId);
+      // Matches App.tsx's own route-transition timing (500ms swap + 350ms settle)
+      // so we scroll only once the target section actually exists in the DOM.
+      setTimeout(() => {
+        document.getElementById(anchorId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 900);
+      return;
+    }
+
+    onPageChange(pageId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -175,12 +195,12 @@ export default function Navbar({
                 );
               }
 
-              const isActive = currentPage === item.id;
+              const isActive = !item.anchor && currentPage === item.id;
               return (
                 <button
-                  key={item.id}
-                  id={`nav-item-${item.id}`}
-                  onClick={() => handleNavClick(item.id)}
+                  key={item.label}
+                  id={`nav-item-${item.anchor || item.id}`}
+                  onClick={() => handleNavClick(item.id, item.anchor)}
                   className={`relative flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-colors rounded-full text-left ${
                     isActive
                       ? 'text-neutral-900 bg-neutral-100/80 font-semibold dark:bg-neutral-800/80 dark:text-white'
@@ -345,10 +365,10 @@ export default function Navbar({
 
                 return (
                   <button
-                    key={item.id}
-                    onClick={() => handleNavClick(item.id)}
+                    key={item.label}
+                    onClick={() => handleNavClick(item.id, item.anchor)}
                     className={`flex w-full items-center justify-between px-3 py-2.5 text-base font-medium transition-colors rounded-lg text-left ${
-                      currentPage === item.id
+                      !item.anchor && currentPage === item.id
                         ? 'bg-neutral-100 text-neutral-900 font-semibold'
                         : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900'
                     }`}

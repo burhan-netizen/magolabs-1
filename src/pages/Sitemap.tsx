@@ -26,7 +26,7 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
       links: [
         { name: 'All Services Overview', id: 'services' as PageId, description: 'Complete map of our bespoke digital business systems' },
         { name: 'Bespoke Web Design & Dev', id: 'service-web-design' as PageId, description: 'Hand-coded TypeScript and React applications without template bloat' },
-        { name: 'Technical SEO & PageSpeed', id: 'service-seo' as PageId, description: 'In-built schema structures that guarantee 90+ Lighthouse speeds' },
+        { name: 'Technical SEO & PageSpeed', id: 'service-seo' as PageId, description: 'In-built schema structures engineered for fast, search-friendly performance' },
         { name: 'Google Business Profile SEO', id: 'service-gbp' as PageId, description: 'Dominating local geo-targeted queries and maps for local leads' },
         { name: 'High-Converting Copywriting', id: 'service-copywriting' as PageId, description: 'Direct sales copy designed specifically to drive inbound phone calls' },
       ]
