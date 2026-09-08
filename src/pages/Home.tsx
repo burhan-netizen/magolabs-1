@@ -916,7 +916,7 @@ export default function Home({ onPageChange }: HomeProps) {
       <section id="why-now-section" className="py-20 bg-neutral-50 font-sans border-t border-neutral-200/50">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center space-y-5">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 leading-tight">
-            Your website is working for you — or against you.
+            Your website is either working for you or against you.
           </h2>
           <p className="text-neutral-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
             Most customers look a business up online before they ever pick up the phone. A site that loads slowly, looks generic, or buries the point creates doubt at exactly the moment you need trust. There is no neutral outcome here: it is either helping people choose you, or quietly talking them out of it.
