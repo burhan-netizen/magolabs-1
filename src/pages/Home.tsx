@@ -13,14 +13,7 @@ import {
   ArrowRight,
   Phone,
   MessageSquare,
-  Stethoscope,
-  Factory,
-  Calculator,
-  ShoppingBag,
-  GraduationCap,
   Building2,
-  Rocket,
-  Utensils,
   Briefcase,
   ChevronRight,
   Plus,
@@ -174,26 +167,30 @@ export default function Home({ onPageChange }: HomeProps) {
     {
       id: 'service-web-design' as PageId,
       title: 'Custom Websites That Generate Leads',
-      desc: 'Bespoke, high-converting websites designed from a blank canvas. No slow templates. We write clean, custom code engineered purely to turn visitors into calls, form submissions, and WhatsApp enquiries.',
+      desc: 'High-converting websites designed from a blank canvas, not a template. Clean, custom code built to turn visitors into calls, form submissions, and WhatsApp enquiries.',
       icon: LayoutTemplate,
+      tag: 'Core Service',
     },
     {
       id: 'service-seo' as PageId,
       title: 'Get Found on Google by Your Ideal Customers',
-      desc: 'Strategic Local and Technical SEO targeting the exact high-intent buyer terms your competitors rank for. Drive consistent organic traffic, phone calls, and direct enquiries.',
+      desc: 'Local and technical SEO targeting the buyer terms your competitors already rank for, so more of your organic traffic turns into calls and enquiries.',
       icon: Search,
+      tag: 'Growth Layer',
     },
     {
       id: 'service-gbp' as PageId,
       title: 'Appear in Local Searches & Attract Nearby Buyers',
-      desc: 'Dominate Google Maps local search. Complete profile setup, optimization, and proactive review gathering strategies that make your business the trusted #1 choice in your area.',
+      desc: 'A fully optimized Google Business Profile, so your business shows up first when nearby customers search for what you do.',
       icon: MapPin,
+      tag: 'Growth Layer',
     },
     {
       id: 'service-copywriting' as PageId,
       title: 'Human Copy Written to Turn Traffic into Revenue',
-      desc: 'Zero generic AI-generated fluff. We write persuasive, clear, trust-building copywriting that speaks directly to your ideal buyers\' pain points and guides them to take immediate action.',
+      desc: 'No generic AI filler. Clear, persuasive copy that speaks to your buyers\' actual problems and guides them to take action.',
       icon: PenTool,
+      tag: 'Growth Layer',
     },
   ];
 
@@ -233,19 +230,6 @@ export default function Home({ onPageChange }: HomeProps) {
       title: 'Support',
       desc: 'We monitor site health, provide quick updates when you ask, and act as your long-term digital growth consultant.',
     },
-  ];
-
-  const industries = [
-    { name: 'Doctors & Dentists', icon: Stethoscope, desc: 'Patient-acquisition setups' },
-    { name: 'Manufacturing', icon: Factory, desc: 'B2B order & catalogue displays' },
-    { name: 'CA & Law Firms', icon: Calculator, desc: 'Authority & lead generation' },
-    { name: 'Real Estate & Builders', icon: Building2, desc: 'Premium project showcasing' },
-    { name: 'Startups & Tech', icon: Rocket, desc: 'High-converting SaaS/MVP landings' },
-    { name: 'Retail Stores', icon: ShoppingBag, desc: 'Product and location catalogs' },
-    { name: 'Restaurants & Cafes', icon: Utensils, desc: 'Direct menus and reservations' },
-    { name: 'Education & Coaches', icon: GraduationCap, desc: 'Class details and student leads' },
-    { name: 'Interior Designers', icon: Sparkles, desc: 'Bespoke image portfolio grids' },
-    { name: 'Professional Services', icon: Briefcase, desc: 'Custom local MSME solutions' },
   ];
 
   return (
@@ -381,7 +365,7 @@ export default function Home({ onPageChange }: HomeProps) {
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <span className="text-xs font-bold uppercase tracking-widest text-rose-400">A Hard Truth</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-400">A Quick Diagnosis</span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
               Your website might be costing you customers.
             </h2>
@@ -395,10 +379,10 @@ export default function Home({ onPageChange }: HomeProps) {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {[
-              { title: 'Visitors Don’t Understand What You Offer', desc: 'They land, get confused in five seconds, and leave without ever finding out what you actually do.', icon: Eye },
-              { title: 'Your Site Doesn’t Build Enough Trust', desc: 'No real proof, no clear credibility signals. Visitors have no reason to believe you’re the safer choice.', icon: ShieldAlert },
-              { title: 'Competitors Look More Credible Online', desc: 'When people compare you side by side, an outdated or generic site loses the decision before you even speak to them.', icon: TrendingDown },
-              { title: 'You’re Not Showing Up on Google', desc: 'People searching for exactly what you offer, in your own area, are finding someone else instead.', icon: SearchX },
+              { title: 'Visitors Don’t Understand What You Offer', desc: 'They land, get confused, and leave before finding out what you actually do.', icon: Eye },
+              { title: 'Your Site Doesn’t Build Enough Trust', desc: 'No real proof or credibility signals, so visitors have no reason to pick you over anyone else.', icon: ShieldAlert },
+              { title: 'Competitors Look More Credible Online', desc: 'Side by side, an outdated or generic site loses the decision before you ever speak to them.', icon: TrendingDown },
+              { title: 'You’re Not Showing Up on Google', desc: 'People searching for exactly what you offer are finding someone else instead.', icon: SearchX },
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
@@ -407,7 +391,7 @@ export default function Home({ onPageChange }: HomeProps) {
                   variants={fadeUpItem}
                   className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/20 transition-all space-y-4"
                 >
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-rose-500/10 text-rose-400">
+                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-sm font-bold text-white">{item.title}</h3>
@@ -418,81 +402,8 @@ export default function Home({ onPageChange }: HomeProps) {
           </motion.div>
 
           <p className="text-center text-neutral-400 text-sm sm:text-base mt-14 max-w-2xl mx-auto leading-relaxed">
-            Mago Labs fixes the digital gaps that stand between your business and your next customer.
+            We close the gaps between your website and your next customer.
           </p>
-        </div>
-      </motion.section>
-
-      {/* Social Proof Strip , added per the homepage redesign: proof needs to appear
-          before claims, not after eight sections of them. */}
-      <motion.section
-        id="social-proof-strip"
-        className="py-16 bg-white font-sans border-b border-neutral-200/50"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-bold uppercase tracking-widest text-neutral-400 mb-8">
-            Trusted by real businesses across Surat and beyond
-          </p>
-
-          {/* Real client logo strip: infinite marquee, full color, bigger */}
-          <div className="logo-marquee-mask overflow-hidden mb-14">
-            <div className="flex items-center gap-4 sm:gap-6 logo-marquee-track">
-              {[...Array(2)].map((_, loopIdx) => (
-                <div key={loopIdx} className="flex items-center gap-4 sm:gap-6 shrink-0">
-                  {[
-                    { name: 'Santosh Timbers', src: '/logos/santoshtimbers.png' },
-                    { name: 'Astrabizz Consultancy', src: '/logos/astrabizz.png' },
-                    { name: 'Dr. Mihir Shah Smile Care Clinic', src: '/logos/drmihirshah.png' },
-                    { name: 'SolWay Energies', src: '/logos/solway.png' },
-                    { name: 'Darshan Galani & Co.', src: '/logos/darshangalani.png' },
-                    { name: 'Jay Mehta & Co.', src: '/logos/jaymehta.png' },
-                    { name: 'MNP & Co.', src: '/logos/mnp.png' },
-                    { name: 'K.D. Mayani & Co.', src: '/logos/kdmayani.png' },
-                  ].map((logo, idx) => (
-                    <div
-                      key={`${loopIdx}-${logo.name}-${idx}`}
-                      className="flex items-center justify-center h-20 sm:h-24 px-6 sm:px-8 rounded-2xl bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-neutral-300 transition-all duration-300 shrink-0"
-                    >
-                      <img
-                        src={logo.src}
-                        alt={logo.name}
-                        loading="lazy"
-                        className="h-10 sm:h-12 w-auto max-w-[140px] object-contain"
-                      />
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { quote: 'Very good website designs. Incredibly responsive team. Quick feedback turnaround. Great value.', name: 'Manav Shah', company: 'SolWay Energies' },
-              { quote: 'We finally have a website that reflects how we work with our clients: clear, professional, and easy to trust.', name: 'CA Jay Mehta', company: 'Jay Mehta & Co.' },
-              { quote: 'Absolutely professional people, know their work in best manner. I will absolutely recommend them for website related work.', name: 'Dr. Mihir Shah', company: 'Smile Care Clinic' },
-              { quote: 'Gorgeous website and amazing service from start to finish. Exactly what we needed for the business.', name: 'Harshit Chopra', company: 'Santosh Timbers' },
-            ].map((t, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="p-5 rounded-2xl border border-neutral-100 bg-neutral-50/50 space-y-3"
-              >
-                <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
-                <div className="pt-2 border-t border-neutral-200/60">
-                  <p className="text-xs font-bold text-neutral-900">{t.name}</p>
-                  <p className="text-[11px] text-neutral-500">{t.company}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </motion.section>
 
@@ -534,8 +445,19 @@ export default function Home({ onPageChange }: HomeProps) {
                   className="flex flex-col justify-between p-8 sm:p-10 rounded-2xl bg-white border border-neutral-200/80 shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:border-neutral-300/80 transition-all group"
                 >
                   <div className="space-y-6">
-                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
-                      <Icon className="h-6 w-6" />
+                    <div className="flex items-center justify-between">
+                      <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <span
+                        className={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${
+                          srv.tag === 'Core Service'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-neutral-100 text-neutral-500'
+                        }`}
+                      >
+                        {srv.tag}
+                      </span>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-neutral-900 group-hover:text-blue-600 transition-colors">
                       {srv.title}
@@ -644,7 +566,7 @@ export default function Home({ onPageChange }: HomeProps) {
               { icon: Building2, node: <AnimatedNumber target={75} suffix="+" />, label: 'Businesses Helped' },
               { icon: Briefcase, node: <AnimatedNumber target={8} />, label: 'Featured Case Studies' },
               { icon: ShieldCheck, node: <AnimatedNumber target={100} suffix="%" />, label: 'Client-Owned Code' },
-              { icon: MessageSquare, node: '1-on-1', label: 'Founder-Direct, No Account Managers' },
+              { icon: MessageSquare, node: '1-on-1', label: 'Direct Access to the Founder' },
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
@@ -730,6 +652,68 @@ export default function Home({ onPageChange }: HomeProps) {
               );
             })}
           </div>
+
+          <p className="text-center text-xs text-neutral-400 mt-8 max-w-3xl mx-auto leading-relaxed">
+            Built for doctors &amp; dentists, manufacturers, CA &amp; law firms, real estate, startups, retail, restaurants, education, and interior design.
+          </p>
+        </div>
+      </section>
+
+      {/* Founder Pitch Teaser: the founder-direct advantage, placed right after
+          Why Mago so it reads as the sharpest of the four pillars, not a repeat. */}
+      <section id="founder-teaser" className="py-20 bg-neutral-50 font-sans border-t border-neutral-200/50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+            {/* Image (Using provided founder image) */}
+            <div className="lg:col-span-2 flex justify-center">
+              <div className="relative max-w-sm rounded-2xl overflow-hidden shadow-xl border border-neutral-200">
+                <img
+                  src="/burhan-founder.jpg"
+                  alt="Burhan Kapasi - Founder of Mago Labs"
+                  width={768}
+                  height={960}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl border border-neutral-100 shadow-sm">
+                  <p className="text-sm font-bold text-neutral-900">Burhan Kapasi</p>
+                  <p className="text-xs text-neutral-500">Founder & Principal Developer</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Teaser Copy */}
+            <div className="lg:col-span-3 space-y-6">
+              <span className="text-xs font-bold uppercase tracking-widest text-blue-600">A Message from the Founder</span>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900">
+                "We do not build pretty business cards. We build marketing engines."
+              </h2>
+              <p className="text-neutral-600 text-sm leading-relaxed">
+                Hi, I'm Burhan Kapasi. I started Mago Labs because too many business owners get handed generic layouts that load slowly and don't convert.
+              </p>
+              <div className="p-5 rounded-xl border border-blue-100 bg-blue-50/50 space-y-1.5">
+                <p className="text-sm font-bold text-neutral-900">
+                  No account manager. No sales handoff. You work directly with the founder.
+                </p>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                  From the first conversation to the final launch, your project stays close to the person responsible for the strategy, design, and technical direction.
+                </p>
+              </div>
+              <div className="pt-2">
+                <motion.button
+                  whileHover={{ scale: 1.03, x: 2 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => navigateTo('about')}
+                  className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:text-blue-500 cursor-pointer"
+                >
+                  Read My Full Story
+                  <ArrowRight className="h-4 w-4" />
+                </motion.button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -797,55 +781,76 @@ export default function Home({ onPageChange }: HomeProps) {
         </div>
       </motion.section>
 
-      {/* Industries We Serve Section */}
-      <motion.section 
-        id="industries-serve" 
-        className="py-24 bg-white font-sans"
-        initial={{ opacity: 0, y: 35, filter: 'blur(4px)' }}
-        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        viewport={{ once: true, margin: '-100px' }}
-        transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
+      {/* Social Proof Strip: logo wall + short quotes, positioned here (after Process)
+          as the homepage's dedicated social-proof beat, ahead of the final CTA. */}
+      <motion.section
+        id="social-proof-strip"
+        className="py-16 bg-white font-sans border-b border-neutral-200/50"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6 }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600">Industries We Serve</span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900">
-              Tailored Solutions for Your Sector
-            </h2>
-            <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">
-              We design specific layout flows depending on your business type. A dentist needs direct bookings, while a manufacturer needs catalog downloads. We build what fits.
-            </p>
+          <p className="text-center text-xs font-bold uppercase tracking-widest text-neutral-400 mb-8">
+            Trusted by real businesses across Surat and beyond
+          </p>
+
+          {/* Real client logo strip: infinite marquee, full color, bigger */}
+          <div className="logo-marquee-mask overflow-hidden mb-14">
+            <div className="flex items-center gap-4 sm:gap-6 logo-marquee-track">
+              {[...Array(2)].map((_, loopIdx) => (
+                <div key={loopIdx} className="flex items-center gap-4 sm:gap-6 shrink-0">
+                  {[
+                    { name: 'Santosh Timbers', src: '/logos/santoshtimbers.png' },
+                    { name: 'Astrabizz Consultancy', src: '/logos/astrabizz.png' },
+                    { name: 'Dr. Mihir Shah Smile Care Clinic', src: '/logos/drmihirshah.png' },
+                    { name: 'SolWay Energies', src: '/logos/solway.png' },
+                    { name: 'Darshan Galani & Co.', src: '/logos/darshangalani.png' },
+                    { name: 'Jay Mehta & Co.', src: '/logos/jaymehta.png' },
+                    { name: 'MNP & Co.', src: '/logos/mnp.png' },
+                    { name: 'K.D. Mayani & Co.', src: '/logos/kdmayani.png' },
+                  ].map((logo, idx) => (
+                    <div
+                      key={`${loopIdx}-${logo.name}-${idx}`}
+                      className="flex items-center justify-center h-20 sm:h-24 px-6 sm:px-8 rounded-2xl bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-neutral-300 transition-all duration-300 shrink-0"
+                    >
+                      <img
+                        src={logo.src}
+                        alt={logo.name}
+                        loading="lazy"
+                        className="h-10 sm:h-12 w-auto max-w-[140px] object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
 
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6"
-          >
-            {industries.map((ind, idx) => {
-              const Icon = ind.icon;
-              return (
-                <motion.div
-                  key={idx}
-                  variants={fadeUpItem}
-                  whileHover={{ y: -5, scale: 1.015, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
-                  className="p-6 rounded-xl border border-neutral-200/60 bg-neutral-50/20 hover:bg-white hover:border-neutral-300 hover:shadow-md transition-all group space-y-4 cursor-default"
-                >
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-100 text-neutral-700 group-hover:bg-blue-50 group-hover:text-blue-600 transition-all">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-neutral-900 group-hover:text-blue-600 transition-colors">
-                      {ind.name}
-                    </h3>
-                    <p className="text-xs text-neutral-400 mt-1">{ind.desc}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { quote: 'Very good website designs. Incredibly responsive team. Quick feedback turnaround. Great value.', name: 'Manav Shah', company: 'SolWay Energies' },
+              { quote: 'We finally have a website that reflects how we work with our clients: clear, professional, and easy to trust.', name: 'CA Jay Mehta', company: 'Jay Mehta & Co.' },
+              { quote: 'Absolutely professional people, know their work in best manner. I will absolutely recommend them for website related work.', name: 'Dr. Mihir Shah', company: 'Smile Care Clinic' },
+              { quote: 'Gorgeous website and amazing service from start to finish. Exactly what we needed for the business.', name: 'Harshit Chopra', company: 'Santosh Timbers' },
+            ].map((t, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                className="p-5 rounded-2xl border border-neutral-100 bg-neutral-50/50 space-y-3"
+              >
+                <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
+                <div className="pt-2 border-t border-neutral-200/60">
+                  <p className="text-xs font-bold text-neutral-900">{t.name}</p>
+                  <p className="text-[11px] text-neutral-500">{t.company}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </motion.section>
 
@@ -854,60 +859,6 @@ export default function Home({ onPageChange }: HomeProps) {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808005_1px,transparent_1px),linear-gradient(to_bottom,#80808005_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none" />
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <SiteHealthCheck />
-        </div>
-      </section>
-
-      {/* Founder Pitch Teaser */}
-      <section id="founder-teaser" className="py-20 bg-neutral-50 font-sans border-t border-neutral-200/50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
-            {/* Image (Using provided founder image) */}
-            <div className="lg:col-span-2 flex justify-center">
-              <div className="relative max-w-sm rounded-2xl overflow-hidden shadow-xl border border-neutral-200">
-                <img
-                  src="/burhan-founder.jpg"
-                  alt="Burhan Kapasi - Founder of Mago Labs"
-                  width={768}
-                  height={960}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-500"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl border border-neutral-100 shadow-sm">
-                  <p className="text-sm font-bold text-neutral-900">Burhan Kapasi</p>
-                  <p className="text-xs text-neutral-500">Founder & Principal Developer</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Teaser Copy */}
-            <div className="lg:col-span-3 space-y-6">
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-600">A Message from the Founder</span>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900">
-                "We do not build pretty business cards. We build marketing engines."
-              </h2>
-              <div className="space-y-4 text-neutral-600 text-sm leading-relaxed">
-                <p>
-                  Hello, I am Burhan Kapasi. When I founded Mago Labs, I set out to deliver a higher standard of digital craftsmanship. Too often, ambitious business owners are given generic pre-made layouts that load slowly, lack engaging copywriting, and miss out on valuable organic traffic.
-                </p>
-                <p>
-                  We approach web design as an absolute partnership. I work directly with you to design high-impact aesthetics, craft persuasive copywriting that connects deeply with your audience, and build lightweight, high-performance pages configured for top Google rankings and actual lead generation.
-                </p>
-              </div>
-              <div className="pt-2">
-                <motion.button
-                  whileHover={{ scale: 1.03, x: 2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => navigateTo('about')}
-                  className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:text-blue-500 cursor-pointer"
-                >
-                  Read My Full Story
-                  <ArrowRight className="h-4 w-4" />
-                </motion.button>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -946,7 +897,7 @@ export default function Home({ onPageChange }: HomeProps) {
               },
               {
                 question: 'How much does a custom website cost?',
-                answer: 'Since every business has unique sitemap requirements, we provide flat, transparent quotes upfront. A custom lead-generation website starts around ₹35,000 / $500 depending on the design scale and integrations. We don\'t charge hidden fees, and you keep 100% ownership of your domain, code, and hosting.'
+                answer: 'Every business has different requirements, so we scope and quote each project individually after understanding what you actually need. You\'ll get a clear, transparent quote before any work starts, no hidden fees, and you keep 100% ownership of your domain, code, and hosting.'
               },
               {
                 question: 'Will my website rank on Google?',

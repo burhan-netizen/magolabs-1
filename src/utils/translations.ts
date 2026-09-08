@@ -56,7 +56,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     // Home Page Services Header
     'home.services.badge': 'Our Services',
     'home.services.title': 'Core Capabilities Engineered for ROI',
-    'home.services.desc': 'We focus exclusively on the channels that drive growth. We do not upsell fancy features you do not need, only what will bring customers to your door.',
+    'home.services.desc': 'Your website is the foundation. SEO, Google Business Profile, and copywriting are the growth layer we build on top of it.',
     
     // Common / General
     'common.soon': 'Soon'
@@ -104,7 +104,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     // Home Page Services Header
     'home.services.badge': 'हमारी सेवाएं',
     'home.services.title': 'वास्तविक विकास (ROI) के लिए निर्मित मुख्य सेवाएं',
-    'home.services.desc': 'हम विशेष रूप से उन चैनलों पर ध्यान केंद्रित करते हैं जो व्यवसाय के विकास को बढ़ावा देते हैं। हम ऐसी अनावश्यक सुविधाओं को बढ़ावा नहीं देते जिनकी आपको आवश्यकता नहीं है, केवल वही जो ग्राहकों को आपके पास लाए।',
+    'home.services.desc': 'आपकी वेबसाइट नींव है। SEO, गूगल बिज़नेस प्रोफाइल और कॉपीराइटिंग वह ग्रोथ लेयर है जो हम उसके ऊपर बनाते हैं।',
     
     // Common / General
     'common.soon': 'जल्द ही'
@@ -152,7 +152,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     // Home Page Services Header
     'home.services.badge': 'અમારી સેવાઓ',
     'home.services.title': 'વ્યવસાયિક પ્રગતિ (ROI) માટે ખાસ ક્ષમતાઓ',
-    'home.services.desc': 'અમે ફક્ત એવા રસ્તાઓ પર ધ્યાન કેન્દ્રિત કરીએ છીએ જે બિઝનેસનો ગ્રોથ વધારે છે. અમે વધારાની બિનજરૂરી વસ્તુઓ આપવા પ્રયત્ન નથી કરતા, માત્ર એ જ જે ગ્રાહકોને તમારા સુધી લાવે.',
+    'home.services.desc': 'તમારી વેબસાઇટ પાયો છે. SEO, ગૂગલ બિઝનેસ પ્રોફાઇલ અને કોપીરાઇટીંગ એ ગ્રોથ લેયર છે જે અમે તેની ઉપર બનાવીએ છીએ.',
     
     // Common / General
     'common.soon': 'ટૂંક સમયમાં'

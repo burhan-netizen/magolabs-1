@@ -145,6 +145,9 @@ export default function Contact({ onPageChange }: ContactProps) {
             <p className="text-neutral-500 text-sm sm:text-base leading-relaxed">
               Have a project, brand, factory, or firm in mind? Reach out below. I personally review every single message and respond within 1 business day.
             </p>
+            <p className="text-xs font-bold uppercase tracking-widest text-blue-600">
+              Direct conversation. No obligation. No sales-team handoff.
+            </p>
           </div>
         </div>
       </section>

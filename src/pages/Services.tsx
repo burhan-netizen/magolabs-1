@@ -18,8 +18,9 @@ export default function Services({ onPageChange }: ServicesProps) {
     {
       id: 'service-web-design' as PageId,
       title: 'Website Design & Development',
+      tag: 'Core Service',
       tagline: 'Bespoke custom code designed to turn visitors into enquiries.',
-      shortDesc: 'We design and code bespoke business websites that look premium, load instantly, and are built purely around converting traffic into actual client calls, form submissions, and WhatsApp enquiries. No template bloat.',
+      shortDesc: 'We design and code business websites that look premium, load instantly, and are built purely around converting traffic into actual client calls, form submissions, and WhatsApp enquiries. No template bloat.',
       bullets: [
         'Custom Design (Blank Canvas - No Templates)',
         'Tactile, Mobile-First Responsive Layout',
@@ -34,6 +35,7 @@ export default function Services({ onPageChange }: ServicesProps) {
     {
       id: 'service-seo' as PageId,
       title: 'Search Engine Optimization',
+      tag: 'Growth Layer',
       tagline: 'Strategic Local & Technical SEO to place you on top of Google.',
       shortDesc: 'Get found by customers actively searching for your services in your local area. We optimize your technical code and site architecture for high-intent keywords that bring direct leads, not vanity traffic.',
       bullets: [
@@ -50,6 +52,7 @@ export default function Services({ onPageChange }: ServicesProps) {
     {
       id: 'service-gbp' as PageId,
       title: 'Google Business Profile',
+      tag: 'Growth Layer',
       tagline: 'Dominate Google Maps local search and drive instant phone calls.',
       shortDesc: 'Unlock immense visibility on Google Maps. We configure, verify, and fully optimize your local profile to rank in the coveted local 3-pack search results, driving direct reviews and calls.',
       bullets: [
@@ -66,6 +69,7 @@ export default function Services({ onPageChange }: ServicesProps) {
     {
       id: 'service-copywriting' as PageId,
       title: 'Conversion Copywriting',
+      tag: 'Growth Layer',
       tagline: 'Persuasive written words that build trust and drive conversions.',
       shortDesc: 'No robotic AI-generated fluff. We draft compelling, clear, persuasive website copy that speaks directly to your ideal buyers\' pain points and guides them to take immediate actions.',
       bullets: [
@@ -140,10 +144,10 @@ export default function Services({ onPageChange }: ServicesProps) {
           <div className="text-center space-y-4 max-w-3xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600">Our Expertise</span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 leading-tight">
-              Bespoke Services to Double Your Business Online
+              Bespoke Digital Services Built to Grow Your Business
             </h1>
             <p className="text-neutral-500 text-sm sm:text-base leading-relaxed">
-              We specialize in custom web development and localized search marketing. We design with intent, program with precision, and write with clarity to deliver real-world conversions.
+              We specialize in custom web development, local search marketing, and conversion-focused messaging. We design with intent, program with precision, and write with clarity to deliver real-world business outcomes.
             </p>
           </div>
         </div>
@@ -159,6 +163,9 @@ export default function Services({ onPageChange }: ServicesProps) {
         transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-sm text-neutral-500 max-w-2xl mx-auto mb-14 leading-relaxed">
+            Your website is the foundation. SEO, Google Business Profile, and copywriting are the growth layer we build on top of it.
+          </p>
           <div className="space-y-16">
             {servicesList.map((srv, idx) => {
               const Icon = srv.icon;
@@ -186,6 +193,15 @@ export default function Services({ onPageChange }: ServicesProps) {
                         <Icon className="h-6 w-6" />
                       </motion.div>
                       <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">0{idx + 1} / Service Capability</span>
+                      <span
+                        className={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${
+                          srv.tag === 'Core Service'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-neutral-100 text-neutral-500'
+                        }`}
+                      >
+                        {srv.tag}
+                      </span>
                     </div>
 
                     <div className="space-y-2">

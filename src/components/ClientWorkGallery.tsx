@@ -9,7 +9,9 @@ import {
   AlertCircle,
   Loader2,
   Check,
+  Building2,
   Target,
+  Lightbulb,
   Wrench,
   TrendingUp,
 } from 'lucide-react';
@@ -22,10 +24,14 @@ const CASE_STUDIES: CaseStudy[] = [
     url: 'https://www.santoshtimbers.com',
     domain: 'www.santoshtimbers.com',
     industry: 'Timber & Wood Trading',
+    business:
+      "One of India's largest timber importers, built on word of mouth and personal networks, with no website to back up that scale when a new buyer went looking online.",
     challenge:
-      "Santosh Timbers is one of India's largest timber importers, but before we stepped in, they had no website at all. A business operating at that scale was relying entirely on word of mouth and personal networks, with nothing online to back up their credibility when a new buyer wanted to check them out.",
+      "Before we stepped in, they had no website at all, so a serious buyer doing due diligence had nothing to find, and nothing to confirm they were dealing with a real, established company.",
     approach:
       "We built them a website from scratch, designed specifically to convert visitors into serious enquiries. Every section was built around establishing trust fast, since bulk timber buyers want to know they are dealing with a real, established company before they pick up the phone.",
+    build:
+      "A custom-designed website with a full product catalog and a direct enquiry form, structured section by section around the trust signals a bulk buyer actually looks for.",
     outcome:
       "Santosh Timbers now has a professional online presence that matches the scale of their actual business, giving new buyers a reason to trust them before the first conversation even happens.",
     scope: ['Website Design', 'Product Catalog', 'Enquiry Form'],
@@ -39,10 +45,14 @@ const CASE_STUDIES: CaseStudy[] = [
     url: 'https://www.drmihirshahsmilecareclinic.com',
     domain: 'www.drmihirshahsmilecareclinic.com',
     industry: 'Dental & Healthcare',
+    business:
+      "A dental practice with over 25 years of real experience, opening a new clinic location with no website to introduce it to anyone in that area.",
     challenge:
-      "Dr. Mihir Shah has been practicing dentistry for over 25 years, but had never had a website. When he opened a new clinic location, he needed a way to attract patients who had never heard of him before, and decades of real experience were not going to be visible to anyone searching online.",
+      "He needed a way to attract patients who had never heard of him before, and decades of real experience were not going to be visible to anyone searching online.",
     approach:
       "We built him a professional, aesthetically polished website with a built in appointment booking flow, designed to make new patients feel comfortable enough to book their first visit at the new location. The goal was to turn 25 years of real experience into something a first time visitor could instantly sense and trust.",
+    build:
+      "A polished website with an integrated appointment booking flow and local SEO, so the new clinic location could actually be found and booked, not just visited.",
     outcome:
       "Dr. Shah now has a website that matches the quality of care he actually provides, giving his new clinic a real shot at attracting patients in a location where nobody knew him yet.",
     scope: ['Website Design', 'Appointment Booking System', 'Local SEO'],
@@ -56,10 +66,14 @@ const CASE_STUDIES: CaseStudy[] = [
     url: 'https://www.astrabizz.com',
     domain: 'www.astrabizz.com',
     industry: 'Business & IT Consulting',
+    business:
+      "A business and IT consultancy working on ERP, CRM, and AI-driven digital transformation projects, pitching against established firms for enterprise clients.",
     challenge:
-      "In consulting, especially when working with large companies on ERP, CRM, and AI driven digital transformation projects, trust is everything. Astrabizz needed a website that could hold its own in front of enterprise clients who are used to dealing with polished, established consulting firms.",
+      "In consulting, trust is everything. Astrabizz needed a website that could hold its own in front of enterprise clients who are used to dealing with polished, established consulting firms.",
     approach:
       "We designed a site that clearly showcases Denish's expertise and the specific technologies he works with, positioning Astrabizz as a credible digital transformation partner rather than just another freelancer with a laptop. Every page was built to move a skeptical enterprise visitor toward booking a consultation.",
+    build:
+      "Dedicated service pages and a consultation-booking flow, structured to showcase real technical expertise rather than generic consulting-agency claims.",
     outcome:
       "Astrabizz now has a website that reflects the seriousness of the work they do, giving Denish a genuine edge when pitching to bigger companies evaluating multiple consulting partners.",
     scope: ['Website Design', 'Service Pages', 'Consultation Booking CTA'],
@@ -157,7 +171,7 @@ const CASE_STUDIES: CaseStudy[] = [
 // The two most differentiated stories (biggest business, most personal narrative)
 // get featured, larger cards with the full challenge/approach/outcome visible.
 // The rest sit in a compact row so the section reads as "range of work."
-const FEATURED_IDS = ['santoshtimbers', 'drmihirshah'];
+const FEATURED_IDS = ['santoshtimbers', 'drmihirshah', 'astrabizz'];
 
 function PreviewFrame({ project, onClose }: { project: CaseStudy; onClose: () => void }) {
   const [status, setStatus] = useState<'loading' | 'loaded' | 'maybe-blocked'>('loading');
@@ -256,7 +270,7 @@ function PreviewFrame({ project, onClose }: { project: CaseStudy; onClose: () =>
   );
 }
 
-function CaseStudyCard({ project, onPreview, featured, key }: { key?: string; project: CaseStudy; onPreview: () => void; featured?: boolean }) {
+function CaseStudyCard({ project, onPreview, featured }: { key?: string; project: CaseStudy; onPreview: () => void; featured?: boolean }) {
   return (
     <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#1F1F1F] shadow-sm hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
       {/* Thumbnail: real homepage screenshot when we have one, with the client
@@ -329,7 +343,28 @@ function CaseStudyCard({ project, onPreview, featured, key }: { key?: string; pr
           </div>
         </div>
 
-        {featured ? (
+        {featured && project.business && project.build ? (
+          <div className="space-y-3.5">
+            {[
+              { label: 'The Business', icon: Building2, text: project.business },
+              { label: 'The Challenge', icon: Target, text: project.challenge },
+              { label: 'The Mago Approach', icon: Lightbulb, text: project.approach },
+              { label: 'The Build', icon: Wrench, text: project.build },
+              { label: 'The Outcome', icon: TrendingUp, text: project.outcome },
+            ].map((row) => {
+              const RowIcon = row.icon;
+              return (
+                <div key={row.label} className="flex gap-2.5">
+                  <RowIcon className="h-4 w-4 shrink-0 mt-0.5" style={{ color: project.accent }} />
+                  <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    <span className="font-bold text-neutral-800 dark:text-neutral-200">{row.label}: </span>
+                    {row.text}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        ) : featured ? (
           <div className="space-y-3.5">
             <div className="flex gap-2.5">
               <Target className="h-4 w-4 shrink-0 mt-0.5" style={{ color: project.accent }} />
@@ -386,7 +421,7 @@ export default function ClientWorkGallery() {
   return (
     <div className="w-full max-w-6xl mx-auto text-left space-y-6">
       {/* Featured case studies, full challenge/approach/outcome narrative */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {featured.map((project) => (
           <CaseStudyCard key={project.id} project={project} onPreview={() => setPreviewId(project.id)} featured />
         ))}

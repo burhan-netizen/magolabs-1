@@ -136,8 +136,14 @@ export default function About({ onPageChange }: AboutProps) {
                 <p>
                   What sets us apart is our absolute focus on your <strong>Return on Investment (ROI)</strong>. We analyze your commercial goals, study how your customers make decisions, and construct a high-converting web pipeline that translates traffic into tangible revenue.
                 </p>
-                <p>
-                  When you partner with us, you work directly with experts. I personally conduct your business audit, structure your information architecture, and collaborate with you from first concept to final launch. We build more than just websites. We build long-term engines for growth.
+              </div>
+
+              <div className="p-5 rounded-xl border border-blue-100 bg-blue-50/50 space-y-1.5">
+                <p className="text-sm font-bold text-neutral-900">
+                  No account manager. No sales handoff. You work directly with the founder.
+                </p>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                  From the first conversation to the final launch, your project stays close to the person responsible for the strategy, design, and technical direction.
                 </p>
               </div>
 
@@ -275,21 +281,21 @@ To set the benchmark for high-performance design and growth advisory, showing bu
                 Our Honest Code
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 leading-tight">
-                How We Stand Apart From Mass-Market Agencies
+                How We Work Differently
               </h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-4">
               {/* Standard Agencies */}
               <div className="space-y-4 bg-red-50/20 p-6 rounded-2xl border border-red-100/40">
-                <h3 className="text-base font-bold text-red-600 uppercase tracking-wide">Standard Agencies</h3>
+                <h3 className="text-base font-bold text-red-600 uppercase tracking-wide">Typical Agencies</h3>
                 <ul className="space-y-3 text-sm text-neutral-600">
                   {[
-                    'Use slow, bloated WordPress builders loaded with plug-ins.',
-                    'Copy-paste visual templates that make you look generic.',
-                    'Write text using generic AI patterns that sound empty.',
-                    'Pass your project to junior, non-responsive support reps.',
-                    'Hide domain control or demand massive annual maintenance.'
+                    'Rely on slow, plug-in-heavy website builders.',
+                    'Use visual templates that make every client look similar.',
+                    'Fill pages with generic, AI-sounding copy.',
+                    'Hand your project off to a rotating support queue.',
+                    'Restrict your access to your own domain and code.'
                   ].map((text, i) => (
                     <motion.li
                       key={i}

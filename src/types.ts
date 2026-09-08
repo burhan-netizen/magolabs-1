@@ -46,15 +46,19 @@ export interface ProcessStep {
 }
 
 /** A single client project shown on the Work page, written as a real case study
- *  (challenge -> approach -> outcome) rather than just a link-out. */
+ *  (challenge -> approach -> outcome) rather than just a link-out. The 3
+ *  strongest projects additionally set `business` and `build` so their card
+ *  can render the fuller 5-part story (business/challenge/approach/build/outcome). */
 export interface CaseStudy {
   id: string;
   clientName: string;
   url: string;
   domain: string;
   industry: string;
+  business?: string;
   challenge: string;
   approach: string;
+  build?: string;
   outcome: string;
   scope: string[];
   accent: string;

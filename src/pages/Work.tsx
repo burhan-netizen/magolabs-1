@@ -49,6 +49,9 @@ export default function Work({ onPageChange }: WorkProps) {
           <p className="text-neutral-500 text-sm sm:text-base leading-relaxed">
             Some had no website at all. Some had one that was quietly costing them clients. Here is what changed, and why it mattered for each business.
           </p>
+          <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">
+            Real businesses. Real requirements. Real digital work.
+          </p>
         </div>
       </section>
 
