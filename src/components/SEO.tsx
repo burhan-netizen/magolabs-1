@@ -3,9 +3,17 @@ import { updateDocumentSEO } from '../utils/seo';
 import { PageId } from '../types';
 
 interface SEOProps {
-  title: string;
-  description: string;
   path: string;
+  /** Only pass these for pages whose title/description are genuinely dynamic
+   *  per instance (there are none among the static pages any more - dynamic
+   *  detail pages like InsightDetail/WorkDetail call updateDocumentSEO directly
+   *  instead). Every static page should omit these and let SEO_CONFIG_MAP
+   *  (src/utils/seo.ts) be the single source of truth, since that's also what
+   *  the prerendered HTML shell and canonical/OG tags are built from - passing
+   *  a different string here would silently overwrite the correct SSR'd title
+   *  after hydration. */
+  title?: string;
+  description?: string;
   schemas?: any[];
 }
 

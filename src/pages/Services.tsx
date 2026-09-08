@@ -130,12 +130,7 @@ export default function Services({ onPageChange }: ServicesProps) {
 
   return (
     <>
-      <SEO
-        title="Our Digital Growth Services | Mago Labs"
-        description="Explore our premium services: custom Website Design & Development, high-impact Local SEO, Google Business Profile optimization, and conversion-focused Copywriting."
-        path="services"
-        schemas={servicesSchemas}
-      />
+      <SEO path="services" schemas={servicesSchemas} />
 
       {/* Hero Header */}
       <section id="services-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white font-sans overflow-hidden border-b border-neutral-200/50">

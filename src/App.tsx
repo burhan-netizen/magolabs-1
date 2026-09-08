@@ -2,7 +2,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PageId } from './types';
 import { updateDocumentSEO } from './utils/seo';
-import { getPageFromPath, getPathFromPage, getInsightSlugFromPath, getInsightDetailPath } from './utils/pageRoutes';
+import { getPageFromPath, getPathFromPage, getInsightSlugFromPath, getInsightDetailPath, getWorkSlugFromPath, getWorkDetailPath } from './utils/pageRoutes';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -21,6 +21,7 @@ const About = lazy(() => import('./pages/About'));
 const Services = lazy(() => import('./pages/Services'));
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const Work = lazy(() => import('./pages/Work'));
+const WorkDetail = lazy(() => import('./pages/WorkDetail'));
 const Insights = lazy(() => import('./pages/Insights'));
 const InsightDetail = lazy(() => import('./pages/InsightDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
@@ -38,7 +39,9 @@ function AppContent() {
     typeof window !== 'undefined' ? getPageFromPath(window.location.pathname) : 'home'
   );
   const [currentSlug, setCurrentSlug] = useState<string | null>(() =>
-    typeof window !== 'undefined' ? getInsightSlugFromPath(window.location.pathname) : null
+    typeof window !== 'undefined'
+      ? getInsightSlugFromPath(window.location.pathname) ?? getWorkSlugFromPath(window.location.pathname)
+      : null
   );
   const [isRouteLoading, setIsRouteLoading] = useState<boolean>(false);
   const [isDemoMode] = useState<boolean>(
@@ -100,7 +103,7 @@ function AppContent() {
 
     const handlePopState = () => {
       setCurrentPage(getPageFromPath(window.location.pathname));
-      setCurrentSlug(getInsightSlugFromPath(window.location.pathname));
+      setCurrentSlug(getInsightSlugFromPath(window.location.pathname) ?? getWorkSlugFromPath(window.location.pathname));
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -129,6 +132,16 @@ function AppContent() {
     setCurrentPage('insights-detail');
   };
 
+  const handleOpenWork = (id: string) => {
+    const path = getWorkDetailPath(id);
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+    }
+    setCurrentSlug(id);
+    setCurrentPage('work-detail');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const renderActivePage = () => {
     switch (renderPage) {
       case 'home':
@@ -141,9 +154,11 @@ function AppContent() {
       case 'service-seo':
       case 'service-gbp':
       case 'service-copywriting':
-        return <ServiceDetail serviceId={renderPage} onPageChange={handlePageChange} />;
+        return <ServiceDetail serviceId={renderPage} onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
       case 'work':
-        return <Work onPageChange={handlePageChange} />;
+        return <Work onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
+      case 'work-detail':
+        return <WorkDetail id={currentSlug} onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
       case 'insights':
         return <Insights onPageChange={handlePageChange} onOpenPost={handleOpenPost} />;
       case 'insights-detail':

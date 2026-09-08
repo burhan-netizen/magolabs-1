@@ -126,12 +126,7 @@ export default function Contact({ onPageChange }: ContactProps) {
 
   return (
     <>
-      <SEO
-        title="Contact Burhan Kapasi & Mago Labs | Book Consultation"
-        description="Discuss your project with Mago Labs. Submit your inquiry or contact us directly on phone at +91 9099245605 or email burhan@magolabs.in."
-        path="contact"
-        schemas={contactSchemas}
-      />
+      <SEO path="contact" schemas={contactSchemas} />
 
       {/* Hero Header */}
       <section id="contact-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-20 bg-white font-sans overflow-hidden border-b border-neutral-200/50">

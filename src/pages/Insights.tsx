@@ -44,11 +44,7 @@ export default function Insights({ onOpenPost }: InsightsProps) {
 
   return (
     <>
-      <SEO
-        title="Digital Growth, SEO & Web Design Insights | Mago Labs"
-        description="Get direct, jargon-free marketing guides, web performance strategies, and local SEO advice to grow your business online."
-        path="/insights"
-      />
+      <SEO path="/insights" />
 
       <section className="pt-32 pb-16 sm:pt-40 sm:pb-20 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">

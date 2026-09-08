@@ -14,9 +14,10 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { renderSeoHtml, renderSeoHtmlForConfig } from '../src/utils/renderSeoHtml';
-import { PAGE_TO_PATH, getInsightDetailPath } from '../src/utils/pageRoutes';
+import { PAGE_TO_PATH, getInsightDetailPath, getWorkDetailPath } from '../src/utils/pageRoutes';
 import { SEOConfig } from '../src/utils/seo';
 import { getAllPosts, isContentfulConfigured } from '../src/lib/contentful';
+import { CASE_STUDIES, getCaseStudySEO } from '../src/data/caseStudies';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -56,6 +57,15 @@ function writeShell(routePath: string, html: string) {
 for (const routePath of Object.values(PAGE_TO_PATH)) {
   writeShell(routePath, renderSeoHtml(template, routePath));
 }
+
+// Case studies are a small, static, local list (unlike blog posts, no network
+// fetch needed) - each gets a real, unique HTML shell derived from its own
+// already-written copy via getCaseStudySEO, not a hand-duplicated title/description.
+for (const cs of CASE_STUDIES) {
+  const routePath = getWorkDetailPath(cs.id);
+  writeShell(routePath, renderSeoHtmlForConfig(template, getCaseStudySEO(cs), routePath));
+}
+console.log(`[prerender-seo] Wrote ${CASE_STUDIES.length} case-study shell(s).`);
 
 // Blog posts don't have a fixed PageId path (one per slug), so they're prerendered
 // separately here rather than through the static PAGE_TO_PATH loop above.

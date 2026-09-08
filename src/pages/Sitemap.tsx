@@ -65,12 +65,7 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
 
   return (
     <>
-      <SEO
-        title="Website Sitemap & Architecture | Mago Labs"
-        description="Comprehensive map of all service pages, portfolio previews, and direct XML sitemap files of Mago Labs website."
-        path="sitemap"
-        schemas={sitemapSchemas}
-      />
+      <SEO path="sitemap" schemas={sitemapSchemas} />
 
       {/* Hero Header */}
       <section id="sitemap-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white dark:bg-[#1A1A1A] font-sans overflow-hidden border-b border-neutral-200/50 dark:border-neutral-800/30 transition-colors duration-300">

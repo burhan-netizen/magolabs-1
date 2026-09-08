@@ -61,12 +61,7 @@ export default function About({ onPageChange }: AboutProps) {
 
   return (
     <>
-      <SEO
-        title="About Mago Labs | Why Businesses in Surat Choose Us"
-        description="Meet Burhan Kapasi, founder of Mago Labs. See why doctors, CA firms, manufacturers, and MSMEs trust us: 100% custom websites, transparent pricing, and direct personal support."
-        path="about"
-        schemas={aboutSchemas}
-      />
+      <SEO path="about" schemas={aboutSchemas} />
 
       {/* Hero Header */}
       <section id="about-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white font-sans overflow-hidden border-b border-neutral-200/50">

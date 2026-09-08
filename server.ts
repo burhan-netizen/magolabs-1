@@ -5,7 +5,8 @@ import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, Type } from '@google/genai';
 import { renderSeoHtml } from './src/utils/renderSeoHtml';
-import { PAGE_TO_PATH, isKnownPath } from './src/utils/pageRoutes';
+import { PAGE_TO_PATH, isKnownPath, getWorkDetailPath } from './src/utils/pageRoutes';
+import { CASE_STUDIES } from './src/data/caseStudies';
 
 // Load environment variables
 dotenv.config();
@@ -342,10 +343,13 @@ app.get('/sitemap.xml', (req, res) => {
     '/contact': { priority: '0.9', changefreq: 'weekly' },
     '/sitemap': { priority: '0.5', changefreq: 'monthly' },
   };
-  const urls = Object.values(PAGE_TO_PATH).map((path) => ({
+  const urls = [
+    ...Object.values(PAGE_TO_PATH),
+    ...CASE_STUDIES.map((cs) => getWorkDetailPath(cs.id)),
+  ].map((path) => ({
     loc: `https://www.magolabs.in${path}`,
-    priority: priorities[path]?.priority ?? '0.8',
-    changefreq: priorities[path]?.changefreq ?? 'weekly',
+    priority: priorities[path]?.priority ?? (path.startsWith('/work/') ? '0.7' : '0.8'),
+    changefreq: priorities[path]?.changefreq ?? (path.startsWith('/work/') ? 'monthly' : 'weekly'),
   }));
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

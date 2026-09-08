@@ -10,11 +10,7 @@ export default function Privacy({ onPageChange }: PrivacyProps) {
 
   return (
     <>
-      <SEO
-        title="Privacy Policy | Mago Labs"
-        description="How Mago Labs collects, uses, and protects the personal information you share through our website and contact forms."
-        path="/privacy"
-      />
+      <SEO path="/privacy" />
 
       <section id="privacy-content" className="pt-32 pb-24 font-sans">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">

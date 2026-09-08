@@ -18,12 +18,26 @@ import {
 import { PageId, Service } from '../types';
 import SEO from '../components/SEO';
 import ReadingProgress from '../components/ReadingProgress';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { WhatsAppLogo } from '../components/BrandIcons';
+import { getCaseStudyById } from '../data/caseStudies';
+import { getPathFromPage } from '../utils/pageRoutes';
+import { ArrowRight } from 'lucide-react';
 
 interface ServiceDetailProps {
   serviceId: PageId;
   onPageChange: (page: PageId) => void;
+  onOpenCaseStudy: (id: string) => void;
 }
+
+// Real case studies most relevant to each service, used for the "Related Work"
+// section - a genuine internal link from the pitch to proof it was actually
+// delivered. Matched by which project's real scope covered that capability.
+const RELATED_WORK: Record<string, string[]> = {
+  'service-web-design': ['santoshtimbers', 'drmihirshah'],
+  'service-seo': ['drmihirshah', 'darshangalani'],
+  'service-gbp': ['drmihirshah', 'kdmayani'],
+};
 
 // Complete bespoke copy database for each of the 4 services
 const SERVICES_DATA: Record<string, Service> = {
@@ -31,7 +45,7 @@ const SERVICES_DATA: Record<string, Service> = {
     id: 'service-web-design',
     title: 'Website Design & Development',
     shortDesc: 'Bespoke corporate, portfolio and business websites engineered from a blank page. We code pixel-perfect, highly responsive layout architectures focused on converting visitors into calls and WhatsApp chats.',
-    longDesc: 'Your website is your absolute virtual storefront. If it looks like a cheap template, loads slowly on 4G networks, or has confusing contact triggers, you are actively losing customers to competitors. We write hand-crafted, lightweight code that guarantees blistering speed and representing your business brand with extreme authority.',
+    longDesc: 'Your website is your virtual storefront. If it looks like a cheap template, loads slowly on 4G networks, or has confusing contact triggers, you are actively losing customers to competitors, in Surat and everywhere else your buyers are searching. We write hand-crafted, lightweight code built for fast load times and a layout that represents your business with real authority.',
     iconName: 'LayoutTemplate',
     benefits: [
       'Purely Custom Coding: No standard pre-made themes or visual page builders that bloat your loading speed.',
@@ -80,10 +94,10 @@ const SERVICES_DATA: Record<string, Service> = {
     id: 'service-seo',
     title: 'Search Engine Optimization (SEO)',
     shortDesc: 'Strategic Search Engine Optimization targeting active, high-intent local buyers. We align your code architecture, speed, and content mapping to position you on page one of Google.',
-    longDesc: 'Most SEO agencies sell fake promises of ranking for thousands of empty, low-intent phrases. We do not focus on vanity charts. We research, map, and rank your site for the exact search words that local patients, clients, and partners use when they are ready to call and purchase.',
+    longDesc: 'Most SEO agencies sell vague promises of ranking for thousands of empty, low-intent phrases. We do not focus on vanity charts. We research, map, and optimize your site for the exact search words that patients, clients, and partners in Surat and the surrounding area actually use when they are ready to call and buy.',
     iconName: 'Search',
     benefits: [
-      'Local Buyer Keywords: Ranking for terms like "best CA firm near me" or "dentist in Ahmedabad" that bring immediate calls.',
+      'Local Buyer Keywords: Ranking for terms like "CA firm in Surat" or "dentist near me" that bring immediate calls.',
       'Technical SEO Auditing: Correcting internal link configurations, crawl directories, and search engine crawling barriers.',
       'Premium Schema Ingestion: Ingesting Organization, Service, and Local Business JSON-LD structure scripts so search crawlers understand you.',
       'Alt Text & Media Optimization: Compressing illustration files and metadata tagging to rank in Google Images.',
@@ -125,7 +139,7 @@ const SERVICES_DATA: Record<string, Service> = {
     id: 'service-gbp',
     title: 'Google Business Profile (GBP)',
     shortDesc: 'Unlock your business on Google Maps. We build, verify, optimize, and manage your Local Business Profile to place you in the Map 3-Pack where over 45% of local search clicks land.',
-    longDesc: 'If you are a doctor, dentist, law firm, manufacturer, or local restaurant, your Google Maps profile is the single most important asset you own. When local customers search for your service, Google presents a map with three businesses. If you are not in that Map 3-Pack, you are invisible. We fully optimize your business profile to drive direct phone calls and map directions.',
+    longDesc: 'If you are a doctor, dentist, law firm, manufacturer, or local restaurant in Surat, your Google Maps profile is one of the most important assets you own. When local customers search for your service, Google presents a map with three businesses front and center, and most people choose from those three without scrolling further. We fully optimize your business profile to drive direct phone calls and map directions.',
     iconName: 'MapPin',
     benefits: [
       'Map 3-Pack Dominance: Adjusting category structures, service tags, and profiles to move you into the top three map listings.',
@@ -258,9 +272,12 @@ function injectFAQSchema(faqs: { question: string; answer: string }[]): () => vo
   };
 }
 
-export default function ServiceDetail({ serviceId, onPageChange }: ServiceDetailProps) {
+export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy }: ServiceDetailProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const data = SERVICES_DATA[serviceId];
+  const relatedWork = (RELATED_WORK[serviceId] ?? [])
+    .map((id) => getCaseStudyById(id))
+    .filter((cs): cs is NonNullable<typeof cs> => Boolean(cs));
 
   // Dynamic FAQ structured data injection effect
   useEffect(() => {
@@ -303,12 +320,7 @@ export default function ServiceDetail({ serviceId, onPageChange }: ServiceDetail
 
   return (
     <>
-      <SEO
-        title={`${data.title} in India | Mago Labs`}
-        description={data.shortDesc}
-        path={`services/${data.id}`}
-        schemas={serviceSchemas}
-      />
+      <SEO path={`services/${data.id}`} schemas={serviceSchemas} />
 
       {/* Top-of-page reading progress bar */}
       <ReadingProgress />
@@ -317,6 +329,16 @@ export default function ServiceDetail({ serviceId, onPageChange }: ServiceDetail
       <section id="service-detail-hero" className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-white overflow-hidden font-sans border-b border-neutral-200/50">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-6">
+            <Breadcrumbs
+              onPageChange={onPageChange}
+              items={[
+                { label: 'Home', page: 'home' },
+                { label: 'Services', page: 'services' },
+                { label: data.title, path: getPathFromPage(serviceId) },
+              ]}
+            />
+          </div>
           <motion.button
             whileHover={{ scale: 1.03, x: -2 }}
             whileTap={{ scale: 0.98 }}
@@ -472,6 +494,36 @@ export default function ServiceDetail({ serviceId, onPageChange }: ServiceDetail
           </div>
         </div>
       </motion.section>
+
+      {/* Related Work: real proof this service was actually delivered, not just pitched */}
+      {relatedWork.length > 0 && (
+        <section id="service-related-work" className="py-20 bg-white font-sans border-t border-neutral-200/50">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-neutral-400 text-center mb-8">
+              Related Work
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {relatedWork.map((cs) => (
+                <button
+                  key={cs.id}
+                  onClick={() => onOpenCaseStudy(cs.id)}
+                  className="text-left p-6 rounded-2xl border border-neutral-200/80 bg-neutral-50/50 hover:bg-white hover:shadow-lg transition-all cursor-pointer space-y-2"
+                >
+                  {cs.logoUrl && <img src={cs.logoUrl} alt={`${cs.clientName} logo`} className="h-6 w-auto max-w-[100px] object-contain" />}
+                  <span className="text-[10px] font-bold uppercase tracking-widest block" style={{ color: cs.accent }}>
+                    {cs.industry}
+                  </span>
+                  <h3 className="text-sm font-bold text-neutral-900">{cs.clientName}</h3>
+                  <p className="text-xs text-neutral-500 leading-relaxed">{cs.outcome}</p>
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600">
+                    Read Full Case Study <ArrowRight className="h-3 w-3" />
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Service Specific FAQ */}
       <section id="service-faq" className="py-24 bg-neutral-50 font-sans border-t border-neutral-200/50">

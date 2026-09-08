@@ -10,11 +10,7 @@ export default function Terms({ onPageChange }: TermsProps) {
 
   return (
     <>
-      <SEO
-        title="Terms of Service | Mago Labs"
-        description="The terms that govern using the Mago Labs website and working with us on a web design, SEO, or copywriting project."
-        path="/terms"
-      />
+      <SEO path="/terms" />
 
       <section id="terms-content" className="pt-32 pb-24 font-sans">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">

@@ -7,9 +7,10 @@ import TestimonialWall from '../components/TestimonialWall';
 
 interface WorkProps {
   onPageChange: (page: PageId) => void;
+  onOpenCaseStudy: (id: string) => void;
 }
 
-export default function Work({ onPageChange }: WorkProps) {
+export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
   const navigateTo = (page: PageId) => {
     onPageChange(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -28,12 +29,7 @@ export default function Work({ onPageChange }: WorkProps) {
 
   return (
     <>
-      <SEO
-        title="Our Work | Client Case Studies | Mago Labs"
-        description="See real websites Mago Labs has designed and built, and what each project actually solved. Live sites across timber trading, dental care, consulting, energy, and chartered accountancy."
-        path="/work"
-        schemas={workSchemas}
-      />
+      <SEO path="/work" schemas={workSchemas} />
 
       {/* Hero Header */}
       <section id="work-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white font-sans overflow-hidden border-b border-neutral-200/50">
@@ -58,7 +54,7 @@ export default function Work({ onPageChange }: WorkProps) {
       {/* Case Studies */}
       <section id="work-case-studies" className="py-24 bg-white font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16">
-          <ClientWorkGallery />
+          <ClientWorkGallery onOpenCaseStudy={onOpenCaseStudy} />
 
           <div className="space-y-4 pt-4 border-t border-neutral-200/60">
             <p className="text-xs font-bold font-mono tracking-widest text-neutral-400 uppercase flex items-center justify-center gap-2">

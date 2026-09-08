@@ -234,12 +234,7 @@ export default function Home({ onPageChange }: HomeProps) {
 
   return (
     <>
-      <SEO
-        title="Websites That Grow Businesses | Mago Labs"
-        description="Mago Labs builds high-converting websites that help businesses attract customers, build trust and generate leads. Fast, SEO-friendly, custom-built."
-        path="/"
-        schemas={homeSchemas}
-      />
+      <SEO path="/" schemas={homeSchemas} />
 
       {/* Hero Section */}
       <section 

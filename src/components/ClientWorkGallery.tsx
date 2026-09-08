@@ -16,162 +16,12 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { CaseStudy } from '../types';
+import { CASE_STUDIES, FEATURED_CASE_STUDY_IDS } from '../data/caseStudies';
 
-const CASE_STUDIES: CaseStudy[] = [
-  {
-    id: 'santoshtimbers',
-    clientName: 'Santosh Timbers',
-    url: 'https://www.santoshtimbers.com',
-    domain: 'www.santoshtimbers.com',
-    industry: 'Timber & Wood Trading',
-    business:
-      "One of India's largest timber importers, built on word of mouth and personal networks, with no website to back up that scale when a new buyer went looking online.",
-    challenge:
-      "Before we stepped in, they had no website at all, so a serious buyer doing due diligence had nothing to find, and nothing to confirm they were dealing with a real, established company.",
-    approach:
-      "We built them a website from scratch, designed specifically to convert visitors into serious enquiries. Every section was built around establishing trust fast, since bulk timber buyers want to know they are dealing with a real, established company before they pick up the phone.",
-    build:
-      "A custom-designed website with a full product catalog and a direct enquiry form, structured section by section around the trust signals a bulk buyer actually looks for.",
-    outcome:
-      "Santosh Timbers now has a professional online presence that matches the scale of their actual business, giving new buyers a reason to trust them before the first conversation even happens.",
-    scope: ['Website Design', 'Product Catalog', 'Enquiry Form'],
-    accent: '#92400E',
-    logoUrl: '/logos/santoshtimbers.png',
-    screenshotUrl: '/screenshots/santoshtimbers.jpg',
-  },
-  {
-    id: 'drmihirshah',
-    clientName: 'Dr. Mihir Shah Smile Care Clinic',
-    url: 'https://www.drmihirshahsmilecareclinic.com',
-    domain: 'www.drmihirshahsmilecareclinic.com',
-    industry: 'Dental & Healthcare',
-    business:
-      "A dental practice with over 25 years of real experience, opening a new clinic location with no website to introduce it to anyone in that area.",
-    challenge:
-      "He needed a way to attract patients who had never heard of him before, and decades of real experience were not going to be visible to anyone searching online.",
-    approach:
-      "We built him a professional, aesthetically polished website with a built in appointment booking flow, designed to make new patients feel comfortable enough to book their first visit at the new location. The goal was to turn 25 years of real experience into something a first time visitor could instantly sense and trust.",
-    build:
-      "A polished website with an integrated appointment booking flow and local SEO, so the new clinic location could actually be found and booked, not just visited.",
-    outcome:
-      "Dr. Shah now has a website that matches the quality of care he actually provides, giving his new clinic a real shot at attracting patients in a location where nobody knew him yet.",
-    scope: ['Website Design', 'Appointment Booking System', 'Local SEO'],
-    accent: '#0D9488',
-    logoUrl: '/logos/drmihirshah.png',
-    screenshotUrl: '/screenshots/drmihirshah.jpg',
-  },
-  {
-    id: 'astrabizz',
-    clientName: 'Astrabizz Consultancy',
-    url: 'https://www.astrabizz.com',
-    domain: 'www.astrabizz.com',
-    industry: 'Business & IT Consulting',
-    business:
-      "A business and IT consultancy working on ERP, CRM, and AI-driven digital transformation projects, pitching against established firms for enterprise clients.",
-    challenge:
-      "In consulting, trust is everything. Astrabizz needed a website that could hold its own in front of enterprise clients who are used to dealing with polished, established consulting firms.",
-    approach:
-      "We designed a site that clearly showcases Denish's expertise and the specific technologies he works with, positioning Astrabizz as a credible digital transformation partner rather than just another freelancer with a laptop. Every page was built to move a skeptical enterprise visitor toward booking a consultation.",
-    build:
-      "Dedicated service pages and a consultation-booking flow, structured to showcase real technical expertise rather than generic consulting-agency claims.",
-    outcome:
-      "Astrabizz now has a website that reflects the seriousness of the work they do, giving Denish a genuine edge when pitching to bigger companies evaluating multiple consulting partners.",
-    scope: ['Website Design', 'Service Pages', 'Consultation Booking CTA'],
-    accent: '#16A34A',
-    logoUrl: '/logos/astrabizz.png',
-    screenshotUrl: '/screenshots/astrabizz.jpg',
-  },
-  {
-    id: 'solway',
-    clientName: 'SolWay Energies',
-    url: 'https://www.solwayenergies.com',
-    domain: 'www.solwayenergies.com',
-    industry: 'Solar & B2B Energy',
-    challenge:
-      "SolWay Energies is a solar and B2B energy distributor working with corporate buyers, but had no website to back up conversations happening in meetings and on calls. In B2B energy, buyers do their homework before committing, and having nothing to find online was quietly costing them credibility.",
-    approach:
-      "We built a website designed to communicate scale and capability to corporate buyers, structured around the kind of proof a B2B buyer actually looks for before trusting a new supplier.",
-    outcome:
-      "SolWay Energies now has a digital presence that supports their sales conversations instead of undermining them, giving corporate buyers a reason to take the relationship seriously from the first search.",
-    scope: ['Website Design', 'Product/Service Showcase', 'Lead Capture'],
-    accent: '#D97706',
-    logoUrl: '/logos/solway.png',
-    screenshotUrl: '/screenshots/solway.jpg',
-  },
-  {
-    id: 'darshangalani',
-    clientName: 'Darshan Galani & Co.',
-    url: 'https://www.darshangalani.com',
-    domain: 'www.darshangalani.com',
-    industry: 'Chartered Accountancy',
-    challenge:
-      "Darshan Galani & Co. is a chartered accountancy practice that had never had a website. For a CA firm, the absence of a website can quietly work against you, since prospective clients often check online before ever picking up the phone.",
-    approach:
-      "We built the firm a clean, trust focused website from the ground up, structured to make it easy for prospective clients to understand their services and reach out with confidence.",
-    outcome:
-      "The firm now has a professional online presence that reflects the credibility of their actual practice, something they simply did not have before.",
-    scope: ['Website Design', 'Content Structure', 'SEO'],
-    accent: '#7C3AED',
-    logoUrl: '/logos/darshangalani.png',
-    screenshotUrl: '/screenshots/darshangalani.jpg',
-  },
-  {
-    id: 'kdmayani',
-    clientName: 'K.D. Mayani & Co.',
-    url: 'https://www.kdmayaniandco.com',
-    domain: 'www.kdmayaniandco.com',
-    industry: 'Chartered Accountancy',
-    challenge:
-      "K.D. Mayani & Co., a growing accounting practice, was also operating without a website, missing the opportunity to build authority with prospective clients before that first conversation.",
-    approach:
-      "We built them a structured, professional presence designed around the specific things a CA firm needs to communicate: credibility, clarity, and ease of contact.",
-    outcome:
-      "K.D. Mayani & Co. now has an authority building website that gives the practice a stronger first impression with every new prospective client who finds them.",
-    scope: ['Website Design', 'Local SEO', 'Enquiry Form'],
-    accent: '#059669',
-    logoUrl: '/logos/kdmayani.png',
-    screenshotUrl: '/screenshots/kdmayani.jpg',
-  },
-  {
-    id: 'jaymehta',
-    clientName: 'Jay Mehta & Co.',
-    url: 'https://www.jaymehtanadco.com',
-    domain: 'www.jaymehtanadco.com',
-    industry: 'Chartered Accountancy',
-    challenge:
-      "Jay Mehta & Co. already had a website, but it was unprofessional and was not converting visitors into enquiries. An outdated site can actually work against a CA firm more than having no site at all, since it signals the opposite of what a prospective client wants to feel.",
-    approach:
-      "We revamped the entire website from the ground up, replacing the old design with a clean, trust focused layout built to convert. The goal was a site that finally matched how the firm actually operates day to day.",
-    outcome:
-      "Jay Mehta & Co. now has a website that works beautifully on mobile, loads fast, and gives clients a much stronger reason to trust the practice than the old site ever did.",
-    scope: ['Website Redesign', 'Mobile Optimization', 'Enquiry Form'],
-    accent: '#0891B2',
-    logoUrl: '/logos/jaymehta.png',
-    screenshotUrl: '/screenshots/jaymehta.jpg',
-  },
-  {
-    id: 'mnp',
-    clientName: 'MNP & Co.',
-    url: 'https://www.mnpnco.com',
-    domain: 'www.mnpnco.com',
-    industry: 'Chartered Accountancy',
-    challenge:
-      "MNP & Co.'s old website barely brought in any enquiries. It technically existed, but it was not doing the job a website is actually supposed to do for a growing accounting practice.",
-    approach:
-      "We rebuilt it from scratch with a cleaner layout and a much stronger structure, focused entirely on turning visitors into actual enquiries rather than just having a page online for the sake of it.",
-    outcome:
-      "Since the rebuild, the firm has noticed a real difference in how prospective clients respond after visiting the site, exactly the kind of result a website revamp should deliver.",
-    scope: ['Website Redesign', 'Conversion Optimization', 'Enquiry Form'],
-    accent: '#2563EB',
-    logoUrl: '/logos/mnp.png',
-    screenshotUrl: '/screenshots/mnp.jpg',
-  },
-];
-
-// The two most differentiated stories (biggest business, most personal narrative)
-// get featured, larger cards with the full challenge/approach/outcome visible.
-// The rest sit in a compact row so the section reads as "range of work."
-const FEATURED_IDS = ['santoshtimbers', 'drmihirshah', 'astrabizz'];
+interface ClientWorkGalleryProps {
+  /** Navigates to this case study's dedicated /work/<id> page (real, indexable content). */
+  onOpenCaseStudy: (id: string) => void;
+}
 
 function PreviewFrame({ project, onClose }: { project: CaseStudy; onClose: () => void }) {
   const [status, setStatus] = useState<'loading' | 'loaded' | 'maybe-blocked'>('loading');
@@ -270,7 +120,18 @@ function PreviewFrame({ project, onClose }: { project: CaseStudy; onClose: () =>
   );
 }
 
-function CaseStudyCard({ project, onPreview, featured }: { key?: string; project: CaseStudy; onPreview: () => void; featured?: boolean }) {
+function CaseStudyCard({
+  project,
+  onPreview,
+  onOpenCaseStudy,
+  featured,
+}: {
+  key?: string;
+  project: CaseStudy;
+  onPreview: () => void;
+  onOpenCaseStudy: (id: string) => void;
+  featured?: boolean;
+}) {
   return (
     <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#1F1F1F] shadow-sm hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
       {/* Thumbnail: real homepage screenshot when we have one, with the client
@@ -336,7 +197,12 @@ function CaseStudyCard({ project, onPreview, featured }: { key?: string; project
             <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: project.accent }}>
               {project.industry}
             </span>
-            <h3 className="text-base font-bold text-neutral-950 dark:text-white tracking-tight">{project.clientName}</h3>
+            <button
+              onClick={() => onOpenCaseStudy(project.id)}
+              className="text-base font-bold text-neutral-950 dark:text-white tracking-tight hover:underline text-left cursor-pointer"
+            >
+              {project.clientName}
+            </button>
           </div>
           <div className="inline-flex items-center gap-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-emerald-600 dark:text-emerald-400 whitespace-nowrap shrink-0">
             <Check className="h-2.5 w-2.5" /> Live
@@ -391,7 +257,13 @@ function CaseStudyCard({ project, onPreview, featured }: { key?: string; project
           ))}
         </div>
 
-        <div className="flex items-center gap-4 pt-2 border-t border-neutral-100 dark:border-neutral-800 mt-1">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 border-t border-neutral-100 dark:border-neutral-800 mt-1">
+          <button
+            onClick={() => onOpenCaseStudy(project.id)}
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-500 dark:text-blue-400 transition-colors cursor-pointer"
+          >
+            Read Full Case Study <ExternalLink className="h-3 w-3" />
+          </button>
           <button
             onClick={onPreview}
             className="inline-flex items-center gap-1.5 text-xs font-bold text-neutral-800 dark:text-neutral-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
@@ -402,7 +274,7 @@ function CaseStudyCard({ project, onPreview, featured }: { key?: string; project
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-neutral-500 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-400 transition-colors"
           >
             Visit Live Site <ExternalLink className="h-3 w-3" />
           </a>
@@ -412,10 +284,10 @@ function CaseStudyCard({ project, onPreview, featured }: { key?: string; project
   );
 }
 
-export default function ClientWorkGallery() {
+export default function ClientWorkGallery({ onOpenCaseStudy }: ClientWorkGalleryProps) {
   const [previewId, setPreviewId] = useState<string | null>(null);
-  const featured = CASE_STUDIES.filter((p) => FEATURED_IDS.includes(p.id));
-  const rest = CASE_STUDIES.filter((p) => !FEATURED_IDS.includes(p.id));
+  const featured = CASE_STUDIES.filter((p) => FEATURED_CASE_STUDY_IDS.includes(p.id));
+  const rest = CASE_STUDIES.filter((p) => !FEATURED_CASE_STUDY_IDS.includes(p.id));
   const previewProject = CASE_STUDIES.find((p) => p.id === previewId) || null;
 
   return (
@@ -423,7 +295,13 @@ export default function ClientWorkGallery() {
       {/* Featured case studies, full challenge/approach/outcome narrative */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {featured.map((project) => (
-          <CaseStudyCard key={project.id} project={project} onPreview={() => setPreviewId(project.id)} featured />
+          <CaseStudyCard
+            key={project.id}
+            project={project}
+            onPreview={() => setPreviewId(project.id)}
+            onOpenCaseStudy={onOpenCaseStudy}
+            featured
+          />
         ))}
       </div>
 
@@ -435,7 +313,12 @@ export default function ClientWorkGallery() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {rest.map((project) => (
-              <CaseStudyCard key={project.id} project={project} onPreview={() => setPreviewId(project.id)} />
+              <CaseStudyCard
+                key={project.id}
+                project={project}
+                onPreview={() => setPreviewId(project.id)}
+                onOpenCaseStudy={onOpenCaseStudy}
+              />
             ))}
           </div>
         </>

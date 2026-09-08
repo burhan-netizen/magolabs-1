@@ -16,7 +16,7 @@ import {
   Rocket,
 } from 'lucide-react';
 
-interface Testimonial {
+export interface Testimonial {
   id: string;
   name: string;
   role: string;
@@ -28,7 +28,7 @@ interface Testimonial {
 }
 
 // Real client feedback, collected from Google Reviews and direct client conversations.
-const TESTIMONIALS: Testimonial[] = [
+export const TESTIMONIALS: Testimonial[] = [
   {
     id: 'darshan-galani',
     name: 'CA Darshan Galani',
