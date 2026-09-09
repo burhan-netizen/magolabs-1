@@ -805,6 +805,7 @@ export default function Home({ onPageChange }: HomeProps) {
                     { name: 'Jay Mehta & Co.', src: '/logos/jaymehta.png' },
                     { name: 'MNP & Co.', src: '/logos/mnp.png' },
                     { name: 'K.D. Mayani & Co.', src: '/logos/kdmayani.png' },
+                    { name: 'Prabhakar Processors', src: '/logos/prabhakarprocessors.jpg' },
                   ].map((logo, idx) => (
                     <div
                       key={`${loopIdx}-${logo.name}-${idx}`}
