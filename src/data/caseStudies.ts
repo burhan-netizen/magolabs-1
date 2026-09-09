@@ -176,6 +176,27 @@ export const CASE_STUDIES: CaseStudy[] = [
     logoUrl: '/logos/mnp.png',
     screenshotUrl: '/screenshots/mnp.jpg',
   },
+  {
+    id: 'prabhakarprocessors',
+    clientName: 'Prabhakar Processors',
+    url: 'https://prabhakarprocessors.com',
+    domain: 'prabhakarprocessors.com',
+    industry: 'Textile Dyeing & Printing',
+    business:
+      "A dyeing and printing mill with real standing in the textile industry, previously represented online by a site that undersold that reputation.",
+    challenge:
+      "Their existing website looked unprofessional and did not reflect the scale or authority the business actually has in the market.",
+    approach:
+      "We rebuilt the website from the ground up with a modern, professional design, built specifically to position Prabhakar Processors as one of the leading names in dyeing and printing.",
+    build:
+      "A full website redesign with a custom admin panel, so the team can manage content independently without needing a developer for every update.",
+    outcome:
+      "The new site looks professional, modern, and aesthetic, establishing the trust and credibility that matches the authority Prabhakar Processors already has in the market.",
+    scope: ['Website Redesign', 'Admin Panel', 'Content Management'],
+    accent: '#78350F',
+    logoUrl: '/logos/prabhakarprocessors.jpg',
+    screenshotUrl: '/screenshots/prabhakarprocessors.jpg',
+  },
 ];
 
 /** Fast lookup by id, used by WorkDetail and the prerender script. */
