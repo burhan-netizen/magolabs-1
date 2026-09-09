@@ -194,7 +194,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "The new site looks professional, modern, and aesthetic, establishing the trust and credibility that matches the authority Prabhakar Processors already has in the market.",
     scope: ['Website Redesign', 'Admin Panel', 'Content Management'],
     accent: '#78350F',
-    logoUrl: '/logos/prabhakarprocessors.jpg',
+    logoUrl: '/logos/prabhakarprocessors.png',
     screenshotUrl: '/screenshots/prabhakarprocessors.jpg',
   },
 ];
