@@ -348,6 +348,80 @@ export default function Home({ onPageChange }: HomeProps) {
         </div>
       </section>
 
+      {/* Social Proof Strip: logo wall + short quotes, positioned right after the
+          hero so proof appears before any claims are even made. */}
+      <motion.section
+        id="social-proof-strip"
+        className="py-16 bg-white font-sans border-b border-neutral-200/50"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-xs font-bold uppercase tracking-widest text-neutral-400 mb-8">
+            Trusted by real businesses across Surat and beyond
+          </p>
+
+          {/* Real client logo strip: infinite marquee, full color, bigger */}
+          <div className="logo-marquee-mask overflow-hidden mb-14">
+            <div className="flex items-center gap-4 sm:gap-6 logo-marquee-track">
+              {[...Array(2)].map((_, loopIdx) => (
+                <div key={loopIdx} className="flex items-center gap-4 sm:gap-6 shrink-0">
+                  {[
+                    { name: 'Santosh Timbers', src: '/logos/santoshtimbers.png' },
+                    { name: 'Astrabizz Consultancy', src: '/logos/astrabizz.png' },
+                    { name: 'Dr. Mihir Shah Smile Care Clinic', src: '/logos/drmihirshah.png' },
+                    { name: 'SolWay Energies', src: '/logos/solway.png' },
+                    { name: 'Darshan Galani & Co.', src: '/logos/darshangalani.png' },
+                    { name: 'Jay Mehta & Co.', src: '/logos/jaymehta.png' },
+                    { name: 'MNP & Co.', src: '/logos/mnp.png' },
+                    { name: 'K.D. Mayani & Co.', src: '/logos/kdmayani.png' },
+                    { name: 'Prabhakar Processors', src: '/logos/prabhakarprocessors.jpg' },
+                  ].map((logo, idx) => (
+                    <div
+                      key={`${loopIdx}-${logo.name}-${idx}`}
+                      className="flex items-center justify-center h-20 sm:h-24 px-6 sm:px-8 rounded-2xl bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-neutral-300 transition-all duration-300 shrink-0"
+                    >
+                      <img
+                        src={logo.src}
+                        alt={logo.name}
+                        loading="lazy"
+                        className="h-10 sm:h-12 w-auto max-w-[140px] object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { quote: 'Very good website designs. Incredibly responsive team. Quick feedback turnaround. Great value.', name: 'Manav Shah', company: 'SolWay Energies' },
+              { quote: 'We finally have a website that reflects how we work with our clients: clear, professional, and easy to trust.', name: 'CA Jay Mehta', company: 'Jay Mehta & Co.' },
+              { quote: 'Absolutely professional people, know their work in best manner. I will absolutely recommend them for website related work.', name: 'Dr. Mihir Shah', company: 'Smile Care Clinic' },
+              { quote: 'Gorgeous website and amazing service from start to finish. Exactly what we needed for the business.', name: 'Harshit Chopra', company: 'Santosh Timbers' },
+            ].map((t, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                className="p-5 rounded-2xl border border-neutral-100 bg-neutral-50/50 space-y-3"
+              >
+                <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
+                <div className="pt-2 border-t border-neutral-200/60">
+                  <p className="text-xs font-bold text-neutral-900">{t.name}</p>
+                  <p className="text-[11px] text-neutral-500">{t.company}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
       {/* Problem Section: visitor pain points, stated plainly, before any pitch */}
       <motion.section
         id="problem-section"
@@ -772,80 +846,6 @@ export default function Home({ onPageChange }: HomeProps) {
                 </motion.div>
               ))}
             </motion.div>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Social Proof Strip: logo wall + short quotes, positioned here (after Process)
-          as the homepage's dedicated social-proof beat, ahead of the final CTA. */}
-      <motion.section
-        id="social-proof-strip"
-        className="py-16 bg-white font-sans border-b border-neutral-200/50"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-bold uppercase tracking-widest text-neutral-400 mb-8">
-            Trusted by real businesses across Surat and beyond
-          </p>
-
-          {/* Real client logo strip: infinite marquee, full color, bigger */}
-          <div className="logo-marquee-mask overflow-hidden mb-14">
-            <div className="flex items-center gap-4 sm:gap-6 logo-marquee-track">
-              {[...Array(2)].map((_, loopIdx) => (
-                <div key={loopIdx} className="flex items-center gap-4 sm:gap-6 shrink-0">
-                  {[
-                    { name: 'Santosh Timbers', src: '/logos/santoshtimbers.png' },
-                    { name: 'Astrabizz Consultancy', src: '/logos/astrabizz.png' },
-                    { name: 'Dr. Mihir Shah Smile Care Clinic', src: '/logos/drmihirshah.png' },
-                    { name: 'SolWay Energies', src: '/logos/solway.png' },
-                    { name: 'Darshan Galani & Co.', src: '/logos/darshangalani.png' },
-                    { name: 'Jay Mehta & Co.', src: '/logos/jaymehta.png' },
-                    { name: 'MNP & Co.', src: '/logos/mnp.png' },
-                    { name: 'K.D. Mayani & Co.', src: '/logos/kdmayani.png' },
-                    { name: 'Prabhakar Processors', src: '/logos/prabhakarprocessors.jpg' },
-                  ].map((logo, idx) => (
-                    <div
-                      key={`${loopIdx}-${logo.name}-${idx}`}
-                      className="flex items-center justify-center h-20 sm:h-24 px-6 sm:px-8 rounded-2xl bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-neutral-300 transition-all duration-300 shrink-0"
-                    >
-                      <img
-                        src={logo.src}
-                        alt={logo.name}
-                        loading="lazy"
-                        className="h-10 sm:h-12 w-auto max-w-[140px] object-contain"
-                      />
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { quote: 'Very good website designs. Incredibly responsive team. Quick feedback turnaround. Great value.', name: 'Manav Shah', company: 'SolWay Energies' },
-              { quote: 'We finally have a website that reflects how we work with our clients: clear, professional, and easy to trust.', name: 'CA Jay Mehta', company: 'Jay Mehta & Co.' },
-              { quote: 'Absolutely professional people, know their work in best manner. I will absolutely recommend them for website related work.', name: 'Dr. Mihir Shah', company: 'Smile Care Clinic' },
-              { quote: 'Gorgeous website and amazing service from start to finish. Exactly what we needed for the business.', name: 'Harshit Chopra', company: 'Santosh Timbers' },
-            ].map((t, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="p-5 rounded-2xl border border-neutral-100 bg-neutral-50/50 space-y-3"
-              >
-                <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
-                <div className="pt-2 border-t border-neutral-200/60">
-                  <p className="text-xs font-bold text-neutral-900">{t.name}</p>
-                  <p className="text-[11px] text-neutral-500">{t.company}</p>
-                </div>
-              </motion.div>
-            ))}
           </div>
         </div>
       </motion.section>
