@@ -28,6 +28,15 @@
  * successfully rather than failing the whole build - the meta-only shells
  * prerender-seo.ts already wrote are left in place as a fallback, so the build
  * isn't hostage to headless Chromium availability.
+ *
+ * Navigation deliberately does NOT wait for `networkidle0`: src/index.css opens
+ * with `@import url('https://fonts.googleapis.com/...')`, a real external network
+ * call on every route, and on Vercel's build sandbox that (plus its cascading
+ * fonts.gstatic.com font-file requests) was observed to occasionally stall for
+ * minutes, which made "wait until the network goes quiet" a bad readiness signal.
+ * Instead this blocks font/image/media requests outright (irrelevant to a text
+ * snapshot for crawlers) and waits for real rendered text in #root instead, each
+ * route on its own fresh page and its own bounded timeout.
  */
 import fs from 'fs';
 import path from 'path';
@@ -77,19 +86,49 @@ function routeForHtmlShell(filePath: string): string {
   return `/${rel.split(path.sep).join('/')}`;
 }
 
-/** Scrolls the full page height to trigger any scroll-based (whileInView) reveal
+/** Scrolls the full page height (capped at a fixed number of steps, since a page
+ *  whose height keeps shifting as reveal animations run could otherwise make this
+ *  loop run far longer than intended) to trigger scroll-based (whileInView) reveal
  *  animations and lazy-mounted content, then returns to the top before capture. */
 async function triggerScrollReveal(page: import('puppeteer-core').Page): Promise<void> {
   await page.evaluate(async () => {
-    const step = 600;
-    const delay = 60;
-    let scrolled = 0;
-    while (scrolled < document.body.scrollHeight) {
+    const step = 800;
+    const delay = 40;
+    const maxSteps = 40;
+    for (let i = 0; i < maxSteps; i++) {
+      if (window.scrollY + window.innerHeight >= document.body.scrollHeight) break;
       window.scrollBy(0, step);
-      scrolled += step;
       await new Promise((r) => setTimeout(r, delay));
     }
     window.scrollTo(0, 0);
+  });
+}
+
+/** Waits for React to have actually rendered real text into #root, bounded by its
+ *  own timeout - independent of any network activity elsewhere on the page. */
+async function waitForContentReady(page: import('puppeteer-core').Page): Promise<void> {
+  await page.waitForFunction(
+    () => {
+      const root = document.getElementById('root');
+      return !!root && root.children.length > 0 && (root.textContent ?? '').trim().length > 40;
+    },
+    { timeout: 15000 }
+  );
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(`${label} exceeded ${ms}ms`)), ms);
+    promise.then(
+      (value) => {
+        clearTimeout(timer);
+        resolve(value);
+      },
+      (err) => {
+        clearTimeout(timer);
+        reject(err);
+      }
+    );
   });
 }
 
@@ -129,16 +168,39 @@ async function main() {
 
   let rendered = 0;
   try {
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1440, height: 900 });
-
     for (const filePath of htmlShells) {
       const routePath = routeForHtmlShell(filePath);
       const url = `${origin}${routePath}`;
+      // A fresh page per route, so a request left hanging by one route (e.g. the
+      // Google Fonts @import in src/index.css, which needs real internet egress
+      // and was observed to occasionally stall for minutes in Vercel's build
+      // sandbox) can never bleed into the next route's capture.
+      const page = await browser.newPage();
       try {
-        await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
-        await triggerScrollReveal(page);
-        await new Promise((r) => setTimeout(r, 300));
+        await page.setViewport({ width: 1440, height: 900 });
+        // This is a text snapshot for crawlers, not a visual one - fonts, images,
+        // and stylesheets add nothing but slow, sometimes-flaky network calls.
+        await page.setRequestInterception(true);
+        page.on('request', (req) => {
+          const reqUrl = req.url();
+          const type = req.resourceType();
+          if (type === 'font' || type === 'image' || type === 'media' || reqUrl.includes('fonts.googleapis.com') || reqUrl.includes('fonts.gstatic.com')) {
+            req.abort();
+          } else {
+            req.continue();
+          }
+        });
+
+        await withTimeout(
+          (async () => {
+            await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+            await waitForContentReady(page);
+            await triggerScrollReveal(page);
+            await new Promise((r) => setTimeout(r, 200));
+          })(),
+          25000,
+          `render ${routePath}`
+        );
 
         const html = await page.content();
         fs.writeFileSync(filePath, html, 'utf-8');
@@ -148,6 +210,8 @@ async function main() {
           `[prerender-content] Failed to render ${routePath}, leaving its meta-only shell in place:`,
           (err as Error).message
         );
+      } finally {
+        await page.close();
       }
     }
   } finally {
