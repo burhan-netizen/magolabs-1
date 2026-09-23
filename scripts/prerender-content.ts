@@ -9,25 +9,52 @@
  * without this step they'd see a correct title/description and nothing else.
  *
  * This spins up a local static preview of dist/, uses a real headless Chromium
- * (via Puppeteer) to load every HTML shell prerender-seo.ts wrote, waits for the
- * client-side app to render, and overwrites that same shell with the fully
- * rendered DOM - so the static file on disk has real content, while real visitors
- * still get the normal hydrated, interactive React app.
+ * to load every HTML shell prerender-seo.ts wrote, waits for the client-side app
+ * to render, and overwrites that same shell with the fully rendered DOM - so the
+ * static file on disk has real content, while real visitors still get the normal
+ * hydrated, interactive React app.
  *
- * If Chromium can't launch in this environment (e.g. a locked-down CI/build image
- * missing system libraries), this warns and exits successfully rather than failing
- * the whole build - the meta-only shells prerender-seo.ts already wrote are left in
- * place as a fallback, so the build isn't hostage to headless Chromium availability.
+ * Two different Chromiums, depending on where this runs:
+ * - Locally (Windows/Mac/Linux dev machines): full `puppeteer`, which downloads a
+ *   real Chromium for whatever OS you're on.
+ * - On Vercel (`process.env.VERCEL` is set during its build): `puppeteer-core` +
+ *   `@sparticuz/chromium`, a Chromium build compiled specifically for serverless/CI
+ *   Linux containers. Vercel's build image is missing shared libraries (nss, atk,
+ *   etc.) that full `puppeteer`'s bundled Chromium needs, so on Vercel that launch
+ *   fails silently into the fallback below instead of ever rendering content -
+ *   this is what actually happened on the first deploy of this script.
+ *
+ * If Chromium still can't launch in some other environment, this warns and exits
+ * successfully rather than failing the whole build - the meta-only shells
+ * prerender-seo.ts already wrote are left in place as a fallback, so the build
+ * isn't hostage to headless Chromium availability.
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { preview } from 'vite';
-import puppeteer from 'puppeteer';
+import type { Browser } from 'puppeteer-core';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, '..');
 const distDir = path.join(projectRoot, 'dist');
+
+async function launchBrowser(): Promise<Browser> {
+  if (process.env.VERCEL) {
+    const chromium = (await import('@sparticuz/chromium')).default;
+    const puppeteerCore = await import('puppeteer-core');
+    return puppeteerCore.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: true,
+    });
+  }
+  const puppeteer = await import('puppeteer');
+  return puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+}
 
 function findHtmlShells(dir: string): string[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -52,7 +79,7 @@ function routeForHtmlShell(filePath: string): string {
 
 /** Scrolls the full page height to trigger any scroll-based (whileInView) reveal
  *  animations and lazy-mounted content, then returns to the top before capture. */
-async function triggerScrollReveal(page: import('puppeteer').Page): Promise<void> {
+async function triggerScrollReveal(page: import('puppeteer-core').Page): Promise<void> {
   await page.evaluate(async () => {
     const step = 600;
     const delay = 60;
@@ -87,12 +114,9 @@ async function main() {
 
   const closePreview = () => new Promise<void>((resolve) => previewServer.httpServer.close(() => resolve()));
 
-  let browser;
+  let browser: Browser;
   try {
-    browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    browser = await launchBrowser();
   } catch (err) {
     console.warn(
       '[prerender-content] Could not launch headless Chromium, skipping full content prerendering. ' +
