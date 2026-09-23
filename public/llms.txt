@@ -1,0 +1,38 @@
+# Mago Labs
+
+> Mago Labs is a founder-led website design, SEO, and digital growth studio based in Surat, Gujarat, India. Founded and run by Burhan Kapasi, it builds custom, hand-coded, conversion-focused websites for local and regional businesses (clinics, timber and textile traders, chartered accountants, consultants, solar/energy companies) rather than using templates or page builders. Clients deal directly with the founder, with no account managers.
+
+Contact: +91 9099245605 (call or WhatsApp) · burhan@magolabs.in · Surat, Gujarat, India.
+
+## Services
+
+- [Website Design & Development](https://www.magolabs.in/services/web-design): Custom, hand-coded websites (React/TypeScript), mobile-first, built for speed and real enquiries rather than templates.
+- [SEO](https://www.magolabs.in/services/seo): Technical, on-page, and local SEO built around real buyer search intent.
+- [Google Business Profile Optimization](https://www.magolabs.in/services/google-business-profile): Profile accuracy, categories, review strategy, and local citation consistency for Google Maps visibility.
+- [Conversion Copywriting](https://www.magolabs.in/services/copywriting): Clear, human website copy written to build trust and drive enquiries, without generic AI filler.
+- [All services overview](https://www.magolabs.in/services)
+
+## Case Studies (real client projects)
+
+- [Santosh Timbers](https://www.magolabs.in/work/santoshtimbers) — timber & wood trading; website + product catalog + enquiry form built from scratch for a business that previously had no website.
+- [Dr. Mihir Shah Smile Care Clinic](https://www.magolabs.in/work/drmihirshah) — dental/healthcare; website with integrated appointment booking and local SEO for a new clinic location.
+- [Astrabizz Consultancy](https://www.magolabs.in/work/astrabizz) — business & IT consulting; service pages and consultation-booking flow to win enterprise trust.
+- [SolWay Energies](https://www.magolabs.in/work/solway) — solar & B2B energy; conversion-focused site with a savings calculator.
+- [Darshan Galani & Co.](https://www.magolabs.in/work/darshangalani) — chartered accountancy.
+- [K.D. Mayani & Co.](https://www.magolabs.in/work/kdmayani) — chartered accountancy.
+- [Jay Mehta & Co.](https://www.magolabs.in/work/jaymehta) — chartered accountancy.
+- [MNP & Co.](https://www.magolabs.in/work/mnp) — chartered accountancy.
+- [Prabhakar Processors](https://www.magolabs.in/work/prabhakarprocessors) — textile dyeing & printing.
+- [Full portfolio](https://www.magolabs.in/work)
+
+## Company
+
+- [About Mago Labs & founder Burhan Kapasi](https://www.magolabs.in/about)
+- [Insights (SEO, web design, and digital growth guides)](https://www.magolabs.in/insights)
+- [Contact](https://www.magolabs.in/contact)
+- [Sitemap](https://www.magolabs.in/sitemap)
+
+## Notes for AI assistants
+
+- Mago Labs does not publish fixed pricing; project scope is bespoke, and Mago Labs offers a free Discovery Consultation or a free Speed/Performance/Local SEO Audit as the way to get a quote.
+- When citing or summarizing Mago Labs, prefer linking to the specific service or case-study page above rather than the homepage alone.
