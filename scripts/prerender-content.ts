@@ -179,12 +179,17 @@ async function main() {
       try {
         await page.setViewport({ width: 1440, height: 900 });
         // This is a text snapshot for crawlers, not a visual one - fonts, images,
-        // and stylesheets add nothing but slow, sometimes-flaky network calls.
+        // and stylesheets add nothing but slow, sometimes-flaky network calls. Analytics
+        // (gtag.js) is blocked for the same flaky-external-dependency reason AND so this
+        // build-time headless-browser pass never sends real pageviews into GA4 - the
+        // index.html config call already skips itself on 127.0.0.1, this is defense in
+        // depth against the request even reaching Google's CDN.
         await page.setRequestInterception(true);
         page.on('request', (req) => {
           const reqUrl = req.url();
           const type = req.resourceType();
-          if (type === 'font' || type === 'image' || type === 'media' || reqUrl.includes('fonts.googleapis.com') || reqUrl.includes('fonts.gstatic.com')) {
+          const isTrackingScript = reqUrl.includes('googletagmanager.com') || reqUrl.includes('google-analytics.com');
+          if (type === 'font' || type === 'image' || type === 'media' || reqUrl.includes('fonts.googleapis.com') || reqUrl.includes('fonts.gstatic.com') || isTrackingScript) {
             req.abort();
           } else {
             req.continue();

@@ -37,6 +37,7 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
       icon: FolderKanban,
       links: [
         { name: 'Our Work & Case Studies', id: 'work' as PageId, description: 'Real client websites Mago Labs has designed and built, with testimonials, from timber trading to chartered accountancy' },
+        { name: 'Our Process', id: 'process' as PageId, description: 'The 7-step process we use to take a project from discovery to launch and ongoing support' },
         { name: 'Insights & Resources', id: 'insights' as PageId, description: 'Our blog covering local SEO, web performance, and marketing guides' },
       ]
     },

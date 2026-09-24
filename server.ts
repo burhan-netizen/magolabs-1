@@ -341,6 +341,7 @@ app.get('/sitemap.xml', (req, res) => {
     '/services/google-business-profile': { priority: '0.9', changefreq: 'weekly' },
     '/services/copywriting': { priority: '0.9', changefreq: 'weekly' },
     '/contact': { priority: '0.9', changefreq: 'weekly' },
+    '/process': { priority: '0.7', changefreq: 'monthly' },
     '/sitemap': { priority: '0.5', changefreq: 'monthly' },
   };
   const urls = [

@@ -124,13 +124,11 @@ function CaseStudyCard({
   project,
   onPreview,
   onOpenCaseStudy,
-  featured,
 }: {
   key?: string;
   project: CaseStudy;
   onPreview: () => void;
   onOpenCaseStudy: (id: string) => void;
-  featured?: boolean;
 }) {
   return (
     <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#1F1F1F] shadow-sm hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
@@ -209,7 +207,7 @@ function CaseStudyCard({
           </div>
         </div>
 
-        {featured && project.business && project.build ? (
+        {project.business && project.build ? (
           <div className="space-y-3.5">
             {[
               { label: 'The Business', icon: Building2, text: project.business },
@@ -230,7 +228,7 @@ function CaseStudyCard({
               );
             })}
           </div>
-        ) : featured ? (
+        ) : (
           <div className="space-y-3.5">
             <div className="flex gap-2.5">
               <Target className="h-4 w-4 shrink-0 mt-0.5" style={{ color: project.accent }} />
@@ -245,8 +243,6 @@ function CaseStudyCard({
               <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">{project.outcome}</p>
             </div>
           </div>
-        ) : (
-          <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed flex-1">{project.outcome}</p>
         )}
 
         <div className="flex flex-wrap gap-1.5">
@@ -300,12 +296,13 @@ export default function ClientWorkGallery({ onOpenCaseStudy }: ClientWorkGallery
             project={project}
             onPreview={() => setPreviewId(project.id)}
             onOpenCaseStudy={onOpenCaseStudy}
-            featured
           />
         ))}
       </div>
 
-      {/* Rest of the work, compact row */}
+      {/* Remaining case studies - same full narrative treatment as the featured row above,
+          just grouped separately as a curatorial "here's the shortlist, here's everything
+          else" split rather than a difference in how much of each story gets told. */}
       {rest.length > 0 && (
         <>
           <p className="text-xs font-bold font-mono tracking-widest text-neutral-400 uppercase text-center pt-2">

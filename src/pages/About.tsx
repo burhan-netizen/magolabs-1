@@ -2,6 +2,7 @@ import { Target, Eye, ShieldAlert, CheckCircle2, Award, Heart, MessageSquare, Sh
 import { motion } from 'motion/react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
+import { trackEvent } from '../utils/analytics';
 
 interface AboutProps {
   onPageChange: (page: PageId) => void;
@@ -168,10 +169,13 @@ export default function About({ onPageChange }: AboutProps) {
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => navigateTo('contact')}
+                  onClick={() => {
+                    trackEvent('cta_click', { location: 'about' });
+                    navigateTo('contact');
+                  }}
                   className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-bold text-white hover:bg-blue-500 transition-all cursor-pointer"
                 >
-                  Let's Discuss Your Project
+                  Get My Website Reviewed
                 </motion.button>
               </div>
             </div>

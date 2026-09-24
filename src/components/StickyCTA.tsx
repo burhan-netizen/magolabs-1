@@ -4,6 +4,7 @@ import { WhatsAppLogo } from './BrandIcons';
 import { motion, AnimatePresence } from 'motion/react';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useLanguage } from '../context/LanguageContext';
+import { trackEvent } from '../utils/analytics';
 
 interface StickyCTAProps {
 }
@@ -73,6 +74,7 @@ export default function StickyCTA({}: StickyCTAProps) {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent('whatsapp_click', { location: 'sticky_cta' })}
               whileHover={{ scale: 1.1, translateY: -2 }}
               whileTap={{ scale: 0.95 }}
               initial={isDesktop ? { opacity: 0, y: 20 } : { opacity: 0, scale: 0.8, y: 15 }}
@@ -98,6 +100,7 @@ export default function StickyCTA({}: StickyCTAProps) {
             <motion.a
               id="sticky-call-btn"
               href={callUrl}
+              onClick={() => trackEvent('phone_click', { location: 'sticky_cta' })}
               whileHover={{ scale: 1.1, translateY: -2 }}
               whileTap={{ scale: 0.95 }}
               initial={isDesktop ? { opacity: 0, y: 20 } : { opacity: 0, scale: 0.8, y: 10 }}

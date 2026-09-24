@@ -22,9 +22,12 @@ import {
   ShieldAlert,
   TrendingDown,
   SearchX,
-  UserCheck
+  UserCheck,
+  Calculator,
+  HeartPulse,
+  Rocket
 } from 'lucide-react';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PageId, Service, Industry, Benefit, ProcessStep } from '../types';
 import SEO from '../components/SEO';
@@ -32,33 +35,23 @@ import InteractiveShowcase from '../components/InteractiveShowcase';
 import InteractiveParticleMesh from '../components/InteractiveParticleMesh';
 import SiteHealthCheck from '../components/SiteHealthCheck';
 import { useLanguage } from '../context/LanguageContext';
+import { trackEvent } from '../utils/analytics';
 
-/** Counts up from 0 to target once it scrolls into view, used on the stat strip
- *  for a more premium feel than a number just appearing statically. */
-function AnimatedNumber({ target, suffix = '', duration = 1.4 }: { target: number; suffix?: string; duration?: number }) {
-  const [value, setValue] = useState(0);
-  const started = useRef(false);
-
-  const startCounting = () => {
-    if (started.current) return;
-    started.current = true;
-    const startTime = performance.now();
-    const step = (now: number) => {
-      const progress = Math.min((now - startTime) / (duration * 1000), 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.floor(eased * target));
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        setValue(target);
-      }
-    };
-    requestAnimationFrame(step);
-  };
-
+/** Renders the real target value always (so crawlers, no-JS visitors, and the
+ *  build's prerender snapshot all see the correct number in static HTML - a
+ *  fake `useState(0)` counter that only reached its target after a client-side
+ *  animation used to mean "0+" / "0%" was what actually shipped in the HTML).
+ *  The premium feel is kept via a blur/scale entrance on scroll instead of
+ *  animating the digits themselves. */
+function AnimatedNumber({ target, suffix = '' }: { target: number; suffix?: string }) {
   return (
-    <motion.span onViewportEnter={startCounting} viewport={{ once: true, margin: '-40px' }}>
-      {value}{suffix}
+    <motion.span
+      initial={{ opacity: 0, scale: 0.85, filter: 'blur(4px)' }}
+      whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
+    >
+      {target}{suffix}
     </motion.span>
   );
 }
@@ -194,47 +187,89 @@ export default function Home({ onPageChange }: HomeProps) {
     },
   ];
 
+  // Full-detail version (the original 7 steps this was trimmed from) now lives on its
+  // own page at /process (src/pages/Process.tsx) - this homepage summary exists so a
+  // first-time visitor gets the shape of the engagement without a long detour.
   const processSteps = [
     {
       number: '01',
-      title: 'Discovery',
-      desc: 'We audit your current online footprint, study your competitors, and understand your exact business objectives and ideal buyers.',
+      title: 'Discover',
+      desc: 'We audit your current online presence, study your competitors, and understand your exact business goals and ideal buyers.',
     },
     {
       number: '02',
-      title: 'Planning',
-      desc: 'We lay down the navigation architecture, design the sitemap, and structure the content blocks for maximum buyer psychology flow.',
+      title: 'Strategize',
+      desc: 'We map out the sitemap, messaging, and conversion structure your buyers actually need to see before they’ll enquire.',
     },
     {
       number: '03',
       title: 'Design',
-      desc: 'We curate bespoke color palettes, premium typography pairings, and layout drafts. You see custom mockups before any code is written.',
+      desc: 'We design a bespoke visual system and page experience for you to review before a single line of code gets written.',
     },
     {
       number: '04',
-      title: 'Development',
-      desc: 'Our developer converts the approved design into lightning-fast, pixel-perfect, secure code following modern web standard protocols.',
+      title: 'Build',
+      desc: 'Our developer builds a responsive, production-ready website: fast, secure, and following modern web standards.',
     },
     {
       number: '05',
-      title: 'Testing',
-      desc: 'We test forms, cross-browser compatibility, links, tracking, and verify Core Web Vitals performance before pointing any servers.',
-    },
-    {
-      number: '06',
-      title: 'Launch',
-      desc: 'We migrate the domains, register sitemaps on Google Search Console, request fast indexing, and verify your live connection.',
-    },
-    {
-      number: '07',
-      title: 'Support',
-      desc: 'We monitor site health, provide quick updates when you ask, and act as your long-term digital growth consultant.',
+      title: 'Launch & Grow',
+      desc: 'We launch, connect analytics, and stay on as your long-term digital growth consultant.',
     },
   ];
 
+  const homeFaqs = [
+    {
+      question: 'How long does a website take to build?',
+      answer: 'A typical custom business website takes between 3 to 5 weeks from discovery to launch. Landing pages can be delivered in as little as 10 to 14 days. We prioritize thorough planning, strategy, persuasive copywriting, and custom coding to ensure your site is built to convert.'
+    },
+    {
+      question: 'How much does a custom website cost?',
+      answer: 'Project pricing depends on scope, functionality, and requirements, so we quote each project individually after understanding what you actually need. You\'ll get a clear, transparent quote before any work starts, no hidden fees, and you keep 100% ownership of your domain, code, and hosting.'
+    },
+    {
+      question: 'Will my website rank on Google?',
+      answer: 'Yes. Every website we build comes with a built-in technical SEO foundation: search-engine friendly HTML outline structure, proper heading tag hierarchy, localized Schema script markups, and fast page loading speeds. Combined with Google Business Profile local optimization, we help you rank higher.'
+    },
+    {
+      question: 'Can I edit my website content later by myself?',
+      answer: 'Absolutely. We design with total client independence in mind. We configure intuitive, easy-to-use content blocks or admin panel routes so you can update service text, change pricing lists, or upload portfolio images in under 2 minutes, without needing to know any code.'
+    },
+    {
+      question: 'Do you provide domain registration & web hosting?',
+      answer: 'Yes, we handle everything for you. We help choose and register your custom domain name and deploy your website files on secure, lightning-fast cloud web servers like Hostinger, Cloudflare, or Vercel, ensuring zero downtime and top-tier page performance.'
+    },
+    {
+      question: 'Do you provide ongoing support and updates?',
+      answer: 'Yes. We don\'t just launch your site and disappear. We offer flexible post-launch support and maintenance. Whether you need rapid content edits, security patches, or new features added, we are always just a direct WhatsApp call or message away.'
+    },
+    {
+      question: 'Do you build WordPress or Shopify websites?',
+      answer: 'No. We hand-code every website in modern, custom frontend technology rather than building on WordPress or Shopify, because template platforms come with plugin bloat, slower load times, and less control over how the site actually converts. If you already have a WordPress or Shopify site and want it rebuilt properly, we\'re happy to talk it through.'
+    },
+    {
+      question: 'Do you work with manufacturers or CA firms?',
+      answer: 'Yes. A meaningful part of our portfolio is manufacturers, timber and textile traders, and chartered accountancy firms, businesses where a visitor needs to trust you before they\'ll ever call. You can see real examples of that work in our case studies.'
+    },
+    {
+      question: 'Who will manage my project?',
+      answer: 'Burhan Kapasi, the founder, personally. There\'s no account manager or sales handoff. You work directly with the person doing the strategy, design, and development, from the first call through launch.'
+    }
+  ];
+
+  const homeFaqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: homeFaqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  };
+
   return (
     <>
-      <SEO path="/" schemas={homeSchemas} />
+      <SEO path="/" schemas={[...homeSchemas, homeFaqSchema]} />
 
       {/* Hero Section */}
       <section 
@@ -272,11 +307,11 @@ export default function Home({ onPageChange }: HomeProps) {
                 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-neutral-950 leading-[1.05] sm:leading-[0.95]"
               >
                 {language === 'en' ? (
-                  <>Websites That Turn <span className="text-blue-600 relative">Visitors</span> Into Customers</>
+                  <>Your Website Should Bring You <span className="text-blue-600 relative">Business</span>. Not Just Look Good.</>
                 ) : language === 'hi' ? (
-                  <>ऐसी वेबसाइटें जो <span className="text-blue-600 relative">विज़िटर्स</span> को ग्राहकों में बदलें</>
+                  <>आपकी वेबसाइट को आपके लिए <span className="text-blue-600 relative">व्यवसाय</span> लाना चाहिए, सिर्फ दिखने में अच्छा नहीं होना चाहिए।</>
                 ) : (
-                  <>એવી વેબસાઇટ્સ જે <span className="text-blue-600 relative">મુલાકાતીઓ</span> ને ગ્રાહકોમાં ફેરવે</>
+                  <>તમારી વેબસાઇટે તમારા માટે <span className="text-blue-600 relative">બિઝનેસ</span> લાવવો જોઈએ, ફક્ત સારી દેખાવી ન જોઈએ.</>
                 )}
               </motion.h1>
 
@@ -298,7 +333,10 @@ export default function Home({ onPageChange }: HomeProps) {
                 <motion.button
                   whileHover={{ y: -3, scale: 1.015, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
                   whileTap={{ scale: 0.985, y: 0 }}
-                  onClick={() => navigateTo('contact')}
+                  onClick={() => {
+                    trackEvent('cta_click', { location: 'hero' });
+                    navigateTo('contact');
+                  }}
                   className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-blue-600 px-8 py-4 text-base font-bold text-white hover:bg-blue-500 shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/25 transition-all cursor-pointer"
                 >
                   {t('hero.cta.primary')}
@@ -313,6 +351,15 @@ export default function Home({ onPageChange }: HomeProps) {
                   <ArrowRight className="h-4 w-4" />
                 </motion.button>
               </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="text-xs text-neutral-400 font-medium"
+              >
+                {t('hero.reassurance')}
+              </motion.p>
             </div>
 
             {/* Right Interactive Mockup Showcase Column */}
@@ -537,13 +584,89 @@ export default function Home({ onPageChange }: HomeProps) {
                   </div>
                   <div className="pt-8">
                     <button
-                      onClick={() => navigateTo(srv.id)}
+                      onClick={() => {
+                        trackEvent('service_page_click', { service: srv.id, location: 'home_services_overview' });
+                        navigateTo(srv.id);
+                      }}
                       className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-500 hover:underline"
                     >
                       Explore Service Details
                       <ChevronRight className="h-4 w-4" />
                     </button>
                   </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Niche Section: who this is actually for, backed by the real portfolio below
+          (manufacturers, CA firms, healthcare, consulting) rather than a generic claim
+          of specializing in everyone. */}
+      <motion.section
+        id="niche-section"
+        className="py-24 bg-white font-sans"
+        initial={{ opacity: 0, y: 35, filter: 'blur(4px)' }}
+        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        viewport={{ once: true, margin: '-100px' }}
+        transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600">Who We Build For</span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900">
+              Built For Businesses Where Trust Matters
+            </h2>
+          </div>
+
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6"
+          >
+            {[
+              {
+                title: 'Manufacturers',
+                desc: 'Help buyers, distributors, and procurement teams understand your capabilities before they ever contact you.',
+                icon: Building2,
+              },
+              {
+                title: 'Professional Firms',
+                desc: 'Present your expertise, people, and services with the credibility your clients expect.',
+                icon: Briefcase,
+              },
+              {
+                title: 'CA & Accounting Firms',
+                desc: 'Give prospective clients a way to check your credibility before they ever pick up the phone.',
+                icon: Calculator,
+              },
+              {
+                title: 'Healthcare Businesses',
+                desc: 'Make your services easier to understand and the next step easier to take.',
+                icon: HeartPulse,
+              },
+              {
+                title: 'Growing B2B Businesses',
+                desc: 'Upgrade from a basic website to a digital presence that matches where your business is going.',
+                icon: Rocket,
+              },
+            ].map((niche, idx) => {
+              const Icon = niche.icon;
+              return (
+                <motion.div
+                  key={niche.title}
+                  variants={fadeUpItem}
+                  whileHover={{ y: -5, scale: 1.01, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
+                  className="p-6 rounded-2xl border border-neutral-200/80 bg-neutral-50/40 hover:bg-white hover:border-neutral-300 hover:shadow-lg hover:shadow-neutral-200/40 transition-all duration-300 space-y-4"
+                >
+                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-sm font-bold text-neutral-900">{niche.title}</h3>
+                  <p className="text-xs text-neutral-500 leading-relaxed">{niche.desc}</p>
                 </motion.div>
               );
             })}
@@ -800,21 +923,30 @@ export default function Home({ onPageChange }: HomeProps) {
             <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-32 h-fit">
               <span className="text-xs font-bold uppercase tracking-widest text-blue-400">Our Method</span>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
-                Our Transparent 7-Step Process
+                Our 5-Step Process
               </h2>
               <p className="text-neutral-400 text-sm leading-relaxed">
                 Great websites do not happen by accident. We use a standardized, meticulously designed process to ensure every project is launched on time, secure, and ready to generate sales.
               </p>
-              <div className="pt-4">
+              <div className="pt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => navigateTo('contact')}
+                  onClick={() => {
+                    trackEvent('cta_click', { location: 'process_section' });
+                    navigateTo('contact');
+                  }}
                   className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-500 transition-all cursor-pointer"
                 >
-                  Start Your Project
+                  Get My Website Reviewed
                   <ArrowRight className="h-4 w-4" />
                 </motion.button>
+                <button
+                  onClick={() => navigateTo('process')}
+                  className="text-sm font-semibold text-neutral-400 hover:text-white transition-colors cursor-pointer underline underline-offset-4 decoration-neutral-700 hover:decoration-white"
+                >
+                  See the full process
+                </button>
               </div>
             </div>
 
@@ -886,32 +1018,7 @@ export default function Home({ onPageChange }: HomeProps) {
           </div>
 
           <div className="space-y-4">
-            {[
-              {
-                question: 'How long does a website take to build?',
-                answer: 'A typical custom business website takes between 3 to 5 weeks from discovery to launch. Landing pages can be delivered in as little as 10 to 14 days. We prioritize thorough planning, strategy, persuasive copywriting, and custom coding to ensure your site is built to convert.'
-              },
-              {
-                question: 'How much does a custom website cost?',
-                answer: 'Every business has different requirements, so we scope and quote each project individually after understanding what you actually need. You\'ll get a clear, transparent quote before any work starts, no hidden fees, and you keep 100% ownership of your domain, code, and hosting.'
-              },
-              {
-                question: 'Will my website rank on Google?',
-                answer: 'Yes. Every website we build comes with a built-in technical SEO foundation: search-engine friendly HTML outline structure, proper heading tag hierarchy, localized Schema script markups, and fast page loading speeds. Combined with Google Business Profile local optimization, we help you rank higher.'
-              },
-              {
-                question: 'Can I edit my website content later by myself?',
-                answer: 'Absolutely. We design with total client independence in mind. We configure intuitive, easy-to-use content blocks or admin panel routes so you can update service text, change pricing lists, or upload portfolio images in under 2 minutes, without needing to know any code.'
-              },
-              {
-                question: 'Do you provide domain registration & web hosting?',
-                answer: 'Yes, we handle everything for you. We help choose and register your custom domain name and deploy your website files on secure, lightning-fast cloud web servers like Hostinger, Cloudflare, or Vercel, ensuring zero downtime and top-tier page performance.'
-              },
-              {
-                question: 'Do you provide ongoing support and updates?',
-                answer: 'Yes. We don\'t just launch your site and disappear. We offer flexible post-launch support and maintenance. Whether you need rapid content edits, security patches, or new features added, we are always just a direct WhatsApp call or message away.'
-              }
-            ].map((faq, idx) => {
+            {homeFaqs.map((faq, idx) => {
               const isOpen = openFaq === idx;
               return (
                 <div 

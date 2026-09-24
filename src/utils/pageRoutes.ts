@@ -17,6 +17,7 @@ export const PAGE_TO_PATH: Record<Exclude<PageId, 'not-found' | 'insights-detail
   'service-gbp': '/services/google-business-profile',
   'service-copywriting': '/services/copywriting',
   work: '/work',
+  process: '/process',
   insights: '/insights',
   contact: '/contact',
   sitemap: '/sitemap',

@@ -26,26 +26,28 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'nav.whyChooseUs': 'Why Choose Us',
     'nav.portfolio': 'Portfolio',
     'nav.work': 'Work',
+    'nav.process': 'Process',
     'nav.testimonials': 'Testimonials',
     'nav.insights': 'Insights',
     'nav.contact': 'Contact',
-    'nav.cta': 'Discuss Your Project',
+    'nav.cta': 'Get My Website Reviewed',
     'nav.theme.light': 'Light Mode',
     'nav.theme.dark': 'Night-Owl Mode',
-    
+
     // Sticky / Footer / CTAs
-    'cta.title': 'Ready for a website that actually works for your business?',
-    'cta.desc': 'Tell us what you’re trying to achieve. We’ll show you what a better digital presence could look like.',
-    'cta.btn': 'Discuss Your Project',
+    'cta.title': 'Think Your Website Could Be Doing More?',
+    'cta.desc': 'Get a practical review of your website and see where you’re losing trust, visibility, or enquiries.',
+    'cta.btn': 'Get My Website Reviewed',
     'cta.whatsapp': 'Chat on WhatsApp',
     'cta.call': 'Call Burhan Kapasi',
 
     // Home Page Hero
     'hero.badge': 'High-Performance Web Engineering for Growth',
-    'hero.title': 'Websites That Turn Visitors Into Customers',
-    'hero.desc': 'Custom-designed, mobile-optimized, SEO-ready, and built purely for conversions. We build websites that represent your brand well and turn visitors into real enquiries. No templates, no bloated page builders.',
-    'hero.cta.primary': 'Discuss Your Project',
+    'hero.title': 'Your Website Should Bring You Business. Not Just Look Good.',
+    'hero.desc': 'Custom websites designed to build trust, improve visibility, and turn visitors into enquiries.',
+    'hero.cta.primary': 'Get My Website Reviewed',
     'hero.cta.secondary': 'See Our Work',
+    'hero.reassurance': 'Free website review. No sales pitch.',
 
     // Hero trust indicators
     'hero.trust.custom': 'Custom Design (No Templates)',
@@ -74,26 +76,28 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'nav.whyChooseUs': 'हमें क्यों चुनें',
     'nav.portfolio': 'पोर्टफोलियो',
     'nav.work': 'हमारा काम',
+    'nav.process': 'प्रक्रिया',
     'nav.testimonials': 'सफलता की कहानियां',
     'nav.insights': 'ब्लॉग',
     'nav.contact': 'संपर्क करें',
-    'nav.cta': 'अपना प्रोजेक्ट चर्चा करें',
+    'nav.cta': 'मेरी वेबसाइट की समीक्षा करवाएं',
     'nav.theme.light': 'लाइट मोड',
     'nav.theme.dark': 'नाईट-आउल मोड',
 
     // Sticky / Footer / CTAs
-    'cta.title': 'क्या आप ऐसी वेबसाइट चाहते हैं जो सच में आपके व्यवसाय के लिए काम करे?',
-    'cta.desc': 'हमें बताएं कि आप क्या हासिल करना चाहते हैं। हम आपको दिखाएंगे कि एक बेहतर डिजिटल उपस्थिति कैसी दिख सकती है।',
-    'cta.btn': 'अपना प्रोजेक्ट चर्चा करें',
+    'cta.title': 'लगता है आपकी वेबसाइट और बेहतर कर सकती है?',
+    'cta.desc': 'अपनी वेबसाइट की व्यावहारिक समीक्षा करवाएं और देखें कि आप कहां भरोसा, विज़िबिलिटी या पूछताछ खो रहे हैं।',
+    'cta.btn': 'मेरी वेबसाइट की समीक्षा करवाएं',
     'cta.whatsapp': 'व्हाट्सएप पर चैट करें',
     'cta.call': 'बुर्हान कपासी को कॉल करें',
 
     // Home Page Hero
     'hero.badge': 'व्यवसायिक विकास के लिए उच्च-प्रदर्शन वेब इंजीनियरिंग',
-    'hero.title': 'ऐसी वेबसाइटें जो विज़िटर्स को ग्राहकों में बदलें',
-    'hero.desc': 'कस्टम-डिज़ाइन की गई, मोबाइल-अनुकूलित (Responsive), एसईओ (SEO)-रेडी और शुद्ध रूप से कन्वर्शन-केंद्रित वेबसाइटें। हम ऐसी वेबसाइटें बनाते हैं जो आपके ब्रांड को अच्छी तरह प्रस्तुत करती हैं और विज़िटर्स को असली पूछताछ (enquiries) में बदलती हैं। कोई टेम्पलेट नहीं, कोई धीमा पेज बिल्डर नहीं।',
-    'hero.cta.primary': 'अपना प्रोजेक्ट चर्चा करें',
+    'hero.title': 'आपकी वेबसाइट को आपके लिए व्यवसाय लाना चाहिए, सिर्फ दिखने में अच्छा नहीं होना चाहिए।',
+    'hero.desc': 'ऐसी कस्टम वेबसाइटें जो भरोसा बनाएं, आपकी विज़िबिलिटी बढ़ाएं, और विज़िटर्स को पूछताछ में बदलें।',
+    'hero.cta.primary': 'मेरी वेबसाइट की समीक्षा करवाएं',
     'hero.cta.secondary': 'हमारा काम देखें',
+    'hero.reassurance': 'मुफ़्त वेबसाइट समीक्षा। कोई सेल्स पिच नहीं।',
 
     // Hero trust indicators
     'hero.trust.custom': 'कस्टम डिज़ाइन (कोई टेम्पलेट नहीं)',
@@ -122,26 +126,28 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'nav.whyChooseUs': 'શા માટે અમને પસંદ કરો',
     'nav.portfolio': 'પોર્ટફોલિયો',
     'nav.work': 'અમારું કામ',
+    'nav.process': 'પ્રક્રિયા',
     'nav.testimonials': 'પ્રશંસાપત્રો',
     'nav.insights': 'માહિતી બ્લોગ',
     'nav.contact': 'સંપર્ક કરો',
-    'nav.cta': 'તમારો પ્રોજેક્ટ ચર્ચા કરો',
+    'nav.cta': 'મારી વેબસાઇટની સમીક્ષા કરાવો',
     'nav.theme.light': 'લાઇટ મોડ',
     'nav.theme.dark': 'નાઇટ-આઉલ મોડ',
 
     // Sticky / Footer / CTAs
-    'cta.title': 'શું તમને એવી વેબસાઇટ જોઈએ છે જે ખરેખર તમારા બિઝનેસ માટે કામ કરે?',
-    'cta.desc': 'અમને જણાવો કે તમે શું હાંસલ કરવા માંગો છો. અમે તમને બતાવીશું કે એક વધુ સારી ડિજિટલ હાજરી કેવી દેખાઈ શકે.',
-    'cta.btn': 'તમારો પ્રોજેક્ટ ચર્ચા કરો',
+    'cta.title': 'લાગે છે તમારી વેબસાઇટ વધુ સારું કરી શકે છે?',
+    'cta.desc': 'તમારી વેબસાઇટની વ્યવહારુ સમીક્ષા મેળવો અને જુઓ કે તમે ક્યાં વિશ્વાસ, વિઝિબિલિટી અથવા પૂછપરછ ગુમાવી રહ્યા છો.',
+    'cta.btn': 'મારી વેબસાઇટની સમીક્ષા કરાવો',
     'cta.whatsapp': 'વોટ્સએપ પર ચેટ કરો',
     'cta.call': 'બુરહાન કપાસીને કોલ કરો',
 
     // Home Page Hero
     'hero.badge': 'ધંધાકીય વૃદ્ધિ માટે હાઇ-પરફોર્મન્સ વેબ એન્જિનિયરિંગ',
-    'hero.title': 'એવી વેબસાઇટ્સ જે મુલાકાતીઓને ગ્રાહકોમાં ફેરવે',
-    'hero.desc': 'કસ્ટમ-ડિઝાઇન કરેલી, મોબાઇલ-ઓપ્ટિમાઇઝ્ડ, એસઇઓ (SEO)-ફ્રેન્ડલી અને સંપૂર્ણપણે કન્વર્ઝન-કેન્દ્રિત વેબસાઇટ્સ. અમે એવી વેબસાઇટ્સ બનાવીએ છીએ જે તમારા બ્રાન્ડને સારી રીતે રજૂ કરે છે અને મુલાકાતીઓને સાચી પૂછપરછ (enquiries)માં ફેરવે છે. કોઈ ટેમ્પલેટ નહીં, કોઈ ધીમા પેજ બિલ્ડર્સ નહીં.',
-    'hero.cta.primary': 'તમારો પ્રોજેક્ટ ચર્ચા કરો',
+    'hero.title': 'તમારી વેબસાઇટે તમારા માટે બિઝનેસ લાવવો જોઈએ, ફક્ત સારી દેખાવી ન જોઈએ.',
+    'hero.desc': 'એવી કસ્ટમ વેબસાઇટ્સ જે વિશ્વાસ બનાવે, તમારી વિઝિબિલિટી વધારે, અને મુલાકાતીઓને પૂછપરછમાં ફેરવે.',
+    'hero.cta.primary': 'મારી વેબસાઇટની સમીક્ષા કરાવો',
     'hero.cta.secondary': 'અમારું કામ જુઓ',
+    'hero.reassurance': 'મફત વેબસાઇટ સમીક્ષા. કોઈ સેલ્સ પિચ નહીં.',
 
     // Hero trust indicators
     'hero.trust.custom': 'કસ્ટમ ડિઝાઇન (કોઈ ટેમ્પલેટ નહીં)',

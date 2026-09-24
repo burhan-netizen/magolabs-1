@@ -2,6 +2,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PageId } from './types';
 import { updateDocumentSEO } from './utils/seo';
+import { trackEvent } from './utils/analytics';
 import { getPageFromPath, getPathFromPage, getInsightSlugFromPath, getInsightDetailPath, getWorkSlugFromPath, getWorkDetailPath } from './utils/pageRoutes';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import Navbar from './components/Navbar';
@@ -22,6 +23,7 @@ const Services = lazy(() => import('./pages/Services'));
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const Work = lazy(() => import('./pages/Work'));
 const WorkDetail = lazy(() => import('./pages/WorkDetail'));
+const Process = lazy(() => import('./pages/Process'));
 const Insights = lazy(() => import('./pages/Insights'));
 const InsightDetail = lazy(() => import('./pages/InsightDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
@@ -133,6 +135,7 @@ function AppContent() {
   };
 
   const handleOpenWork = (id: string) => {
+    trackEvent('case_study_click', { case_study: id });
     const path = getWorkDetailPath(id);
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path);
@@ -159,6 +162,8 @@ function AppContent() {
         return <Work onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
       case 'work-detail':
         return <WorkDetail id={currentSlug} onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
+      case 'process':
+        return <Process onPageChange={handlePageChange} />;
       case 'insights':
         return <Insights onPageChange={handlePageChange} onOpenPost={handleOpenPost} />;
       case 'insights-detail':

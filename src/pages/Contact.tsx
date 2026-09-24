@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
 import ScopePlanner from '../components/ScopePlanner';
+import { trackEvent } from '../utils/analytics';
 
 interface ContactProps {
   onPageChange: (page: PageId) => void;
@@ -97,6 +98,7 @@ export default function Contact({ onPageChange }: ContactProps) {
         throw new Error(result.error || 'Failed to submit enquiry. Please try again.');
       }
 
+      trackEvent('contact_form_submit', { service: formData.service });
       setLoading(false);
       setSubmitted(true);
       setFormData({
@@ -238,6 +240,7 @@ export default function Contact({ onPageChange }: ContactProps) {
               <div className="flex flex-wrap gap-3 pt-2">
                 <a
                   href="tel:+919099245605"
+                  onClick={() => trackEvent('phone_click', { location: 'contact_page' })}
                   className="flex-1 min-w-[140px] inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white px-4 py-3 text-sm font-bold border border-neutral-800 transition-colors text-center"
                 >
                   <Phone className="h-4 w-4" />
@@ -247,6 +250,7 @@ export default function Contact({ onPageChange }: ContactProps) {
                   href="https://wa.me/919099245605?text=Hi%20Mago%20Labs%2C%20I%20would%20like%20to%20discuss%20my%20website."
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent('whatsapp_click', { location: 'contact_page' })}
                   className="flex-1 min-w-[140px] inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 text-sm font-bold border border-emerald-500 transition-colors text-center"
                 >
                   <WhatsAppLogo className="h-4 w-4" />
@@ -413,7 +417,7 @@ export default function Contact({ onPageChange }: ContactProps) {
                           ) : (
                             <>
                               <Send className="h-5 w-5" />
-                              Discuss Your Project
+                              Get My Free Website Review
                             </>
                           )}
                         </button>

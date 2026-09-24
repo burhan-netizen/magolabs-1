@@ -90,6 +90,18 @@ function toSummary(entry: ContentfulEntry, includes?: ContentfulResponse['includ
   };
 }
 
+/** Every real visitor's browser calls the Contentful API directly (there's no server-side
+ *  proxy/cache), so a single transient network blip - not just an actual outage - used to
+ *  surface as "Couldn't load this post" / "Couldn't load posts right now" for that visitor.
+ *  One retry after a short delay absorbs that without masking a genuine, persistent failure. */
+async function fetchOnce(url: string): Promise<ContentfulResponse> {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`Contentful request failed: ${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
 async function fetchFromContentful(query: string): Promise<ContentfulResponse> {
   const spaceId = getSpaceId();
   const accessToken = getAccessToken();
@@ -97,11 +109,12 @@ async function fetchFromContentful(query: string): Promise<ContentfulResponse> {
     throw new Error('Contentful is not configured: missing VITE_CONTENTFUL_SPACE_ID / VITE_CONTENTFUL_ACCESS_TOKEN.');
   }
   const url = `${CDA_BASE}/spaces/${spaceId}/environments/${getEnvironment()}/entries?content_type=blogPost&access_token=${accessToken}&${query}`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`Contentful request failed: ${res.status} ${res.statusText}`);
+  try {
+    return await fetchOnce(url);
+  } catch {
+    await new Promise((resolve) => setTimeout(resolve, 1200));
+    return fetchOnce(url);
   }
-  return res.json();
 }
 
 /** All published posts, newest first, for the Insights listing page. */

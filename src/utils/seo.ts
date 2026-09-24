@@ -84,6 +84,15 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
     ogType: 'website',
     twitterCard: 'summary_large_image'
   },
+  process: {
+    title: 'Our Web Design Process | Mago Labs, Surat',
+    description: 'How Mago Labs takes a website from discovery to launch: a transparent 7-step process covering discovery, planning, design, development, testing, launch, and ongoing support.',
+    ogTitle: 'Our Web Design Process | Mago Labs',
+    ogDescription: 'A transparent, 7-step process from discovery to launch and ongoing support.',
+    ogImage: 'https://www.magolabs.in/default-og.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
   insights: {
     title: 'Web Design, SEO & Digital Growth Insights | Mago Labs',
     description: 'Plain-English guides on website design, local SEO, and digital growth to help Surat businesses understand what actually moves the needle online.',
@@ -119,7 +128,7 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
   contact: {
     title: 'Contact Mago Labs | Website & SEO Services in Surat',
     description: 'Discuss your project with Surat\u2019s Mago Labs. Connect with us on WhatsApp or call +91 9099245605 to talk through your website and digital strategy.',
-    ogTitle: 'Discuss Your Project | Mago Labs, Surat',
+    ogTitle: 'Get Your Free Website Review | Mago Labs, Surat',
     ogDescription: 'Speak directly with Burhan Kapasi about your website and digital strategy. No account managers, no runaround.',
     ogImage: 'https://www.magolabs.in/og-image-contact.jpg',
     ogType: 'website',

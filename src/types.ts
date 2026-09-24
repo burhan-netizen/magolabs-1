@@ -8,6 +8,7 @@ export type PageId =
   | 'service-copywriting'
   | 'work'
   | 'work-detail'
+  | 'process'
   | 'insights'
   | 'insights-detail'
   | 'contact'

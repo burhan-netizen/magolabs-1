@@ -22,6 +22,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import { getCaseStudyById } from '../data/caseStudies';
 import { getPathFromPage } from '../utils/pageRoutes';
+import { trackEvent } from '../utils/analytics';
 import { ArrowRight } from 'lucide-react';
 
 interface ServiceDetailProps {
@@ -37,6 +38,10 @@ const RELATED_WORK: Record<string, string[]> = {
   'service-web-design': ['santoshtimbers', 'drmihirshah'],
   'service-seo': ['drmihirshah', 'darshangalani'],
   'service-gbp': ['drmihirshah', 'kdmayani'],
+  // Astrabizz's approach was built specifically to reposition/persuade a skeptical
+  // enterprise buyer, and MNP's rebuild was explicitly about conversion-focused
+  // messaging - the two case studies where the copy itself did the most work.
+  'service-copywriting': ['astrabizz', 'mnp'],
 };
 
 // Complete bespoke copy database for each of the 4 services
@@ -365,12 +370,13 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => {
+                    trackEvent('cta_click', { location: 'service_detail', service: serviceId });
                     onPageChange('contact');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className="inline-flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-500 px-6 py-3.5 text-sm font-bold text-white transition-all shadow-lg shadow-blue-600/10 cursor-pointer"
                 >
-                  Discuss Your Project
+                  Get My Website Reviewed
                 </motion.button>
                 <motion.a
                   whileHover={{ scale: 1.03 }}
@@ -378,6 +384,7 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
                   href="https://wa.me/919099245605?text=Hi%20Mago%20Labs%2C%20I%20would%20like%20to%20discuss%20my%20website."
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent('whatsapp_click', { location: 'service_detail', service: serviceId })}
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-neutral-200 hover:bg-neutral-50 px-6 py-3.5 text-sm font-bold text-neutral-800 transition-all cursor-pointer"
                 >
                   <WhatsAppLogo className="h-4 w-4 text-emerald-600" />

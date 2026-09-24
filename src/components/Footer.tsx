@@ -131,6 +131,11 @@ export default function Footer({ onPageChange }: FooterProps) {
                 </button>
               </li>
               <li>
+                <button onClick={() => handleLinkClick('process')} className="hover:text-neutral-900 dark:hover:text-white transition-colors flex items-center gap-2 text-left">
+                  Process
+                </button>
+              </li>
+              <li>
                 <button onClick={() => handleLinkClick('insights')} className="hover:text-neutral-900 dark:hover:text-white transition-colors flex items-center gap-2 text-left">
                   Insights
                 </button>

@@ -17,6 +17,20 @@
     <meta name="twitter:image" content="%%SEO_OG_IMAGE%%" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="shortcut icon" href="/favicon.ico" />
+    <!-- Google tag (gtag.js) - the config call is skipped on localhost/local previews so
+         local development and the build's own prerendering pass (scripts/prerender-content.ts,
+         which loads every page in a real headless browser to snapshot its HTML) never send
+         real events into the production GA4 property. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-57YSJ5SYSV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+        gtag('config', 'G-57YSJ5SYSV');
+      }
+    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",

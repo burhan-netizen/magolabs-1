@@ -18,6 +18,7 @@ import { getCaseStudyById, getCaseStudySEO, CASE_STUDIES } from '../data/caseStu
 import { TESTIMONIALS } from '../components/TestimonialWall';
 import { updateDocumentSEO } from '../utils/seo';
 import { getWorkDetailPath } from '../utils/pageRoutes';
+import { trackEvent } from '../utils/analytics';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import Breadcrumbs from '../components/Breadcrumbs';
 
@@ -229,15 +230,19 @@ export default function WorkDetail({ id, onPageChange, onOpenCaseStudy }: WorkDe
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Want a project like this for your business?</h2>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <button
-              onClick={() => onPageChange('contact')}
+              onClick={() => {
+                trackEvent('cta_click', { location: 'work_detail', case_study: project.id });
+                onPageChange('contact');
+              }}
               className="inline-flex items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 px-6 py-3.5 text-sm font-bold text-white transition-all cursor-pointer"
             >
-              Discuss Your Project
+              Get My Website Reviewed
             </button>
             <a
               href="https://wa.me/919099245605?text=Hi%20Mago%20Labs%2C%20I%20would%20like%20to%20discuss%20my%20website."
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent('whatsapp_click', { location: 'work_detail', case_study: project.id })}
               className="inline-flex items-center gap-2 rounded-full border border-neutral-700 hover:bg-neutral-900 px-6 py-3.5 text-sm font-bold text-neutral-200 transition-all"
             >
               <WhatsAppLogo className="h-4 w-4 text-emerald-500" /> Chat on WhatsApp

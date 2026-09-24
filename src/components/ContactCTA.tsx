@@ -3,6 +3,7 @@ import { WhatsAppLogo } from './BrandIcons';
 import { motion } from 'motion/react';
 import { PageId } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { trackEvent } from '../utils/analytics';
 
 interface ContactCTAProps {
   title?: string;
@@ -54,6 +55,7 @@ export default function ContactCTA({
               whileHover={{ y: -2, scale: 1.015, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
               whileTap={{ scale: 0.985, y: 0 }}
               onClick={() => {
+                trackEvent('cta_click', { location: 'contact_cta_banner' });
                 onPageChange('contact');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
@@ -68,6 +70,7 @@ export default function ContactCTA({
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent('whatsapp_click', { location: 'contact_cta_banner' })}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 border border-neutral-800 px-8 py-4 text-base font-bold text-neutral-200 hover:text-white hover:bg-neutral-800 hover:border-neutral-700 transition-all hover:translate-y-[-2px] active:translate-y-0"
             >
               <WhatsAppLogo className="h-5 w-5 text-emerald-500" />
@@ -77,6 +80,7 @@ export default function ContactCTA({
             {/* Direct Call */}
             <a
               href={callUrl}
+              onClick={() => trackEvent('phone_click', { location: 'contact_cta_banner' })}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 border border-neutral-800 px-8 py-4 text-base font-bold text-neutral-200 hover:text-white hover:bg-neutral-800 hover:border-neutral-700 transition-all hover:translate-y-[-2px] active:translate-y-0"
             >
               <Phone className="h-5 w-5 text-blue-400" />
@@ -85,7 +89,7 @@ export default function ContactCTA({
           </div>
 
           <p className="text-xs text-neutral-500 pt-2">
-            No obligation. Talk directly to Burhan Kapasi (Founder) to map out your digital growth.
+            No obligation. No hard sell.
           </p>
 
           <button

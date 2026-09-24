@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { PageId } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { LANGUAGES } from '../utils/translations';
+import { trackEvent } from '../utils/analytics';
 
 interface NavbarProps {
   currentPage: PageId;
@@ -56,9 +57,9 @@ export default function Navbar({
       ],
     },
     { label: t('nav.work'), id: 'work' as PageId },
-    { label: 'Why Mago', id: 'home' as PageId, anchor: 'why-choose-us-overview' },
-    { label: t('nav.about'), id: 'about' as PageId },
+    { label: t('nav.process'), id: 'process' as PageId },
     { label: t('nav.insights'), id: 'insights' as PageId },
+    { label: t('nav.about'), id: 'about' as PageId },
     { label: t('nav.contact'), id: 'contact' as PageId },
   ];
 
@@ -283,7 +284,10 @@ export default function Navbar({
               id="navbar-cta-btn"
               whileHover={{ y: -1, scale: 1.02, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
               whileTap={{ scale: 0.98, y: 0 }}
-              onClick={() => handleNavClick('contact')}
+              onClick={() => {
+                trackEvent('cta_click', { location: 'navbar_desktop' });
+                handleNavClick('contact');
+              }}
               className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white cursor-pointer shadow-sm hover:shadow-md transition-all"
             >
               <PhoneCall className="h-4 w-4" />
@@ -430,7 +434,10 @@ export default function Navbar({
                   id="mobile-drawer-cta-btn"
                   whileHover={{ scale: 1.015 }}
                   whileTap={{ scale: 0.985 }}
-                  onClick={() => handleNavClick('contact')}
+                  onClick={() => {
+                    trackEvent('cta_click', { location: 'navbar_mobile' });
+                    handleNavClick('contact');
+                  }}
                   className="flex w-full items-center justify-center gap-2 rounded-full bg-blue-600 px-4 py-3 text-base font-semibold text-white cursor-pointer shadow-sm hover:shadow-md transition-all"
                 >
                   <PhoneCall className="h-5 w-5" />

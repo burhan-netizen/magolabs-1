@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
 import SiteHealthCheck from '../components/SiteHealthCheck';
+import { trackEvent } from '../utils/analytics';
 
 interface ServicesProps {
   onPageChange: (page: PageId) => void;
@@ -216,7 +217,10 @@ export default function Services({ onPageChange }: ServicesProps) {
                       <motion.button
                         whileHover={{ y: -3, scale: 1.015, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
                         whileTap={{ scale: 0.985, y: 0 }}
-                        onClick={() => navigateTo(srv.id)}
+                        onClick={() => {
+                          trackEvent('service_page_click', { service: srv.id, location: 'services_overview' });
+                          navigateTo(srv.id);
+                        }}
                         className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 hover:bg-neutral-800 px-6 py-3.5 text-sm font-bold text-white shadow-sm hover:shadow-lg transition-all cursor-pointer"
                       >
                         Deep Dive Service Details
@@ -225,10 +229,13 @@ export default function Services({ onPageChange }: ServicesProps) {
                       <motion.button
                         whileHover={{ y: -3, scale: 1.015, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
                         whileTap={{ scale: 0.985, y: 0 }}
-                        onClick={() => navigateTo('contact')}
+                        onClick={() => {
+                          trackEvent('cta_click', { location: 'services_overview', service: srv.id });
+                          navigateTo('contact');
+                        }}
                         className="inline-flex items-center justify-center rounded-full border border-neutral-200 hover:bg-neutral-50 px-6 py-3.5 text-sm font-bold text-neutral-800 shadow-sm hover:shadow-md transition-all cursor-pointer"
                       >
-                        Discuss Your Project
+                        Get My Website Reviewed
                       </motion.button>
                     </div>
                   </div>
