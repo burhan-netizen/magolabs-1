@@ -194,7 +194,16 @@ async function main() {
           const reqUrl = req.url();
           const type = req.resourceType();
           const isTrackingScript = reqUrl.includes('googletagmanager.com') || reqUrl.includes('google-analytics.com');
-          if (type === 'font' || type === 'image' || type === 'media' || reqUrl.includes('fonts.googleapis.com') || reqUrl.includes('fonts.gstatic.com') || isTrackingScript) {
+          // Blog post bodies come from Contentful's rich text (author-controlled CMS
+          // content, not reviewed here) and can embed iframes (YouTube, Maps, etc.).
+          // An iframe's own navigation request also has resourceType 'document', same
+          // as the page's own top-level load, so it can't be filtered by type alone -
+          // this instead blocks anything that isn't the main frame outright. A slow or
+          // unreachable embed was observed to hang not just that route's capture but
+          // the next several routes too, since Puppeteer's page.close() can itself
+          // block on an in-flight sub-frame navigation.
+          const isSubFrame = req.frame() !== null && req.frame() !== page.mainFrame();
+          if (isSubFrame || type === 'font' || type === 'image' || type === 'media' || reqUrl.includes('fonts.googleapis.com') || reqUrl.includes('fonts.gstatic.com') || isTrackingScript) {
             req.abort();
           } else {
             req.continue();
@@ -208,7 +217,7 @@ async function main() {
             await triggerScrollReveal(page);
             await new Promise((r) => setTimeout(r, 200));
           })(),
-          25000,
+          40000,
           `render ${routePath}`
         );
 
@@ -221,7 +230,10 @@ async function main() {
           (err as Error).message
         );
       } finally {
-        await page.close();
+        // A page stuck on some in-flight navigation can make close() itself hang -
+        // don't let a single bad page stall every route after it. The browser-wide
+        // close() at the end of the run cleans up anything left dangling here.
+        await withTimeout(page.close(), 5000, 'page.close()').catch(() => {});
       }
     }
   } finally {
