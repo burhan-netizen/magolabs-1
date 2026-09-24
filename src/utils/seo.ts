@@ -93,6 +93,60 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
     ogType: 'website',
     twitterCard: 'summary_large_image'
   },
+  'website-design-surat': {
+    title: 'Website Design in Surat | Custom, Not Template | Mago Labs',
+    description: 'Custom website design for Surat businesses, built from a blank canvas around your actual brand and audience, not a recolored template.',
+    ogTitle: 'Website Design in Surat | Mago Labs',
+    ogDescription: 'Custom website design for Surat businesses, built to look like you belong.',
+    ogImage: 'https://www.magolabs.in/default-og.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
+  'website-development-surat': {
+    title: 'Website Development in Surat | Hand-Coded, Not Templated | Mago Labs',
+    description: 'Website development for Surat businesses: hand-coded in modern frontend technology, not WordPress or Shopify, built for speed, security, and easy long-term maintenance.',
+    ogTitle: 'Website Development in Surat | Mago Labs',
+    ogDescription: 'Hand-coded website development for Surat businesses, not templated.',
+    ogImage: 'https://www.magolabs.in/default-og.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
+  'seo-agency-surat': {
+    title: 'SEO Agency in Surat | Local SEO & Google Maps | Mago Labs',
+    description: 'Local SEO for Surat businesses: Google Business Profile optimization, local keyword targeting, and Maps visibility built to bring in nearby, ready-to-call customers.',
+    ogTitle: 'SEO Agency in Surat | Mago Labs',
+    ogDescription: 'Local SEO for Surat businesses, built around the searches people make right before they call.',
+    ogImage: 'https://www.magolabs.in/default-og.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
+  'website-design-for-manufacturers': {
+    title: 'Website Design for Manufacturers & Traders | Mago Labs',
+    description: 'Websites for manufacturers and traders, built to help buyers, distributors, and procurement teams understand your capabilities before they ever contact you.',
+    ogTitle: 'Website Design for Manufacturers | Mago Labs',
+    ogDescription: 'Websites built for manufacturers and traders to earn buyer trust before the first call.',
+    ogImage: 'https://www.magolabs.in/og-image-portfolio.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
+  'ca-firm-website-design': {
+    title: 'Website Design for CA & Accounting Firms | Mago Labs',
+    description: 'Websites for CA and accounting firms, built to present your expertise, people, and services with the credibility prospective clients expect.',
+    ogTitle: 'Website Design for CA Firms | Mago Labs',
+    ogDescription: 'Websites built for CA and accounting firms, with real examples across four practices.',
+    ogImage: 'https://www.magolabs.in/og-image-portfolio.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
+  'professional-services-websites': {
+    title: 'Websites for Professional Services Firms | Mago Labs',
+    description: 'Websites for consultants, advisors, and professional services firms, built around the credibility signals clients look for before the first real conversation.',
+    ogTitle: 'Websites for Professional Services Firms | Mago Labs',
+    ogDescription: 'Websites built on credibility for consulting and advisory firms.',
+    ogImage: 'https://www.magolabs.in/og-image-portfolio.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
   insights: {
     title: 'Web Design, SEO & Digital Growth Insights | Mago Labs',
     description: 'Plain-English guides on website design, local SEO, and digital growth to help Surat businesses understand what actually moves the needle online.',

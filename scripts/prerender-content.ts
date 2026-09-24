@@ -104,13 +104,18 @@ async function triggerScrollReveal(page: import('puppeteer-core').Page): Promise
   });
 }
 
-/** Waits for React to have actually rendered real text into #root, bounded by its
- *  own timeout - independent of any network activity elsewhere on the page. */
+/** Waits for the actual per-route page content to render, bounded by its own timeout -
+ *  independent of any network activity elsewhere on the page. Checks <main> specifically,
+ *  not #root as a whole: Navbar/Footer/ContactCTA are always-mounted chrome that alone
+ *  exceeds any reasonable text-length threshold, so a #root-wide check could (and once
+ *  did, for a lazy-loaded route that took a little longer than usual) pass while <main>
+ *  - the part that's actually route-specific and behind React.lazy/Suspense - was still
+ *  empty, capturing a shell with everything except the page's own content. */
 async function waitForContentReady(page: import('puppeteer-core').Page): Promise<void> {
   await page.waitForFunction(
     () => {
-      const root = document.getElementById('root');
-      return !!root && root.children.length > 0 && (root.textContent ?? '').trim().length > 40;
+      const main = document.querySelector('main');
+      return !!main && (main.textContent ?? '').trim().length > 40;
     },
     { timeout: 15000 }
   );

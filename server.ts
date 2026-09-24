@@ -342,6 +342,12 @@ app.get('/sitemap.xml', (req, res) => {
     '/services/copywriting': { priority: '0.9', changefreq: 'weekly' },
     '/contact': { priority: '0.9', changefreq: 'weekly' },
     '/process': { priority: '0.7', changefreq: 'monthly' },
+    '/website-design-surat': { priority: '0.8', changefreq: 'monthly' },
+    '/website-development-surat': { priority: '0.8', changefreq: 'monthly' },
+    '/seo-agency-surat': { priority: '0.8', changefreq: 'monthly' },
+    '/website-design-for-manufacturers': { priority: '0.8', changefreq: 'monthly' },
+    '/ca-firm-website-design': { priority: '0.8', changefreq: 'monthly' },
+    '/professional-services-websites': { priority: '0.8', changefreq: 'monthly' },
     '/sitemap': { priority: '0.5', changefreq: 'monthly' },
   };
   const urls = [

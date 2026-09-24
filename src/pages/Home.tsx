@@ -632,16 +632,19 @@ export default function Home({ onPageChange }: HomeProps) {
                 title: 'Manufacturers',
                 desc: 'Help buyers, distributors, and procurement teams understand your capabilities before they ever contact you.',
                 icon: Building2,
+                page: 'website-design-for-manufacturers' as PageId,
               },
               {
                 title: 'Professional Firms',
                 desc: 'Present your expertise, people, and services with the credibility your clients expect.',
                 icon: Briefcase,
+                page: 'professional-services-websites' as PageId,
               },
               {
                 title: 'CA & Accounting Firms',
                 desc: 'Give prospective clients a way to check your credibility before they ever pick up the phone.',
                 icon: Calculator,
+                page: 'ca-firm-website-design' as PageId,
               },
               {
                 title: 'Healthcare Businesses',
@@ -653,21 +656,28 @@ export default function Home({ onPageChange }: HomeProps) {
                 desc: 'Upgrade from a basic website to a digital presence that matches where your business is going.',
                 icon: Rocket,
               },
-            ].map((niche, idx) => {
+            ].map((niche) => {
               const Icon = niche.icon;
+              const CardTag = niche.page ? motion.button : motion.div;
               return (
-                <motion.div
+                <CardTag
                   key={niche.title}
                   variants={fadeUpItem}
                   whileHover={{ y: -5, scale: 1.01, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
-                  className="p-6 rounded-2xl border border-neutral-200/80 bg-neutral-50/40 hover:bg-white hover:border-neutral-300 hover:shadow-lg hover:shadow-neutral-200/40 transition-all duration-300 space-y-4"
+                  onClick={niche.page ? () => navigateTo(niche.page as PageId) : undefined}
+                  className={`text-left p-6 rounded-2xl border border-neutral-200/80 bg-neutral-50/40 hover:bg-white hover:border-neutral-300 hover:shadow-lg hover:shadow-neutral-200/40 transition-all duration-300 space-y-4 ${niche.page ? 'cursor-pointer' : ''}`}
                 >
                   <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-sm font-bold text-neutral-900">{niche.title}</h3>
                   <p className="text-xs text-neutral-500 leading-relaxed">{niche.desc}</p>
-                </motion.div>
+                  {niche.page && (
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600">
+                      Learn more <ChevronRight className="h-3.5 w-3.5" />
+                    </span>
+                  )}
+                </CardTag>
               );
             })}
           </motion.div>

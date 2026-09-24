@@ -24,6 +24,7 @@ const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const Work = lazy(() => import('./pages/Work'));
 const WorkDetail = lazy(() => import('./pages/WorkDetail'));
 const Process = lazy(() => import('./pages/Process'));
+const NicheLandingPage = lazy(() => import('./pages/NicheLandingPage'));
 const Insights = lazy(() => import('./pages/Insights'));
 const InsightDetail = lazy(() => import('./pages/InsightDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
@@ -164,6 +165,19 @@ function AppContent() {
         return <WorkDetail id={currentSlug} onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
       case 'process':
         return <Process onPageChange={handlePageChange} />;
+      case 'website-design-surat':
+      case 'website-development-surat':
+      case 'seo-agency-surat':
+      case 'website-design-for-manufacturers':
+      case 'ca-firm-website-design':
+      case 'professional-services-websites':
+        return (
+          <NicheLandingPage
+            nicheId={renderPage}
+            onPageChange={handlePageChange}
+            onOpenCaseStudy={handleOpenWork}
+          />
+        );
       case 'insights':
         return <Insights onPageChange={handlePageChange} onOpenPost={handleOpenPost} />;
       case 'insights-detail':

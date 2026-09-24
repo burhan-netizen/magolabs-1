@@ -1,4 +1,4 @@
-import { Map, Link2, FileCode, CheckCircle2, ArrowRight, Home, User, Settings, FolderKanban, MessageSquare, BookOpen, Mail } from 'lucide-react';
+import { Map, Link2, FileCode, CheckCircle2, ArrowRight, Home, User, Settings, FolderKanban, MessageSquare, BookOpen, Mail, MapPin } from 'lucide-react';
 import { motion } from 'motion/react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
@@ -29,6 +29,19 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
         { name: 'Technical SEO & PageSpeed', id: 'service-seo' as PageId, description: 'In-built schema structures engineered for fast, search-friendly performance' },
         { name: 'Google Business Profile SEO', id: 'service-gbp' as PageId, description: 'Dominating local geo-targeted queries and maps for local leads' },
         { name: 'High-Converting Copywriting', id: 'service-copywriting' as PageId, description: 'Direct sales copy designed specifically to drive inbound phone calls' },
+      ]
+    },
+    {
+      title: 'By Location & Industry',
+      description: 'Dedicated pages for specific markets and industries we build for.',
+      icon: MapPin,
+      links: [
+        { name: 'Website Design in Surat', id: 'website-design-surat' as PageId, description: 'Custom website design for Surat businesses' },
+        { name: 'Website Development in Surat', id: 'website-development-surat' as PageId, description: 'Hand-coded website development for Surat businesses' },
+        { name: 'SEO Agency in Surat', id: 'seo-agency-surat' as PageId, description: 'Local SEO and Google Maps visibility for Surat businesses' },
+        { name: 'Website Design for Manufacturers', id: 'website-design-for-manufacturers' as PageId, description: 'Websites built for manufacturers and traders' },
+        { name: 'Website Design for CA Firms', id: 'ca-firm-website-design' as PageId, description: 'Websites built for CA and accounting firms' },
+        { name: 'Websites for Professional Services', id: 'professional-services-websites' as PageId, description: 'Websites built for consultants and advisory firms' },
       ]
     },
     {
