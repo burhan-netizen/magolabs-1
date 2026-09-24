@@ -117,7 +117,7 @@ async function waitForContentReady(page: import('puppeteer-core').Page): Promise
       const main = document.querySelector('main');
       return !!main && (main.textContent ?? '').trim().length > 40;
     },
-    { timeout: 15000 }
+    { timeout: 25000 }
   );
 }
 
@@ -214,7 +214,7 @@ async function main() {
           await triggerScrollReveal(page);
           await new Promise((r) => setTimeout(r, 200));
         })(),
-        40000,
+        55000,
         `render ${routePath}`
       );
 
@@ -228,31 +228,52 @@ async function main() {
     }
   }
 
-  let rendered = 0;
-  try {
-    for (const filePath of htmlShells) {
-      const routePath = routeForHtmlShell(filePath);
-      const url = `${origin}${routePath}`;
-      // Vercel's shared, 2-core build machine occasionally makes an otherwise-healthy
-      // route (no hanging request involved) miss its own timeout budget under load -
-      // one retry on a fresh page catches that without masking a genuinely broken route.
+  async function renderRouteWithRetry(filePath: string): Promise<boolean> {
+    const routePath = routeForHtmlShell(filePath);
+    const url = `${origin}${routePath}`;
+    // Vercel's shared, 2-core build machine occasionally makes an otherwise-healthy
+    // route (no hanging request involved) miss its own timeout budget under load -
+    // one retry on a fresh page catches that without masking a genuinely broken route.
+    try {
+      await renderRouteOnce(routePath, url, filePath);
+      return true;
+    } catch (firstErr) {
       try {
         await renderRouteOnce(routePath, url, filePath);
-        rendered++;
-      } catch (firstErr) {
-        try {
-          await renderRouteOnce(routePath, url, filePath);
-          rendered++;
-        } catch (secondErr) {
-          console.warn(
-            `[prerender-content] Failed to render ${routePath} after 2 attempts, leaving its meta-only shell in place:`,
-            (firstErr as Error).message,
-            '|',
-            (secondErr as Error).message
-          );
-        }
+        return true;
+      } catch (secondErr) {
+        console.warn(
+          `[prerender-content] Failed to render ${routePath} after 2 attempts, leaving its meta-only shell in place:`,
+          (firstErr as Error).message,
+          '|',
+          (secondErr as Error).message
+        );
+        return false;
       }
     }
+  }
+
+  let rendered = 0;
+  try {
+    // Sequential, one route at a time, made total build time scale linearly with
+    // route count - on Vercel's shared 2-core machine each route already takes
+    // noticeably longer than locally, and 34+ routes sequentially risked bumping into
+    // the build's own timeout regardless of any individual route's health. Route
+    // captures are otherwise fully independent (separate page, separate origin
+    // request), so a small worker pool cuts wall-clock time. Kept at 2, matching
+    // Vercel's build machine's actual core count - a higher value was tried locally
+    // and caused enough CPU contention between concurrent pages that a route missed
+    // its own readiness timeout that it otherwise passes comfortably alone, which
+    // would only be worse on a real 2-core box.
+    const CONCURRENCY = 2;
+    let nextIndex = 0;
+    async function worker() {
+      while (nextIndex < htmlShells.length) {
+        const filePath = htmlShells[nextIndex++];
+        if (await renderRouteWithRetry(filePath)) rendered++;
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(CONCURRENCY, htmlShells.length) }, () => worker()));
   } finally {
     await browser.close();
     await closePreview();
