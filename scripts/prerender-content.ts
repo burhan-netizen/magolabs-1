@@ -254,28 +254,41 @@ async function main() {
   }
 
   let rendered = 0;
+  let renderedOrAttempted = 0;
+  const ROUTES_PER_BROWSER = 8;
   try {
-    // Sequential, one route at a time, made total build time scale linearly with
-    // route count - on Vercel's shared 2-core machine each route already takes
-    // noticeably longer than locally, and 34+ routes sequentially risked bumping into
-    // the build's own timeout regardless of any individual route's health. Route
-    // captures are otherwise fully independent (separate page, separate origin
-    // request), so a small worker pool cuts wall-clock time. Kept at 2, matching
-    // Vercel's build machine's actual core count - a higher value was tried locally
-    // and caused enough CPU contention between concurrent pages that a route missed
-    // its own readiness timeout that it otherwise passes comfortably alone, which
-    // would only be worse on a real 2-core box.
-    const CONCURRENCY = 2;
-    let nextIndex = 0;
-    async function worker() {
-      while (nextIndex < htmlShells.length) {
-        const filePath = htmlShells[nextIndex++];
-        if (await renderRouteWithRetry(filePath)) rendered++;
+    // Sequential, one route at a time. A concurrency of 2 (matching the build
+    // machine's stated core count) was tried and made things dramatically worse in
+    // practice - Vercel's advertised "2 cores" evidently doesn't mean 2 full cores'
+    // worth of usable headroom for 2 concurrent Chromium instances, and most routes
+    // started failing with CDP-level "Runtime.callFunctionOn timed out" errors
+    // (the browser's own protocol connection overloaded, not just a slow page).
+    // Sequential, one browser tab at a time, is the safe default here.
+    for (const filePath of htmlShells) {
+      // A long run of many routes was observed to fail progressively more often
+      // as it went on (an early route or two failing, then most of the back half
+      // failing outright) - the signature of some per-page resource never fully
+      // released across a long sequence of newPage()/close() cycles in this
+      // environment specifically. Recycling the whole browser periodically is a
+      // blunt but reliable guard against that, regardless of its exact cause.
+      if (renderedOrAttempted % ROUTES_PER_BROWSER === 0 && renderedOrAttempted > 0) {
+        await withTimeout(browser.close(), 10000, 'browser.close() (recycle)').catch(() => {});
+        try {
+          browser = await launchBrowser();
+        } catch (err) {
+          console.warn(
+            '[prerender-content] Could not relaunch Chromium mid-run, stopping here. ' +
+            'Remaining routes keep their correct meta tags from prerender-seo.ts.',
+            err
+          );
+          break;
+        }
       }
+      if (await renderRouteWithRetry(filePath)) rendered++;
+      renderedOrAttempted++;
     }
-    await Promise.all(Array.from({ length: Math.min(CONCURRENCY, htmlShells.length) }, () => worker()));
   } finally {
-    await browser.close();
+    await withTimeout(browser.close(), 10000, 'browser.close()').catch(() => {});
     await closePreview();
   }
 
