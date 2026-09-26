@@ -160,7 +160,7 @@ async function main() {
 
   let browser: Browser;
   try {
-    browser = await launchBrowser();
+    browser = await withTimeout(launchBrowser(), 30000, 'launchBrowser() (initial)');
   } catch (err) {
     console.warn(
       '[prerender-content] Could not launch headless Chromium, skipping full content prerendering. ' +
@@ -175,75 +175,96 @@ async function main() {
    *  whether to retry. A fresh page per attempt, so a request left hanging by one
    *  route or attempt (e.g. the Google Fonts @import in src/index.css, which needs
    *  real internet egress and was observed to occasionally stall for minutes in
-   *  Vercel's build sandbox) can never bleed into the next one. */
+   *  Vercel's build sandbox) can never bleed into the next one.
+   *
+   * Everything from opening the page through reading its content is inside the one
+   * withTimeout race, including browser.newPage()/setViewport()/setRequestInterception()
+   * themselves - those calls used to sit outside it, unprotected, and a hang in any
+   * one of them (rather than in the navigation/content-ready steps the timeout
+   * actually covered) would block indefinitely with nothing to catch it. That's the
+   * likely explanation for silent double-digit-minute gaps in earlier build logs that
+   * never matched any of this script's own "exceeded Xms" messages. */
   async function renderRouteOnce(routePath: string, url: string, filePath: string): Promise<void> {
-    const page = await browser.newPage();
+    let page: import('puppeteer-core').Page | undefined;
     try {
-      await page.setViewport({ width: 1440, height: 900 });
-      // This is a text snapshot for crawlers, not a visual one - fonts, images,
-      // and stylesheets add nothing but slow, sometimes-flaky network calls. Analytics
-      // (gtag.js) is blocked for the same flaky-external-dependency reason AND so this
-      // build-time headless-browser pass never sends real pageviews into GA4 - the
-      // index.html config call already skips itself on 127.0.0.1, this is defense in
-      // depth against the request even reaching Google's CDN.
-      await page.setRequestInterception(true);
-      page.on('request', (req) => {
-        const reqUrl = req.url();
-        const type = req.resourceType();
-        const isTrackingScript = reqUrl.includes('googletagmanager.com') || reqUrl.includes('google-analytics.com');
-        // Blog post bodies come from Contentful's rich text (author-controlled CMS
-        // content, not reviewed here) and can embed iframes (YouTube, Maps, etc.).
-        // An iframe's own navigation request also has resourceType 'document', same
-        // as the page's own top-level load, so it can't be filtered by type alone -
-        // this instead blocks anything that isn't the main frame outright. A slow or
-        // unreachable embed was observed to hang not just that route's capture but
-        // the next several routes too, since Puppeteer's page.close() can itself
-        // block on an in-flight sub-frame navigation.
-        const isSubFrame = req.frame() !== null && req.frame() !== page.mainFrame();
-        if (isSubFrame || type === 'font' || type === 'image' || type === 'media' || reqUrl.includes('fonts.googleapis.com') || reqUrl.includes('fonts.gstatic.com') || isTrackingScript) {
-          req.abort();
-        } else {
-          req.continue();
-        }
-      });
-
-      await withTimeout(
+      const html = await withTimeout(
         (async () => {
+          page = await browser.newPage();
+          await page.setViewport({ width: 1440, height: 900 });
+          // This is a text snapshot for crawlers, not a visual one - fonts, images,
+          // and stylesheets add nothing but slow, sometimes-flaky network calls.
+          // Analytics (gtag.js) is blocked for the same flaky-external-dependency
+          // reason AND so this build-time headless-browser pass never sends real
+          // pageviews into GA4 - the index.html config call already skips itself on
+          // 127.0.0.1, this is defense in depth against the request even reaching
+          // Google's CDN.
+          await page.setRequestInterception(true);
+          page.on('request', (req) => {
+            const reqUrl = req.url();
+            const type = req.resourceType();
+            const isTrackingScript = reqUrl.includes('googletagmanager.com') || reqUrl.includes('google-analytics.com');
+            // Blog post bodies come from Contentful's rich text (author-controlled
+            // CMS content, not reviewed here) and can embed iframes (YouTube, Maps,
+            // etc.). An iframe's own navigation request also has resourceType
+            // 'document', same as the page's own top-level load, so it can't be
+            // filtered by type alone - this instead blocks anything that isn't the
+            // main frame outright. A slow or unreachable embed was observed to hang
+            // not just that route's capture but the next several routes too, since
+            // Puppeteer's page.close() can itself block on an in-flight sub-frame
+            // navigation.
+            const isSubFrame = req.frame() !== null && req.frame() !== page!.mainFrame();
+            if (isSubFrame || type === 'font' || type === 'image' || type === 'media' || reqUrl.includes('fonts.googleapis.com') || reqUrl.includes('fonts.gstatic.com') || isTrackingScript) {
+              req.abort();
+            } else {
+              req.continue();
+            }
+          });
+
           await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
           await waitForContentReady(page);
           await triggerScrollReveal(page);
           await new Promise((r) => setTimeout(r, 200));
+          return page.content();
         })(),
         55000,
         `render ${routePath}`
       );
 
-      const html = await page.content();
       fs.writeFileSync(filePath, html, 'utf-8');
     } finally {
       // A page stuck on some in-flight navigation can make close() itself hang -
       // don't let a single bad page stall every route after it. The browser-wide
-      // close() at the end of the run cleans up anything left dangling here.
-      await withTimeout(page.close(), 5000, 'page.close()').catch(() => {});
+      // close() at the end of the run cleans up anything left dangling here. `page`
+      // may still be undefined if newPage() itself was what the timeout raced past.
+      if (page) {
+        await withTimeout(page.close(), 5000, 'page.close()').catch(() => {});
+      }
     }
   }
 
   async function renderRouteWithRetry(filePath: string): Promise<boolean> {
     const routePath = routeForHtmlShell(filePath);
     const url = `${origin}${routePath}`;
+    const startedAt = Date.now();
+    // Logged unconditionally (not just on failure) so a slow or stuck build shows
+    // exactly which route was in flight when time disappeared, instead of a long
+    // silent gap that has to be guessed at from timestamps around it after the fact.
+    console.log(`[prerender-content] Rendering ${routePath}...`);
     // Vercel's shared, 2-core build machine occasionally makes an otherwise-healthy
     // route (no hanging request involved) miss its own timeout budget under load -
     // one retry on a fresh page catches that without masking a genuinely broken route.
     try {
       await renderRouteOnce(routePath, url, filePath);
+      console.log(`[prerender-content] OK ${routePath} (${Date.now() - startedAt}ms)`);
       return true;
     } catch (firstErr) {
       try {
         await renderRouteOnce(routePath, url, filePath);
+        console.log(`[prerender-content] OK ${routePath} on retry (${Date.now() - startedAt}ms)`);
         return true;
       } catch (secondErr) {
         console.warn(
-          `[prerender-content] Failed to render ${routePath} after 2 attempts, leaving its meta-only shell in place:`,
+          `[prerender-content] Failed to render ${routePath} after 2 attempts (${Date.now() - startedAt}ms), leaving its meta-only shell in place:`,
           (firstErr as Error).message,
           '|',
           (secondErr as Error).message
@@ -272,9 +293,12 @@ async function main() {
       // environment specifically. Recycling the whole browser periodically is a
       // blunt but reliable guard against that, regardless of its exact cause.
       if (renderedOrAttempted % ROUTES_PER_BROWSER === 0 && renderedOrAttempted > 0) {
+        const recycleStart = Date.now();
+        console.log('[prerender-content] Recycling browser...');
         await withTimeout(browser.close(), 10000, 'browser.close() (recycle)').catch(() => {});
         try {
-          browser = await launchBrowser();
+          browser = await withTimeout(launchBrowser(), 30000, 'launchBrowser() (recycle)');
+          console.log(`[prerender-content] Browser recycled (${Date.now() - recycleStart}ms)`);
         } catch (err) {
           console.warn(
             '[prerender-content] Could not relaunch Chromium mid-run, stopping here. ' +
