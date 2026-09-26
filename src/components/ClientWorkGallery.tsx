@@ -155,7 +155,7 @@ function CaseStudyCard({
           logo as a small badge over it, falling back to logo-only or the
           domain chrome placeholder for anything we don't have media for yet */}
       <div
-        className="relative aspect-[4/3] overflow-hidden cursor-pointer bg-neutral-100 dark:bg-neutral-900"
+        className="relative aspect-[8/5] overflow-hidden cursor-pointer bg-neutral-100 dark:bg-neutral-900"
         onClick={onPreview}
       >
         {project.screenshotUrl ? (
@@ -163,7 +163,7 @@ function CaseStudyCard({
             src={project.screenshotUrl}
             alt={`${project.clientName} website homepage`}
             loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+            className="absolute inset-0 h-full w-full object-cover object-left-top transition-transform duration-500 group-hover:scale-[1.04]"
           />
         ) : (
           <div
