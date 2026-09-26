@@ -163,7 +163,7 @@ function CaseStudyCard({
             src={project.screenshotUrl}
             alt={`${project.clientName} website homepage`}
             loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover object-left-top transition-transform duration-500 group-hover:scale-[1.04]"
+            className="absolute inset-0 h-full w-full object-contain object-top transition-transform duration-500 group-hover:scale-[1.04]"
           />
         ) : (
           <div
