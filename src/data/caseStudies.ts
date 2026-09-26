@@ -6,28 +6,53 @@ import type { SEOConfig } from '../utils/seo';
  * (business -> challenge -> approach -> build -> outcome) rather than just a link-out.
  * Lives outside ClientWorkGallery.tsx so scripts/prerender-seo.ts (a plain Node script,
  * no JSX) can import the same data to generate a real, unique HTML shell per project.
+ *
+ * Order here is the display order on /work (row 1: Prabhakar, SolWay, Dr. Mihir Shah;
+ * row 2 starts with Astrabizz; row 3 starts with Santosh Timbers) - requested directly,
+ * not derived from any other ranking.
  */
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    id: 'santoshtimbers',
-    clientName: 'Santosh Timbers',
-    url: 'https://www.santoshtimbers.com',
-    domain: 'www.santoshtimbers.com',
-    industry: 'Timber & Wood Trading',
+    id: 'prabhakarprocessors',
+    clientName: 'Prabhakar Processors',
+    url: 'https://prabhakarprocessors.com',
+    domain: 'prabhakarprocessors.com',
+    industry: 'Textile Dyeing & Printing',
     business:
-      "One of India's largest timber importers, built on word of mouth and personal networks, with no website to back up that scale when a new buyer went looking online.",
+      "A dyeing and printing mill with real standing in the textile industry, previously represented online by a site that undersold that reputation.",
     challenge:
-      "Before we stepped in, they had no website at all, so a serious buyer doing due diligence had nothing to find, and nothing to confirm they were dealing with a real, established company.",
+      "Their existing website looked unprofessional and did not reflect the scale or authority the business actually has in the market.",
     approach:
-      "We built them a website from scratch, designed specifically to convert visitors into serious enquiries. Every section was built around establishing trust fast, since bulk timber buyers want to know they are dealing with a real, established company before they pick up the phone.",
+      "We rebuilt the website from the ground up with a modern, professional design, built specifically to position Prabhakar Processors as one of the leading names in dyeing and printing.",
     build:
-      "A custom-designed website with a full product catalog and a direct enquiry form, structured section by section around the trust signals a bulk buyer actually looks for.",
+      "A full website redesign with a custom admin panel, so the team can manage content independently without needing a developer for every update.",
     outcome:
-      "Santosh Timbers now has a professional online presence that matches the scale of their actual business, giving new buyers a reason to trust them before the first conversation even happens.",
-    scope: ['Website Design', 'Product Catalog', 'Enquiry Form'],
-    accent: '#92400E',
-    logoUrl: '/logos/santoshtimbers.png',
-    screenshotUrl: '/screenshots/santoshtimbers.jpg',
+      "The new site looks professional, modern, and aesthetic, establishing the trust and credibility that matches the authority Prabhakar Processors already has in the market.",
+    scope: ['Website Redesign', 'Admin Panel', 'Content Management'],
+    accent: '#78350F',
+    logoUrl: '/logos/prabhakarprocessors.png',
+    screenshotUrl: '/screenshots/prabhakarprocessors.jpg',
+  },
+  {
+    id: 'solway',
+    clientName: 'SolWay Energies',
+    url: 'https://www.solwayenergies.com',
+    domain: 'www.solwayenergies.com',
+    industry: 'Solar & B2B Energy',
+    business:
+      "A solar and B2B energy distributor working with corporate buyers who do their homework on suppliers before committing.",
+    challenge:
+      "They had no website to back up conversations happening in meetings and on calls. In B2B energy, buyers research suppliers before committing, and having nothing to find online was quietly costing them credibility.",
+    approach:
+      "We built a website designed to communicate scale and capability to corporate buyers, structured around the kind of proof a B2B buyer actually looks for before trusting a new supplier.",
+    build:
+      "A product and service showcase with direct lead capture, built to communicate scale and capability to corporate buyers evaluating a new supplier.",
+    outcome:
+      "SolWay Energies now has a digital presence that supports their sales conversations instead of undermining them, giving corporate buyers a reason to take the relationship seriously from the first search.",
+    scope: ['Website Design', 'Product/Service Showcase', 'Lead Capture'],
+    accent: '#D97706',
+    logoUrl: '/logos/solway.png',
+    screenshotUrl: '/screenshots/solway.jpg',
   },
   {
     id: 'drmihirshah',
@@ -72,27 +97,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     screenshotUrl: '/screenshots/astrabizz.jpg',
   },
   {
-    id: 'solway',
-    clientName: 'SolWay Energies',
-    url: 'https://www.solwayenergies.com',
-    domain: 'www.solwayenergies.com',
-    industry: 'Solar & B2B Energy',
-    business:
-      "A solar and B2B energy distributor working with corporate buyers who do their homework on suppliers before committing.",
-    challenge:
-      "They had no website to back up conversations happening in meetings and on calls. In B2B energy, buyers research suppliers before committing, and having nothing to find online was quietly costing them credibility.",
-    approach:
-      "We built a website designed to communicate scale and capability to corporate buyers, structured around the kind of proof a B2B buyer actually looks for before trusting a new supplier.",
-    build:
-      "A product and service showcase with direct lead capture, built to communicate scale and capability to corporate buyers evaluating a new supplier.",
-    outcome:
-      "SolWay Energies now has a digital presence that supports their sales conversations instead of undermining them, giving corporate buyers a reason to take the relationship seriously from the first search.",
-    scope: ['Website Design', 'Product/Service Showcase', 'Lead Capture'],
-    accent: '#D97706',
-    logoUrl: '/logos/solway.png',
-    screenshotUrl: '/screenshots/solway.jpg',
-  },
-  {
     id: 'darshangalani',
     clientName: 'Darshan Galani & Co.',
     url: 'https://www.darshangalani.com',
@@ -135,6 +139,27 @@ export const CASE_STUDIES: CaseStudy[] = [
     screenshotUrl: '/screenshots/kdmayani.jpg',
   },
   {
+    id: 'santoshtimbers',
+    clientName: 'Santosh Timbers',
+    url: 'https://www.santoshtimbers.com',
+    domain: 'www.santoshtimbers.com',
+    industry: 'Timber & Wood Trading',
+    business:
+      "One of India's largest timber importers, built on word of mouth and personal networks, with no website to back up that scale when a new buyer went looking online.",
+    challenge:
+      "Before we stepped in, they had no website at all, so a serious buyer doing due diligence had nothing to find, and nothing to confirm they were dealing with a real, established company.",
+    approach:
+      "We built them a website from scratch, designed specifically to convert visitors into serious enquiries. Every section was built around establishing trust fast, since bulk timber buyers want to know they are dealing with a real, established company before they pick up the phone.",
+    build:
+      "A custom-designed website with a full product catalog and a direct enquiry form, structured section by section around the trust signals a bulk buyer actually looks for.",
+    outcome:
+      "Santosh Timbers now has a professional online presence that matches the scale of their actual business, giving new buyers a reason to trust them before the first conversation even happens.",
+    scope: ['Website Design', 'Product Catalog', 'Enquiry Form'],
+    accent: '#92400E',
+    logoUrl: '/logos/santoshtimbers.png',
+    screenshotUrl: '/screenshots/santoshtimbers.jpg',
+  },
+  {
     id: 'jaymehta',
     clientName: 'Jay Mehta & Co.',
     url: 'https://www.jaymehtanadco.com',
@@ -175,27 +200,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     accent: '#2563EB',
     logoUrl: '/logos/mnp.png',
     screenshotUrl: '/screenshots/mnp.jpg',
-  },
-  {
-    id: 'prabhakarprocessors',
-    clientName: 'Prabhakar Processors',
-    url: 'https://prabhakarprocessors.com',
-    domain: 'prabhakarprocessors.com',
-    industry: 'Textile Dyeing & Printing',
-    business:
-      "A dyeing and printing mill with real standing in the textile industry, previously represented online by a site that undersold that reputation.",
-    challenge:
-      "Their existing website looked unprofessional and did not reflect the scale or authority the business actually has in the market.",
-    approach:
-      "We rebuilt the website from the ground up with a modern, professional design, built specifically to position Prabhakar Processors as one of the leading names in dyeing and printing.",
-    build:
-      "A full website redesign with a custom admin panel, so the team can manage content independently without needing a developer for every update.",
-    outcome:
-      "The new site looks professional, modern, and aesthetic, establishing the trust and credibility that matches the authority Prabhakar Processors already has in the market.",
-    scope: ['Website Redesign', 'Admin Panel', 'Content Management'],
-    accent: '#78350F',
-    logoUrl: '/logos/prabhakarprocessors.png',
-    screenshotUrl: '/screenshots/prabhakarprocessors.jpg',
   },
 ];
 
