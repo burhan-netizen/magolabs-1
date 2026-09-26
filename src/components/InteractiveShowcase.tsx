@@ -1,31 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Zap, 
-  Sparkles, 
-  Layers, 
-  Play, 
-  RotateCcw, 
-  CheckCircle2, 
-  Monitor, 
-  Phone, 
+import {
+  Sparkles,
+  Layers,
+  CheckCircle2,
   Smartphone,
-  Eye,
   Check
 } from 'lucide-react';
 
-type TabId = 'performance' | 'themes' | 'layouts';
+type TabId = 'themes' | 'layouts';
 type ThemeId = 'classic' | 'cyber' | 'editorial' | 'emerald';
 type LayoutId = 'hero' | 'services' | 'lead';
 
 export default function InteractiveShowcase() {
-  const [activeTab, setActiveTab] = useState<TabId>('performance');
-  
-  // Performance Simulator State
-  const [auditProgress, setAuditProgress] = useState(0);
-  const [isAuditing, setIsAuditing] = useState(false);
-  const [auditLogs, setAuditLogs] = useState<string[]>([]);
-  const [speedScore, setSpeedScore] = useState(42);
+  const [activeTab, setActiveTab] = useState<TabId>('themes');
 
   // Themes state
   const [selectedTheme, setSelectedTheme] = useState<ThemeId>('classic');
@@ -42,53 +30,6 @@ export default function InteractiveShowcase() {
       y: e.clientY - rect.top,
     });
   };
-
-  // Run Speed Audit simulation
-  const runSpeedAudit = () => {
-    if (isAuditing) return;
-    setIsAuditing(true);
-    setAuditProgress(0);
-    setSpeedScore(42);
-    setAuditLogs([]);
-
-    const logs = [
-      '🔍 Auditing bundle files...',
-      '⚡ Optimizing responsive layouts...',
-      '🖼️ Compressing image assets to WebP...',
-      '🛠️ Generating critical path CSS...',
-      '🚀 Code structural health check: Perfect!',
-      '🎉 Audit complete. Mobile score: 99/100!'
-    ];
-
-    let currentStep = 0;
-    const interval = setInterval(() => {
-      setAuditProgress((prev) => {
-        const nextProgress = prev + 1.8;
-        if (nextProgress >= 100) {
-          clearInterval(interval);
-          setSpeedScore(99);
-          setIsAuditing(false);
-          return 100;
-        }
-        return nextProgress;
-      });
-
-      // Add logs sequentially as progress builds
-      const stepIndex = Math.floor((auditProgress / 100) * logs.length);
-      if (stepIndex > currentStep && stepIndex < logs.length) {
-        currentStep = stepIndex;
-        setAuditLogs(prev => [...prev, logs[stepIndex]]);
-      }
-    }, 45);
-  };
-
-  // Initialize with finished audit logs or run automatically on load
-  useEffect(() => {
-    setAuditLogs([
-      '⚡ Standby. Core Web Vitals audit ready.',
-      '👉 Click "Run Speed Audit" to start simulation.'
-    ]);
-  }, []);
 
   // Theme definition mapping
   const themesData = {
@@ -146,18 +87,6 @@ export default function InteractiveShowcase() {
       {/* Simulation Selector Tabs */}
       <div className="flex p-1 bg-neutral-100/80 backdrop-blur-md rounded-full border border-neutral-200/50 w-full max-w-[420px] self-center">
         <button
-          onClick={() => setActiveTab('performance')}
-          className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full text-xs font-bold transition-all cursor-pointer ${
-            activeTab === 'performance'
-              ? 'bg-white text-blue-600 shadow-sm'
-              : 'text-neutral-600 hover:text-neutral-900'
-          }`}
-          id="tab-btn-performance"
-        >
-          <Zap className="h-3.5 w-3.5" />
-          Speed Audit
-        </button>
-        <button
           onClick={() => setActiveTab('themes')}
           className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full text-xs font-bold transition-all cursor-pointer ${
             activeTab === 'themes'
@@ -189,61 +118,6 @@ export default function InteractiveShowcase() {
         {/* Left Side: Simulation Interactive Panel */}
         <div className="md:col-span-6 flex flex-col justify-center space-y-6">
           <AnimatePresence mode="wait">
-            {activeTab === 'performance' && (
-              <motion.div
-                key="perf"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-                transition={{ duration: 0.25 }}
-                className="space-y-4"
-              >
-                <div className="space-y-2">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">Performance Core</span>
-                  <h3 className="text-xl font-bold text-neutral-900 tracking-tight">Zero-Bloat Speed Engine</h3>
-                  <p className="text-xs text-neutral-500 leading-relaxed">
-                    Most standard templates are clogged with excess JavaScript that hurts conversion. Watch our system clean, bundle, and optimize code in real-time to guarantee 99+ Core Web Vitals.
-                  </p>
-                </div>
-
-                <div className="bg-neutral-50 rounded-2xl border border-neutral-200/60 p-4 space-y-3 font-mono text-[10px] leading-relaxed text-neutral-600 h-36 overflow-y-auto scrollbar-thin shadow-inner">
-                  <div className="flex items-center justify-between border-b border-neutral-200/50 pb-2 text-[9px] font-semibold text-neutral-400">
-                    <span>Mago Optimization Engine v1.4</span>
-                    <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  </div>
-                  {auditLogs.map((log, i) => (
-                    <motion.div
-                      initial={{ opacity: 0, x: -4 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      key={i}
-                      className="flex items-start gap-1.5 text-neutral-700"
-                    >
-                      <span className="text-neutral-400 select-none">&gt;</span>
-                      <span>{log}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <button
-                  onClick={runSpeedAudit}
-                  disabled={isAuditing}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 disabled:opacity-75 disabled:hover:bg-blue-600 text-white font-bold py-3 px-6 text-sm tracking-tight transition-all active:translate-y-0.5 shadow-md shadow-blue-600/10 cursor-pointer"
-                >
-                  {isAuditing ? (
-                    <>
-                      <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Auditing System ({Math.round(auditProgress)}%)
-                    </>
-                  ) : (
-                    <>
-                      <Play className="h-4 w-4" />
-                      Run Speed Audit
-                    </>
-                  )}
-                </button>
-              </motion.div>
-            )}
-
             {activeTab === 'themes' && (
               <motion.div
                 key="themes"
@@ -378,68 +252,6 @@ export default function InteractiveShowcase() {
               {/* Dynamic Simulated Interactive Canvas Content */}
               <div className="flex-1 flex flex-col justify-center py-4 space-y-4">
                 <AnimatePresence mode="wait">
-                  {/* Performance Mode Content */}
-                  {activeTab === 'performance' && (
-                    <motion.div
-                      key="preview-perf"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-center space-y-4 flex flex-col items-center justify-center flex-1"
-                    >
-                      {/* Animated circular progress score indicator */}
-                      <div className="relative h-28 w-28 flex items-center justify-center">
-                        <svg className="absolute inset-0 h-full w-full transform -rotate-90">
-                          <circle
-                            cx="56"
-                            cy="56"
-                            r="44"
-                            className="stroke-neutral-200/50 fill-none"
-                            strokeWidth="6"
-                          />
-                          <motion.circle
-                            cx="56"
-                            cy="56"
-                            r="44"
-                            className={`fill-none ${speedScore > 90 ? 'stroke-emerald-500' : 'stroke-orange-500'}`}
-                            strokeWidth="6"
-                            strokeDasharray={`${2 * Math.PI * 44}`}
-                            strokeDashoffset={`${2 * Math.PI * 44 * (1 - (isAuditing ? auditProgress : speedScore) / 100)}`}
-                            transition={{ ease: 'easeOut', duration: 0.1 }}
-                          />
-                        </svg>
-                        
-                        <div className="text-center space-y-0.5">
-                          <span className={`text-3xl font-extrabold tracking-tighter block ${themesData[selectedTheme].textMain}`}>
-                            {Math.round(isAuditing ? auditProgress : speedScore)}
-                          </span>
-                          <span className={`text-[8px] font-bold uppercase tracking-widest block ${speedScore > 90 ? 'text-emerald-500' : 'text-neutral-400'}`}>
-                            {isAuditing ? 'Auditing' : 'Lighthouse'}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Diagnostic score bars */}
-                      <div className="w-full space-y-2 pt-2 px-1">
-                        <div className="bg-white/80 dark:bg-neutral-900/60 backdrop-blur-sm p-2 rounded-xl border border-neutral-200/50 dark:border-neutral-800/40 space-y-1">
-                          <div className="flex justify-between text-[8px] font-bold text-neutral-400">
-                            <span>FIRST CONTENTFUL PAINT</span>
-                            <span className={speedScore > 90 ? 'text-emerald-500' : 'text-orange-500'}>
-                              {isAuditing ? `${(2.1 - (auditProgress/100)*1.7).toFixed(1)}s` : '0.4s'}
-                            </span>
-                          </div>
-                          <div className="w-full bg-neutral-100 dark:bg-neutral-800 h-1 rounded-full overflow-hidden">
-                            <div 
-                              className={`h-full transition-all duration-100 ${speedScore > 90 ? 'bg-emerald-500' : 'bg-orange-500'}`}
-                              style={{ width: isAuditing ? `${auditProgress}%` : '100%' }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-
                   {/* Aesthetics Mode Content */}
                   {activeTab === 'themes' && (
                     <motion.div

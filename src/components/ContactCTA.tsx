@@ -19,6 +19,10 @@ export default function ContactCTA({
   const { t } = useLanguage();
   const whatsappUrl = 'https://wa.me/919099245605?text=Hi%20Mago%20Labs%2C%20I%20would%20like%20to%20discuss%20my%20website.';
   const callUrl = 'tel:+919099245605';
+  // For visitors who don't have a website yet - the primary CTA above assumes
+  // they're reviewing an existing site, so this opens WhatsApp with a message
+  // that fits their actual situation instead.
+  const noWebsiteWhatsappUrl = "https://wa.me/919099245605?text=Hi%20Burhan%2C%20I%20don%27t%20have%20a%20website%20yet%20and%20would%20like%20to%20discuss%20getting%20one%20built.";
 
   const displayTitle = title || t('cta.title');
   const displayDesc = description || t('cta.desc');
@@ -92,15 +96,26 @@ export default function ContactCTA({
             No obligation. No hard sell.
           </p>
 
-          <button
-            onClick={() => {
-              onPageChange('work');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="text-sm font-semibold text-neutral-400 hover:text-white transition-colors cursor-pointer underline underline-offset-4 decoration-neutral-700 hover:decoration-white"
-          >
-            Or view our work first
-          </button>
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            <button
+              onClick={() => {
+                onPageChange('work');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="text-sm font-semibold text-neutral-400 hover:text-white transition-colors cursor-pointer underline underline-offset-4 decoration-neutral-700 hover:decoration-white"
+            >
+              Or view our work first
+            </button>
+            <a
+              href={noWebsiteWhatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent('whatsapp_click', { location: 'contact_cta_banner_no_website' })}
+              className="text-sm font-semibold text-neutral-400 hover:text-white transition-colors cursor-pointer underline underline-offset-4 decoration-neutral-700 hover:decoration-white"
+            >
+              {t('cta.nowebsite')}
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

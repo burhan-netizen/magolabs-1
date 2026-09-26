@@ -34,6 +34,7 @@ import SEO from '../components/SEO';
 import InteractiveShowcase from '../components/InteractiveShowcase';
 import InteractiveParticleMesh from '../components/InteractiveParticleMesh';
 import SiteHealthCheck from '../components/SiteHealthCheck';
+import { WhatsAppLogo } from '../components/BrandIcons';
 import { useLanguage } from '../context/LanguageContext';
 import { trackEvent } from '../utils/analytics';
 
@@ -116,6 +117,10 @@ export default function Home({ onPageChange }: HomeProps) {
     onPageChange(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // For visitors who don't have a website yet - the main CTA ("Get My Website
+  // Reviewed") doesn't fit them, so this opens WhatsApp with a message that does.
+  const noWebsiteWhatsappUrl = "https://wa.me/919099245605?text=Hi%20Burhan%2C%20I%20don%27t%20have%20a%20website%20yet%20and%20would%20like%20to%20discuss%20getting%20one%20built.";
 
   // Structured Data Schema for Local Business and Organization
   const homeSchemas = [
@@ -341,16 +346,29 @@ export default function Home({ onPageChange }: HomeProps) {
                 >
                   {t('hero.cta.primary')}
                 </motion.button>
-                <motion.button
+                <motion.a
+                  href={noWebsiteWhatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('whatsapp_click', { location: 'hero_no_website' })}
                   whileHover={{ y: -3, scale: 1.015, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
                   whileTap={{ scale: 0.985, y: 0 }}
-                  onClick={() => navigateTo('work')}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1 rounded-full bg-white border border-neutral-200 px-8 py-4 text-base font-bold text-neutral-800 hover:bg-neutral-50 hover:border-neutral-300 transition-all shadow-sm hover:shadow-md cursor-pointer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white border border-neutral-200 px-8 py-4 text-base font-bold text-neutral-800 hover:bg-neutral-50 hover:border-neutral-300 transition-all shadow-sm hover:shadow-md cursor-pointer"
                 >
-                  {t('hero.cta.secondary')}
-                  <ArrowRight className="h-4 w-4" />
-                </motion.button>
+                  <WhatsAppLogo className="h-4 w-4 text-emerald-500" />
+                  {t('cta.nowebsite')}
+                </motion.a>
               </motion.div>
+
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
+                onClick={() => navigateTo('work')}
+                className="text-sm font-semibold text-neutral-500 hover:text-neutral-900 transition-colors cursor-pointer underline underline-offset-4 decoration-neutral-300 hover:decoration-neutral-900"
+              >
+                {t('hero.cta.secondary')}
+              </motion.button>
 
               <motion.p
                 initial={{ opacity: 0 }}
@@ -997,19 +1015,6 @@ export default function Home({ onPageChange }: HomeProps) {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808005_1px,transparent_1px),linear-gradient(to_bottom,#80808005_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none" />
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <SiteHealthCheck />
-        </div>
-      </section>
-
-      {/* Why Now Section: the case for not sitting on a weak website, stated
-          plainly rather than with manufactured urgency or invented numbers. */}
-      <section id="why-now-section" className="py-20 bg-neutral-50 font-sans border-t border-neutral-200/50">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 leading-tight">
-            Your website is either working for you or against you.
-          </h2>
-          <p className="text-neutral-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-            Most customers look a business up online before they ever pick up the phone. A site that loads slowly, looks generic, or buries the point creates doubt at exactly the moment you need trust. There is no neutral outcome here: it is either helping people choose you, or quietly talking them out of it.
-          </p>
         </div>
       </section>
 

@@ -40,6 +40,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'cta.btn': 'Get My Website Reviewed',
     'cta.whatsapp': 'Chat on WhatsApp',
     'cta.call': 'Call Burhan Kapasi',
+    'cta.nowebsite': 'No website yet? Let\'s talk',
 
     // Home Page Hero
     'hero.badge': 'High-Performance Web Engineering for Growth',
@@ -90,6 +91,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'cta.btn': 'मेरी वेबसाइट की समीक्षा करवाएं',
     'cta.whatsapp': 'व्हाट्सएप पर चैट करें',
     'cta.call': 'बुर्हान कपासी को कॉल करें',
+    'cta.nowebsite': 'अभी वेबसाइट नहीं है? चलिए बात करते हैं',
 
     // Home Page Hero
     'hero.badge': 'व्यवसायिक विकास के लिए उच्च-प्रदर्शन वेब इंजीनियरिंग',
@@ -140,6 +142,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'cta.btn': 'મારી વેબસાઇટની સમીક્ષા કરાવો',
     'cta.whatsapp': 'વોટ્સએપ પર ચેટ કરો',
     'cta.call': 'બુરહાન કપાસીને કોલ કરો',
+    'cta.nowebsite': 'હજુ વેબસાઇટ નથી? ચાલો વાત કરીએ',
 
     // Home Page Hero
     'hero.badge': 'ધંધાકીય વૃદ્ધિ માટે હાઇ-પરફોર્મન્સ વેબ એન્જિનિયરિંગ',
