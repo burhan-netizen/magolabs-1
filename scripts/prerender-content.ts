@@ -117,7 +117,7 @@ async function waitForContentReady(page: import('puppeteer-core').Page): Promise
       const main = document.querySelector('main');
       return !!main && (main.textContent ?? '').trim().length > 40;
     },
-    { timeout: 25000 }
+    { timeout: 15000 }
   );
 }
 
@@ -220,13 +220,13 @@ async function main() {
             }
           });
 
-          await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+          await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 12000 });
           await waitForContentReady(page);
           await triggerScrollReveal(page);
           await new Promise((r) => setTimeout(r, 200));
           return page.content();
         })(),
-        55000,
+        30000,
         `render ${routePath}`
       );
 
@@ -250,27 +250,24 @@ async function main() {
     // exactly which route was in flight when time disappeared, instead of a long
     // silent gap that has to be guessed at from timestamps around it after the fact.
     console.log(`[prerender-content] Rendering ${routePath}...`);
-    // Vercel's shared, 2-core build machine occasionally makes an otherwise-healthy
-    // route (no hanging request involved) miss its own timeout budget under load -
-    // one retry on a fresh page catches that without masking a genuinely broken route.
+    // No retry: a build was observed where every single route, not just a flaky
+    // one, took 40-100x longer than a healthy local run (Vercel's shared build
+    // machine having a genuinely bad allocation for that run, not a bug in any
+    // particular route). Retrying doubled the cost of that without fixing it, and
+    // pushed total build time past the platform's own build timeout. One capped
+    // attempt per route keeps the worst case bounded and safe - a route that
+    // misses its budget falls back to its already-correct meta-only shell rather
+    // than risking the whole build failing outright.
     try {
       await renderRouteOnce(routePath, url, filePath);
       console.log(`[prerender-content] OK ${routePath} (${Date.now() - startedAt}ms)`);
       return true;
-    } catch (firstErr) {
-      try {
-        await renderRouteOnce(routePath, url, filePath);
-        console.log(`[prerender-content] OK ${routePath} on retry (${Date.now() - startedAt}ms)`);
-        return true;
-      } catch (secondErr) {
-        console.warn(
-          `[prerender-content] Failed to render ${routePath} after 2 attempts (${Date.now() - startedAt}ms), leaving its meta-only shell in place:`,
-          (firstErr as Error).message,
-          '|',
-          (secondErr as Error).message
-        );
-        return false;
-      }
+    } catch (err) {
+      console.warn(
+        `[prerender-content] Failed to render ${routePath} (${Date.now() - startedAt}ms), leaving its meta-only shell in place:`,
+        (err as Error).message
+      );
+      return false;
     }
   }
 
