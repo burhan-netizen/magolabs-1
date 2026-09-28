@@ -201,6 +201,38 @@ export const CASE_STUDIES: CaseStudy[] = [
     logoUrl: '/logos/mnp.png',
     screenshotUrl: '/screenshots/mnp.jpg',
   },
+  {
+    id: 'momrise',
+    clientName: 'Momrise',
+    url: 'https://momrise.vercel.app/',
+    domain: 'momrise.vercel.app',
+    industry: 'Coaching & Digital Products',
+    challenge:
+      "A digital income-coaching guide for busy mothers, needing a sales page that explains the offer clearly to a visitor with very little time to spare.",
+    approach:
+      "A focused landing page structured around the offer, program details, and social proof, built to guide a visitor toward the purchase decision.",
+    outcome:
+      "Momrise has a conversion-focused landing page for its 2 Hour Work From Home Plan, built to turn visitors into paying customers.",
+    scope: ['Landing Page Design', 'Checkout Flow', 'Conversion Copy'],
+    accent: '#EA580C',
+    screenshotUrl: '/screenshots/momrise.jpg',
+  },
+  {
+    id: 'tinyhumansbigfeelings',
+    clientName: 'Tiny Humans, Big Feelings',
+    url: 'https://tinyhumansbigfeelings.vercel.app/',
+    domain: 'tinyhumansbigfeelings.vercel.app',
+    industry: 'Parenting & Digital Products',
+    challenge:
+      "A digital parenting guide of 100 scripted responses for toddler meltdowns, needing a landing page that makes the case for the product to a parent in the middle of a stressful moment.",
+    approach:
+      "A simple, focused sales page built around the core promise and real script examples, with a low-friction, one-time-purchase checkout.",
+    outcome:
+      "Tiny Humans, Big Feelings has a landing page built to turn visiting parents into buyers, with instant PDF delivery on purchase.",
+    scope: ['Landing Page Design', 'Digital Product Page', 'Checkout Integration'],
+    accent: '#DB2777',
+    screenshotUrl: '/screenshots/tinyhumansbigfeelings.jpg',
+  },
 ];
 
 /** Fast lookup by id, used by WorkDetail and the prerender script. */
