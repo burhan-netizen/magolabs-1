@@ -1,0 +1,402 @@
+@import "tailwindcss";
+
+/* Mago Labs brand system (see the brand style guide):
+   Poppins throughout, uppercase mono labels, an ink and paper base,
+   and Signal Amber as the single accent. Never add a second accent. */
+@theme {
+  /* Plain values on purpose: writing these as var(--font-sans, ...) makes the
+     variable refer to itself, which browsers treat as invalid, so the whole
+     site silently falls back to the system font. */
+  --font-sans: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Poppins", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Signal Amber: highlights, tags, primary buttons. Always paired with ink text. */
+  --color-brand: #FFC53D;
+  --color-brand-deep: #F0B323;
+  --color-brand-soft: #FFF4D6;
+  --color-ink: #0D0D0D;
+  --color-paper: #FAFAF8;
+  --color-hairline: #E4E1D9;
+  --color-slate: #7E7E7E;
+
+  /* Warm the neutral scale so greys sit with paper and ink, not cold grey. */
+  --color-neutral-50: #FAFAF8;
+  --color-neutral-100: #F3F1EC;
+  --color-neutral-200: #E4E1D9;
+  --color-neutral-950: #0D0D0D;
+
+  --color-accent: #FFC53D;
+  --color-brand-black: #0D0D0D;
+  --color-light-gray: #FAFAF8;
+  --color-dark-gray: #1A1A1A;
+}
+
+/* Custom baseline styling for Mago Labs design system */
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #FFFFFF;
+  color: #0D0D0D;
+  position: relative;
+}
+
+/* Subtle static film-grain overlay. It used to animate continuously, which kept
+   the browser repainting a full-screen layer on every page for no benefit. */
+body::before {
+  content: "";
+  position: fixed;
+  top: -150%;
+  left: -150%;
+  width: 300%;
+  height: 300%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes grain-animation {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-4%, -10%); }
+  20% { transform: translate(-12%, 5%); }
+  30% { transform: translate(6%, -20%); }
+  40% { transform: translate(-5%, 20%); }
+  50% { transform: translate(-10%, 8%); }
+  60% { transform: translate(12%, 0%); }
+  70% { transform: translate(0%, 12%); }
+  80% { transform: translate(3%, 30%); }
+  90% { transform: translate(-8%, 8%); }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-panel-dark {
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@variant dark (&:where(.dark, .dark *));
+
+/* Night-owl dark mode overrides */
+.dark body {
+  background-color: #1A1A1A !important;
+  color: #F8F9FA !important;
+}
+
+/* Base structural containers and cards */
+.dark .bg-white {
+  background-color: #1F1F1F !important;
+}
+.dark .bg-neutral-50,
+.dark .bg-neutral-50\/20,
+.dark .bg-neutral-50\/25,
+.dark .bg-neutral-50\/50,
+.dark .bg-neutral-100 {
+  background-color: #262626 !important;
+}
+
+/* Borders */
+.dark .border-neutral-100,
+.dark .border-neutral-200,
+.dark .border-neutral-200\/50,
+.dark .border-neutral-200\/60,
+.dark .border-neutral-200\/80 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Typography adjustment for contrast */
+.dark .text-neutral-950 {
+  color: #FFFFFF !important;
+}
+.dark .text-neutral-900,
+.dark .text-neutral-800,
+.dark .text-neutral-700 {
+  color: #F3F4F6 !important;
+}
+.dark .text-neutral-600,
+.dark .text-neutral-500 {
+  color: #D1D5DB !important;
+}
+.dark .text-neutral-400 {
+  color: #9CA3AF !important;
+}
+
+/* Amber-tinted badge and icon tiles: an opaque dark amber so grid lines do not bleed through */
+.dark .bg-brand-soft,
+.dark .bg-brand-soft\/15,
+.dark .bg-brand-soft\/20,
+.dark .bg-brand-soft\/30,
+.dark .bg-brand-soft\/40,
+.dark .bg-brand-soft\/50,
+.dark .bg-brand-soft\/80 {
+  background-color: #2A2414 !important;
+}
+
+/* Glass panels */
+.dark .glass-panel {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Specific component overrides for absolute premium quality */
+.dark #main-navbar.bg-white\/85 {
+  background-color: rgba(26, 26, 26, 0.85) !important;
+}
+.dark #mobile-drawer-overlay {
+  background-color: rgba(26, 26, 26, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark #services-dropdown-menu {
+  background-color: #262626 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark #desktop-nav button:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark #main-navbar button {
+  color: #D1D5DB;
+}
+.dark #main-navbar button:hover {
+  color: #FFFFFF;
+}
+
+/* Keep CTA buttons legible */
+.dark .text-white {
+  color: #FFFFFF !important;
+}
+
+/* Keep the contact inputs readable in dark mode */
+.dark input, 
+.dark textarea,
+.dark select {
+  background-color: #262626 !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark input:focus, 
+.dark textarea:focus,
+.dark select:focus {
+  border-color: #FFC53D !important;
+  outline: none;
+}
+
+/* Background Grid Overlays */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+/* Dots Grid */
+.grid-dots body::after {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  opacity: 0.75;
+}
+.dark.grid-dots body::after {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1.2px, transparent 1.2px);
+  opacity: 0.5;
+}
+
+/* Blueprint Grid */
+.grid-blueprint body::after {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.85;
+}
+.dark.grid-blueprint body::after {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  opacity: 0.6;
+}
+
+/* Clean grid */
+.grid-clean body::after {
+  opacity: 0;
+}
+
+/* Spotlight Cursor Halo */
+#cursor-spotlight-halo {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99;
+  background: radial-gradient(450px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px), color-mix(in srgb, var(--color-brand) 5%, transparent), transparent 80%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.cursor-halo-enabled #cursor-spotlight-halo {
+  opacity: 1;
+}
+.dark #cursor-spotlight-halo {
+  background: radial-gradient(450px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px), color-mix(in srgb, var(--color-brand) 8%, transparent), transparent 80%);
+}
+
+/* Infinite logo marquee: two copies of the track sit side by side and scroll
+   left together, when the first copy fully exits, the second is in the exact
+   same position, so the loop reads as seamless. Pauses on hover so visitors
+   can actually read a logo they stop to look at. */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.logo-marquee-track {
+  animation: marquee-scroll 28s linear infinite;
+  width: max-content;
+}
+.logo-marquee-track:hover {
+  animation-play-state: paused;
+}
+/* Fixed-pixel (not %) fade: a percentage-based stop eats roughly a whole
+   logo card at each edge on narrow/mobile widths, since the fade width
+   scales with the container instead of staying a thin edge vignette. */
+.logo-marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+  mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+}
+
+/* Styling for rendered Contentful "Body" rich text on the Insights detail page */
+.insight-body > * + * {
+  margin-top: 1.25em;
+}
+.insight-body h1, .insight-body h2, .insight-body h3 {
+  font-weight: 800;
+  color: #171717;
+  line-height: 1.3;
+}
+.dark .insight-body h1, .dark .insight-body h2, .dark .insight-body h3 {
+  color: #F8F9FA;
+}
+.insight-body h2 { font-size: 1.5em; }
+.insight-body h3 { font-size: 1.25em; }
+.insight-body a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--color-brand);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.insight-body ul, .insight-body ol {
+  padding-left: 1.5em;
+}
+.insight-body ul { list-style: disc; }
+.insight-body ol { list-style: decimal; }
+.insight-body blockquote {
+  border-left: 3px solid var(--color-brand);
+  padding-left: 1em;
+  font-style: italic;
+  color: #525252;
+}
+.insight-body img {
+  border-radius: 1rem;
+  width: 100%;
+}
+.insight-body code {
+  background: #F3F4F6;
+  padding: 0.15em 0.4em;
+  border-radius: 0.35em;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+.dark .insight-body code {
+  background: #262626;
+}
+
+
+
+
+/* Brand label: uppercase mono with an amber square, used above section headings. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  text-align: left;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #5C5C5C;
+}
+.eyebrow::before {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--color-brand);
+}
+.eyebrow-on-dark,
+.dark .eyebrow {
+  color: #A8A6A0;
+}
+
+/* Brand highlight: a solid amber marker block behind ink text. */
+.marker {
+  background: var(--color-brand);
+  color: var(--color-ink);
+  padding: 0 0.14em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Dark mode: tinted neutral panels (any opacity variant) become a dark surface,
+   so light-on-light text never happens. */
+.dark [class~="bg-neutral-100/40"],
+.dark [class~="bg-neutral-100/80"],
+.dark [class~="bg-neutral-50/25"],
+.dark [class~="bg-neutral-50/50"] {
+  background-color: #262626 !important;
+}
+
+/* Dark mode: amber buttons always keep ink text, including inside the navbar. */
+.dark #main-navbar .bg-brand,
+.dark .bg-brand.text-ink {
+  color: var(--color-ink) !important;
+}
+
+/* Pricing page: dark mode surfaces */
+.dark .pricing-surface {
+  background-color: #1F1F1F !important;
+}
+.dark .pricing-chip {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+.dark .pricing-check {
+  background-color: #FFC53D !important;
+}
+.dark .pricing-btn-ink {
+  background-color: #F8F9FA !important;
+  color: #0D0D0D !important;
+}
+
+/* Prices: hide the rupee price for visitors outside India until the dollar price
+   replaces it (see src/hooks/useCurrency.ts). */
+html[data-currency="usd"] .cur-inr {
+  visibility: hidden;
+}
