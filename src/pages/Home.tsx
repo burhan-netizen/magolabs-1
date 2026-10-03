@@ -1,4 +1,4 @@
-import { ArrowRight, Plus, Minus } from 'lucide-react';
+import { ArrowRight, Check, Plus, Minus, X } from 'lucide-react';
 import { useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { PageId } from '../types';
@@ -156,6 +156,17 @@ const QUOTES = [
   { quote: 'Absolutely professional people, know their work in best manner. I will absolutely recommend them for website related work.', name: 'Dr. Mihir Shah', company: 'Smile Care Clinic' },
   { quote: 'Gorgeous website and amazing service from start to finish. Exactly what we needed for the business.', name: 'Harshit Chopra', company: 'Santosh Timbers' },
 ];
+
+// "With Mago Labs" against the usual agency: rows arrive one after another.
+const versusList = { hidden: {}, visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } } };
+const versusRow = {
+  hidden: { opacity: 0, x: -16 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.2, 0.7, 0.2, 1] as const } },
+};
+const versusTick = {
+  hidden: { scale: 0 },
+  visible: { scale: 1, transition: { type: 'spring' as const, stiffness: 420, damping: 16 } },
+};
 
 const WITH_MAGO = [
   'A design made for your business, from a blank canvas.',
@@ -711,40 +722,86 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-2xl bg-neutral-950 text-white p-8 sm:p-10">
-              <h3 className="flex items-center gap-1 text-2xl font-bold tracking-tight">
-                With
-                {/* The logo file has empty space around the wordmark, which the negative margins cancel. */}
-                <img
-                  src="/logo.png"
-                  alt="Mago Labs"
-                  width={99}
-                  height={66}
-                  className="h-[66px] w-auto -my-6 translate-y-[3px] invert select-none"
-                />
-              </h3>
-              <ul className="mt-7">
-                {WITH_MAGO.map((line) => (
-                  <li key={line} className="flex gap-3.5 py-4 border-t border-white/10 text-sm sm:text-base text-neutral-100 leading-relaxed">
-                    <span className="mt-2 h-2 w-2 shrink-0 bg-brand" aria-hidden="true" />
-                    {line}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* With Mago Labs: the lit, raised card */}
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, ease: [0.2, 0.7, 0.2, 1] }}
+              className="relative"
+            >
+              <div className="versus-glow" aria-hidden="true" />
+              <div className="versus-card glow-follow h-full overflow-hidden rounded-3xl bg-neutral-950 text-white border border-brand/50 p-8 sm:p-10 shadow-2xl shadow-neutral-900/25">
+                <div className="relative z-10">
+                  <h3 className="flex items-center gap-1 text-2xl font-bold tracking-tight">
+                    With
+                    {/* The logo file has empty space around the wordmark, which the negative margins cancel. */}
+                    <img
+                      src="/logo.png"
+                      alt="Mago Labs"
+                      width={99}
+                      height={66}
+                      className="h-[66px] w-auto -my-6 translate-y-[3px] invert select-none"
+                    />
+                  </h3>
+                  <motion.ul
+                    variants={versusList}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-80px' }}
+                    className="mt-7"
+                  >
+                    {WITH_MAGO.map((line) => (
+                      <motion.li key={line} variants={versusRow} className="versus-row flex items-start gap-3.5 py-4 border-t border-white/10 text-sm sm:text-base text-neutral-100 leading-relaxed">
+                        <motion.span variants={versusTick} className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-ink" aria-hidden="true">
+                          <Check className="h-3 w-3" strokeWidth={3.5} />
+                        </motion.span>
+                        <span>{line}</span>
+                      </motion.li>
+                    ))}
+                  </motion.ul>
+                </div>
+              </div>
+            </motion.div>
 
-            <div className="rounded-2xl bg-white border border-neutral-200 p-8 sm:p-10">
+            {/* The usual agency: flat and quiet on purpose */}
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, delay: 0.15, ease: [0.2, 0.7, 0.2, 1] }}
+              className="h-full rounded-3xl bg-white border border-neutral-200 p-8 sm:p-10"
+            >
               <h3 className="text-2xl font-semibold tracking-tight text-neutral-500">With the usual agency</h3>
-              <ul className="mt-7">
+              <motion.ul
+                variants={versusList}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-80px' }}
+                className="mt-7"
+              >
                 {THE_USUAL.map((line) => (
-                  <li key={line} className="flex gap-3.5 py-4 border-t border-neutral-200 text-sm sm:text-base text-neutral-600 leading-relaxed">
-                    <span className="mt-[0.7rem] h-px w-2 shrink-0 bg-neutral-400" aria-hidden="true" />
-                    {line}
-                  </li>
+                  <motion.li key={line} variants={versusRow} className="flex items-start gap-3.5 py-4 border-t border-neutral-200 text-sm sm:text-base text-neutral-500 leading-relaxed">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-400" aria-hidden="true">
+                      <X className="h-3 w-3" strokeWidth={3} />
+                    </span>
+                    <span>{line}</span>
+                  </motion.li>
                 ))}
-              </ul>
-            </div>
+              </motion.ul>
+            </motion.div>
+
+            <motion.span
+              initial={{ opacity: 0, scale: 0.4 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ type: 'spring', stiffness: 320, damping: 18, delay: 0.45 }}
+              className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 h-12 w-12 items-center justify-center rounded-full bg-brand text-ink font-mono text-xs font-bold ring-8 ring-neutral-50 dark:ring-[#262626]"
+              aria-hidden="true"
+            >
+              VS
+            </motion.span>
           </div>
         </div>
       </section>

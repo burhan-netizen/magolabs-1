@@ -760,6 +760,39 @@ html.motion-ok.reveal-all main section ~ section :is(h2, .eyebrow) {
   .cta-aurora { animation: none; }
 }
 
+/* Home: "With Mago Labs" card. A breathing glow behind it, a lift on hover, and
+   rows that nudge forward under the pointer. */
+.versus-glow {
+  position: absolute;
+  inset: 8% -3%;
+  border-radius: 3rem;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 197, 61, 0.5), transparent);
+  filter: blur(48px);
+  animation: cardGlow 5s ease-in-out infinite alternate;
+}
+.versus-card {
+  transition: translate 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.4s ease;
+}
+.versus-row > span:last-child {
+  transition: translate 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.3s ease;
+}
+@media (hover: hover) {
+  .versus-card:hover {
+    translate: 0 -6px;
+    border-color: var(--color-brand);
+  }
+  .versus-row:hover > span:last-child {
+    translate: 4px 0;
+    color: #FFFFFF;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .versus-glow { animation: none; }
+  .versus-card,
+  .versus-row > span:last-child { transition: none; translate: none !important; }
+}
+
 /* Work page ---------------------------------------------------------- */
 
 /* Featured stories: a normal list by default; the script adds is-stacking on
