@@ -359,7 +359,10 @@ body::after {
 
 /* Brand highlight: a solid amber marker block behind ink text. */
 .marker {
-  background: var(--color-brand);
+  /* The block is drawn only behind the letters (cap top to descender). A plain
+     background fills the font's full line box, which is taller than the heading's
+     tight line spacing, so it ran into the line above. */
+  background: linear-gradient(var(--color-brand), var(--color-brand)) no-repeat 0 0.27em / 100% 1.04em;
   color: var(--color-ink);
   padding: 0 0.14em;
   -webkit-box-decoration-break: clone;
