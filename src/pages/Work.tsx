@@ -62,7 +62,7 @@ export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
           <div className="mx-auto max-w-3xl space-y-5">
             <span className="eyebrow eyebrow-on-dark">Client work</span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.08]">
-              Real businesses. <span className="marker inline-block whitespace-nowrap">Real results.</span>
+              Real businesses. <span className="marker whitespace-nowrap">Real results.</span>
             </h1>
             <p className="text-neutral-300 text-base sm:text-lg leading-relaxed">
               Some had no website. Some had one that was quietly costing them clients. Here is what we built, and what changed.
