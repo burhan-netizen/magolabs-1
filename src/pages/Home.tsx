@@ -699,7 +699,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
         </div>
       </section>
 
-      {/* 5. The work behind the results: every website, as a wall that comes together */}
+      {/* 5. The work behind the results: a selection of websites, as a wall that comes together */}
       <WorkWall onOpenWork={() => navigateTo('work')} />
 
       {/* What clients say */}

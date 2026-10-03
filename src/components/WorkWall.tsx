@@ -37,7 +37,7 @@ const clamp = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 /**
- * Home page: every website we have built, as one wall.
+ * Home page: a selection of the websites we have built, as one wall.
  *
  * It starts as a tilted wall of screenshots hanging in space. As the visitor
  * scrolls, the section holds in place, the view swings round to face the wall and
@@ -117,10 +117,10 @@ export default function WorkWall({ onOpenWork }: WorkWallProps) {
           <div className="max-w-3xl space-y-4">
             <span className="eyebrow eyebrow-on-dark">Our work</span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-              Every website we have built.
+              A few of the websites we have built.
             </h2>
             <p className="text-base sm:text-lg text-neutral-300 leading-relaxed">
-              {SITES.length} live websites, each designed and coded from a blank page. Open any of them.
+              A selection of our work for clinics, CA firms, manufacturers and more. Each one designed and coded from a blank page. Open any of them.
             </p>
           </div>
           <PageLink
