@@ -207,6 +207,46 @@ export const CASE_STUDIES: CaseStudy[] = [
     logoUrl: '/logos/prabhakarprocessors.png',
     screenshotUrl: '/screenshots/prabhakarprocessors.jpg',
   },
+  {
+    id: 'momrise',
+    clientName: 'Momrise',
+    url: 'https://momrise.vercel.app',
+    domain: 'momrise.vercel.app',
+    industry: 'Digital Product Sales Page',
+    business:
+      "Momrise is our own brand for busy mothers building an income from home. Its first product is The 2 Hour Work From Home Plan.",
+    challenge:
+      "A digital product has no salesperson. The page has to explain the plan, earn trust and take the order on its own, for a visitor who arrives cold from social media, usually on a phone.",
+    approach:
+      "We built one long sales page around a single promise: a flexible income in two focused hours a day. Each section answers the next question a busy mother would ask, and each one ends with the same clear action.",
+    build:
+      "A mobile-first, single-page sales site in the Momrise brand we created: navy, orange and peach, with a serif headline for warmth.",
+    outcome:
+      "Momrise has a sales page built to turn social media visitors into buyers without anyone on a call, and a brand system ready for the products that follow.",
+    scope: ['Sales Page', 'Brand Identity', 'Conversion Copywriting'],
+    accent: '#FF6321',
+    screenshotUrl: '/screenshots/momrise.jpg',
+  },
+  {
+    id: 'tinyhumans',
+    clientName: 'Tiny Humans, Big Feelings',
+    url: 'https://tinyhumansbigfeelings.vercel.app',
+    domain: 'tinyhumansbigfeelings.vercel.app',
+    industry: 'Digital Product Sales Page',
+    business:
+      "A practical guide for parents of toddlers and preschoolers: 100 exact scripts for meltdowns and everyday battles. One of our own products.",
+    challenge:
+      "Tired parents do not want theory. The page had to show within seconds that this guide gives them the exact words to say, and make buying a one-tap decision.",
+    approach:
+      "We opened with the parent's own frustration, then let the product prove itself: sample scripts free on the page, reviews and a short FAQ, all before asking for the sale.",
+    build:
+      "A single-page sales site with free sample scripts, reviews, an FAQ and instant checkout for the PDF.",
+    outcome:
+      "A parent can try real scripts before buying and check out in one step, on a page written in the same calm voice as the guide.",
+    scope: ['Sales Page', 'Conversion Copywriting', 'Checkout'],
+    accent: '#E2674E',
+    screenshotUrl: '/screenshots/tinyhumans.jpg',
+  },
 ];
 
 /** Fast lookup by id, used by WorkDetail and the prerender script. */

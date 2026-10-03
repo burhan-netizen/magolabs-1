@@ -64,7 +64,7 @@ export default function Footer({ onPageChange }: FooterProps) {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-50 border border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 hover:border-neutral-300 dark:bg-neutral-900 dark:border-neutral-800 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-neutral-800 dark:hover:border-neutral-700 transition-all"
+                    className="magnetic flex h-10 w-10 items-center justify-center rounded-full bg-neutral-50 border border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 hover:border-neutral-300 dark:bg-neutral-900 dark:border-neutral-800 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-neutral-800 dark:hover:border-neutral-700 transition-all"
                     aria-label={social.label}
                   >
                     <Icon className="h-4 w-4" />
@@ -232,6 +232,11 @@ export default function Footer({ onPageChange }: FooterProps) {
             </PageLink>
           </div>
         </div>
+      </div>
+
+      {/* Giant outlined wordmark that rises in as the footer scrolls into view */}
+      <div className="overflow-hidden pt-10" data-scroll-progress aria-hidden="true">
+        <span className="foot-giant">Magolabs</span>
       </div>
     </footer>
   );

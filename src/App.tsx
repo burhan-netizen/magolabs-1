@@ -1,5 +1,6 @@
 import { StrictMode, useState, useEffect, lazy, Suspense } from 'react';
-import { motion, AnimatePresence, MotionConfig } from 'motion/react';
+import { motion, AnimatePresence, MotionConfig, useScroll, useSpring } from 'motion/react';
+import { initAmbientEffects, refreshAmbientEffects } from './utils/ambient';
 import { PageId } from './types';
 import { lazyPage, LazyPage } from './utils/lazyPage';
 import { updateDocumentSEO } from './utils/seo';
@@ -167,6 +168,22 @@ function AppContent({ initialPath }: AppProps) {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // Site-wide motion touches (button ripple, pointer light, heading reveals).
+  useEffect(() => {
+    initAmbientEffects();
+  }, []);
+  useEffect(() => {
+    // Watch the new page's headings once it has rendered (and again after the
+    // page fade, for code-split pages that arrive a moment later).
+    refreshAmbientEffects();
+    const timers = [120, 500, 1200].map((ms) => window.setTimeout(refreshAmbientEffects, ms));
+    return () => timers.forEach((id) => window.clearTimeout(id));
+  }, [currentPage, currentSlug]);
+
+  // Reading progress bar along the top of the page.
+  const { scrollYProgress } = useScroll();
+  const progressScale = useSpring(scrollYProgress, { stiffness: 140, damping: 28, mass: 0.3 });
+
   useEffect(() => {
     updateDocumentSEO(currentPage);
   }, [currentPage]);
@@ -242,6 +259,8 @@ function AppContent({ initialPath }: AppProps) {
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-[#1A1A1A] text-neutral-900 dark:text-[#F8F9FA] selection:bg-brand selection:text-ink transition-colors duration-300">
+      <motion.div className="scroll-progress" style={{ scaleX: progressScale }} aria-hidden="true" />
+
       {/* Dynamic Header */}
       <Navbar
         currentPage={currentPage}

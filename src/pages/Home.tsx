@@ -5,7 +5,7 @@ import { PageId } from '../types';
 import SEO from '../components/SEO';
 import PageLink from '../components/PageLink';
 import LeadForm, { LeadMode } from '../components/LeadForm';
-import TiltCard from '../components/TiltCard';
+import HeroShowcase from '../components/HeroShowcase';
 import CountUp from '../components/CountUp';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import { useLanguage } from '../context/LanguageContext';
@@ -340,7 +340,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       {/* 1. Hero: the promise, one action, and proof beside it. Dark, with glass cards.
           The text has no entrance animation: it is in the page HTML and should be
           visible the instant it paints. */}
-      <section id="hero" className="relative pt-32 pb-14 md:pt-40 md:pb-16 bg-neutral-950 text-[#ffffff] overflow-hidden font-sans">
+      <section id="hero" className="glow-follow relative pt-32 pb-14 md:pt-40 md:pb-16 bg-neutral-950 text-[#ffffff] overflow-hidden font-sans">
         {/* Background: a faint grid and one amber glow that drifts on scroll */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:44px_44px] pointer-events-none [mask-image:linear-gradient(180deg,black_0%,black_70%,transparent_100%)]" />
         <motion.div
@@ -390,49 +390,11 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
               </p>
             </div>
 
-            {/* Proof: a real client site that tilts toward the pointer, then three plain facts */}
-            <motion.div style={{ y: cardsY }} className="lg:col-span-6 space-y-5">
-              <TiltCard>
-                <PageLink
-                  href={getWorkDetailPath('drmihirshah')}
-                  onNavigate={() => onOpenCaseStudy('drmihirshah')}
-                  aria-label="Read the Dr. Mihir Shah Smile Care Clinic case study"
-                  className="group block"
-                >
-                  <figure className="relative">
-                    <div className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-xl shadow-[0_30px_80px_rgba(0,0,0,0.55)] overflow-hidden">
-                      <div className="flex items-center gap-1.5 px-4 py-3 border-b border-white/10">
-                        <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
-                        <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
-                        <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
-                        <span className="ml-3 font-mono text-[11px] text-neutral-400 truncate">drmihirshahsmilecareclinic.com</span>
-                      </div>
-                      <img
-                        src="/screenshots/drmihirshah.jpg"
-                        alt="The website Mago Labs built for Dr. Mihir Shah Smile Care Clinic"
-                        width={900}
-                        height={430}
-                        fetchPriority="high"
-                        decoding="async"
-                        className="block w-full h-auto"
-                      />
-                    </div>
+            {/* Proof: real client websites on a 3D rail, then three plain facts */}
+            <motion.div style={{ y: cardsY }} className="lg:col-span-6 space-y-7">
+              <HeroShowcase onOpenCaseStudy={onOpenCaseStudy} />
 
-                    <figcaption
-                      className="relative z-10 -mt-9 mx-4 sm:mx-8 rounded-2xl bg-brand text-ink p-5 sm:p-6 flex items-center justify-between gap-4 shadow-[0_18px_40px_rgba(0,0,0,0.45)]"
-                      style={{ transform: 'translateZ(40px)' }}
-                    >
-                      <div>
-                        <p className="text-2xl sm:text-3xl font-bold tracking-tight leading-none">25 to 58 patients a day</p>
-                        <p className="mt-2 text-sm font-medium">Within two months of launch. Dr. Mihir Shah Smile Care Clinic.</p>
-                      </div>
-                      <ArrowRight className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
-                    </figcaption>
-                  </figure>
-                </PageLink>
-              </TiltCard>
-
-              <dl className="grid grid-cols-3 divide-x divide-white/10 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl py-5 text-center">
+              <dl className="grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-6 text-center">
                 {HERO_FACTS.map((fact) => (
                   <div key={fact.label} className="px-2">
                     <dd className="text-xl sm:text-2xl font-bold text-[#ffffff]">{fact.value}</dd>

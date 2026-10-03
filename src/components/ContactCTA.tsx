@@ -23,7 +23,8 @@ export default function ContactCTA({
   const displayDesc = description || t('cta.desc');
 
   return (
-    <section id="reusable-contact-cta" className="relative py-24 overflow-hidden bg-neutral-950 text-white font-sans">
+    <section id="reusable-contact-cta" className="glow-follow relative py-24 overflow-hidden bg-neutral-950 text-white font-sans">
+      <div className="cta-aurora" aria-hidden="true" />
       {/* Decorative gradient overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,197,61,0.08),transparent_50%)] pointer-events-none" />
       <div className="absolute -bottom-48 -left-48 h-96 w-96 rounded-full bg-brand/5 blur-3xl pointer-events-none" />

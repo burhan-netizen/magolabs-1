@@ -400,3 +400,324 @@ body::after {
 html[data-currency="usd"] .cur-inr {
   visibility: hidden;
 }
+
+/* Hero showcase: client websites on a 3D rail (src/components/HeroShowcase.tsx).
+   Cards move with transform, opacity and filter only. */
+.hero-showcase {
+  position: relative;
+  outline: none;
+  user-select: none;
+  touch-action: pan-y;
+}
+.hero-showcase-stage {
+  position: relative;
+  height: clamp(200px, 50vw, 250px);
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+  transform: translateX(var(--hs-shift, -90px));
+}
+.hero-showcase-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 420px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #171717;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  will-change: transform, opacity, filter;
+}
+.hero-showcase-card img {
+  pointer-events: none;
+}
+.hero-showcase-caption {
+  position: relative;
+  z-index: 3000;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.hero-showcase-dot {
+  width: 22px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.hero-showcase-dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+  transition: background 0.2s ease, width 0.2s ease;
+}
+.hero-showcase-dot.is-active::before {
+  width: 20px;
+  background: #FFC53D;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-showcase-card { will-change: auto; }
+  .hero-showcase-dot::before { transition: none; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Site-wide motion (see src/utils/ambient.ts). transform, opacity and  */
+/* filter only, and all of it off under prefers-reduced-motion.         */
+/* ------------------------------------------------------------------ */
+
+/* Primary buttons: a light streak sweeps across on hover, the face sinks on
+   press, and a ripple starts where the pointer landed. */
+a.bg-brand.rounded-full,
+button.bg-brand.rounded-full {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+a.bg-brand.rounded-full::before,
+button.bg-brand.rounded-full::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.45) 47%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.45) 53%, transparent 65%);
+  transform: translateX(-130%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+a.bg-brand.rounded-full:hover::before,
+a.bg-brand.rounded-full:focus-visible::before,
+button.bg-brand.rounded-full:hover::before,
+button.bg-brand.rounded-full:focus-visible::before {
+  opacity: 1;
+  animation: metalSweep 0.85s ease;
+}
+@keyframes metalSweep {
+  from { transform: translateX(-130%); }
+  to { transform: translateX(130%); }
+}
+a.bg-brand.rounded-full:active,
+button.bg-brand.rounded-full:active {
+  transform: translateY(1px) scale(0.985);
+}
+.btn-ripple {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 70%);
+  animation: btnRipple 0.6s ease forwards;
+}
+@keyframes btnRipple {
+  from { transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
+  to { transform: translate(-50%, -50%) scale(5); opacity: 0; }
+}
+
+/* Dark sections: a soft amber light follows the pointer. */
+.glow-follow {
+  position: relative;
+}
+.glow-follow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(520px circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 197, 61, 0.11), transparent 65%);
+}
+.glow-follow[data-glow="on"]::after {
+  opacity: 1;
+}
+
+/* Small icon buttons that lean toward the pointer. */
+.magnetic {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+/* Section headings rise into place as they scroll into view. The hidden state
+   only applies once the head script has confirmed motion is welcome. */
+html.motion-ok main section ~ section :is(h2, .eyebrow) {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+html.motion-ok main section ~ section h2 {
+  transition-delay: 0.08s;
+}
+html.motion-ok main section ~ section :is(h2, .eyebrow)[data-inview],
+html.motion-ok.reveal-all main section ~ section :is(h2, .eyebrow) {
+  opacity: 1;
+  transform: none;
+}
+
+/* Closing call to action: a slow breathing glow. */
+.cta-aurora {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 70vw;
+  height: 50vh;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 197, 61, 0.22) 0%, rgba(255, 197, 61, 0.06) 45%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: auroraBreathe 8s ease-in-out infinite alternate;
+}
+@keyframes auroraBreathe {
+  from { transform: translate(-50%, -50%) scale(1); opacity: 0.55; }
+  to { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
+}
+
+/* Footer: a giant wordmark that rises and fades in as the footer arrives. */
+.foot-giant {
+  display: block;
+  text-align: center;
+  font-weight: 800;
+  font-size: 17vw;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(13, 13, 13, 0.2);
+  opacity: var(--p, 0);
+  transform: translateY(calc((1 - var(--p, 0)) * 6vh)) scale(calc(0.9 + 0.1 * var(--p, 0)));
+  transform-origin: bottom center;
+}
+.dark .foot-giant {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.22);
+}
+
+/* Reading progress along the very top of the page. */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 60;
+  background: #FFC53D;
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.bg-brand.rounded-full::before,
+  button.bg-brand.rounded-full::before,
+  .btn-ripple,
+  .glow-follow::after,
+  .scroll-progress { display: none; }
+  a.bg-brand.rounded-full:active,
+  button.bg-brand.rounded-full:active { transform: none; }
+  .magnetic { transition: none; }
+  .cta-aurora { animation: none; }
+  .foot-giant { opacity: 0.9; transform: none; }
+}
+
+/* Work page ---------------------------------------------------------- */
+
+/* Featured stories: a normal list by default; the script adds is-stacking on
+   wide screens and then drives each card's transform as the page scrolls. */
+.work-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.work-stack.is-stacking {
+  display: block;
+}
+.work-stack.is-stacking .work-stack-card {
+  margin-bottom: 5rem;
+  transform-origin: top center;
+  backface-visibility: hidden;
+  will-change: transform, filter;
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.35);
+}
+.stack-end {
+  height: 1px;
+  margin-top: 10vh;
+}
+
+/* Project cards lean toward the pointer, with a soft light under it. */
+.work-card {
+  position: relative;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+.work-card:hover {
+  box-shadow: 0 28px 60px -28px rgba(0, 0, 0, 0.4);
+  border-color: rgba(13, 13, 13, 0.35);
+}
+.work-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 197, 61, 0.16), transparent 60%);
+}
+.work-card:hover::after {
+  opacity: 1;
+}
+.work-filter-idle {
+  background: rgba(13, 13, 13, 0.05);
+}
+.dark .work-filter-idle {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Work hero: two rows of client websites drifting behind the headline. */
+.work-wall {
+  position: absolute;
+  inset: -20% -10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  transform: rotate(-7deg) scale(1.1);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.work-wall-row {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  animation: workWall 70s linear infinite;
+}
+.work-wall-row.is-reverse {
+  animation-direction: reverse;
+  animation-duration: 85s;
+}
+.work-wall-row img {
+  width: 380px;
+  aspect-ratio: 900 / 430;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+@keyframes workWall {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-card { transform: none; transition: none; }
+  .work-card::after { display: none; }
+  .work-wall-row { animation: none; }
+}
