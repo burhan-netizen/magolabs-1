@@ -233,11 +233,6 @@ export default function Footer({ onPageChange }: FooterProps) {
           </div>
         </div>
       </div>
-
-      {/* Giant outlined wordmark that rises in as the footer scrolls into view */}
-      <div className="overflow-hidden pt-10" data-scroll-progress aria-hidden="true">
-        <span className="foot-giant">Magolabs</span>
-      </div>
     </footer>
   );
 }
