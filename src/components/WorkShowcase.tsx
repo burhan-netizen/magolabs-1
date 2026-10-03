@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useScrollDepth } from '../hooks/useScrollDepth';
+import { useStickyStack } from '../hooks/useStickyStack';
 import { screenshotSrcSet } from '../utils/images';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
@@ -28,7 +28,7 @@ const FILTERS = ['All', 'CA firms', 'Consulting', 'Our own products'];
 /** A screenshot inside a slim browser frame. */
 function BrowserFrame({ project, eager }: { project: CaseStudy; eager?: boolean }) {
   return (
-    <div className="depth-frame relative overflow-hidden rounded-xl border border-black/10 bg-white shadow-[0_24px_60px_-20px_rgba(0,0,0,0.35)]">
+    <div className="overflow-hidden rounded-xl border border-black/10 bg-white shadow-[0_24px_60px_-20px_rgba(0,0,0,0.35)]">
       <div className="flex items-center gap-1.5 border-b border-black/5 bg-[#f4f4f2] px-3.5 py-2.5">
         <span className="h-2 w-2 rounded-full bg-black/15" />
         <span className="h-2 w-2 rounded-full bg-black/15" />
@@ -44,10 +44,8 @@ function BrowserFrame({ project, eager }: { project: CaseStudy; eager?: boolean 
         height={430}
         loading={eager ? 'eager' : 'lazy'}
         decoding="async"
-        className="depth-shot block aspect-[900/430] w-full object-cover object-top"
+        className="block aspect-[900/430] w-full object-cover object-top"
       />
-      {/* A streak of light that crosses the screenshot once, as the card arrives (phones) */}
-      <span className="depth-sheen" aria-hidden="true" />
     </div>
   );
 }
@@ -60,11 +58,11 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
   const stackRef = useRef<HTMLDivElement>(null);
   useScrollStack(stackRef, '.work-stack-card', { stackDistance: 22, scale: 0.04, blur: 1.2 });
 
-  // Phones and tablets: no pointer and no room to stack, so the cards get depth
-  // from the scroll itself.
+  // Phones and tablets get the same deck, pinned by the browser so it stays smooth
+  // under a finger. The grid below joins in where it is a single column.
   const gridRef = useRef<HTMLDivElement>(null);
-  useScrollDepth(stackRef, '.work-stack-card');
-  useScrollDepth(gridRef, '.work-card');
+  useStickyStack(stackRef, '.work-stack-card', { maxWidth: 1023, top: 76, offset: 8 });
+  useStickyStack(gridRef, '.work-grid-item', { maxWidth: 639, top: 76, offset: 8 });
 
   const [filter, setFilter] = useState('All');
 
@@ -90,7 +88,7 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
             {featured.map((project, idx) => (
               <article key={project.id} className="work-stack-card grid grid-cols-1 lg:grid-cols-12 overflow-hidden rounded-3xl border border-neutral-200 bg-white">
                 <div
-                  className="lg:col-span-7 flex items-center p-6 sm:p-10"
+                  className="lg:col-span-7 flex items-center p-3 sm:p-10"
                   style={{ background: `linear-gradient(135deg, ${project.accent}26 0%, ${project.accent}0d 55%, transparent 100%)` }}
                 >
                   <PageLink
@@ -103,7 +101,8 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                   </PageLink>
                 </div>
 
-                <div className="lg:col-span-5 flex flex-col gap-5 p-6 sm:p-10">
+                {/* Kept compact on phones, so a whole card fits on screen and can join the deck */}
+                <div className="lg:col-span-5 flex flex-col gap-3 sm:gap-5 p-4 sm:p-10">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-bold uppercase tracking-[0.16em]" style={{ color: project.accent }}>
                       {project.industry}
@@ -112,28 +111,28 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                       0{idx + 1} / 0{featured.length}
                     </span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 leading-tight">{project.clientName}</h3>
+                  <h3 className="text-xl sm:text-3xl font-bold tracking-tight text-neutral-900 leading-tight">{project.clientName}</h3>
 
                   {project.results ? (
-                    <dl className="flex flex-wrap gap-2.5">
+                    <dl className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2.5">
                       {project.results.slice(0, 2).map((r) => (
-                        <div key={r.label} className="rounded-xl bg-neutral-950 px-4 py-3">
-                          <dd className="text-2xl font-bold leading-none text-brand">{r.value}</dd>
+                        <div key={r.label} className="rounded-xl bg-neutral-950 px-3 py-2.5 sm:px-4 sm:py-3">
+                          <dd className="text-xl sm:text-2xl font-bold leading-none text-brand">{r.value}</dd>
                           <dt className="mt-1.5 text-[10px] font-medium uppercase tracking-wider text-neutral-300">{r.label}</dt>
                         </div>
                       ))}
                     </dl>
                   ) : (
-                    <ul className="flex flex-wrap gap-2">
+                    <ul className="flex flex-nowrap overflow-hidden sm:flex-wrap gap-2">
                       {project.scope.map((s) => (
-                        <li key={s} className="rounded-full border border-neutral-200 px-3 py-1 text-xs font-medium text-neutral-600">{s}</li>
+                        <li key={s} className="shrink-0 whitespace-nowrap rounded-full border border-neutral-200 px-3 py-1 text-xs font-medium text-neutral-600">{s}</li>
                       ))}
                     </ul>
                   )}
 
-                  <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">{project.outcome}</p>
+                  <p className="line-clamp-2 sm:line-clamp-none [@media(max-width:380px)]:hidden text-sm sm:text-base text-neutral-600 leading-relaxed">{project.outcome}</p>
 
-                  <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-2">
+                  <div className="mt-auto flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-3 sm:pt-2">
                     <PageLink
                       href={getWorkDetailPath(project.id)}
                       onNavigate={() => onOpenCaseStudy(project.id)}
@@ -147,7 +146,8 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors"
                     >
-                      Visit the live site <ArrowUpRight className="h-4 w-4" />
+                      <span className="sm:hidden">Live site</span>
+                      <span className="hidden sm:inline">Visit the live site</span> <ArrowUpRight className="h-4 w-4" />
                     </a>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
             </div>
           </div>
 
-          <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div ref={gridRef} className="work-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout" initial={false}>
               {shown.map((project, idx) => (
                 <motion.div
@@ -203,7 +203,7 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                   exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.45, delay: (idx % 3) * 0.07, layout: { type: 'spring', stiffness: 300, damping: 32 } }}
-                  className="h-full"
+                  className="work-grid-item h-full"
                 >
                   <article className="work-card group flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white" {...tiltHandlers()}>
                     <PageLink
@@ -221,11 +221,10 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                         height={430}
                         loading="lazy"
                         decoding="async"
-                        className="depth-shot block aspect-[900/430] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                        className="block aspect-[900/430] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                       />
-                      <span className="depth-sheen" aria-hidden="true" />
-                      <span className="depth-shade absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-neutral-950/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                      <span className="depth-pill absolute bottom-3 left-3 inline-flex translate-y-3 items-center gap-1.5 rounded-full bg-brand px-3.5 py-1.5 text-xs font-bold text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                      <span className="absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-neutral-950/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <span className="absolute bottom-3 left-3 inline-flex translate-y-3 items-center gap-1.5 rounded-full bg-brand px-3.5 py-1.5 text-xs font-bold text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                         Read the case study <ArrowRight className="h-3 w-3" />
                       </span>
                     </PageLink>
@@ -235,7 +234,7 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                         {project.industry}
                       </span>
                       <h3 className="text-lg font-bold tracking-tight text-neutral-900">{project.clientName}</h3>
-                      <p className="text-sm text-neutral-600 leading-relaxed">{project.outcome}</p>
+                      <p className="line-clamp-3 sm:line-clamp-none text-sm text-neutral-600 leading-relaxed">{project.outcome}</p>
                       <ul className="mt-auto flex flex-wrap gap-1.5 pt-2">
                         {project.scope.map((s) => (
                           <li key={s} className="rounded-full border border-neutral-200 px-2.5 py-0.5 text-[11px] font-medium text-neutral-600">{s}</li>
