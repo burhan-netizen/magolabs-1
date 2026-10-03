@@ -426,6 +426,15 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
                   <WhatsAppLogo className="h-5 w-5 text-emerald-400" />
                   {t('hero.cta.secondary')}
                 </a>
+                {/* Phones get the portfolio link as a third button; wider screens get it as a text link below */}
+                <PageLink
+                  page="work"
+                  onNavigate={() => navigateTo('work')}
+                  className="group sm:hidden w-full inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-[#ffffff] hover:bg-white/10 hover:border-white/30 transition-colors"
+                >
+                  See our work
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </PageLink>
               </div>
 
               <p className="flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-neutral-400">
@@ -443,7 +452,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
                 <PageLink
                   page="work"
                   onNavigate={() => navigateTo('work')}
-                  className="group inline-flex items-center gap-1.5 font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
+                  className="group hidden sm:inline-flex items-center gap-1.5 font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
                 >
                   See our work
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
