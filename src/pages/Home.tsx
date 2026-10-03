@@ -1,5 +1,5 @@
 import { ArrowRight, ArrowUpRight, Check, Plus, Minus, Quote, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
@@ -49,17 +49,48 @@ interface HomeProps {
    House style: short sentences, plain words, written to "you".
 --------------------------------------------------------------------------- */
 
+// The logo strip uses small copies made for it (public/logos/sm, about 78 KB for
+// all nine). Each one carries its pixel size so its tile is the right width
+// before the file arrives.
 const CLIENT_LOGOS = [
-  { name: 'Santosh Timbers', src: '/logos/santoshtimbers.png' },
-  { name: 'Astrabizz Consultancy', src: '/logos/astrabizz.png' },
-  { name: 'Dr. Mihir Shah Smile Care Clinic', src: '/logos/drmihirshah.png' },
-  { name: 'SolWay Energies', src: '/logos/solway.png' },
-  { name: 'Darshan Galani & Co.', src: '/logos/darshangalani.png' },
-  { name: 'Jay Mehta & Co.', src: '/logos/jaymehta.png' },
-  { name: 'MNP & Co.', src: '/logos/mnp.png' },
-  { name: 'K.D. Mayani & Co.', src: '/logos/kdmayani.png' },
-  { name: 'Prabhakar Processors', src: '/logos/prabhakarprocessors.png' },
+  { name: 'Santosh Timbers', src: '/logos/sm/santoshtimbers.webp', width: 120, height: 120 },
+  { name: 'Astrabizz Consultancy', src: '/logos/sm/astrabizz.webp', width: 180, height: 120 },
+  { name: 'Dr. Mihir Shah Smile Care Clinic', src: '/logos/sm/drmihirshah.webp', width: 349, height: 120 },
+  { name: 'SolWay Energies', src: '/logos/sm/solway.webp', width: 341, height: 120 },
+  { name: 'Darshan Galani & Co.', src: '/logos/sm/darshangalani.webp', width: 390, height: 79 },
+  { name: 'Jay Mehta & Co.', src: '/logos/sm/jaymehta.webp', width: 362, height: 73 },
+  { name: 'MNP & Co.', src: '/logos/sm/mnp.webp', width: 212, height: 61 },
+  { name: 'K.D. Mayani & Co.', src: '/logos/sm/kdmayani.webp', width: 289, height: 120 },
+  { name: 'Prabhakar Processors', src: '/logos/sm/prabhakarprocessors.webp', width: 390, height: 99 },
 ];
+
+/** One logo in the strip. The white tile stays hidden until its logo has loaded,
+ *  so a slow connection never shows a row of blank tiles. */
+function LogoTile({ logo, decorative }: { logo: (typeof CLIENT_LOGOS)[number]; decorative: boolean; key?: string }) {
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [ready, setReady] = useState(false);
+  // A logo that finished loading before the page became interactive never fires onLoad.
+  useEffect(() => {
+    if (imgRef.current?.complete) setReady(true);
+  }, []);
+  return (
+    <div
+      className={`flex items-center justify-center h-16 sm:h-[4.5rem] px-6 sm:px-7 rounded-2xl bg-[#ffffff] shrink-0 transition-opacity duration-500 ${ready ? 'opacity-100' : 'opacity-0'}`}
+    >
+      <img
+        ref={imgRef}
+        src={logo.src}
+        alt={decorative ? '' : logo.name}
+        width={logo.width}
+        height={logo.height}
+        decoding="async"
+        onLoad={() => setReady(true)}
+        onError={() => setReady(true)}
+        className="h-9 sm:h-10 w-auto max-w-[130px] object-contain"
+      />
+    </div>
+  );
+}
 
 const PROBLEMS = [
   { title: 'People can’t tell what you do.', desc: 'They land, get confused, and leave within seconds.' },
@@ -432,17 +463,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
                 {[...Array(2)].map((_, loopIdx) => (
                   <div key={loopIdx} className="flex items-center gap-4 sm:gap-5 shrink-0" aria-hidden={loopIdx === 1 ? 'true' : undefined}>
                     {CLIENT_LOGOS.map((logo, idx) => (
-                      <div
-                        key={`${loopIdx}-${logo.name}-${idx}`}
-                        className="flex items-center justify-center h-16 sm:h-[4.5rem] px-6 sm:px-7 rounded-2xl bg-[#ffffff] shrink-0"
-                      >
-                        <img
-                          src={logo.src}
-                          alt={loopIdx === 0 ? logo.name : ''}
-                          loading="lazy"
-                          className="h-9 sm:h-10 w-auto max-w-[130px] object-contain"
-                        />
-                      </div>
+                      <LogoTile key={`${loopIdx}-${logo.name}-${idx}`} logo={logo} decorative={loopIdx === 1} />
                     ))}
                   </div>
                 ))}
