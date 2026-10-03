@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Check, Plus, Minus, Quote, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Check, EyeOff, Plus, Minus, Quote, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { PageId } from '../types';
@@ -11,7 +11,7 @@ import { WhatsAppLogo } from '../components/BrandIcons';
 import { useLanguage } from '../context/LanguageContext';
 import { getWorkDetailPath } from '../utils/pageRoutes';
 import { WHATSAPP_URL } from '../utils/contactLinks';
-import { tiltHandlers } from '../utils/tilt';
+import { spotlight, tiltHandlers } from '../utils/tilt';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -93,10 +93,10 @@ function LogoTile({ logo, decorative }: { logo: (typeof CLIENT_LOGOS)[number]; d
 }
 
 const PROBLEMS = [
-  { title: 'People can’t tell what you do.', desc: 'They land, get confused, and leave within seconds.' },
-  { title: 'Nothing gives them a reason to trust you.', desc: 'No proof, no results, nothing that sets you apart from the next search result.' },
-  { title: 'A competitor looks more established.', desc: 'Side by side, the dated website loses, even when your work is better.' },
-  { title: 'Google is not showing you.', desc: 'People searching for exactly what you sell are finding someone else.' },
+  { icon: EyeOff, title: 'People can’t tell what you do.', desc: 'They land, get confused, and leave within seconds.' },
+  { icon: ShieldAlert, title: 'Nothing gives them a reason to trust you.', desc: 'No proof, no results, nothing that sets you apart from the next search result.' },
+  { icon: Trophy, title: 'A competitor looks more established.', desc: 'Side by side, the dated website loses, even when your work is better.' },
+  { icon: SearchX, title: 'Google is not showing you.', desc: 'People searching for exactly what you sell are finding someone else.' },
 ];
 
 // Each fix leads with what the customer gets; the service name is the small label.
@@ -331,6 +331,8 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
   // Gentle hero parallax: as the page scrolls, the cards drift up a little faster
   // than the text and the glow drifts down. Switched off for reduced motion.
   const reduceMotion = useReducedMotion();
+  // Starts the "no results" search animation once that row scrolls into view.
+  const [searchSeen, setSearchSeen] = useState(false);
   const { scrollY } = useScroll();
   const cardsY = useTransform(scrollY, [0, 700], [0, reduceMotion ? 0 : -48]);
   const glowY = useTransform(scrollY, [0, 700], [0, reduceMotion ? 0 : 90]);
@@ -508,29 +510,49 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
             viewport={{ once: true, margin: '-100px' }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
           >
-            {PROBLEMS.map((item, idx) => (
-              <motion.div
-                key={idx}
-                variants={fadeUpItem}
-                className="p-6 rounded-2xl border border-neutral-200 bg-neutral-50 space-y-3"
-              >
-                <span className="font-mono text-xs font-bold text-neutral-500">0{idx + 1}</span>
-                <h3 className="text-base font-semibold text-neutral-900 leading-snug">{item.title}</h3>
-                <p className="text-sm text-neutral-600 leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
+            {PROBLEMS.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={idx}
+                  variants={fadeUpItem}
+                  onPointerMove={spotlight}
+                  className="spot-card group p-6 rounded-2xl border border-neutral-200 bg-neutral-50 hover:border-neutral-300"
+                >
+                  {/* An amber line draws across the top on hover */}
+                  <span className="absolute inset-x-0 top-0 h-1 bg-brand origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" aria-hidden="true" />
+                  <span className="spot-number spot-number-light" aria-hidden="true">0{idx + 1}</span>
+                  <div className="relative flex items-center justify-between">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white border border-neutral-200 text-neutral-700 transition-[background-color,color,border-color,rotate] duration-300 group-hover:bg-brand group-hover:border-brand group-hover:text-ink group-hover:-rotate-6">
+                      <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                    </span>
+                    <span className="font-mono text-xs font-bold text-neutral-500">0{idx + 1}</span>
+                  </div>
+                  <h3 className="relative mt-5 text-base font-semibold text-neutral-900 leading-snug">{item.title}</h3>
+                  <p className="relative mt-3 text-sm text-neutral-600 leading-relaxed">{item.desc}</p>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
-          <div className="mt-12 flex flex-col sm:flex-row sm:items-center gap-5">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-12 flex flex-col sm:flex-row sm:items-center gap-5"
+          >
             <AuditButton onNavigate={goToAudit} label="Find out what yours is costing you" />
             <p className="text-sm text-neutral-600">A free review of your website, in plain English.</p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* For businesses with no website at all: their own problem, proof and action */}
-      <section id="no-website" className="bg-brand text-ink font-sans">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <section id="no-website" className="relative overflow-hidden bg-brand text-ink font-sans">
+        <div className="brand-orb brand-orb-a" aria-hidden="true" />
+        <div className="brand-orb brand-orb-b" aria-hidden="true" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             <div className="lg:col-span-7 space-y-4">
               <span className="font-mono text-xs font-bold uppercase tracking-widest">No website yet?</span>
@@ -540,22 +562,50 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
               <p className="text-base sm:text-lg leading-relaxed max-w-2xl">
                 People search for a business before they call it. When nothing comes up, many assume you are small, new, or no longer around, and they call the next name on the list.
               </p>
+              {/* What a customer sees today: a search that finds nothing */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                onViewportEnter={() => setSearchSeen(true)}
+                data-seen={searchSeen || undefined}
+                className="search-mock mt-3 flex flex-wrap items-center gap-x-4 gap-y-3"
+                aria-hidden="true"
+              >
+                <span className="inline-flex items-center gap-3 rounded-full bg-[#ffffff] px-5 py-3 shadow-[0_18px_40px_-22px_rgba(13,13,13,0.55)]">
+                  <Search className="h-4 w-4 text-neutral-500" />
+                  <span className="search-mock-text font-mono text-sm text-neutral-900">your business name</span>
+                </span>
+                <span className="search-mock-result inline-flex items-center gap-2 rounded-full bg-ink/10 px-4 py-2 text-sm font-semibold text-ink">
+                  <SearchX className="h-4 w-4" />
+                  No results found
+                </span>
+              </motion.div>
             </div>
-            <div className="lg:col-span-5 space-y-5">
-              <div className="rounded-2xl bg-neutral-950 text-[#ffffff] p-6 sm:p-7">
-                <p className="text-3xl sm:text-4xl font-bold tracking-tight text-brand leading-none">34 new clients</p>
-                <p className="mt-3 text-sm sm:text-base text-neutral-300 leading-relaxed">
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7, ease: [0.2, 0.7, 0.2, 1] }}
+              className="lg:col-span-5 space-y-5"
+            >
+              <div onPointerMove={spotlight} className="spot-card rounded-2xl bg-neutral-950 text-[#ffffff] p-6 sm:p-7 shadow-2xl shadow-neutral-900/30">
+                <p className="relative text-3xl sm:text-4xl font-bold tracking-tight text-brand leading-none">
+                  <CountUp to={34} duration={1.6} /> new clients
+                </p>
+                <p className="relative mt-3 text-sm sm:text-base text-neutral-300 leading-relaxed">
                   Darshan Galani &amp; Co. had never had a website. Three months after their first one launched, enquiries from Google had turned into 34 new clients.
                 </p>
               </div>
               <button
                 onClick={startWithoutWebsite}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-neutral-950 hover:bg-neutral-800 px-7 py-4 text-base font-semibold text-[#ffffff] transition-colors cursor-pointer"
+                className="group w-full inline-flex items-center justify-center gap-2 rounded-full bg-neutral-950 hover:bg-neutral-800 px-7 py-4 text-base font-semibold text-[#ffffff] transition-colors cursor-pointer"
               >
                 Get a free website plan
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

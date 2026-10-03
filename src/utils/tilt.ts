@@ -20,3 +20,12 @@ export function tiltHandlers() {
     },
   };
 }
+
+/** Moves a card's soft light to wherever the pointer is. Mouse only. */
+export function spotlight(e: React.PointerEvent<HTMLElement>) {
+  if (e.pointerType !== 'mouse') return;
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  el.style.setProperty('--mx', `${(e.clientX - r.left).toFixed(0)}px`);
+  el.style.setProperty('--my', `${(e.clientY - r.top).toFixed(0)}px`);
+}

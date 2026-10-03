@@ -1,8 +1,9 @@
-import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, MessageCircle, PencilRuler, Target, Zap } from 'lucide-react';
 import { motion } from 'motion/react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
 import PageLink from '../components/PageLink';
+import { spotlight } from '../utils/tilt';
 
 interface AboutProps {
   onPageChange: (page: PageId) => void;
@@ -12,18 +13,22 @@ interface AboutProps {
 const PRINCIPLES = [
   {
     title: 'Results over looks',
+    icon: Target,
     desc: 'A website is measured by the calls, bookings and WhatsApp messages it brings in, not by how it looks in a portfolio.',
   },
   {
     title: 'Plain speaking',
+    icon: MessageCircle,
     desc: 'We reply quickly, explain things without jargon, and tell you when something is not worth paying for.',
   },
   {
     title: 'Built from scratch',
+    icon: PencilRuler,
     desc: 'Every project starts from a blank canvas. No templates, no page builders, nothing recycled from the last client.',
   },
   {
     title: 'Fast by default',
+    icon: Zap,
     desc: 'Lightweight, hand-written code that loads quickly on any phone and any network.',
   },
 ];
@@ -160,30 +165,39 @@ export default function About({ onPageChange }: AboutProps) {
       </section>
 
       {/* Principles */}
-      <section id="values-grid" className="py-24 bg-neutral-950 text-white font-sans">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="values-grid" className="glow-follow relative overflow-hidden py-24 bg-neutral-950 text-white font-sans">
+        <div className="cta-aurora" aria-hidden="true" />
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-14 space-y-4">
             <span className="eyebrow eyebrow-on-dark">How we work</span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight">Four things we do not compromise on.</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {PRINCIPLES.map((val, idx) => (
-              <motion.div
-                key={val.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: idx * 0.06 }}
-                className="flex gap-6 p-8 rounded-2xl border border-white/10 bg-white/[0.03]"
-              >
-                <span className="font-mono text-sm font-bold text-brand pt-1">0{idx + 1}</span>
-                <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-white">{val.title}</h3>
-                  <p className="text-sm text-neutral-400 leading-relaxed">{val.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+            {PRINCIPLES.map((val, idx) => {
+              const Icon = val.icon;
+              return (
+                <motion.div
+                  key={val.title}
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.2, 0.7, 0.2, 1] }}
+                  onPointerMove={spotlight}
+                  className="spot-card group flex gap-5 sm:gap-6 p-8 rounded-2xl border border-white/10 bg-neutral-950/70 backdrop-blur-sm hover:border-brand/60"
+                >
+                  <span className="spot-number" aria-hidden="true">0{idx + 1}</span>
+                  <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-brand transition-[background-color,color,rotate] duration-300 group-hover:bg-brand group-hover:text-ink group-hover:-rotate-6">
+                    <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                  </span>
+                  <div className="relative space-y-2">
+                    <span className="font-mono text-xs font-bold text-brand">0{idx + 1}</span>
+                    <h3 className="text-lg font-semibold text-white">{val.title}</h3>
+                    <p className="text-sm text-neutral-400 leading-relaxed transition-colors duration-300 group-hover:text-neutral-300">{val.desc}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

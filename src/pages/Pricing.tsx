@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type PointerEvent, type ReactNode } from 'react';
+import { useState, type CSSProperties, type ReactNode } from 'react';
 import {
   ArrowDown, ArrowRight, BadgeCheck, Check, ChevronDown, CreditCard, Gem, Globe, Handshake, KeyRound,
   LayoutDashboard, Minus, Palette, Plus, ShieldCheck, ShoppingBag, Sparkles, Store, TrendingUp,
@@ -11,6 +11,7 @@ import { WhatsAppLogo } from '../components/BrandIcons';
 import AddOnServices from '../components/AddOnServices';
 import Price from '../components/Price';
 import { PACKAGES, getPackage, PackageInfo } from '../data/packages';
+import { spotlight } from '../utils/tilt';
 
 interface PricingProps {
   onPageChange: (page: PageId) => void;
@@ -220,15 +221,6 @@ const FAQS = [
 
 const whatsappFor = (name: string) =>
   'https://wa.me/919099245605?text=' + encodeURIComponent(`Hi Mago Labs, I am interested in the ${name} package.`);
-
-/** Moves a card's soft light to wherever the pointer is. Mouse only. */
-function spotlight(e: PointerEvent<HTMLElement>) {
-  if (e.pointerType !== 'mouse') return;
-  const el = e.currentTarget;
-  const r = el.getBoundingClientRect();
-  el.style.setProperty('--mx', `${(e.clientX - r.left).toFixed(0)}px`);
-  el.style.setProperty('--my', `${(e.clientY - r.top).toFixed(0)}px`);
-}
 
 /** One ticked line in a package's feature list. */
 function FeatureItem({ dark, children }: { dark?: boolean; children: ReactNode; key?: string }) {
