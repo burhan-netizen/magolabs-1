@@ -256,10 +256,10 @@ export function getCaseStudyById(id: string): CaseStudy | undefined {
   return CASE_STUDIES.find((cs) => cs.id === id);
 }
 
-/** The 3 strongest stories (the two with measured results, then the biggest
- *  business) get featured, larger cards with the full 5-part narrative visible on /work.
+/** The 5 strongest stories (the two with measured results, then the biggest
+ *  businesses) get featured, larger cards with the full 5-part narrative visible on /work.
  *  The rest sit in a compact row so the section reads as "range of work." */
-export const FEATURED_CASE_STUDY_IDS = ['drmihirshah', 'darshangalani', 'santoshtimbers'];
+export const FEATURED_CASE_STUDY_IDS = ['drmihirshah', 'darshangalani', 'santoshtimbers', 'prabhakarprocessors', 'solway'];
 
 /** Derives real, non-duplicate SEO metadata for a case study's dedicated page
  *  straight from its own already-written copy, rather than hand-writing (and

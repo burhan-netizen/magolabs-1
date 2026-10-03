@@ -16,13 +16,11 @@ const CATEGORY: Record<string, string> = {
   kdmayani: 'CA firms',
   jaymehta: 'CA firms',
   mnp: 'CA firms',
-  solway: 'B2B and industry',
-  prabhakarprocessors: 'B2B and industry',
   astrabizz: 'Consulting',
   momrise: 'Our own products',
   tinyhumans: 'Our own products',
 };
-const FILTERS = ['All', 'CA firms', 'B2B and industry', 'Consulting', 'Our own products'];
+const FILTERS = ['All', 'CA firms', 'Consulting', 'Our own products'];
 
 /** A screenshot inside a slim browser frame. */
 function BrowserFrame({ project, eager }: { project: CaseStudy; eager?: boolean }) {
@@ -69,7 +67,7 @@ function tiltHandlers() {
 }
 
 /**
- * The Work page's portfolio: three featured stories that stack like a deck as you
+ * The Work page's portfolio: five featured stories that stack like a deck as you
  * scroll, then every other project in a grid you can filter.
  */
 export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
@@ -92,7 +90,7 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
           <div className="max-w-3xl mb-12 space-y-4">
             <span className="eyebrow">Featured</span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              Three stories worth reading.
+              Five stories worth reading.
             </h2>
           </div>
 
