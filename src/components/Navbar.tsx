@@ -47,7 +47,7 @@ export default function Navbar({
       label: t('nav.services'),
       id: 'services' as PageId,
       subItems: [
-        { label: t('nav.services.web'), id: 'service-web-design' as PageId, tag: 'Main service' },
+        { label: t('nav.services.web'), id: 'service-web-design' as PageId },
         { label: t('nav.services.seo'), id: 'service-seo' as PageId },
         { label: t('nav.services.gbp'), id: 'service-gbp' as PageId },
         { label: t('nav.services.copywriting'), id: 'service-copywriting' as PageId },
