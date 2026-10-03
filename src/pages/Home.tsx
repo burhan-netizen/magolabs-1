@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Plus, Minus, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Check, Plus, Minus, Quote, X } from 'lucide-react';
 import { useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { PageId } from '../types';
@@ -11,6 +11,7 @@ import { WhatsAppLogo } from '../components/BrandIcons';
 import { useLanguage } from '../context/LanguageContext';
 import { getWorkDetailPath } from '../utils/pageRoutes';
 import { WHATSAPP_URL } from '../utils/contactLinks';
+import { tiltHandlers } from '../utils/tilt';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -129,6 +130,9 @@ const FEATURED_WORK = [
     name: 'Dr. Mihir Shah Smile Care Clinic',
     industry: 'Dental & Healthcare',
     stat: '25 to 58 patients a day',
+    // The stat again, split so the number can count up: before, from, to, after.
+    count: { before: '25 to ', from: 25, to: 58, after: ' patients a day' },
+    screenshot: '/screenshots/drmihirshah.jpg',
     result: 'A new clinic where nobody knew him yet. Two months after launch, daily patients had more than doubled.',
     logo: '/logos/drmihirshah.png',
   },
@@ -137,6 +141,8 @@ const FEATURED_WORK = [
     name: 'Darshan Galani & Co.',
     industry: 'Chartered Accountancy',
     stat: '34 new clients in 3 months',
+    count: { before: '', from: 0, to: 34, after: ' new clients in 3 months' },
+    screenshot: '/screenshots/darshangalani.jpg',
     result: 'A practice that had never had a website. Enquiries started arriving through Google, and 34 became clients.',
     logo: '/logos/darshangalani.png',
   },
@@ -145,16 +151,18 @@ const FEATURED_WORK = [
     name: 'Santosh Timbers',
     industry: 'Timber & Wood Trading',
     stat: 'Zero online presence to a full catalogue',
+    count: undefined,
+    screenshot: '/screenshots/santoshtimbers.jpg',
     result: 'One of India’s largest timber importers, given a website that finally matches the scale of the business.',
     logo: '/logos/santoshtimbers.png',
   },
 ];
 
 const QUOTES = [
-  { quote: 'Very good website designs. Incredibly responsive team. Quick feedback turnaround. Great value.', name: 'Manav Shah', company: 'SolWay Energies' },
-  { quote: 'We finally have a website that reflects how we work with our clients: clear, professional, and easy to trust.', name: 'CA Jay Mehta', company: 'Jay Mehta & Co.' },
-  { quote: 'Absolutely professional people, know their work in best manner. I will absolutely recommend them for website related work.', name: 'Dr. Mihir Shah', company: 'Smile Care Clinic' },
-  { quote: 'Gorgeous website and amazing service from start to finish. Exactly what we needed for the business.', name: 'Harshit Chopra', company: 'Santosh Timbers' },
+  { quote: 'Very good website designs. Incredibly responsive team. Quick feedback turnaround. Great value.', name: 'Manav Shah', initials: 'MS', company: 'SolWay Energies' },
+  { quote: 'We finally have a website that reflects how we work with our clients: clear, professional, and easy to trust.', name: 'CA Jay Mehta', initials: 'JM', company: 'Jay Mehta & Co.' },
+  { quote: 'Absolutely professional people, know their work in best manner. I will absolutely recommend them for website related work.', name: 'Dr. Mihir Shah', initials: 'MS', company: 'Smile Care Clinic' },
+  { quote: 'Gorgeous website and amazing service from start to finish. Exactly what we needed for the business.', name: 'Harshit Chopra', initials: 'HC', company: 'Santosh Timbers' },
 ];
 
 // "With Mago Labs" against the usual agency: rows arrive one after another.
@@ -649,9 +657,9 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
             <PageLink
               page="work"
               onNavigate={() => navigateTo('work')}
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4 hover:decoration-neutral-900"
+              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4 hover:decoration-neutral-900"
             >
-              See all case studies <ArrowRight className="h-4 w-4" />
+              See all case studies <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </PageLink>
           </div>
 
@@ -659,34 +667,72 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
             {FEATURED_WORK.map((project, idx) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 36 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                transition={{ duration: 0.6, delay: idx * 0.12, ease: [0.2, 0.7, 0.2, 1] }}
                 className="h-full"
               >
-                <PageLink
-                  href={getWorkDetailPath(project.id)}
-                  onNavigate={() => onOpenCaseStudy(project.id)}
-                  className="group h-full flex flex-col p-7 rounded-2xl border border-neutral-200 bg-white hover:border-neutral-900 transition-colors"
-                >
-                  {/* White chip so client logos stay legible in dark mode too */}
-                  <span className="self-start rounded-lg bg-[#ffffff] px-2.5 py-1.5">
-                    <img src={project.logo} alt={`${project.name} logo`} loading="lazy" className="h-8 w-auto max-w-[130px] object-contain object-left" />
-                  </span>
-                  <span className="mt-6 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-500">
-                    {project.industry}
-                  </span>
-                  <h3 className="mt-2 text-lg font-semibold text-neutral-900 leading-snug">{project.name}</h3>
-                  <p className="mt-4 text-xl font-bold text-neutral-900 leading-snug">
-                    <span className="marker">{project.stat}</span>
-                  </p>
-                  <p className="mt-4 text-sm text-neutral-600 leading-relaxed flex-1">{project.result}</p>
-                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-900">
-                    Read the case study
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </PageLink>
+                {/* Leans toward the pointer, with a soft light under it */}
+                <div className="work-card group h-full overflow-hidden rounded-2xl border border-neutral-200 bg-white" {...tiltHandlers()}>
+                  <PageLink
+                    href={getWorkDetailPath(project.id)}
+                    onNavigate={() => onOpenCaseStudy(project.id)}
+                    className="h-full flex flex-col"
+                  >
+                    <div className="relative overflow-hidden border-b border-neutral-200">
+                      <img
+                        src={project.screenshot}
+                        alt={`${project.name} website`}
+                        width={900}
+                        height={430}
+                        loading="lazy"
+                        decoding="async"
+                        className="block aspect-[900/430] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.07] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/45 via-transparent to-transparent pointer-events-none" aria-hidden="true" />
+                      {/* White chip so client logos stay legible over the screenshot */}
+                      <span className="absolute left-5 bottom-4 rounded-lg bg-[#ffffff] px-2.5 py-1.5 shadow-lg">
+                        <img src={project.logo} alt={`${project.name} logo`} loading="lazy" className="h-7 w-auto max-w-[120px] object-contain object-left" />
+                      </span>
+                      <span className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-brand text-ink opacity-0 -translate-x-2 translate-y-2 transition-[opacity,translate] duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0" aria-hidden="true">
+                        <ArrowUpRight className="h-4 w-4" />
+                      </span>
+                    </div>
+
+                    <div className="flex flex-1 flex-col p-7">
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                        {project.industry}
+                      </span>
+                      <h3 className="mt-2 text-lg font-semibold text-neutral-900 leading-snug">{project.name}</h3>
+                      {/* The result wipes in from the left, and its number counts up */}
+                      <motion.p
+                        initial={{ clipPath: 'inset(0 100% 0 0)' }}
+                        whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
+                        viewport={{ once: true, margin: '-60px' }}
+                        transition={{ duration: 0.8, delay: 0.3 + idx * 0.12, ease: [0.2, 0.7, 0.2, 1] }}
+                        className="mt-4 text-xl font-bold text-neutral-900 leading-snug"
+                      >
+                        <span className="marker">
+                          {project.count ? (
+                            <>
+                              {project.count.before}
+                              <CountUp from={project.count.from} to={project.count.to} duration={1.6} />
+                              {project.count.after}
+                            </>
+                          ) : (
+                            project.stat
+                          )}
+                        </span>
+                      </motion.p>
+                      <p className="mt-4 text-sm text-neutral-600 leading-relaxed flex-1">{project.result}</p>
+                      <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-900">
+                        <span className="underline decoration-transparent decoration-2 underline-offset-4 transition-colors duration-300 group-hover:decoration-brand">Read the case study</span>
+                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                      </span>
+                    </div>
+                  </PageLink>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -695,16 +741,22 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
             {QUOTES.map((q, idx) => (
               <motion.figure
                 key={idx}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="p-6 rounded-2xl border border-neutral-200/70 bg-neutral-50 flex flex-col gap-4"
+                transition={{ duration: 0.5, delay: idx * 0.09 }}
+                className="group relative p-6 rounded-2xl border border-neutral-200/70 bg-neutral-50 flex flex-col gap-4 transition-[translate,box-shadow,border-color] duration-300 hover:-translate-y-1.5 hover:border-brand hover:shadow-[0_24px_48px_-30px_rgba(13,13,13,0.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
+                <Quote className="h-6 w-6 text-brand transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6" fill="currentColor" strokeWidth={0} aria-hidden="true" />
                 <blockquote className="text-sm text-neutral-800 leading-relaxed flex-1">&ldquo;{q.quote}&rdquo;</blockquote>
-                <figcaption className="pt-3 border-t border-neutral-200">
-                  <p className="text-sm font-semibold text-neutral-900">{q.name}</p>
-                  <p className="text-xs text-neutral-500">{q.company}</p>
+                <figcaption className="pt-4 border-t border-neutral-200 flex items-center gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-xs font-bold text-white transition-colors duration-300 group-hover:bg-brand group-hover:text-ink" aria-hidden="true">
+                    {q.initials}
+                  </span>
+                  <span>
+                    <span className="block text-sm font-semibold text-neutral-900">{q.name}</span>
+                    <span className="block text-xs text-neutral-500">{q.company}</span>
+                  </span>
                 </figcaption>
               </motion.figure>
             ))}
