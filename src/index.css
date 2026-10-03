@@ -395,6 +395,157 @@ body::after {
   color: #0D0D0D !important;
 }
 
+/* Pricing page: motion. Everything below moves with transform, translate and
+   opacity only, and is switched off under prefers-reduced-motion. */
+
+/* Hero: each line rises into place in turn (--i sets the order). */
+html.motion-ok .price-rise {
+  animation: priceRise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+@keyframes priceRise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Hero: a slow breathing amber glow behind the headline. */
+.pricing-aurora {
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  width: 62vw;
+  height: 44vh;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 197, 61, 0.3) 0%, rgba(255, 197, 61, 0.08) 45%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: auroraBreathe 8s ease-in-out infinite alternate;
+}
+
+/* Package finder buttons lift toward the pointer. */
+.need-pick {
+  transition: translate 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+@media (hover: hover) {
+  .need-pick:hover {
+    translate: 0 -4px;
+    box-shadow: 0 22px 44px -26px rgba(13, 13, 13, 0.4);
+  }
+}
+
+/* Package cards: lift on hover, with a soft light under the pointer. */
+.price-card {
+  position: relative;
+  scroll-margin-top: 7rem;
+  transition: translate 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease;
+}
+.price-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(440px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 197, 61, 0.16), transparent 65%);
+}
+@media (hover: hover) {
+  .price-card:hover {
+    translate: 0 -6px;
+    box-shadow: 0 36px 70px -36px rgba(13, 13, 13, 0.4);
+  }
+  .price-card:hover::after {
+    opacity: 1;
+  }
+}
+/* The package picked in the hero gets an amber ring and a tag. */
+.price-card[data-picked] {
+  box-shadow: 0 0 0 3px var(--color-brand), 0 36px 70px -36px rgba(13, 13, 13, 0.4);
+}
+.price-match {
+  position: absolute;
+  top: -0.875rem;
+  z-index: 10;
+  border-radius: 9999px;
+  padding: 0.375rem 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--color-ink);
+  color: #FFFFFF;
+  border: 1px solid var(--color-brand);
+  animation: matchPop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+@keyframes matchPop {
+  from { opacity: 0; transform: translateY(6px) scale(0.85); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Most popular package: a breathing amber glow behind the card. */
+.price-card-glow {
+  position: absolute;
+  inset: 6% -4%;
+  border-radius: 3rem;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 197, 61, 0.55), transparent);
+  filter: blur(46px);
+  animation: cardGlow 5s ease-in-out infinite alternate;
+}
+@keyframes cardGlow {
+  from { opacity: 0.35; transform: scale(0.96); }
+  to { opacity: 0.8; transform: scale(1.04); }
+}
+
+/* Commerce: the package number as a large watermark on the amber panel. */
+.commerce-mark {
+  position: absolute;
+  right: -0.75rem;
+  top: -1rem;
+  font-family: var(--font-display);
+  font-size: 9rem;
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: rgba(13, 13, 13, 0.07);
+  pointer-events: none;
+  user-select: none;
+  transition: translate 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.price-card:hover .commerce-mark {
+  translate: -10px 8px;
+}
+
+/* "Something else": two soft lights drifting across the amber band. */
+.brand-orb {
+  position: absolute;
+  width: 34rem;
+  height: 34rem;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent 65%);
+  filter: blur(40px);
+  animation: orbDrift 14s ease-in-out infinite alternate;
+}
+.brand-orb-a { top: -18rem; left: -8rem; }
+.brand-orb-b { bottom: -20rem; right: -6rem; animation-delay: -7s; }
+@keyframes orbDrift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(9rem, 3rem, 0) scale(1.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing-aurora,
+  .price-card-glow,
+  .brand-orb,
+  .price-match { animation: none; }
+  .need-pick,
+  .price-card,
+  .commerce-mark { transition: none; translate: none !important; }
+  .price-card::after { display: none; }
+}
+
 /* Prices: hide the rupee price for visitors outside India until the dollar price
    replaces it (see src/hooks/useCurrency.ts). */
 html[data-currency="usd"] .cur-inr {

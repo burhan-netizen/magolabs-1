@@ -50,8 +50,10 @@ export default function AddOnServices({ onPageChange }: AddOnServicesProps) {
           {ADD_ONS.map((item) => {
             const Icon = item.icon;
             return (
-              <li key={item.name} className="flex flex-col rounded-2xl border border-neutral-200 p-5">
-                <Icon className="h-5 w-5 text-neutral-500" strokeWidth={1.75} aria-hidden="true" />
+              <li key={item.name} className="group flex flex-col rounded-2xl border border-neutral-200 p-5 transition-[translate,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-[0_22px_44px_-28px_rgba(13,13,13,0.4)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100 text-neutral-600 transition-colors duration-300 group-hover:bg-brand group-hover:text-ink">
+                  <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                </span>
                 <h3 className="mt-4 text-sm font-semibold text-neutral-900">{item.name}</h3>
                 <p className="mt-1.5 text-sm text-neutral-600 leading-relaxed">{item.desc}</p>
                 {item.page && (
