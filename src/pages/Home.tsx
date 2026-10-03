@@ -1,5 +1,5 @@
-import { ArrowRight, ArrowUpRight, Check, EyeOff, Plus, Minus, Quote, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
-import { screenshotSrcSet } from '../utils/images';
+import { ArrowRight, Check, EyeOff, Plus, Minus, Quote, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
+import WorkWall from '../components/WorkWall';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { PageId } from '../types';
@@ -12,7 +12,7 @@ import { WhatsAppLogo } from '../components/BrandIcons';
 import { useLanguage } from '../context/LanguageContext';
 import { getWorkDetailPath } from '../utils/pageRoutes';
 import { WHATSAPP_URL } from '../utils/contactLinks';
-import { spotlight, tiltHandlers } from '../utils/tilt';
+import { spotlight } from '../utils/tilt';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -153,43 +153,6 @@ const RESULTS = [
     detail: 'A chartered accountancy firm that had never received an enquiry through Google before.',
     client: 'Darshan Galani & Co.',
     caseStudyId: 'darshangalani',
-  },
-];
-
-const FEATURED_WORK = [
-  {
-    id: 'drmihirshah',
-    name: 'Dr. Mihir Shah Smile Care Clinic',
-    industry: 'Dental & Healthcare',
-    stat: '25 to 58 patients a day',
-    // The stat again, split so the number can count up: before, from, to, after.
-    count: { before: '25 to ', from: 25, to: 58, after: ' patients a day' },
-    screenshot: '/screenshots/drmihirshah.webp',
-    result: 'A new clinic where nobody knew him yet. Two months after launch, daily patients had more than doubled.',
-    logo: '/logos/sm/drmihirshah.webp',
-    logoSize: [349, 120],
-  },
-  {
-    id: 'darshangalani',
-    name: 'Darshan Galani & Co.',
-    industry: 'Chartered Accountancy',
-    stat: '34 new clients in 3 months',
-    count: { before: '', from: 0, to: 34, after: ' new clients in 3 months' },
-    screenshot: '/screenshots/darshangalani.webp',
-    result: 'A practice that had never had a website. Enquiries started arriving through Google, and 34 became clients.',
-    logo: '/logos/sm/darshangalani.webp',
-    logoSize: [390, 79],
-  },
-  {
-    id: 'santoshtimbers',
-    name: 'Santosh Timbers',
-    industry: 'Timber & Wood Trading',
-    stat: 'Zero online presence to a full catalogue',
-    count: undefined,
-    screenshot: '/screenshots/santoshtimbers.webp',
-    result: 'One of India’s largest timber importers, given a website that finally matches the scale of the business.',
-    logo: '/logos/sm/santoshtimbers.webp',
-    logoSize: [120, 120],
   },
 ];
 
@@ -736,100 +699,13 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
         </div>
       </section>
 
-      {/* 5. The work behind the results, and what clients say */}
-      <section id="featured-work" className="py-24 bg-white font-sans">
+      {/* 5. The work behind the results: every website, as a wall that comes together */}
+      <WorkWall onOpenWork={() => navigateTo('work')} />
+
+      {/* What clients say */}
+      <section id="client-quotes" className="py-24 bg-white font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
-            <div className="max-w-3xl space-y-4">
-              <span className="eyebrow">Client work</span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">Proof, not promises.</h2>
-            </div>
-            <PageLink
-              page="work"
-              onNavigate={() => navigateTo('work')}
-              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4 hover:decoration-neutral-900"
-            >
-              See all case studies <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </PageLink>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {FEATURED_WORK.map((project, idx) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 36 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: idx * 0.12, ease: [0.2, 0.7, 0.2, 1] }}
-                className="h-full"
-              >
-                {/* Leans toward the pointer, with a soft light under it */}
-                <div className="work-card group h-full overflow-hidden rounded-2xl border border-neutral-200 bg-white" {...tiltHandlers()}>
-                  <PageLink
-                    href={getWorkDetailPath(project.id)}
-                    onNavigate={() => onOpenCaseStudy(project.id)}
-                    className="h-full flex flex-col"
-                  >
-                    <div className="relative overflow-hidden border-b border-neutral-200">
-                      <img
-                        src={project.screenshot}
-                        srcSet={screenshotSrcSet(project.screenshot)}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                        alt={`${project.name} website`}
-                        width={900}
-                        height={430}
-                        loading="lazy"
-                        decoding="async"
-                        className="block aspect-[900/430] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.07] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/45 via-transparent to-transparent pointer-events-none" aria-hidden="true" />
-                      {/* White chip so client logos stay legible over the screenshot */}
-                      <span className="absolute left-5 bottom-4 rounded-lg bg-[#ffffff] px-2.5 py-1.5 shadow-lg">
-                        <img src={project.logo} alt={`${project.name} logo`} width={project.logoSize[0]} height={project.logoSize[1]} loading="lazy" decoding="async" className="h-7 w-auto max-w-[120px] object-contain object-left" />
-                      </span>
-                      <span className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-brand text-ink opacity-0 -translate-x-2 translate-y-2 transition-[opacity,translate] duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0" aria-hidden="true">
-                        <ArrowUpRight className="h-4 w-4" />
-                      </span>
-                    </div>
-
-                    <div className="flex flex-1 flex-col p-7">
-                      <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-500">
-                        {project.industry}
-                      </span>
-                      <h3 className="mt-2 text-lg font-semibold text-neutral-900 leading-snug">{project.name}</h3>
-                      {/* The result wipes in from the left, and its number counts up */}
-                      <motion.p
-                        initial={{ clipPath: 'inset(0 100% 0 0)' }}
-                        whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
-                        viewport={{ once: true, margin: '-60px' }}
-                        transition={{ duration: 0.8, delay: 0.3 + idx * 0.12, ease: [0.2, 0.7, 0.2, 1] }}
-                        className="mt-4 text-xl font-bold text-neutral-900 leading-snug"
-                      >
-                        <span className="marker">
-                          {project.count ? (
-                            <>
-                              {project.count.before}
-                              <CountUp from={project.count.from} to={project.count.to} duration={1.6} />
-                              {project.count.after}
-                            </>
-                          ) : (
-                            project.stat
-                          )}
-                        </span>
-                      </motion.p>
-                      <p className="mt-4 text-sm text-neutral-600 leading-relaxed flex-1">{project.result}</p>
-                      <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-900">
-                        <span className="underline decoration-transparent decoration-2 underline-offset-4 transition-colors duration-300 group-hover:decoration-brand">Read the case study</span>
-                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                      </span>
-                    </div>
-                  </PageLink>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {QUOTES.map((q, idx) => (
               <motion.figure
                 key={idx}
