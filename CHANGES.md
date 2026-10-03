@@ -203,3 +203,26 @@ Please check:
 - Every page title is now 60 characters or fewer and every description 160 or fewer, so Google does not cut them off. Rewrote the home, about, services, web design, Google Business Profile, work, contact, sitemap and industry descriptions to lead with what the customer gets and a real result.
 - Case study titles shortened ("Client: Website Case Study | Mago Labs"), and their descriptions trimmed to whole sentences.
 - Site-wide business schema now lists the founder, LinkedIn and India as an area served.
+
+## 18. New hero showcase
+
+- The single screenshot with the amber caption is replaced by a 3D stack of five real client websites (`src/components/HeroShowcase.tsx`). The front one is in focus, the others recede behind it, and the result line underneath changes with it. It advances on its own, pauses on hover, and can be swiped, clicked, or moved with the dots or arrow keys. Visitors who ask for reduced motion get a still stack.
+- Removed the unused TiltCard component.
+
+## 19. Work page rebuilt, two projects added, motion across the site
+
+**Work page**
+- Dark hero with two rows of the client websites drifting behind the headline, and three numbers that count up.
+- "Three stories worth reading": the featured case studies are large cards that pin and stack like a deck as you scroll (wide screens only; a normal list on phones).
+- "Different industries. Same goal.": every other project in a grid with a filter. Cards lean toward the pointer, the screenshot zooms, and the grid re-flows when you filter.
+- Code: `src/components/WorkShowcase.tsx`, `src/hooks/useScrollStack.ts`. The old ClientWorkGallery is removed.
+
+**Two projects added** (`src/data/caseStudies.ts`): Momrise and Tiny Humans, Big Feelings, described as our own products. Each has a case study page. Their images in `public/screenshots/` are designed covers, not screenshots: replace `momrise.jpg` and `tinyhumans.jpg` (900 by 430) with real ones.
+
+**Across the site** (`src/utils/ambient.ts`, end of `src/index.css`)
+- Amber progress line along the top as you scroll.
+- Primary buttons: a light sweep on hover, a press, and a ripple where you click.
+- Section headings rise into place as they scroll into view.
+- A soft amber light follows the pointer on the dark hero sections and the closing call to action, which also has a slow breathing glow.
+- Footer: social icons lean toward the pointer; a giant outlined "Magolabs" rises in at the bottom.
+- All of it is switched off for visitors who ask for reduced motion.

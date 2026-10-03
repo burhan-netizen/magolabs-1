@@ -36,6 +36,16 @@
         }
       } catch (e) {}
     </script>
+    <script>
+      // Section headings fade in on scroll. Only hide them first when motion is
+      // welcome, and show everything anyway if the page code is slow to arrive.
+      try {
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.classList.add('motion-ok');
+          setTimeout(function () { document.documentElement.classList.add('reveal-all'); }, 4000);
+        }
+      } catch (e) {}
+    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
