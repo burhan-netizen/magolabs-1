@@ -428,15 +428,26 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
                 </a>
               </div>
 
-              <p className="text-sm text-neutral-400">
-                Free, with no obligation.{' '}
-                <a
-                  href="#next-step"
-                  onClick={(e) => { e.preventDefault(); startWithoutWebsite(); }}
-                  className="font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
+              <p className="flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-neutral-400">
+                <span>
+                  Free, with no obligation.{' '}
+                  <a
+                    href="#next-step"
+                    onClick={(e) => { e.preventDefault(); startWithoutWebsite(); }}
+                    className="font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
+                  >
+                    No website yet? Start here
+                  </a>
+                </span>
+                {/* Straight to the portfolio, for visitors who want to see the work first */}
+                <PageLink
+                  page="work"
+                  onNavigate={() => navigateTo('work')}
+                  className="group inline-flex items-center gap-1.5 font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
                 >
-                  No website yet? Start here
-                </a>
+                  See our work
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </PageLink>
               </p>
             </div>
 
