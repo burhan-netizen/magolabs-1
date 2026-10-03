@@ -932,128 +932,197 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
 .work-card:hover::after {
   opacity: 1;
 }
-/* Home page wall of websites (src/components/WorkWall.tsx).
-   Plain grid by default. The script adds is-wall, then sets --wall on the stage
-   (the view: 0 tilted away, 1 facing it) and --q on each tile (0 adrift, 1 home). */
-.wall-section {
-  /* The tilted wall is wider than the page. clip trims it without making the
-     section a scroll box, which would stop the wall holding in place. */
+/* Home page gallery of websites (src/components/WorkGallery.tsx).
+   A plain grid by default. The script adds is-gallery, which turns it into a
+   corridor of frames in 3D that the scroll moves the camera through. */
+.gallery-section {
+  /* Frames drift past the edges of the page. clip trims them without making the
+     section a scroll box, which would stop the stage holding in place. */
   overflow-x: clip;
 }
-.wall-wrap {
-  padding: 3rem 0 6rem;
-}
-.wall-stage {
+.gallery-stage {
   position: relative;
+  padding: 6rem 0;
 }
-.wall-glow {
-  position: absolute;
-  inset: -10% 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse 55% 45% at 50% 45%, rgba(255, 197, 61, 0.14), transparent 70%);
-}
-.wall-grid {
+.gallery-intro {
   position: relative;
+  z-index: 2;
+  margin-bottom: 3rem;
+}
+.gallery-glow,
+.gallery-hud,
+.gallery-chrome {
+  display: none;
+}
+.gallery-rail {
   list-style: none;
 }
-.wall-open {
+.gallery-open {
   opacity: 0;
-  transform: translate(-4px, 4px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease;
 }
-.wall-card {
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, translate 0.3s ease;
+.gallery-label {
+  flex-direction: column;
+  gap: 0.125rem;
+}
+.gallery-card {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 @media (hover: hover) {
-  a.wall-card:hover {
+  a.gallery-card:hover {
     border-color: rgba(255, 197, 61, 0.7);
-    box-shadow: 0 24px 50px -24px rgba(255, 197, 61, 0.45);
-    translate: 0 -4px;
+    box-shadow: 0 30px 70px -30px rgba(255, 197, 61, 0.5);
   }
-  .wall-card:hover .wall-open {
+  .gallery-card:hover .gallery-open {
     opacity: 1;
-    transform: none;
   }
 }
-/* No hover on a touch screen, so the "opens the site" arrow is always there. */
 @media (hover: none) {
-  .wall-open {
+  .gallery-open {
     opacity: 1;
-    transform: none;
   }
 }
 
-/* The spacer is the distance the wall is held for while it comes together. It has
-   to be real content: a held element cannot travel into its parent's padding. */
-.wall-wrap.is-wall {
-  padding-bottom: 0;
+/* The corridor. The wrapper's height is the distance the camera travels; the
+   stage is one screen tall and held in place for all of it. */
+.gallery-wrap.is-gallery {
+  height: 520vh;
 }
-.wall-wrap.is-wall::after {
-  content: "";
-  display: block;
-  height: 130vh;
-}
-.is-wall .wall-stage {
-  --wall: 1;
+.is-gallery .gallery-stage {
   position: sticky;
-  top: 5.25rem;
-  padding-bottom: 1.5rem;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  padding: 0;
+  overflow: hidden;
+  perspective: 1100px;
+  perspective-origin: 50% 52%;
 }
-.is-wall .wall-glow {
-  opacity: var(--wall);
+.is-gallery .gallery-glow {
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 52%, rgba(255, 197, 61, 0.13), transparent 70%),
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
 }
-.is-wall .wall-grid {
-  transform-style: preserve-3d;
-  transform:
-    perspective(1500px)
-    rotateX(calc((1 - var(--wall)) * 54deg))
-    rotateZ(calc((1 - var(--wall)) * -18deg))
-    scale(calc(1 + (1 - var(--wall)) * 0.22));
-  transform-origin: 50% 40%;
-  will-change: transform;
-}
-.is-wall .wall-tile {
-  --q: 1;
-  transform:
-    translate3d(calc((1 - var(--q)) * var(--sx)), calc((1 - var(--q)) * var(--sy)), calc((1 - var(--q)) * var(--sz)))
-    rotate(calc((1 - var(--q)) * var(--sr)));
-  opacity: calc(0.3 + var(--q) * 0.7);
+.is-gallery .gallery-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  pointer-events: none;
   will-change: transform, opacity;
 }
-/* Names appear as each screenshot lands. */
-.is-wall .wall-label {
-  opacity: calc((var(--q) - 0.75) * 4);
+.is-gallery .gallery-view {
+  position: absolute;
+  inset: 0;
+  max-width: none;
+  padding: 0;
+  transform-style: preserve-3d;
 }
-/* Until the wall has come together, a tap should not land on a moving tile. */
-.is-wall:not(.is-assembled) .wall-card {
+.is-gallery .gallery-rail {
+  display: block;
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.is-gallery .gallery-frame {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: min(620px, 46vw);
+  opacity: 0;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+.is-gallery .gallery-card {
+  pointer-events: none;
+  box-shadow: 0 50px 110px -40px rgba(0, 0, 0, 0.9);
+}
+.is-gallery .gallery-frame.is-focus .gallery-card {
+  pointer-events: auto;
+}
+.is-gallery .gallery-chrome {
+  display: flex;
+}
+.is-gallery .gallery-label {
+  flex-direction: row;
+  gap: 0.75rem;
+  padding: 0.875rem 1.125rem;
+}
+.is-gallery .gallery-label p:first-child {
+  font-size: 1rem;
+}
+.is-gallery .gallery-industry {
+  flex: none;
+  max-width: 50%;
+}
+/* The arrow shows on the frame in focus: that is the one that opens. */
+.is-gallery .gallery-open {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.is-gallery .gallery-frame.is-focus .gallery-open {
+  opacity: 1;
+  transform: none;
+}
+.is-gallery .gallery-end {
+  min-height: 15rem;
+}
+.is-gallery .gallery-hud {
+  display: flex;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.75rem;
+  z-index: 3;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 auto;
+  max-width: 80rem;
+  /* Room on the right for the floating contact buttons. */
+  padding: 0 6rem 0 2rem;
   pointer-events: none;
 }
-/* Short laptop screens: drop the browser bar on each tile so all three rows fit
-   on screen while the wall is held. */
-@media (min-width: 1024px) and (max-height: 840px) {
-  .wall-bar {
-    display: none;
-  }
+.gallery-track {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+}
+.gallery-bar {
+  display: block;
+  height: 100%;
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
 }
 @media (max-width: 639px) {
-  .wall-wrap.is-wall::after {
-    height: 110vh;
+  .gallery-wrap.is-gallery {
+    height: 470vh;
   }
-  .is-wall .wall-stage {
-    top: 4.75rem;
+  .is-gallery .gallery-frame {
+    width: 82vw;
   }
-  /* Narrow screens: less swing and less drift, or tiles fly off the sides. */
-  .is-wall .wall-grid {
-    transform:
-      perspective(1100px)
-      rotateX(calc((1 - var(--wall)) * 50deg))
-      rotateZ(calc((1 - var(--wall)) * -14deg))
-      scale(calc(1 + (1 - var(--wall)) * 0.12));
+  .is-gallery .gallery-label {
+    flex-direction: column;
+    gap: 0.125rem;
+    padding: 0.75rem 0.875rem;
   }
-  .is-wall .wall-tile {
-    transform:
-      translate3d(calc((1 - var(--q)) * var(--sx) * 0.45), calc((1 - var(--q)) * var(--sy) * 0.6), calc((1 - var(--q)) * var(--sz) * 0.6))
-      rotate(calc((1 - var(--q)) * var(--sr)));
+  .is-gallery .gallery-industry {
+    max-width: 100%;
+  }
+  .is-gallery .gallery-end {
+    min-height: 11rem;
+  }
+  .is-gallery .gallery-hud {
+    bottom: 1.25rem;
+    padding: 0 4.5rem 0 1rem;
   }
 }
 
