@@ -402,11 +402,6 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
             <div className="lg:col-span-6 space-y-7 text-center lg:text-left">
-              <span className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-md font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-300">
-                <span className="h-2 w-2 bg-brand" aria-hidden="true" />
-                Website design &amp; development, Surat
-              </span>
-
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#ffffff] leading-[1.08]">
                 Websites that turn visitors into <span className="marker">customers.</span>
               </h1>
