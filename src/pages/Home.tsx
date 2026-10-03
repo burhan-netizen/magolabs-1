@@ -713,8 +713,16 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="rounded-2xl bg-neutral-950 text-white p-8 sm:p-10">
-              <h3 className="text-2xl font-bold tracking-tight">
-                With Mago<span className="font-light text-neutral-400">labs</span>
+              <h3 className="flex items-center gap-1 text-2xl font-bold tracking-tight">
+                With
+                {/* The logo file has empty space around the wordmark, which the negative margins cancel. */}
+                <img
+                  src="/logo.png"
+                  alt="Mago Labs"
+                  width={99}
+                  height={66}
+                  className="h-[66px] w-auto -my-6 translate-y-[3px] invert select-none"
+                />
               </h3>
               <ul className="mt-7">
                 {WITH_MAGO.map((line) => (
