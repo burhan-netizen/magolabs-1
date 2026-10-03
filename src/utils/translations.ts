@@ -7,7 +7,6 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'nav.about': 'About',
     'nav.services': 'Services',
     'nav.services.all': 'Services overview',
-    'nav.services.also': 'Alongside your website',
     'nav.services.web': 'Website Design & Development',
     'nav.services.seo': 'SEO',
     'nav.services.gbp': 'Google Business Profile',

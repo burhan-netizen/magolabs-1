@@ -170,11 +170,6 @@ export default function Navbar({
                           <hr className="my-1 border-neutral-100 dark:border-neutral-800" />
                           {item.subItems.map((sub, subIdx) => (
                             <Fragment key={sub.id}>
-                            {subIdx === 1 && (
-                              <p className="px-4 pt-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                                {t('nav.services.also')}
-                              </p>
-                            )}
                             <PageLink page={sub.id}
                               onNavigate={() => handleNavClick(sub.id)}
                               className={`flex w-full items-center justify-between px-4 ${subIdx === 0 ? 'py-2.5 text-sm font-semibold' : 'py-2 text-[13px] font-medium'} transition-colors rounded-lg text-left ${
@@ -301,13 +296,8 @@ export default function Navbar({
                           {t('nav.services.all')}
                         </PageLink>
                       )}
-                      {item.subItems.map((sub, subIdx) => (
+                      {item.subItems.map((sub) => (
                         <Fragment key={sub.id}>
-                        {subIdx === 1 && (
-                          <p className="px-6 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
-                            {t('nav.services.also')}
-                          </p>
-                        )}
                         <PageLink page={sub.id}
                           onNavigate={() => handleNavClick(sub.id)}
                           className={`block w-full px-6 py-2 text-sm font-medium transition-colors rounded-lg text-left ${
