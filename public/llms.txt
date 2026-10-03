@@ -1,0 +1,45 @@
+# Mago Labs
+
+> Mago Labs is a founder-led website design and development studio in Surat, Gujarat, India. It builds custom, hand-coded websites for clinics, chartered accountancy firms, manufacturers and other small businesses, designed to turn visitors into enquiries. Clients work directly with the founder, Burhan Kapasi.
+
+Key facts:
+
+- Main service: custom website design and development, live in 5 to 28 days depending on the package. SEO, Google Business Profile and copywriting are offered alongside a website.
+- Four website packages with fixed quotes. Starting prices in India: Launch ₹17,999 (5 days), Growth ₹29,999 (14 days), Scale ₹49,999 (21 days), Commerce ₹64,999 (28 days). Outside India: Launch $599, Growth $1,149, Scale $1,899, Commerce $2,499.
+- Results from client work: Dr. Mihir Shah Smile Care Clinic went from 25 to 58 patients a day within two months of launch. Darshan Galani & Co. signed 34 new clients within three months of launching its first website.
+- Free website audit: send a website address and Mago Labs replies within one business day with what is stopping visitors from enquiring. Free, with no obligation.
+- Contact: phone and WhatsApp +91 9099245605, email burhan@magolabs.in. Based in Surat, serving clients across India and abroad.
+
+## Services
+
+- [Services overview](https://www.magolabs.in/services): Everything Mago Labs offers and how the services fit together.
+- [Website design and development](https://www.magolabs.in/services/web-design): Custom websites, hand-coded from a blank canvas, never a template.
+- [SEO](https://www.magolabs.in/services/seo): Technical, on-page and local SEO.
+- [Google Business Profile](https://www.magolabs.in/services/google-business-profile): Profile setup and optimisation for Google Maps visibility.
+- [Copywriting](https://www.magolabs.in/services/copywriting): Clear, human-written website copy.
+- [Pricing](https://www.magolabs.in/pricing): The four packages, what each includes, and timelines.
+
+## Client work
+
+- [All case studies](https://www.magolabs.in/work): Websites built for clinics, CA firms, manufacturers and more, and what changed after launch.
+- [Dr. Mihir Shah Smile Care Clinic](https://www.magolabs.in/work/drmihirshah): Dental clinic, 25 to 58 patients a day.
+- [Darshan Galani & Co.](https://www.magolabs.in/work/darshangalani): CA firm, 34 new clients in three months.
+- [Santosh Timbers](https://www.magolabs.in/work/santoshtimbers): Timber importer, from no website to a full product catalogue.
+
+## Industries
+
+- [Websites for dentists and clinics](https://www.magolabs.in/industries/dentists)
+- [Websites for CA firms](https://www.magolabs.in/industries/ca-firms)
+- [Websites for manufacturers](https://www.magolabs.in/industries/manufacturers)
+
+## Company
+
+- [About](https://www.magolabs.in/about): Burhan Kapasi and how Mago Labs works.
+- [Contact](https://www.magolabs.in/contact): Request a free website audit, or call or WhatsApp directly.
+
+## Optional
+
+- [Insights](https://www.magolabs.in/insights): Plain-English guides on website design, local SEO and digital growth.
+- [Sitemap](https://www.magolabs.in/sitemap.xml): Every page on the site.
+- [Privacy policy](https://www.magolabs.in/privacy)
+- [Terms](https://www.magolabs.in/terms)

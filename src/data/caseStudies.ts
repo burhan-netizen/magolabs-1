@@ -26,8 +26,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Santosh Timbers now has a professional online presence that matches the scale of their actual business, giving new buyers a reason to trust them before the first conversation even happens.",
     scope: ['Website Design', 'Product Catalog', 'Enquiry Form'],
     accent: '#92400E',
-    logoUrl: '/logos/santoshtimbers.png',
-    screenshotUrl: '/screenshots/santoshtimbers.jpg',
+    logoUrl: '/logos/sm/santoshtimbers.webp',
+    screenshotUrl: '/screenshots/santoshtimbers.webp',
   },
   {
     id: 'drmihirshah',
@@ -52,8 +52,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     scope: ['Website Design', 'Appointment Booking System', 'Local SEO'],
     accent: '#0D9488',
-    logoUrl: '/logos/drmihirshah.png',
-    screenshotUrl: '/screenshots/drmihirshah.jpg',
+    logoUrl: '/logos/sm/drmihirshah.webp',
+    screenshotUrl: '/screenshots/drmihirshah.webp',
   },
   {
     id: 'astrabizz',
@@ -73,8 +73,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Astrabizz now has a website that reflects the seriousness of the work they do, giving Denish a genuine edge when pitching to bigger companies evaluating multiple consulting partners.",
     scope: ['Website Design', 'Service Pages', 'Consultation Booking CTA'],
     accent: '#16A34A',
-    logoUrl: '/logos/astrabizz.png',
-    screenshotUrl: '/screenshots/astrabizz.jpg',
+    logoUrl: '/logos/sm/astrabizz.webp',
+    screenshotUrl: '/screenshots/astrabizz.webp',
   },
   {
     id: 'solway',
@@ -94,8 +94,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       "SolWay Energies now has a digital presence that supports their sales conversations instead of undermining them, giving corporate buyers a reason to take the relationship seriously from the first search.",
     scope: ['Website Design', 'Product/Service Showcase', 'Lead Capture'],
     accent: '#D97706',
-    logoUrl: '/logos/solway.png',
-    screenshotUrl: '/screenshots/solway.jpg',
+    logoUrl: '/logos/sm/solway.webp',
+    screenshotUrl: '/screenshots/solway.webp',
   },
   {
     id: 'darshangalani',
@@ -120,8 +120,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     scope: ['Website Design', 'Content Structure', 'SEO'],
     accent: '#7C3AED',
-    logoUrl: '/logos/darshangalani.png',
-    screenshotUrl: '/screenshots/darshangalani.jpg',
+    logoUrl: '/logos/sm/darshangalani.webp',
+    screenshotUrl: '/screenshots/darshangalani.webp',
   },
   {
     id: 'kdmayani',
@@ -141,8 +141,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       "K.D. Mayani & Co. now has an authority building website that gives the practice a stronger first impression with every new prospective client who finds them.",
     scope: ['Website Design', 'Local SEO', 'Enquiry Form'],
     accent: '#059669',
-    logoUrl: '/logos/kdmayani.png',
-    screenshotUrl: '/screenshots/kdmayani.jpg',
+    logoUrl: '/logos/sm/kdmayani.webp',
+    screenshotUrl: '/screenshots/kdmayani.webp',
   },
   {
     id: 'jaymehta',
@@ -162,8 +162,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Jay Mehta & Co. now has a website that works beautifully on mobile, loads fast, and gives clients a much stronger reason to trust the practice than the old site ever did.",
     scope: ['Website Redesign', 'Mobile Optimization', 'Enquiry Form'],
     accent: '#0891B2',
-    logoUrl: '/logos/jaymehta.png',
-    screenshotUrl: '/screenshots/jaymehta.jpg',
+    logoUrl: '/logos/sm/jaymehta.webp',
+    screenshotUrl: '/screenshots/jaymehta.webp',
   },
   {
     id: 'mnp',
@@ -183,8 +183,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Since the rebuild, the firm has noticed a real difference in how prospective clients respond after visiting the site, exactly the kind of result a website revamp should deliver.",
     scope: ['Website Redesign', 'Conversion Optimization', 'Enquiry Form'],
     accent: '#2563EB',
-    logoUrl: '/logos/mnp.png',
-    screenshotUrl: '/screenshots/mnp.jpg',
+    logoUrl: '/logos/sm/mnp.webp',
+    screenshotUrl: '/screenshots/mnp.webp',
   },
   {
     id: 'prabhakarprocessors',
@@ -204,8 +204,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       "The new site looks professional, modern, and aesthetic, establishing the trust and credibility that matches the authority Prabhakar Processors already has in the market.",
     scope: ['Website Redesign', 'Admin Panel', 'Content Management'],
     accent: '#78350F',
-    logoUrl: '/logos/prabhakarprocessors.png',
-    screenshotUrl: '/screenshots/prabhakarprocessors.jpg',
+    logoUrl: '/logos/sm/prabhakarprocessors.webp',
+    screenshotUrl: '/screenshots/prabhakarprocessors.webp',
   },
   {
     id: 'momrise',
@@ -225,7 +225,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Momrise has a sales page built to turn social media visitors into buyers without anyone on a call, and a brand system ready for the products that follow.",
     scope: ['Sales Page', 'Brand Identity', 'Conversion Copywriting'],
     accent: '#FF6321',
-    screenshotUrl: '/screenshots/momrise.jpg',
+    screenshotUrl: '/screenshots/momrise.webp',
   },
   {
     id: 'tinyhumans',
@@ -245,7 +245,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "A parent can try real scripts before buying and check out in one step, on a page written in the same calm voice as the guide.",
     scope: ['Sales Page', 'Conversion Copywriting', 'Checkout'],
     accent: '#E2674E',
-    screenshotUrl: '/screenshots/tinyhumans.jpg',
+    screenshotUrl: '/screenshots/tinyhumans.webp',
   },
 ];
 
@@ -292,7 +292,8 @@ export function getCaseStudySEO(cs: CaseStudy): SEOConfig {
     description: shortDescription(cs.outcome),
     ogTitle: `${cs.clientName} Case Study | Mago Labs`,
     ogDescription: cs.outcome,
-    ogImage: cs.screenshotUrl ? `https://www.magolabs.in${cs.screenshotUrl}` : undefined,
+    // Link previews get the JPEG: not every app that shows previews can read WebP.
+    ogImage: cs.screenshotUrl ? `https://www.magolabs.in${cs.screenshotUrl.replace(/.webp$/, '.jpg')}` : undefined,
     ogType: 'article',
     twitterCard: 'summary_large_image',
   };

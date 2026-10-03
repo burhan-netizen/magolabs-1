@@ -1,4 +1,5 @@
 import { ArrowRight, ArrowUpRight, Check, EyeOff, Plus, Minus, Quote, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
+import { screenshotSrcSet } from '../utils/images';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { PageId } from '../types';
@@ -163,9 +164,10 @@ const FEATURED_WORK = [
     stat: '25 to 58 patients a day',
     // The stat again, split so the number can count up: before, from, to, after.
     count: { before: '25 to ', from: 25, to: 58, after: ' patients a day' },
-    screenshot: '/screenshots/drmihirshah.jpg',
+    screenshot: '/screenshots/drmihirshah.webp',
     result: 'A new clinic where nobody knew him yet. Two months after launch, daily patients had more than doubled.',
-    logo: '/logos/drmihirshah.png',
+    logo: '/logos/sm/drmihirshah.webp',
+    logoSize: [349, 120],
   },
   {
     id: 'darshangalani',
@@ -173,9 +175,10 @@ const FEATURED_WORK = [
     industry: 'Chartered Accountancy',
     stat: '34 new clients in 3 months',
     count: { before: '', from: 0, to: 34, after: ' new clients in 3 months' },
-    screenshot: '/screenshots/darshangalani.jpg',
+    screenshot: '/screenshots/darshangalani.webp',
     result: 'A practice that had never had a website. Enquiries started arriving through Google, and 34 became clients.',
-    logo: '/logos/darshangalani.png',
+    logo: '/logos/sm/darshangalani.webp',
+    logoSize: [390, 79],
   },
   {
     id: 'santoshtimbers',
@@ -183,9 +186,10 @@ const FEATURED_WORK = [
     industry: 'Timber & Wood Trading',
     stat: 'Zero online presence to a full catalogue',
     count: undefined,
-    screenshot: '/screenshots/santoshtimbers.jpg',
+    screenshot: '/screenshots/santoshtimbers.webp',
     result: 'One of India’s largest timber importers, given a website that finally matches the scale of the business.',
-    logo: '/logos/santoshtimbers.png',
+    logo: '/logos/sm/santoshtimbers.webp',
+    logoSize: [120, 120],
   },
 ];
 
@@ -769,6 +773,8 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
                     <div className="relative overflow-hidden border-b border-neutral-200">
                       <img
                         src={project.screenshot}
+                        srcSet={screenshotSrcSet(project.screenshot)}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
                         alt={`${project.name} website`}
                         width={900}
                         height={430}
@@ -779,7 +785,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
                       <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/45 via-transparent to-transparent pointer-events-none" aria-hidden="true" />
                       {/* White chip so client logos stay legible over the screenshot */}
                       <span className="absolute left-5 bottom-4 rounded-lg bg-[#ffffff] px-2.5 py-1.5 shadow-lg">
-                        <img src={project.logo} alt={`${project.name} logo`} loading="lazy" className="h-7 w-auto max-w-[120px] object-contain object-left" />
+                        <img src={project.logo} alt={`${project.name} logo`} width={project.logoSize[0]} height={project.logoSize[1]} loading="lazy" decoding="async" className="h-7 w-auto max-w-[120px] object-contain object-left" />
                       </span>
                       <span className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-brand text-ink opacity-0 -translate-x-2 translate-y-2 transition-[opacity,translate] duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0" aria-hidden="true">
                         <ArrowUpRight className="h-4 w-4" />

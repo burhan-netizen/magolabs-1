@@ -27,6 +27,18 @@ interface LeadFormState {
   message: string;
 }
 
+/** A form submission started by an AI agent in the browser (WebMCP), which waits
+ *  for a plain-text result instead of reading the page. */
+type AgentSubmitEvent = Event & { agentInvoked?: boolean; respondWith?: (result: Promise<string>) => void };
+
+// Describes the form to AI agents browsing on a visitor's behalf (WebMCP), so they
+// can fill it in reliably. The visitor still presses the button to send it.
+const AGENT_TOOL = {
+  toolname: 'request_free_website_audit',
+  tooldescription:
+    'Send an enquiry to Mago Labs, a website design studio. Use it to request a free audit of an existing website, or a free plan for a first website. Mago Labs replies within one business day.',
+};
+
 const EMPTY: LeadFormState = { name: '', phone: '', website: '', business: '', message: '' };
 
 // The words that change with the visitor's starting point.
@@ -74,10 +86,21 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim()) return setError('Please tell us your name.');
-    if (form.phone.replace(/\D/g, '').length < 7) return setError('Please enter a phone or WhatsApp number we can reach you on.');
+    const outcome = send();
+    const agentEvent = e.nativeEvent as AgentSubmitEvent;
+    if (agentEvent.agentInvoked) agentEvent.respondWith?.(outcome);
+  };
+
+  /** Sends the enquiry. Resolves with a one-line result, which an AI agent reads. */
+  const send = async (): Promise<string> => {
+    const invalid = (message: string) => {
+      setError(message);
+      return `Not sent: ${message}`;
+    };
+    if (!form.name.trim()) return invalid('Please tell us your name.');
+    if (form.phone.replace(/\D/g, '').length < 7) return invalid('Please enter a phone or WhatsApp number we can reach you on.');
 
     setError('');
     setStatus('sending');
@@ -100,9 +123,11 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
       if (!response.ok) throw new Error(result.error || 'Something went wrong.');
       setStatus('sent');
       setForm(EMPTY);
+      return `Enquiry sent. ${copy.thanks}`;
     } catch {
       setStatus('idle');
       setError('That did not go through. Please try again, or message us on WhatsApp.');
+      return 'Not sent: the enquiry did not go through. Try again, or message Mago Labs on WhatsApp.';
     }
   };
 
@@ -128,7 +153,7 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
   }
 
   return (
-    <form onSubmit={submit} noValidate className="rounded-2xl border border-neutral-200 bg-white p-6 sm:p-8 text-left space-y-5">
+    <form onSubmit={submit} noValidate {...AGENT_TOOL} className="rounded-2xl border border-neutral-200 bg-white p-6 sm:p-8 text-left space-y-5">
       {/* Starting point: the same form serves people with a website and people without one */}
       <div role="radiogroup" aria-label="Where are you starting from?" className="grid grid-cols-2 gap-1 rounded-full bg-neutral-100 p-1">
         {(['audit', 'new'] as LeadMode[]).map((option) => {
@@ -159,6 +184,7 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
             type="text"
             autoComplete="name"
             required
+            {...{ toolparamdescription: 'Full name of the person making the enquiry.' }}
             value={form.name}
             onChange={update}
             className={fieldClass}
@@ -173,6 +199,7 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
             inputMode="tel"
             autoComplete="tel"
             required
+            {...{ toolparamdescription: 'Phone or WhatsApp number to reply on, with country code if outside India.' }}
             value={form.phone}
             onChange={update}
             className={fieldClass}
@@ -190,6 +217,7 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
             inputMode="url"
             autoComplete="url"
             placeholder="yourbusiness.com"
+            {...{ toolparamdescription: 'Address of the existing website to audit, for example yourbusiness.com.' }}
             value={form.website}
             onChange={update}
             className={fieldClass}
@@ -204,6 +232,7 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
             type="text"
             autoComplete="organization"
             placeholder="For example: a dental clinic in Surat"
+            {...{ toolparamdescription: 'What the business does and where, for a business with no website yet.' }}
             value={form.business}
             onChange={update}
             className={fieldClass}
@@ -219,6 +248,7 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
           id={`${idPrefix}-message`}
           name="message"
           rows={3}
+          {...{ toolparamdescription: 'Optional. Anything else Mago Labs should know, such as goals, budget or timeline.' }}
           value={form.message}
           onChange={update}
           className={`${fieldClass} resize-y`}

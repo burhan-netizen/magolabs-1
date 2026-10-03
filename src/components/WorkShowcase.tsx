@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { screenshotSrcSet } from '../utils/images';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { CaseStudy } from '../types';
@@ -35,6 +36,8 @@ function BrowserFrame({ project, eager }: { project: CaseStudy; eager?: boolean 
       </div>
       <img
         src={project.screenshotUrl}
+        srcSet={project.screenshotUrl && screenshotSrcSet(project.screenshotUrl)}
+        sizes="(max-width: 640px) 100vw, 450px"
         alt={`${project.clientName} website`}
         width={900}
         height={430}
@@ -202,6 +205,8 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                     >
                       <img
                         src={project.screenshotUrl}
+                        srcSet={project.screenshotUrl && screenshotSrcSet(project.screenshotUrl)}
+                        sizes="(max-width: 640px) 100vw, 450px"
                         alt={`${project.clientName} website`}
                         width={900}
                         height={430}

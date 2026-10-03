@@ -45,7 +45,66 @@ if (!fs.existsSync(templatePath)) {
   process.exit(1);
 }
 
-const template = fs.readFileSync(templatePath, 'utf-8');
+/**
+ * Three changes to the built page shell that let the browser paint as soon as the
+ * HTML arrives, with no further round trip:
+ *   1. The stylesheet is placed inside the page. As a separate file it blocked
+ *      the first paint until it had been requested and downloaded.
+ *   2. The fonts used at the top of every page start downloading straight away.
+ *      Otherwise the browser only discovers them after reading the styles.
+ *   3. The app's JavaScript starts loading just after the first paint, not
+ *      alongside it. Every page is complete in its HTML and its links are real
+ *      links, so nothing waits on the script, and on a slow phone connection the
+ *      download no longer competes with the content the visitor is waiting to see.
+ *      A tap, a key press or a scroll starts it at once.
+ * Visitors move between pages without reloading, so the styles are still only
+ * downloaded once per visit.
+ */
+function deferredScriptLoader(src: string): string {
+  return (
+    '<script>(function(){var done=false;function load(){if(done)return;done=true;' +
+    "var s=document.createElement('script');s.type='module';s.crossOrigin='anonymous';" +
+    `s.src=${JSON.stringify(src)};document.head.appendChild(s);}` +
+    // The browser reports its first paint; start then. Older browsers without that
+    // report wait two animation frames (the second one runs after the first paint).
+    "try{new PerformanceObserver(function(list,observer){observer.disconnect();setTimeout(load,0);}).observe({type:'paint',buffered:true});}" +
+    'catch(e){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(load,0);});});}' +
+    // Background tabs never paint, so a timer makes sure it still loads.
+    'setTimeout(load,2000);' +
+    "['pointerdown','keydown','touchstart','scroll'].forEach(function(t){addEventListener(t,load,{once:true,passive:true});});" +
+    '})();</script>'
+  );
+}
+
+function inlineCriticalAssets(html: string): string {
+  const assetsDir = path.join(distDir, 'assets');
+  const assetFiles = fs.readdirSync(assetsDir);
+
+  const preloads = ['poppins-latin-700-normal', 'poppins-latin-400-normal', 'poppins-latin-600-normal']
+    .map((name) => assetFiles.find((file) => file.startsWith(`${name}-`) && file.endsWith('.woff2')))
+    .filter((file): file is string => Boolean(file))
+    .map((file) => `<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/${file}">`)
+    .join('');
+
+  const stylesheetTag = /<link rel="stylesheet"[^>]*href="\/assets\/([^"]+\.css)"[^>]*>/;
+  const match = html.match(stylesheetTag);
+  if (!match) {
+    console.warn('[prerender-seo] No stylesheet link found to inline, leaving the page shell as built.');
+    return html;
+  }
+  const css = fs.readFileSync(path.join(assetsDir, match[1]), 'utf-8');
+  // A function replacer, so "$" characters in the styles are never read as patterns.
+  html = html.replace(stylesheetTag, () => `${preloads}<style>${css}</style>`);
+
+  const scriptTag = /<script type="module"[^>]*src="(\/assets\/[^"]+\.js)"[^>]*><\/script>/;
+  if (!scriptTag.test(html)) {
+    console.warn('[prerender-seo] No module script found to defer, leaving it as built.');
+    return html;
+  }
+  return html.replace(scriptTag, (_tag, src: string) => deferredScriptLoader(src));
+}
+
+const template = inlineCriticalAssets(fs.readFileSync(templatePath, 'utf-8'));
 let written = 0;
 
 const ROOT_PLACEHOLDER = '<div id="root"></div>';

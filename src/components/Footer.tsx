@@ -37,6 +37,10 @@ export default function Footer({ onPageChange }: FooterProps) {
                 <img
                   src="/logo.png"
                   alt="Mago Labs Logo"
+                  width={300}
+                  height={200}
+                  loading="lazy"
+                  decoding="async"
                   className="h-14 w-auto object-contain dark:invert select-none"
                   onError={() => setLogoError(true)}
                   referrerPolicy="no-referrer"
@@ -107,7 +111,7 @@ export default function Footer({ onPageChange }: FooterProps) {
                   For manufacturers
                 </PageLink>
               </li>
-              <li className="pt-2 text-[11px] font-semibold uppercase tracking-wider text-neutral-400">Alongside your website</li>
+              <li className="pt-2 text-[11px] font-semibold uppercase tracking-wider text-neutral-500">Alongside your website</li>
               <li>
                 <PageLink page="service-seo"
                   onNavigate={() => handleLinkClick('service-seo')}
@@ -211,7 +215,7 @@ export default function Footer({ onPageChange }: FooterProps) {
                 <div>
                   <p className="text-xs text-neutral-500 dark:text-neutral-500 uppercase font-medium">Business Hours</p>
                   <p className="text-neutral-700 dark:text-neutral-300 font-medium">Mon to Sat: 9:00 AM to 7:00 PM</p>
-                  <p className="text-neutral-400 dark:text-neutral-500 text-xs">Sunday: Closed</p>
+                  <p className="text-neutral-500 dark:text-neutral-400 text-xs">Sunday: Closed</p>
                 </div>
               </li>
             </ul>
@@ -220,7 +224,7 @@ export default function Footer({ onPageChange }: FooterProps) {
 
         {/* Bottom Bar */}
         <div className="border-t border-neutral-200 dark:border-neutral-800/80 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
-          <p className="text-neutral-400 dark:text-neutral-500">
+          <p className="text-neutral-500 dark:text-neutral-400">
             &copy; {currentYear} Mago Labs. All rights reserved. Registered in India.
           </p>
           <div className="flex items-center gap-6">

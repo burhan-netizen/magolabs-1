@@ -43,15 +43,16 @@ body {
 }
 
 /* Subtle static film-grain overlay. It used to animate continuously, which kept
-   the browser repainting a full-screen layer on every page for no benefit. */
+   the browser repainting a full-screen layer on every page for no benefit.
+   The grain is a small ready-made image, repeated. Drawn live by an SVG noise
+   filter, as it was before, the browser had to compute the noise for the whole
+   screen before it could paint the page for the first time. */
 body::before {
   content: "";
   position: fixed;
-  top: -150%;
-  left: -150%;
-  width: 300%;
-  height: 300%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  inset: 0;
+  background-image: url("/grain.png");
+  background-size: 100px 100px;
   opacity: 0.035;
   pointer-events: none;
   z-index: 9999;
@@ -594,7 +595,7 @@ html[data-currency="usd"] .cur-inr {
   gap: 1rem;
 }
 .hero-showcase-dot {
-  width: 22px;
+  width: 26px;
   height: 44px;
   display: grid;
   place-items: center;

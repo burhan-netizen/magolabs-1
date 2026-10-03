@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { screenshotSrcSet } from '../utils/images';
 import { ArrowRight } from 'lucide-react';
 import PageLink from './PageLink';
 import { getWorkDetailPath } from '../utils/pageRoutes';
@@ -9,11 +10,11 @@ interface HeroShowcaseProps {
 
 // Real client websites, each with the one line worth knowing about it.
 const SLIDES = [
-  { id: 'drmihirshah', domain: 'drmihirshahsmilecareclinic.com', image: '/screenshots/drmihirshah.jpg', industry: 'Dental clinic', headline: '25 to 58 patients a day', detail: 'Dr. Mihir Shah Smile Care Clinic, within two months of launch.' },
-  { id: 'darshangalani', domain: 'darshangalani.com', image: '/screenshots/darshangalani.jpg', industry: 'CA firm', headline: '34 new clients signed', detail: 'Darshan Galani & Co., within three months of launch.' },
-  { id: 'santoshtimbers', domain: 'santoshtimbers.com', image: '/screenshots/santoshtimbers.jpg', industry: 'Timber importer', headline: 'From no website to a full catalogue', detail: 'Santosh Timbers, with a direct enquiry form for bulk buyers.' },
-  { id: 'prabhakarprocessors', domain: 'prabhakarprocessors.com', image: '/screenshots/prabhakarprocessors.jpg', industry: 'Textile mill', headline: 'A redesign the team runs itself', detail: 'Prabhakar Processors, with a custom admin panel.' },
-  { id: 'solway', domain: 'solwayenergies.com', image: '/screenshots/solway.jpg', industry: 'Solar and B2B energy', headline: 'A website that backs up every sales call', detail: 'SolWay Energies, built for corporate buyers.' },
+  { id: 'drmihirshah', domain: 'drmihirshahsmilecareclinic.com', image: '/screenshots/drmihirshah.webp', industry: 'Dental clinic', headline: '25 to 58 patients a day', detail: 'Dr. Mihir Shah Smile Care Clinic, within two months of launch.' },
+  { id: 'darshangalani', domain: 'darshangalani.com', image: '/screenshots/darshangalani.webp', industry: 'CA firm', headline: '34 new clients signed', detail: 'Darshan Galani & Co., within three months of launch.' },
+  { id: 'santoshtimbers', domain: 'santoshtimbers.com', image: '/screenshots/santoshtimbers.webp', industry: 'Timber importer', headline: 'From no website to a full catalogue', detail: 'Santosh Timbers, with a direct enquiry form for bulk buyers.' },
+  { id: 'prabhakarprocessors', domain: 'prabhakarprocessors.com', image: '/screenshots/prabhakarprocessors.webp', industry: 'Textile mill', headline: 'A redesign the team runs itself', detail: 'Prabhakar Processors, with a custom admin panel.' },
+  { id: 'solway', domain: 'solwayenergies.com', image: '/screenshots/solway.webp', industry: 'Solar and B2B energy', headline: 'A website that backs up every sales call', detail: 'SolWay Energies, built for corporate buyers.' },
 ];
 
 const COUNT = SLIDES.length;
@@ -232,6 +233,8 @@ export default function HeroShowcase({ onOpenCaseStudy }: HeroShowcaseProps) {
             </div>
             <img
               src={slide.image}
+              srcSet={screenshotSrcSet(slide.image)}
+              sizes="(max-width: 640px) 270px, 450px"
               alt={i === 0 ? 'The website Mago Labs built for Dr. Mihir Shah Smile Care Clinic' : `The website Mago Labs built for ${slide.detail.split(',')[0]}`}
               width={900}
               height={430}
