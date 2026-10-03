@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useScrollDepth } from '../hooks/useScrollDepth';
 import { screenshotSrcSet } from '../utils/images';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
@@ -27,7 +28,7 @@ const FILTERS = ['All', 'CA firms', 'Consulting', 'Our own products'];
 /** A screenshot inside a slim browser frame. */
 function BrowserFrame({ project, eager }: { project: CaseStudy; eager?: boolean }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-black/10 bg-white shadow-[0_24px_60px_-20px_rgba(0,0,0,0.35)]">
+    <div className="depth-frame relative overflow-hidden rounded-xl border border-black/10 bg-white shadow-[0_24px_60px_-20px_rgba(0,0,0,0.35)]">
       <div className="flex items-center gap-1.5 border-b border-black/5 bg-[#f4f4f2] px-3.5 py-2.5">
         <span className="h-2 w-2 rounded-full bg-black/15" />
         <span className="h-2 w-2 rounded-full bg-black/15" />
@@ -43,8 +44,10 @@ function BrowserFrame({ project, eager }: { project: CaseStudy; eager?: boolean 
         height={430}
         loading={eager ? 'eager' : 'lazy'}
         decoding="async"
-        className="block aspect-[900/430] w-full object-cover object-top"
+        className="depth-shot block aspect-[900/430] w-full object-cover object-top"
       />
+      {/* A streak of light that crosses the screenshot once, as the card arrives (phones) */}
+      <span className="depth-sheen" aria-hidden="true" />
     </div>
   );
 }
@@ -56,6 +59,12 @@ function BrowserFrame({ project, eager }: { project: CaseStudy; eager?: boolean 
 export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
   const stackRef = useRef<HTMLDivElement>(null);
   useScrollStack(stackRef, '.work-stack-card', { stackDistance: 22, scale: 0.04, blur: 1.2 });
+
+  // Phones and tablets: no pointer and no room to stack, so the cards get depth
+  // from the scroll itself.
+  const gridRef = useRef<HTMLDivElement>(null);
+  useScrollDepth(stackRef, '.work-stack-card');
+  useScrollDepth(gridRef, '.work-card');
 
   const [filter, setFilter] = useState('All');
 
@@ -183,7 +192,7 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout" initial={false}>
               {shown.map((project, idx) => (
                 <motion.div
@@ -212,10 +221,11 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                         height={430}
                         loading="lazy"
                         decoding="async"
-                        className="block aspect-[900/430] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                        className="depth-shot block aspect-[900/430] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                       />
-                      <span className="absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-neutral-950/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                      <span className="absolute bottom-3 left-3 inline-flex translate-y-3 items-center gap-1.5 rounded-full bg-brand px-3.5 py-1.5 text-xs font-bold text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                      <span className="depth-sheen" aria-hidden="true" />
+                      <span className="depth-shade absolute inset-0 bg-gradient-to-t from-neutral-950/70 via-neutral-950/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <span className="depth-pill absolute bottom-3 left-3 inline-flex translate-y-3 items-center gap-1.5 rounded-full bg-brand px-3.5 py-1.5 text-xs font-bold text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                         Read the case study <ArrowRight className="h-3 w-3" />
                       </span>
                     </PageLink>

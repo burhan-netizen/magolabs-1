@@ -932,6 +932,60 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
 .work-card:hover::after {
   opacity: 1;
 }
+/* Phones and tablets (src/hooks/useScrollDepth.ts): the script sets --in and
+   --out on each card as the page scrolls, and marks it is-depth. Each card rises
+   and tilts flat as it arrives, and sinks back a little as it leaves at the top. */
+.depth-sheen {
+  display: none;
+}
+.is-depth {
+  --in: 1;
+  --out: 0;
+  transform:
+    perspective(1100px)
+    translate3d(0, calc((1 - var(--in)) * 64px), 0)
+    scale(calc(0.9 + var(--in) * 0.1 - var(--out) * 0.07))
+    rotateX(calc((1 - var(--in)) * 9deg - var(--out) * 5deg));
+  transform-origin: 50% 100%;
+  opacity: calc(0.2 + var(--in) * 0.8 - var(--out) * 0.5);
+  transition: none;
+  will-change: transform, opacity;
+}
+/* The browser frame swings up a little further than the card it sits in. */
+.is-depth .depth-frame {
+  transform: perspective(900px) rotateX(calc((1 - var(--in)) * 16deg)) translate3d(0, calc((1 - var(--in)) * 28px), 0);
+  transform-origin: 50% 100%;
+}
+/* The screenshot starts zoomed in and settles, so it moves inside its frame. */
+.is-depth .depth-shot {
+  transform: scale(calc(1.16 - var(--in) * 0.16));
+  transform-origin: 50% 0;
+  transition: none;
+}
+.is-depth .depth-sheen {
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+.is-depth.is-inview .depth-sheen {
+  animation: depthSheen 0.9s ease-out 0.05s both;
+}
+@keyframes depthSheen {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
+}
+/* With no hover on a touch screen, the "Read the case study" tag shows once the
+   card has arrived. */
+.is-depth.is-inview .depth-shade {
+  opacity: 0.85;
+}
+.is-depth.is-inview .depth-pill {
+  opacity: 1;
+  translate: 0 0;
+}
 .work-filter-idle {
   background: rgba(13, 13, 13, 0.05);
 }
