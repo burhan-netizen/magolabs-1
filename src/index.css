@@ -932,197 +932,274 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
 .work-card:hover::after {
   opacity: 1;
 }
-/* Home page gallery of websites (src/components/WorkGallery.tsx).
-   A plain grid by default. The script adds is-gallery, which turns it into a
-   corridor of frames in 3D that the scroll moves the camera through. */
-.gallery-section {
-  /* Frames drift past the edges of the page. clip trims them without making the
-     section a scroll box, which would stop the stage holding in place. */
+/* Home page wall of websites (src/components/WorkWall.tsx).
+   Columns of browser frames drifting on a wall that leans back in 3D. The script
+   sets --turn on the plane: 0 leaning back, 1 facing the visitor. */
+.wall-section {
+  /* The leaning wall is wider than the page; clip trims it at the section's edges. */
   overflow-x: clip;
 }
-.gallery-stage {
+.wall-view {
   position: relative;
-  padding: 6rem 0;
-}
-.gallery-intro {
-  position: relative;
-  z-index: 2;
-  margin-bottom: 3rem;
-}
-.gallery-glow,
-.gallery-hud,
-.gallery-chrome {
-  display: none;
-}
-.gallery-rail {
-  list-style: none;
-}
-.gallery-open {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.gallery-label {
-  flex-direction: column;
-  gap: 0.125rem;
-}
-.gallery-card {
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-@media (hover: hover) {
-  a.gallery-card:hover {
-    border-color: rgba(255, 197, 61, 0.7);
-    box-shadow: 0 30px 70px -30px rgba(255, 197, 61, 0.5);
-  }
-  .gallery-card:hover .gallery-open {
-    opacity: 1;
-  }
-}
-@media (hover: none) {
-  .gallery-open {
-    opacity: 1;
-  }
-}
-
-/* The corridor. The wrapper's height is the distance the camera travels; the
-   stage is one screen tall and held in place for all of it. */
-.gallery-wrap.is-gallery {
-  height: 520vh;
-}
-.is-gallery .gallery-stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  padding: 0;
+  height: clamp(520px, 80vh, 780px);
+  margin-top: 3.5rem;
   overflow: hidden;
-  perspective: 1100px;
-  perspective-origin: 50% 52%;
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
 }
-.is-gallery .gallery-glow {
-  display: block;
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 50% 40% at 50% 52%, rgba(255, 197, 61, 0.13), transparent 70%),
-    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
-}
-.is-gallery .gallery-intro {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  margin: 0 auto;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-.is-gallery .gallery-view {
-  position: absolute;
-  inset: 0;
-  max-width: none;
-  padding: 0;
-  transform-style: preserve-3d;
-}
-.is-gallery .gallery-rail {
-  display: block;
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-.is-gallery .gallery-frame {
-  position: absolute;
-  left: 50%;
-  top: 52%;
-  width: min(620px, 46vw);
-  opacity: 0;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-}
-.is-gallery .gallery-card {
-  pointer-events: none;
-  box-shadow: 0 50px 110px -40px rgba(0, 0, 0, 0.9);
-}
-.is-gallery .gallery-frame.is-focus .gallery-card {
-  pointer-events: auto;
-}
-.is-gallery .gallery-chrome {
-  display: flex;
-}
-.is-gallery .gallery-label {
-  flex-direction: row;
-  gap: 0.75rem;
-  padding: 0.875rem 1.125rem;
-}
-.is-gallery .gallery-label p:first-child {
-  font-size: 1rem;
-}
-.is-gallery .gallery-industry {
-  flex: none;
-  max-width: 50%;
-}
-/* The arrow shows on the frame in focus: that is the one that opens. */
-.is-gallery .gallery-open {
-  opacity: 0;
-  transform: scale(0.6);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.is-gallery .gallery-frame.is-focus .gallery-open {
-  opacity: 1;
-  transform: none;
-}
-.is-gallery .gallery-end {
-  min-height: 15rem;
-}
-.is-gallery .gallery-hud {
-  display: flex;
+/* The wall fades into the section at the top and bottom, where columns come and go. */
+.wall-view::before,
+.wall-view::after {
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 1.75rem;
   z-index: 3;
-  align-items: center;
-  gap: 1rem;
-  margin: 0 auto;
-  max-width: 80rem;
-  /* Room on the right for the floating contact buttons. */
-  padding: 0 6rem 0 2rem;
+  height: 7rem;
   pointer-events: none;
 }
-.gallery-track {
-  flex: 1;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.16);
+.wall-view::before {
+  top: 0;
+  background: linear-gradient(#0d0d0d, rgba(13, 13, 13, 0));
 }
-.gallery-bar {
+.wall-view::after {
+  bottom: 0;
+  background: linear-gradient(rgba(13, 13, 13, 0), #0d0d0d);
+}
+.wall-plane {
+  --turn: 1;
+  --lean-x: 50deg;
+  --lean-z: -20deg;
+  --lean-scale: 0.75;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+  transform-style: preserve-3d;
+  transform:
+    rotateX(calc((1 - var(--turn)) * var(--lean-x)))
+    rotateZ(calc((1 - var(--turn)) * var(--lean-z)))
+    scale(calc(1 + (1 - var(--turn)) * var(--lean-scale)));
+  transform-origin: 50% 30%;
+}
+.wall-col {
+  transform-style: preserve-3d;
+  animation: wallDrift 64s linear infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+.wall-col.is-down {
+  animation-direction: reverse;
+  animation-duration: 78s;
+}
+.wall-col:nth-child(3) {
+  animation-duration: 70s;
+}
+/* Half the column is one full set of frames, so the loop has no seam. */
+@keyframes wallDrift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -50%, 0); }
+}
+.wall-view.is-live .wall-col {
+  animation-play-state: running;
+}
+/* Hold still while a frame is being looked at. */
+.wall-view.is-live .wall-plane:has(.wall-tile:hover) .wall-col,
+.wall-view.is-live .wall-plane:has(.wall-tile:focus-visible) .wall-col {
+  animation-play-state: paused;
+}
+
+.wall-tile {
   display: block;
-  height: 100%;
+  /* A margin, not a grid gap: both copies of the list must be exactly the same height. */
+  margin-bottom: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #171717;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  outline: none;
+}
+.wall-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.wall-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.wall-domain {
+  margin-left: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #a3a3a3;
+}
+/* The window onto the page. The screenshot is the whole page, taller than this. */
+.wall-window {
+  display: block;
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  container-type: size;
+}
+.wall-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Back to the top of the page, quickly, when the pointer leaves. */
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.wall-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 2.5rem 0.875rem 0.75rem;
+  background: linear-gradient(rgba(13, 13, 13, 0), rgba(13, 13, 13, 0.92));
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.wall-visit {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 999px;
   background: var(--color-brand);
-  transform: scaleX(0);
-  transform-origin: 0 50%;
+  color: var(--color-ink);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.wall-name {
+  display: none;
+}
+
+/* Pointer and keyboard: the frame comes forward, the rest fall back, and the page
+   inside it scrolls from top to bottom. */
+.wall-tile:focus-visible {
+  transform: translateZ(70px) scale(1.04);
+  border-color: var(--color-brand);
+  box-shadow: 0 40px 80px -30px rgba(255, 197, 61, 0.45);
+  z-index: 2;
+}
+.wall-tile:focus-visible .wall-info {
+  opacity: 1;
+}
+.wall-tile:focus-visible .wall-shot {
+  transform: translateY(calc(-100% + 100cqh));
+  transition: transform 4s linear;
+}
+.wall-plane:has(.wall-tile:focus-visible) .wall-tile:not(:focus-visible) {
+  opacity: 0.45;
+}
+@media (hover: hover) {
+  .wall-tile:hover {
+    transform: translateZ(70px) scale(1.04);
+    border-color: var(--color-brand);
+    box-shadow: 0 40px 80px -30px rgba(255, 197, 61, 0.45);
+    z-index: 2;
+  }
+  .wall-tile:hover .wall-info {
+    opacity: 1;
+  }
+  .wall-tile:hover .wall-shot {
+    transform: translateY(calc(-100% + 100cqh));
+    transition: transform 4s linear;
+  }
+  .wall-plane:has(.wall-tile:hover) .wall-tile:not(:hover) {
+    opacity: 0.45;
+  }
+}
+/* Touch screens: no hover, so the name sits under each frame. */
+@media (hover: none) {
+  .wall-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.375rem;
+    padding: 0.5rem 0.625rem;
+    font-size: 11px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  .wall-info {
+    display: none;
+  }
 }
 @media (max-width: 639px) {
-  .gallery-wrap.is-gallery {
-    height: 470vh;
+  .wall-view {
+    height: clamp(440px, 72vh, 620px);
+    margin-top: 2.5rem;
   }
-  .is-gallery .gallery-frame {
-    width: 82vw;
+  .wall-view::before,
+  .wall-view::after {
+    height: 4rem;
   }
-  .is-gallery .gallery-label {
-    flex-direction: column;
-    gap: 0.125rem;
-    padding: 0.75rem 0.875rem;
+  .wall-plane {
+    --lean-x: 34deg;
+    --lean-z: -12deg;
+    --lean-scale: 0.4;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
   }
-  .is-gallery .gallery-industry {
-    max-width: 100%;
+  .wall-tile {
+    margin-bottom: 0.75rem;
+    border-radius: 0.5rem;
   }
-  .is-gallery .gallery-end {
-    min-height: 11rem;
+  .wall-chrome {
+    padding: 0.3rem 0.5rem;
   }
-  .is-gallery .gallery-hud {
-    bottom: 1.25rem;
-    padding: 0 4.5rem 0 1rem;
+  .wall-dot {
+    width: 0.25rem;
+    height: 0.25rem;
+  }
+  .wall-domain {
+    display: none;
+  }
+}
+/* Reduced motion: a flat, still grid. No drift, no lean, no second copy. */
+@media (prefers-reduced-motion: reduce) {
+  .wall-view {
+    height: auto;
+    overflow: visible;
+    perspective: none;
+  }
+  .wall-view::before,
+  .wall-view::after {
+    display: none;
+  }
+  .wall-plane {
+    transform: none;
+  }
+  .wall-col {
+    animation: none;
+  }
+  .wall-clone {
+    display: none;
+  }
+  .wall-tile,
+  .wall-tile:hover,
+  .wall-tile:focus-visible {
+    transform: none;
+    transition: none;
+  }
+  .wall-tile:hover .wall-shot,
+  .wall-tile:focus-visible .wall-shot {
+    transform: none;
   }
 }
 

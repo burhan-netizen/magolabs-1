@@ -147,8 +147,8 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 'jaymehta',
     clientName: 'Jay Mehta & Co.',
-    url: 'https://www.jaymehtanadco.com',
-    domain: 'www.jaymehtanadco.com',
+    url: 'https://www.jaymehtaandco.com',
+    domain: 'www.jaymehtaandco.com',
     industry: 'Chartered Accountancy',
     business:
       "A chartered accountancy practice with an existing website that was unprofessional and was not converting visitors into enquiries.",

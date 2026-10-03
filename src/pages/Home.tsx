@@ -1,5 +1,5 @@
 import { ArrowRight, Check, EyeOff, Plus, Minus, Quote, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
-import WorkGallery from '../components/WorkGallery';
+import WorkWall from '../components/WorkWall';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { PageId } from '../types';
@@ -699,8 +699,8 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
         </div>
       </section>
 
-      {/* 5. The work behind the results: a selection of websites, as a gallery the scroll walks through */}
-      <WorkGallery onOpenWork={() => navigateTo('work')} />
+      {/* 5. The work behind the results: a selection of websites, on a tilted wall that turns to face the visitor */}
+      <WorkWall onOpenWork={() => navigateTo('work')} />
 
       {/* What clients say */}
       <section id="client-quotes" className="py-24 bg-white font-sans">
