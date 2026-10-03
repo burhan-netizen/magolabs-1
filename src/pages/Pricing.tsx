@@ -312,7 +312,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
           <div className="text-center space-y-5 max-w-3xl mx-auto">
             <span className="eyebrow price-rise">Pricing</span>
             <h1 className="price-rise text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.12]" style={{ '--i': 1 } as CSSProperties}>
-              Clear prices. <span className="marker">No surprises.</span>
+              Clear prices. <span className="marker inline-block whitespace-nowrap">No surprises.</span>
             </h1>
             <p className="price-rise text-neutral-600 text-base sm:text-lg leading-relaxed" style={{ '--i': 2 } as CSSProperties}>
               Four packages, each designed from scratch for your business. Pick the one closest to what you need. Live in as little as 5 days, with a fixed quote before any work starts.
