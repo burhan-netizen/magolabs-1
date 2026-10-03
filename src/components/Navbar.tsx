@@ -90,8 +90,8 @@ export default function Navbar({
       id="main-navbar"
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/85 dark:bg-[#1A1A1A]/85 border-b border-neutral-200/50 dark:border-neutral-800/50 backdrop-blur-md py-4 shadow-sm'
-          : 'bg-white dark:bg-[#1A1A1A] border-b border-transparent py-5'
+          ? 'bg-white/85 dark:bg-[#1A1A1A]/85 border-b border-neutral-200/50 dark:border-neutral-800/50 backdrop-blur-md py-2.5 md:py-3 shadow-sm'
+          : 'bg-white dark:bg-[#1A1A1A] border-b border-transparent py-3 md:py-4'
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -108,7 +108,7 @@ export default function Navbar({
                 alt="Mago Labs Logo"
                 width={300}
                 height={200}
-                className="h-14 md:h-16 w-auto object-contain dark:invert select-none"
+                className="h-14 md:h-16 -my-3 md:-my-4 w-auto object-contain dark:invert select-none"
                 onError={() => setLogoError(true)}
                 referrerPolicy="no-referrer"
               />
