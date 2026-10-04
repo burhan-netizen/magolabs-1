@@ -1,5 +1,5 @@
 import { PageId } from '../types';
-import ScrollLitQuotes from '../components/ScrollLitQuotes';
+import TestimonialDeck from '../components/TestimonialDeck';
 import PageLink from '../components/PageLink';
 import { INDUSTRIES } from '../data/industries';
 import SEO from '../components/SEO';
@@ -104,8 +104,8 @@ export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
 
       <WorkShowcase onOpenCaseStudy={onOpenCaseStudy} />
 
-      {/* Reviews in large type that light up with the scroll, then every review in a grid */}
-      <ScrollLitQuotes eyebrow="In their own words" heading="What clients say." />
+      {/* A pile of review cards to drag through, then every review in a grid */}
+      <TestimonialDeck eyebrow="In their own words" heading="What clients say." />
 
       {/* Testimonials, folded in here so proof sits next to the work it's proving */}
       <section id="work-testimonials" className="py-24 bg-white font-sans border-t border-neutral-200/60">
