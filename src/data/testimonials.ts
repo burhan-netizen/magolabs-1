@@ -1,17 +1,3 @@
-import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import {
-  Quote,
-  Star,
-  BadgeCheck,
-  Scale,
-  Factory,
-  Sun,
-  TreePine,
-  Stethoscope,
-  Rocket,
-} from 'lucide-react';
-
 export interface Testimonial {
   id: string;
   name: string;
@@ -124,17 +110,8 @@ export const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-const INDUSTRY_ICON: Record<Testimonial['industry'], typeof Scale> = {
-  'Chartered Accountancy': Scale,
-  Manufacturing: Factory,
-  'Solar & B2B Energy': Sun,
-  'Timber & Wood Trading': TreePine,
-  'Dental & Healthcare': Stethoscope,
-  'Business & IT Consulting': Rocket,
-};
-
-const FILTERS: Array<Testimonial['industry'] | 'All'> = [
-  'All',
+/** The industries the reviews come from, in the order the filter shows them. */
+export const TESTIMONIAL_INDUSTRIES: Testimonial['industry'][] = [
   'Chartered Accountancy',
   'Manufacturing',
   'Solar & B2B Energy',
@@ -142,113 +119,3 @@ const FILTERS: Array<Testimonial['industry'] | 'All'> = [
   'Dental & Healthcare',
   'Business & IT Consulting',
 ];
-
-function Stars() {
-  return (
-    <div className="flex items-center gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-      ))}
-    </div>
-  );
-}
-
-function ReviewCard({ t, index }: { key?: string; t: Testimonial; index: number }) {
-  const [expanded, setExpanded] = useState(false);
-  const isLong = t.quote.length > 180;
-  const Icon = INDUSTRY_ICON[t.industry];
-
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.35, delay: (index % 3) * 0.06 }}
-      className="rounded-2xl border border-neutral-200 bg-white shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all p-5 sm:p-6 flex flex-col gap-4"
-    >
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex items-center gap-3">
-          <div
-            className="h-10 w-10 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-            style={{ backgroundColor: t.accent }}
-          >
-            {t.initials}
-          </div>
-          <div>
-            <p className="text-sm font-bold text-neutral-900 flex items-center gap-1 leading-tight">
-              {t.name}
-              <BadgeCheck className="h-3.5 w-3.5 text-neutral-900 shrink-0" />
-            </p>
-            <p className="text-[11px] text-neutral-500">{t.role}, {t.company}</p>
-          </div>
-        </div>
-        <Quote className="h-5 w-5 opacity-15 shrink-0" style={{ color: t.accent }} />
-      </div>
-
-      <Stars />
-
-      <p className={`text-sm text-neutral-600 leading-relaxed flex-1 ${!expanded && isLong ? 'line-clamp-4' : ''}`}>
-        {t.quote}
-      </p>
-
-      {isLong && (
-        <button
-          onClick={() => setExpanded((e) => !e)}
-          className="text-[11px] font-bold text-neutral-900 hover:text-neutral-600 transition-colors self-start cursor-pointer"
-        >
-          {expanded ? 'Show less' : 'Read full review'}
-        </button>
-      )}
-
-      <div className="pt-3 border-t border-neutral-100 flex items-center justify-between">
-        <span
-          className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide"
-          style={{ color: t.accent }}
-        >
-          <Icon className="h-3 w-3" /> {t.industry}
-        </span>
-        <span className="text-[10px] font-medium text-neutral-400">Verified Client</span>
-      </div>
-    </motion.div>
-  );
-}
-
-export default function TestimonialWall() {
-  const [filter, setFilter] = useState<Testimonial['industry'] | 'All'>('All');
-
-  const filtered = useMemo(
-    () => (filter === 'All' ? TESTIMONIALS : TESTIMONIALS.filter((t) => t.industry === filter)),
-    [filter]
-  );
-
-  return (
-    <div className="w-full max-w-6xl mx-auto space-y-12 text-left">
-      <div className="space-y-6">
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          {FILTERS.map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold transition-all cursor-pointer border ${
-                filter === f
-                  ? 'bg-neutral-900 border-neutral-900 text-white'
-                  : 'bg-white border-neutral-200 text-neutral-500 hover:border-neutral-300 hover:text-neutral-800'
-              }`}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-
-        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((t, i) => (
-              <ReviewCard key={t.id} t={t} index={i} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-    </div>
-  );
-}

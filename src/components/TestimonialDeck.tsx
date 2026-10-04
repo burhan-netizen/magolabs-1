@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
 import { animate, motion, useMotionValue, useReducedMotion, useSpring, useTransform, type PanInfo } from 'motion/react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { TESTIMONIALS, type Testimonial } from './TestimonialWall';
+import { TESTIMONIALS, TESTIMONIAL_INDUSTRIES, type Testimonial } from '../data/testimonials';
 
 /** The one line on each card that says what changed. Each is either the client's
  *  own words from their review, or a result already published on the Work page. */
@@ -53,6 +53,16 @@ function DeckCard({ item, index, depth, total, reduced, returning, onThrown, reg
   const tilt = useTransform(x, [-360, 360], [-18, 18]);
   const fade = useTransform([x, y], ([dx, dy]: number[]) => 1 - Math.min(1, Math.max(0, (Math.hypot(dx, dy) - 240) / 320)));
   const [leaving, setLeaving] = useState(false);
+  // Moves the card to a point, first stopping any move still in flight: left
+  // running, an old throw would finish later and drag the card away again.
+  const moves = useRef<{ stop: () => void }[]>([]);
+  const moveTo = useCallback(
+    (toX: number, toY: number, how: object, vx = 0, vy = 0) => {
+      moves.current.forEach((move) => move.stop());
+      moves.current = [animate(x, toX, { ...how, velocity: vx }), animate(y, toY, { ...how, velocity: vy })];
+    },
+    [x, y]
+  );
   const quoteRef = useRef<HTMLQuoteElement>(null);
 
   // Send the card off in a direction, with the speed it was released at.
@@ -61,13 +71,12 @@ function DeckCard({ item, index, depth, total, reduced, returning, onThrown, reg
       const reach = Math.max(window.innerWidth, 900) * 0.9;
       const length = Math.hypot(dx, dy) || 1;
       setLeaving(true);
-      animate(x, (dx / length) * reach, { ...THROW, velocity: vx });
-      animate(y, (dy / length) * reach, { ...THROW, velocity: vy });
+      moveTo((dx / length) * reach, (dy / length) * reach, THROW, vx, vy);
       onThrown();
       // Once it is out of sight it waits there, off to the side, until its turn comes round.
       window.setTimeout(() => setLeaving(false), 520);
     },
-    [onThrown, x, y]
+    [moveTo, onThrown]
   );
 
   useEffect(() => {
@@ -79,15 +88,18 @@ function DeckCard({ item, index, depth, total, reduced, returning, onThrown, reg
   // straight to the top (the previous button), it springs in from the side.
   useEffect(() => {
     if (leaving || depth > VISIBLE) return;
-    if (isTop && returning && !reduced) {
-      if (Math.hypot(x.get(), y.get()) < 40) x.set(-Math.max(window.innerWidth, 900) * 0.6);
-      animate(x, 0, SPRING);
-      animate(y, 0, SPRING);
-    } else if (!isTop) {
+    if (isTop) {
+      // Still off to the side when it is the top card again: a short pile, where a
+      // thrown card comes straight back round.
+      const away = Math.hypot(x.get(), y.get()) > 40;
+      if (returning && !away && !reduced) x.set(-Math.max(window.innerWidth, 900) * 0.6);
+      if (away || returning) moveTo(0, 0, reduced ? { duration: 0 } : SPRING);
+    } else {
+      moves.current.forEach((move) => move.stop());
       x.set(0);
       y.set(0);
     }
-  }, [depth, isTop, leaving, reduced, returning, x, y]);
+  }, [depth, isTop, leaving, moveTo, reduced, returning, x, y]);
 
   // Number each word by the line it sits on, so a line rises as one piece.
   useLayoutEffect(() => {
@@ -119,8 +131,7 @@ function DeckCard({ item, index, depth, total, reduced, returning, onThrown, reg
       const useSpeed = speed > 400;
       fling(useSpeed ? info.velocity.x : info.offset.x, useSpeed ? info.velocity.y : info.offset.y, info.velocity.x, info.velocity.y);
     } else {
-      animate(x, 0, SPRING);
-      animate(y, 0, SPRING);
+      moveTo(0, 0, SPRING);
     }
   };
 
@@ -185,7 +196,11 @@ function DeckCard({ item, index, depth, total, reduced, returning, onThrown, reg
 interface TestimonialDeckProps {
   eyebrow?: string;
   heading?: string;
+  /** Shows the industry filter above the cards. */
+  filter?: boolean;
 }
+
+type Industry = Testimonial['industry'] | 'All';
 
 /**
  * Client reviews as a pile of cards. The top card can be dragged or flicked away
@@ -195,12 +210,21 @@ interface TestimonialDeckProps {
  *
  * Works by touch, by mouse (with a "Drag" badge that follows the pointer), with the
  * arrow keys, and with the previous and next buttons. Never moves on its own.
+ * With `filter`, the pile can be narrowed to one industry.
  * With reduced motion the cards simply change, with a fade.
  */
-export default function TestimonialDeck({ eyebrow = 'In their words', heading = 'What our clients say.' }: TestimonialDeckProps) {
+export default function TestimonialDeck({ eyebrow = 'In their words', heading = 'What our clients say.', filter = false }: TestimonialDeckProps) {
   const reduced = Boolean(useReducedMotion());
   // The ids in pile order, top card first.
   const [pile, setPile] = useState<string[]>(() => CARDS.map((card) => card.id));
+  const [industry, setIndustry] = useState<Industry>('All');
+  // The cards in play: all of them, or one industry's.
+  const cards = industry === 'All' ? CARDS : CARDS.filter((card) => card.industry === industry);
+  const chooseIndustry = (choice: Industry) => {
+    setIndustry(choice);
+    setReturning(false);
+    setPile((choice === 'All' ? CARDS : CARDS.filter((card) => card.industry === choice)).map((card) => card.id));
+  };
   const [returning, setReturning] = useState(false);
   const [armed, setArmed] = useState(false);
   const throwers = useRef<Record<string, ((dx: number, dy: number) => void) | null>>({});
@@ -251,8 +275,9 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
     if (!hovering) setHovering(true);
   };
 
-  const top = CARDS.find((card) => card.id === pile[0]) ?? CARDS[0];
-  const position = CARDS.indexOf(top) + 1;
+  const top = cards.find((card) => card.id === pile[0]) ?? cards[0];
+  const position = cards.indexOf(top) + 1;
+  const single = cards.length < 2;
 
   return (
     <section id="client-quotes" className="deck-section py-24 sm:py-28 bg-neutral-100 font-sans overflow-hidden">
@@ -277,13 +302,13 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
                     {String(position).padStart(2, '0')}
                   </motion.span>
                 </span>
-                <span className="deck-count-of">/ {String(CARDS.length).padStart(2, '0')}</span>
+                <span className="deck-count-of">/ {String(cards.length).padStart(2, '0')}</span>
               </p>
               <div className="flex items-center gap-3 pb-2">
-                <button type="button" onClick={previous} aria-label="Previous review" className="deck-button">
+                <button type="button" onClick={previous} aria-label="Previous review" className="deck-button" disabled={single}>
                   <ArrowLeft className="h-5 w-5" />
                 </button>
-                <button type="button" onClick={next} aria-label="Next review" className="deck-button">
+                <button type="button" onClick={next} aria-label="Next review" className="deck-button" disabled={single}>
                   <ArrowRight className="h-5 w-5" />
                 </button>
               </div>
@@ -291,6 +316,22 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
           </div>
 
           <div className="order-2 lg:order-none lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:row-span-2 lg:self-center">
+            {filter && (
+              <div className="deck-filter" role="group" aria-label="Show reviews from one industry">
+                {(['All', ...TESTIMONIAL_INDUSTRIES] as Industry[]).map((choice) => (
+                  <button
+                    key={choice}
+                    type="button"
+                    onClick={() => chooseIndustry(choice)}
+                    aria-pressed={industry === choice}
+                    className={`deck-chip ${industry === choice ? 'is-on' : ''}`}
+                  >
+                    {choice}
+                  </button>
+                ))}
+              </div>
+            )}
+
             <div
               ref={deckRef}
               className={`deck ${armed ? 'is-armed' : ''} ${dragging ? 'is-dragging' : ''}`}
@@ -302,12 +343,13 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
               onPointerMove={onPointerMove}
               onPointerLeave={() => setHovering(false)}
             >
-              {CARDS.map((item, index) => (
+              {cards.map((item) => (
                 <DeckCard
                   key={item.id}
                   item={item}
-                  index={index}
-                  depth={pile.indexOf(item.id)}
+                  // The card's place in the full set, so its face and lean never change.
+                  index={CARDS.indexOf(item)}
+                  depth={Math.max(0, pile.indexOf(item.id))}
                   total={CARDS.length}
                   reduced={reduced}
                   returning={returning}
@@ -333,7 +375,7 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
 
             {/* Read out to screen readers when the card changes */}
             <p className="sr-only" aria-live="polite">
-              Review {position} of {CARDS.length}. {top.name}, {top.company}: {top.quote}
+              Review {position} of {cards.length}. {top.name}, {top.company}: {top.quote}
             </p>
           </div>
         </div>

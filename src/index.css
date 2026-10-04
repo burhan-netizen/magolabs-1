@@ -1062,6 +1062,39 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
 .deck-business {
   color: var(--deck-soft);
 }
+/* Industry filter above the cards (Work page). */
+.deck-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 36rem;
+  margin: 0 auto 2rem;
+}
+.deck-chip {
+  border-radius: 999px;
+  border: 1.5px solid rgba(13, 13, 13, 0.16);
+  background: #ffffff;
+  color: #57534e;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.deck-chip:hover {
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+}
+.deck-chip.is-on {
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+  color: #ffffff;
+}
+.deck-button:disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
 .deck-count {
   display: flex;
   align-items: baseline;

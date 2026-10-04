@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { PageId } from '../types';
 import { getCaseStudyById, getCaseStudySEO, CASE_STUDIES } from '../data/caseStudies';
-import { TESTIMONIALS } from '../components/TestimonialWall';
+import { TESTIMONIALS } from '../data/testimonials';
 import { updateDocumentSEO } from '../utils/seo';
 import { getWorkDetailPath } from '../utils/pageRoutes';
 import { WhatsAppLogo } from '../components/BrandIcons';
