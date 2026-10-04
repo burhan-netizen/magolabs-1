@@ -118,7 +118,7 @@ export const TESTIMONIALS: Testimonial[] = [
     company: 'Astrabizz Consultancy',
     industry: 'Business & IT Consulting',
     quote:
-      "Great design and a truly gorgeous website. Mago Labs delivered amazing service and amazing support at every step. The site captures exactly the professional image we wanted for our consultancy.",
+      "Our website finally reflects the seriousness of the work we do. Since launch we have started receiving enquiries directly through the site, and prospects come to the first conversation already knowing what we offer. Burhan and the Mago Labs team were responsive at every step.",
     accent: '#16A34A',
     initials: 'DD',
   },
