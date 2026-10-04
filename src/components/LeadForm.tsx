@@ -271,7 +271,7 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
       </button>
 
       <p className="text-xs text-neutral-500 leading-relaxed">
-        No obligation. We reply within one business day and never send spam.
+        We reply within one business day and never send spam.
       </p>
     </form>
   );

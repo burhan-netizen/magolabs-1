@@ -76,7 +76,7 @@ export default function ContactCTA({
           </div>
 
           <p className="text-sm text-neutral-400 pt-2">
-            No obligation. You talk directly to Burhan Kapasi, the founder.{' '}
+            You talk directly to Burhan Kapasi, the founder.{' '}
             <a href={callUrl} className="font-semibold text-white underline decoration-brand decoration-2 underline-offset-4">
               Or call +91 9099245605
             </a>
