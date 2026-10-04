@@ -206,7 +206,8 @@ type Industry = Testimonial['industry'] | 'All';
  * Client reviews as a pile of cards. The top card can be dragged or flicked away
  * in any direction: let go far or fast enough and it flies off and goes to the
  * bottom of the pile, otherwise it springs back. The next card springs up to take
- * its place and its words rise into view a line at a time.
+ * its place and its words rise into view a line at a time. The pile never says
+ * how many cards it holds.
  *
  * Works by touch, by mouse (with a "Drag" badge that follows the pointer), with the
  * arrow keys, and with the previous and next buttons. Never moves on its own.
@@ -276,7 +277,6 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
   };
 
   const top = cards.find((card) => card.id === pile[0]) ?? cards[0];
-  const position = cards.indexOf(top) + 1;
   const single = cards.length < 2;
 
   return (
@@ -288,23 +288,15 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
               <span className="eyebrow">{eyebrow}</span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">{heading}</h2>
               <p className="text-base sm:text-lg text-neutral-600 leading-relaxed max-w-md">
-                {CARDS.length} clients, in their own words. Drag a card away to read the next.
+                Drag a card away to read the next.
               </p>
             </div>
           </div>
 
           {/* Under the cards on a phone, where a thumb can reach them */}
           <div className="order-3 lg:order-none lg:col-span-5 lg:col-start-1 lg:row-start-2 lg:self-start">
-            <div className="flex items-end justify-between lg:justify-start gap-8">
-              <p className="deck-count" aria-hidden="true">
-                <span className="deck-count-now">
-                  <motion.span key={position} className="block" initial={reduced ? false : { y: '60%', opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={SPRING}>
-                    {String(position).padStart(2, '0')}
-                  </motion.span>
-                </span>
-                <span className="deck-count-of">/ {String(cards.length).padStart(2, '0')}</span>
-              </p>
-              <div className="flex items-center gap-3 pb-2">
+            <div className="flex items-center justify-center lg:justify-start">
+              <div className="flex items-center gap-3">
                 <button type="button" onClick={previous} aria-label="Previous review" className="deck-button" disabled={single}>
                   <ArrowLeft className="h-5 w-5" />
                 </button>
@@ -375,7 +367,7 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
 
             {/* Read out to screen readers when the card changes */}
             <p className="sr-only" aria-live="polite">
-              Review {position} of {cards.length}. {top.name}, {top.company}: {top.quote}
+              {top.name}, {top.company}: {top.quote}
             </p>
           </div>
         </div>
