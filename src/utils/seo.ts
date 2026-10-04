@@ -7,6 +7,10 @@ export interface SEOConfig {
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
+  /** Pixel size of ogImage, when known. Apps that show link previews can lay the
+   *  card out before the image has downloaded. */
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   ogType?: 'website' | 'article' | 'profile';
   twitterCard?: 'summary' | 'summary_large_image';
 }
@@ -15,9 +19,13 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
   home: {
     title: 'Mago Labs | Website Design & Development Company in Surat',
     description: 'Custom websites that turn visitors into customers. One clinic went from 25 to 58 patients a day. Founder-led studio in Surat. Get a free website audit.',
-    ogTitle: 'Mago Labs | Website Design & Development Company in Surat',
+    // What link previews show when the homepage is shared. Kept separate from the
+    // page title above, which is written for search and must not change.
+    ogTitle: 'Mago Labs | Websites that get you found, trusted and chosen',
     ogDescription: 'Custom websites that turn visitors into customers. One clinic went from 25 to 58 patients a day. Founder-led studio in Surat. Get a free website audit.',
-    ogImage: 'https://www.magolabs.in/og-image-home.jpg',
+    ogImage: 'https://www.magolabs.in/og-image-home.png',
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
     ogType: 'website',
     twitterCard: 'summary_large_image'
   },
@@ -241,6 +249,13 @@ export function updateDocumentSEO(
   setMetaTag('property', 'og:title', finalOgTitle);
   setMetaTag('property', 'og:description', finalOgDesc);
   setMetaTag('property', 'og:image', finalOgImage);
+  // The image's size is only stated for pages that declare it, and only while the
+  // page's own image is the one in use.
+  const sized = !customOgImage && defaultConfig?.ogImageWidth && defaultConfig?.ogImageHeight;
+  for (const [name, value] of [['og:image:width', defaultConfig?.ogImageWidth], ['og:image:height', defaultConfig?.ogImageHeight]] as const) {
+    if (sized) setMetaTag('property', name, String(value));
+    else document.querySelector(`meta[property="${name}"]`)?.remove();
+  }
   setMetaTag('property', 'og:type', finalOgType);
   setMetaTag('property', 'og:url', `https://www.magolabs.in${finalPath}`);
 

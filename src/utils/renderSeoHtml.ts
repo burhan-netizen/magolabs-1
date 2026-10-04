@@ -34,6 +34,12 @@ export function renderSeoHtmlForConfig(template: string, config: SEOConfig, path
   for (const [token, value] of Object.entries(replacements)) {
     html = html.split(token).join(escapeHtml(value));
   }
+  // The image's size, for pages that declare it. Other pages get no size tags.
+  const imageSize =
+    config.ogImageWidth && config.ogImageHeight
+      ? `<meta property="og:image:width" content="${config.ogImageWidth}" />\n    <meta property="og:image:height" content="${config.ogImageHeight}" />`
+      : '';
+  html = html.replace(/[ \t]*<!--%%SEO_OG_IMAGE_SIZE%%-->\r?\n?/, imageSize ? `    ${imageSize}\n` : '');
   return html;
 }
 
