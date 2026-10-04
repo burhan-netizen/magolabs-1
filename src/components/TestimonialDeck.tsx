@@ -288,7 +288,7 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
               <span className="eyebrow">{eyebrow}</span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">{heading}</h2>
               <p className="text-base sm:text-lg text-neutral-600 leading-relaxed max-w-md">
-                Drag a card away to read the next.
+                Don&rsquo;t take our word for it. Take theirs. Drag a card away to read the next.
               </p>
             </div>
           </div>
