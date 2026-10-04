@@ -1,13 +1,9 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Quote,
   Star,
   BadgeCheck,
-  ChevronLeft,
-  ChevronRight,
-  Pause,
-  Play,
   Scale,
   Factory,
   Sun,
@@ -157,134 +153,6 @@ function Stars() {
   );
 }
 
-function Spotlight() {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    if (paused) return;
-    timerRef.current = setInterval(() => {
-      setIndex((i) => (i + 1) % TESTIMONIALS.length);
-    }, 5500);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [paused]);
-
-  const t = TESTIMONIALS[index];
-  const Icon = INDUSTRY_ICON[t.industry];
-
-  const go = (dir: 1 | -1) => {
-    setIndex((i) => (i + dir + TESTIMONIALS.length) % TESTIMONIALS.length);
-  };
-
-  return (
-    <div
-      className="relative max-w-3xl mx-auto rounded-3xl border border-neutral-200 bg-white shadow-sm overflow-hidden"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <div className="absolute inset-x-0 top-0 h-1 bg-neutral-100">
-        {!paused && (
-          <motion.div
-            key={index}
-            className="h-full"
-            style={{ backgroundColor: t.accent }}
-            initial={{ width: '0%' }}
-            animate={{ width: '100%' }}
-            transition={{ duration: 5.5, ease: 'linear' }}
-          />
-        )}
-      </div>
-
-      <div className="p-8 sm:p-10 text-center">
-        <Quote className="h-7 w-7 mx-auto mb-4 opacity-20" style={{ color: t.accent }} />
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={t.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25 }}
-          >
-            <p className="text-base sm:text-lg font-medium text-neutral-800 leading-relaxed max-w-2xl mx-auto">
-              "{t.quote}"
-            </p>
-
-            <div className="mt-6 flex flex-col items-center gap-2">
-              <Stars />
-              <div className="flex items-center gap-2.5 mt-1">
-                <div
-                  className="h-9 w-9 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-                  style={{ backgroundColor: t.accent }}
-                >
-                  {t.initials}
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-bold text-neutral-900 flex items-center gap-1">
-                    {t.name}
-                    <BadgeCheck className="h-3.5 w-3.5 text-neutral-900" />
-                  </p>
-                  <p className="text-xs text-neutral-500 flex items-center gap-1">
-                    <Icon className="h-3 w-3" /> {t.company}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="mt-7 flex items-center justify-center gap-3">
-          <button
-            onClick={() => go(-1)}
-            className="p-1.5 rounded-full border border-neutral-200 hover:bg-neutral-50 text-neutral-400 hover:text-neutral-700 transition-colors cursor-pointer"
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="h-3.5 w-3.5" />
-          </button>
-
-          <div className="flex items-center gap-1.5">
-            {TESTIMONIALS.map((item, i) => (
-              <button
-                key={item.id}
-                onClick={() => setIndex(i)}
-                aria-label={`Show testimonial from ${item.name}`}
-                className="p-1 cursor-pointer"
-              >
-                <span
-                  className="block h-1.5 rounded-full transition-all"
-                  style={{
-                    width: i === index ? 18 : 6,
-                    backgroundColor: i === index ? t.accent : '#e5e7eb',
-                  }}
-                />
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={() => go(1)}
-            className="p-1.5 rounded-full border border-neutral-200 hover:bg-neutral-50 text-neutral-400 hover:text-neutral-700 transition-colors cursor-pointer"
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="h-3.5 w-3.5" />
-          </button>
-
-          <button
-            onClick={() => setPaused((p) => !p)}
-            className="ml-2 p-1.5 rounded-full border border-neutral-200 hover:bg-neutral-50 text-neutral-400 hover:text-neutral-700 transition-colors cursor-pointer"
-            aria-label={paused ? 'Resume autoplay' : 'Pause autoplay'}
-          >
-            {paused ? <Play className="h-3 w-3" /> : <Pause className="h-3 w-3" />}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function ReviewCard({ t, index }: { key?: string; t: Testimonial; index: number }) {
   const [expanded, setExpanded] = useState(false);
   const isLong = t.quote.length > 180;
@@ -356,8 +224,6 @@ export default function TestimonialWall() {
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-12 text-left">
-      <Spotlight />
-
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-center gap-2">
           {FILTERS.map((f) => (

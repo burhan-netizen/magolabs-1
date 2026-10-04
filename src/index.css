@@ -932,6 +932,70 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
 .work-card:hover::after {
   opacity: 1;
 }
+/* Scroll-lit reviews (src/components/ScrollLitQuotes.tsx).
+   Fully lit by default. The script adds is-armed, which dims every word, then
+   marks words is-lit as the visitor scrolls through each quote. */
+.lit-mark {
+  width: 2.75rem;
+  height: auto;
+  fill: var(--color-brand);
+}
+.lit-rule {
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background: var(--color-ink);
+}
+.lit-text {
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+/* The key phrase: an amber marker behind the letters (see .marker for the sizing). */
+.lit-key {
+  background: linear-gradient(var(--color-brand), var(--color-brand)) no-repeat 0 0.27em / 100% 1.04em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.is-armed .lit-word {
+  color: #d6d3cb;
+  transition: color 0.45s ease, background-size 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.is-armed .lit-word.is-lit {
+  color: var(--color-ink);
+}
+/* The marker draws across each word of the key phrase as it lights. */
+.is-armed .lit-key {
+  background-size: 0% 1.04em;
+}
+.is-armed .lit-key.is-lit {
+  background-size: 100% 1.04em;
+}
+.is-armed .lit-mark {
+  opacity: 0.25;
+  transition: opacity 0.6s ease;
+}
+.is-armed .lit-rule {
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+/* The name arrives once the whole quote is lit. */
+.is-armed .lit-by {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.is-armed .lit-quote.is-done .lit-by {
+  opacity: 1;
+  transform: none;
+}
+.is-armed .lit-quote.is-done .lit-mark {
+  opacity: 1;
+}
+.is-armed .lit-quote.is-done .lit-rule {
+  transform: none;
+}
+
 /* Home page wall of websites (src/components/WorkWall.tsx).
    Columns of browser frames drifting on a wall that leans back in 3D. The script
    sets --turn on the plane: 0 leaning back, 1 facing the visitor. */

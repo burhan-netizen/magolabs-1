@@ -1,4 +1,5 @@
 import { PageId } from '../types';
+import ScrollLitQuotes from '../components/ScrollLitQuotes';
 import PageLink from '../components/PageLink';
 import { INDUSTRIES } from '../data/industries';
 import SEO from '../components/SEO';
@@ -103,12 +104,15 @@ export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
 
       <WorkShowcase onOpenCaseStudy={onOpenCaseStudy} />
 
+      {/* Reviews in large type that light up with the scroll, then every review in a grid */}
+      <ScrollLitQuotes eyebrow="In their own words" heading="What clients say." />
+
       {/* Testimonials, folded in here so proof sits next to the work it's proving */}
-      <section id="work-testimonials" className="py-24 bg-neutral-50 font-sans border-t border-neutral-200/60">
+      <section id="work-testimonials" className="py-24 bg-white font-sans border-t border-neutral-200/60">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <span className="eyebrow">In their own words</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900">What clients say.</h2>
+            <span className="eyebrow">Every review</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900">More from our clients.</h2>
           </div>
           <TestimonialWall />
         </div>

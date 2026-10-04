@@ -1,4 +1,5 @@
-import { ArrowRight, Check, EyeOff, Plus, Minus, Quote, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
+import { ArrowRight, Check, EyeOff, Plus, Minus, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
+import ScrollLitQuotes from '../components/ScrollLitQuotes';
 import WorkWall from '../components/WorkWall';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
@@ -154,13 +155,6 @@ const RESULTS = [
     client: 'Darshan Galani & Co.',
     caseStudyId: 'darshangalani',
   },
-];
-
-const QUOTES = [
-  { quote: 'Very good website designs. Incredibly responsive team. Quick feedback turnaround. Great value.', name: 'Manav Shah', initials: 'MS', company: 'SolWay Energies' },
-  { quote: 'We finally have a website that reflects how we work with our clients: clear, professional, and easy to trust.', name: 'CA Jay Mehta', initials: 'JM', company: 'Jay Mehta & Co.' },
-  { quote: 'Absolutely professional people, know their work in best manner. I will absolutely recommend them for website related work.', name: 'Dr. Mihir Shah', initials: 'MS', company: 'Smile Care Clinic' },
-  { quote: 'Gorgeous website and amazing service from start to finish. Exactly what we needed for the business.', name: 'Harshit Chopra', initials: 'HC', company: 'Santosh Timbers' },
 ];
 
 // "With Mago Labs" against the usual agency: rows arrive one after another.
@@ -701,35 +695,8 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       {/* 5. The work behind the results: a selection of websites, on a tilted wall that turns to face the visitor */}
       <WorkWall onOpenWork={() => navigateTo('work')} />
 
-      {/* What clients say */}
-      <section id="client-quotes" className="py-24 bg-white font-sans">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {QUOTES.map((q, idx) => (
-              <motion.figure
-                key={idx}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: idx * 0.09 }}
-                className="group relative p-6 rounded-2xl border border-neutral-200/70 bg-neutral-50 flex flex-col gap-4 transition-[translate,box-shadow,border-color] duration-300 hover:-translate-y-1.5 hover:border-brand hover:shadow-[0_24px_48px_-30px_rgba(13,13,13,0.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-              >
-                <Quote className="h-6 w-6 text-brand transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6" fill="currentColor" strokeWidth={0} aria-hidden="true" />
-                <blockquote className="text-sm text-neutral-800 leading-relaxed flex-1">&ldquo;{q.quote}&rdquo;</blockquote>
-                <figcaption className="pt-4 border-t border-neutral-200 flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-xs font-bold text-white transition-colors duration-300 group-hover:bg-brand group-hover:text-ink" aria-hidden="true">
-                    {q.initials}
-                  </span>
-                  <span>
-                    <span className="block text-sm font-semibold text-neutral-900">{q.name}</span>
-                    <span className="block text-xs text-neutral-500">{q.company}</span>
-                  </span>
-                </figcaption>
-              </motion.figure>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* What clients say: reviews in large type that light up with the scroll */}
+      <ScrollLitQuotes />
 
       {/* 6. What the customer gets, against the common alternative */}
       <section id="why-choose-us-overview" className="py-24 bg-neutral-50 font-sans border-y border-neutral-200/50">
