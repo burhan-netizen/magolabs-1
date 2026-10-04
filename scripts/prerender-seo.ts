@@ -19,7 +19,7 @@ import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { renderSeoHtml, renderSeoHtmlForConfig } from '../src/utils/renderSeoHtml';
 import { PAGE_TO_PATH, getInsightDetailPath, getWorkDetailPath } from '../src/utils/pageRoutes';
-import { SEOConfig } from '../src/utils/seo';
+import { SEOConfig, SEO_CONFIG_MAP } from '../src/utils/seo';
 import { getAllPosts, getPostBySlug, isContentfulConfigured } from '../src/lib/contentful';
 import { BlogData, BLOG_DATA_ELEMENT_ID } from '../src/lib/blogData';
 import { BlogPostSummary } from '../src/types';
@@ -146,6 +146,8 @@ async function withContent(routePath: string, html: string, blogData?: BlogData)
 // Blog posts live in Contentful. Fetch the list once, up front, so the Insights
 // listing page and every post page can be written with their content included.
 let blogPosts: BlogPostSummary[] | null = null;
+// Every blog post page that was written, with its date, for the sitemap.
+const writtenPosts: { path: string; date: string }[] = [];
 if (isContentfulConfigured()) {
   try {
     blogPosts = await getAllPosts();
@@ -204,12 +206,53 @@ if (blogPosts) {
         twitterCard: 'summary_large_image',
       };
       writeShell(routePath, await withContent(routePath, renderSeoHtmlForConfig(template, config, routePath), { post }));
+      writtenPosts.push({ path: routePath, date: post.publishedDate });
       included++;
     } catch (err) {
       console.warn(`[prerender-seo] Could not write ${routePath}, it will load in the browser instead:`, err);
     }
   }
   console.log(`[prerender-seo] Included ${included} Contentful blog post(s) with full content.`);
+}
+
+// The page for addresses that do not exist. The host serves dist/404.html with a
+// real "404 Not Found" status for anything that matches no file (see vercel.json),
+// so search engines drop dead links instead of indexing copies of the homepage.
+// It must never be indexed itself, and has no address of its own to point to.
+{
+  const notFoundPath = '/404';
+  const html = (await withContent(notFoundPath, renderSeoHtmlForConfig(template, SEO_CONFIG_MAP['not-found'], notFoundPath)))
+    .replace(/\s*<link rel="canonical"[^>]*>/, '')
+    .replace(/\s*<meta property="og:url"[^>]*>/, '')
+    .replace('</title>', '</title>\n    <meta name="robots" content="noindex, nofollow" />');
+  fs.writeFileSync(path.join(distDir, '404.html'), html, 'utf-8');
+  console.log('[prerender-seo] Wrote 404.html.');
+}
+
+// The sitemap lists exactly the pages written above, so it can never name a page
+// that does not exist or miss one that does, including blog posts. The on-site
+// sitemap page is left out: it is a list of links, not something to find in search.
+{
+  const today = new Date().toISOString().slice(0, 10);
+  const isoDate = (value: string) => {
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? today : parsed.toISOString().slice(0, 10);
+  };
+  const entries: { path: string; date: string }[] = [
+    ...Object.values(PAGE_TO_PATH)
+      .filter((routePath) => routePath !== PAGE_TO_PATH.sitemap)
+      .map((routePath) => ({ path: routePath, date: today })),
+    ...CASE_STUDIES.map((cs) => ({ path: getWorkDetailPath(cs.id), date: today })),
+    ...writtenPosts.map((post) => ({ path: post.path, date: isoDate(post.date) })),
+  ];
+  const xml =
+    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    entries
+      .map((entry) => `  <url>\n    <loc>https://www.magolabs.in${entry.path}</loc>\n    <lastmod>${entry.date}</lastmod>\n  </url>\n`)
+      .join('') +
+    '</urlset>\n';
+  fs.writeFileSync(path.join(distDir, 'sitemap.xml'), xml, 'utf-8');
+  console.log(`[prerender-seo] Wrote sitemap.xml with ${entries.length} pages (${writtenPosts.length} blog posts).`);
 }
 
 // The server build was only needed to render the pages above.

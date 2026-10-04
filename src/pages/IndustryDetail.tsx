@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Breadcrumbs from '../components/Breadcrumbs';
+import { getPathFromPage } from '../utils/pageRoutes';
 import { ArrowRight, Check, Plus, Minus } from 'lucide-react';
 import { motion } from 'motion/react';
 import { PageId } from '../types';
@@ -55,6 +57,16 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
       <section id="industry-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-20 bg-white font-sans overflow-hidden border-b border-neutral-200/50">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none opacity-60" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 flex justify-center">
+            <Breadcrumbs
+              onPageChange={onPageChange}
+              items={[
+                { label: 'Home', page: 'home' },
+                { label: 'Work', page: 'work' },
+                { label: industry.label, path: getPathFromPage(industry.id) },
+              ]}
+            />
+          </div>
           <div className="text-center space-y-5 max-w-3xl mx-auto">
             <span className="eyebrow">{industry.eyebrow}</span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.12]">

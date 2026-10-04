@@ -6,7 +6,7 @@
       "destination": "/api/:path*"
     },
     {
-      "source": "/((?!\\.well-known/).*)",
+      "source": "/insights/:slug",
       "destination": "/"
     }
   ]
