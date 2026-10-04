@@ -22,6 +22,7 @@ interface LeadFormProps {
 interface LeadFormState {
   name: string;
   phone: string;
+  email: string;
   website: string;
   business: string;
   message: string;
@@ -39,7 +40,7 @@ const AGENT_TOOL = {
     'Send an enquiry to Mago Labs, a website design studio. Use it to request a free audit of an existing website, or a free plan for a first website. Mago Labs replies within one business day.',
 };
 
-const EMPTY: LeadFormState = { name: '', phone: '', website: '', business: '', message: '' };
+const EMPTY: LeadFormState = { name: '', phone: '', email: '', website: '', business: '', message: '' };
 
 // The words that change with the visitor's starting point.
 const MODE_COPY: Record<LeadMode, { tab: string; button: string; service: string; thanks: string }> = {
@@ -101,6 +102,10 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
     };
     if (!form.name.trim()) return invalid('Please tell us your name.');
     if (form.phone.replace(/\D/g, '').length < 7) return invalid('Please enter a phone or WhatsApp number we can reach you on.');
+    // Email is optional, but if one is given it should be usable.
+    if (form.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      return invalid('That email address does not look right. Please check it, or leave it empty.');
+    }
 
     setError('');
     setStatus('sending');
@@ -111,6 +116,7 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
         body: JSON.stringify({
           name: form.name.trim(),
           phone: form.phone.trim(),
+          email: form.email.trim(),
           website: activeMode === 'audit' ? form.website.trim() : '',
           businessName: activeMode === 'new' ? form.business.trim() : '',
           message: form.message.trim(),
@@ -205,6 +211,23 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
             className={fieldClass}
           />
         </div>
+      </div>
+
+      <div>
+        <label htmlFor={`${idPrefix}-email`} className={labelClass}>
+          Email <span className="font-normal text-neutral-500">(optional)</span>
+        </label>
+        <input
+          id={`${idPrefix}-email`}
+          name="email"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          {...{ toolparamdescription: 'Optional. Email address to reply to.' }}
+          value={form.email}
+          onChange={update}
+          className={fieldClass}
+        />
       </div>
 
       {activeMode === 'audit' ? (
