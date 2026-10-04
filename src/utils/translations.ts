@@ -24,7 +24,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     
     // Sticky / Footer / CTAs
     'cta.title': 'Find out what your website is costing you.',
-    'cta.desc': 'Send us your website address. We will tell you plainly what is stopping visitors from calling. Free, with no obligation.',
+    'cta.desc': 'Send us your website address. We will tell you plainly what is stopping visitors from calling. No obligation.',
     'cta.btn': 'Get a free website audit',
     'cta.whatsapp': 'Chat on WhatsApp',
     'cta.call': 'Call Burhan Kapasi',

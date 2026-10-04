@@ -403,7 +403,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
 
               <p className="flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-neutral-400">
                 <span>
-                  Free, with no obligation.{' '}
+                  No obligation.{' '}
                   <a
                     href="#next-step"
                     onClick={(e) => { e.preventDefault(); startWithoutWebsite(); }}
