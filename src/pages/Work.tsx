@@ -17,10 +17,12 @@ interface WorkProps {
 const WALL_ROW_A = CASE_STUDIES.filter((_, i) => i % 2 === 0);
 const WALL_ROW_B = CASE_STUDIES.filter((_, i) => i % 2 === 1);
 
+// The same three facts as the home page hero. The number counts up; the words
+// around it stay put.
 const HERO_STATS = [
-  { value: CASE_STUDIES.length, label: 'Websites in this portfolio' },
-  { value: 58, label: 'Patients a day at one clinic, up from 25' },
-  { value: 34, label: 'New clients for one CA firm in 3 months' },
+  { before: '', value: 75, after: '+', label: 'Businesses helped' },
+  { before: '5 to ', value: 28, after: '', label: 'Days to launch' },
+  { before: '', value: 100, after: '%', label: 'Yours to own' },
 ];
 
 export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
@@ -92,7 +94,7 @@ export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
                 className="rounded-2xl border border-white/10 bg-white/5 px-5 py-6 backdrop-blur-xl"
               >
                 <dd className="text-4xl font-bold tracking-tight text-brand">
-                  <CountUp to={stat.value} duration={1.4} />
+                  {stat.before}<CountUp to={stat.value} duration={1.4} />{stat.after}
                 </dd>
                 <dt className="mt-2 text-sm text-neutral-300">{stat.label}</dt>
               </motion.div>
