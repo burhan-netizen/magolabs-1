@@ -550,9 +550,9 @@ html.motion-ok .price-rise {
   .price-card::after { display: none; }
 }
 
-/* Prices: hide the rupee price for visitors outside India until the dollar price
+/* Prices: hide the rupee price for visitors outside India until their own price
    replaces it (see src/hooks/useCurrency.ts). */
-html[data-currency="usd"] .cur-inr {
+html[data-currency="intl"] .cur-inr {
   visibility: hidden;
 }
 

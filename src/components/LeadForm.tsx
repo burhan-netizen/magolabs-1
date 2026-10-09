@@ -122,7 +122,7 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
           message: form.message.trim(),
           service: copy.service,
           // Tells you which price list this visitor was shown.
-          source: detectCurrency() === 'USD' ? `${source} (outside India, saw USD prices)` : source,
+          source: detectCurrency() !== 'INR' ? `${source} (outside India, saw ${detectCurrency()} prices)` : source,
         }),
       });
       const result = await response.json().catch(() => ({}));

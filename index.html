@@ -28,12 +28,12 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <script>
-      // Visitors outside India see the international price list. Mark the page
+      // Visitors outside India see their own currency's prices. Mark the page
       // before it paints so the rupee price never flashes first.
       try {
         var zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         if (zone && zone !== 'Asia/Kolkata' && zone !== 'Asia/Calcutta') {
-          document.documentElement.setAttribute('data-currency', 'usd');
+          document.documentElement.setAttribute('data-currency', 'intl');
         }
       } catch (e) {}
     </script>
