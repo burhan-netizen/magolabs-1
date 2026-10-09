@@ -171,6 +171,14 @@ export default function Footer({ onPageChange }: FooterProps) {
                   Contact
                 </PageLink>
               </li>
+              <li>
+                {/* The separate site for trades businesses abroad. A plain link so it
+                    also helps search engines find and connect the two sites. */}
+                <a href="https://trades.magolabs.in/" className="hover:text-neutral-900 dark:hover:text-white transition-colors inline-flex items-center gap-1">
+                  Websites for trades
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              </li>
             </ul>
           </div>
 

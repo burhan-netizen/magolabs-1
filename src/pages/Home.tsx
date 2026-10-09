@@ -326,17 +326,6 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
     },
     {
       '@context': 'https://schema.org',
-      '@type': 'Organization',
-      'name': 'Mago Labs',
-      'url': 'https://www.magolabs.in',
-      'logo': 'https://www.magolabs.in/logo.png',
-      'founder': {
-        '@type': 'Person',
-        'name': 'Burhan Kapasi'
-      }
-    },
-    {
-      '@context': 'https://schema.org',
       '@type': 'FAQPage',
       'mainEntity': FAQS.map((faq) => ({
         '@type': 'Question',

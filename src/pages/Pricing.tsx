@@ -267,7 +267,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
       '@context': 'https://schema.org',
       '@type': 'Service',
       'name': 'Website design and development',
-      'provider': { '@type': 'Organization', 'name': 'Mago Labs', 'url': 'https://www.magolabs.in' },
+      'provider': { '@id': 'https://www.magolabs.in/#localbusiness' },
       'url': 'https://www.magolabs.in/pricing',
       'offers': [...TIERS, COMMERCE].map((tier) => ({
         '@type': 'Offer',

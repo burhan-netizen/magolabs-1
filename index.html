@@ -49,30 +49,109 @@
     </script>
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Mago Labs",
-      "image": "https://www.magolabs.in/default-og.jpg",
-      "url": "https://www.magolabs.in",
-      "sameAs": [
-        "https://maps.app.goo.gl/MT8QiwA56T7NtyC18",
-        "https://www.linkedin.com/in/burhanuddinkapasi/"
-      ],
-      "founder": { "@type": "Person", "name": "Burhan Kapasi" },
-      "telephone": "+91-9099245605",
-      "email": "burhan@magolabs.in",
-      "areaServed": [
-        { "@type": "City", "name": "Surat" },
-        { "@type": "Country", "name": "India" }
-      ],
-      "address": {
+     "@context": "https://schema.org",
+     "@graph": [
+      {
+       "@type": "ProfessionalService",
+       "@id": "https://www.magolabs.in/#localbusiness",
+       "name": "Mago Labs",
+       "url": "https://www.magolabs.in",
+       "logo": "https://www.magolabs.in/logo.png",
+       "image": "https://www.magolabs.in/default-og.jpg",
+       "description": "Mago Labs is a founder-led website design and development studio in Surat, building custom websites, SEO and Google Business Profiles that bring enquiries, for businesses in India and abroad.",
+       "telephone": "+91-9099245605",
+       "email": "burhan@magolabs.in",
+       "priceRange": "₹₹",
+       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Surat",
         "addressRegion": "Gujarat",
         "addressCountry": "IN"
+       },
+       "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+         "Monday",
+         "Tuesday",
+         "Wednesday",
+         "Thursday",
+         "Friday",
+         "Saturday"
+        ],
+        "opens": "09:00",
+        "closes": "19:00"
+       },
+       "areaServed": [
+        {
+         "@type": "City",
+         "name": "Surat"
+        },
+        {
+         "@type": "Country",
+         "name": "India"
+        },
+        {
+         "@type": "Country",
+         "name": "Australia"
+        },
+        {
+         "@type": "Country",
+         "name": "United States"
+        },
+        {
+         "@type": "Country",
+         "name": "United Kingdom"
+        },
+        {
+         "@type": "Country",
+         "name": "New Zealand"
+        }
+       ],
+       "founder": {
+        "@id": "https://www.magolabs.in/#founder"
+       },
+       "knowsAbout": [
+        "Website design",
+        "Web development",
+        "Search engine optimisation",
+        "Local SEO",
+        "Google Business Profile",
+        "Conversion copywriting"
+       ],
+       "sameAs": [
+        "https://maps.app.goo.gl/MT8QiwA56T7NtyC18",
+        "https://www.instagram.com/magolabs.in/",
+        "https://x.com/bkapasi72",
+        "https://www.linkedin.com/in/burhanuddinkapasi/",
+        "https://trades.magolabs.in/"
+       ]
       },
-      "priceRange": "\u20b9\u20b9",
-      "description": "Mago Labs is a founder-led website design and development studio in Surat, building custom websites that bring enquiries."
+      {
+       "@type": "Person",
+       "@id": "https://www.magolabs.in/#founder",
+       "name": "Burhan Kapasi",
+       "alternateName": "Burhanuddin Kapasi",
+       "jobTitle": "Founder",
+       "worksFor": {
+        "@id": "https://www.magolabs.in/#localbusiness"
+       },
+       "url": "https://www.magolabs.in/about",
+       "sameAs": [
+        "https://www.linkedin.com/in/burhanuddinkapasi/",
+        "https://x.com/bkapasi72"
+       ]
+      },
+      {
+       "@type": "WebSite",
+       "@id": "https://www.magolabs.in/#website",
+       "url": "https://www.magolabs.in",
+       "name": "Mago Labs",
+       "inLanguage": "en",
+       "publisher": {
+        "@id": "https://www.magolabs.in/#localbusiness"
+       }
+      }
+     ]
     }
     </script>
   </head>

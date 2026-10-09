@@ -289,7 +289,7 @@ export function getCaseStudySEO(cs: CaseStudy): SEOConfig {
   const title = fullTitle.length <= 60 ? fullTitle : `${cs.clientName}: Website Case Study`;
   return {
     title,
-    description: shortDescription(cs.outcome),
+    description: shortDescription(`${cs.industry} website case study. ${cs.outcome}`),
     ogTitle: `${cs.clientName} Case Study | Mago Labs`,
     ogDescription: cs.outcome,
     // Link previews get the JPEG: not every app that shows previews can read WebP.

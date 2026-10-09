@@ -35,7 +35,7 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
       '@type': 'Service',
       'name': industry.eyebrow,
       'serviceType': 'Website design and development',
-      'provider': { '@type': 'Organization', 'name': 'Mago Labs', 'url': 'https://www.magolabs.in' },
+      'provider': { '@id': 'https://www.magolabs.in/#localbusiness' },
       'description': industry.intro,
     },
     {

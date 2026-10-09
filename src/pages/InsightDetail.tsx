@@ -63,13 +63,23 @@ export default function InsightDetail({ slug, onPageChange }: InsightDetailProps
   const articleSchema = post
     ? {
         '@context': 'https://schema.org',
-        '@type': 'Article',
+        '@type': 'BlogPosting',
         headline: post.title,
         description: post.excerpt,
         image: post.coverImageUrl,
-        author: post.author ? { '@type': 'Person', name: post.author } : undefined,
+        author: post.author
+          ? { '@type': 'Person', name: post.author, url: 'https://www.magolabs.in/about' }
+          : { '@id': 'https://www.magolabs.in/#founder' },
         datePublished: post.publishedDate,
-        publisher: { '@type': 'Organization', name: 'Mago Labs' },
+        dateModified: post.publishedDate,
+        inLanguage: 'en',
+        mainEntityOfPage: `https://www.magolabs.in${getInsightDetailPath(post.slug)}`,
+        publisher: {
+          '@type': 'Organization',
+          '@id': 'https://www.magolabs.in/#localbusiness',
+          name: 'Mago Labs',
+          logo: { '@type': 'ImageObject', url: 'https://www.magolabs.in/logo.png' },
+        },
       }
     : null;
 

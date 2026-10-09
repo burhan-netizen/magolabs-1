@@ -39,40 +39,28 @@ export default function Services({ onPageChange }: ServicesProps) {
       '@context': 'https://schema.org',
       '@type': 'Service',
       'name': 'Website Design & Development',
-      'provider': {
-        '@type': 'LocalBusiness',
-        'name': 'Mago Labs'
-      },
+      'provider': { '@id': 'https://www.magolabs.in/#localbusiness' },
       'description': 'Custom premium website design & development services.'
     },
     {
       '@context': 'https://schema.org',
       '@type': 'Service',
       'name': 'Search Engine Optimization (SEO)',
-      'provider': {
-        '@type': 'LocalBusiness',
-        'name': 'Mago Labs'
-      },
+      'provider': { '@id': 'https://www.magolabs.in/#localbusiness' },
       'description': 'Technical, On-page and Local SEO optimization.'
     },
     {
       '@context': 'https://schema.org',
       '@type': 'Service',
       'name': 'Google Business Profile (GBP) Management',
-      'provider': {
-        '@type': 'LocalBusiness',
-        'name': 'Mago Labs'
-      },
+      'provider': { '@id': 'https://www.magolabs.in/#localbusiness' },
       'description': 'Google Map rankings and GBP optimization services.'
     },
     {
       '@context': 'https://schema.org',
       '@type': 'Service',
       'name': 'Conversion Copywriting',
-      'provider': {
-        '@type': 'LocalBusiness',
-        'name': 'Mago Labs'
-      },
+      'provider': { '@id': 'https://www.magolabs.in/#localbusiness' },
       'description': 'Custom written human copywriting focused on sales conversions.'
     }
   ];

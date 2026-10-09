@@ -260,13 +260,7 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
       '@context': 'https://schema.org',
       '@type': 'Service',
       'name': data.title,
-      'provider': {
-        '@type': 'LocalBusiness',
-        'name': 'Mago Labs',
-        'telephone': '+91 9099245605',
-        'email': 'burhan@magolabs.in',
-        'url': 'https://www.magolabs.in'
-      },
+      'provider': { '@id': 'https://www.magolabs.in/#localbusiness' },
       'description': data.shortDesc
     },
     ...(data.faqs && data.faqs.length > 0

@@ -51,13 +51,10 @@ export default function About({ onPageChange }: AboutProps) {
     {
       '@context': 'https://schema.org',
       '@type': 'Person',
+      '@id': 'https://www.magolabs.in/#founder',
       'name': 'Burhan Kapasi',
       'jobTitle': 'Founder',
-      'worksFor': {
-        '@type': 'Organization',
-        'name': 'Mago Labs',
-        'url': 'https://www.magolabs.in'
-      },
+      'worksFor': { '@id': 'https://www.magolabs.in/#localbusiness' },
       'image': 'https://www.magolabs.in/burhan-founder.jpg',
       'sameAs': ['https://www.linkedin.com/in/burhanuddinkapasi/']
     }
