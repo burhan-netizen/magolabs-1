@@ -33,6 +33,9 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
         { name: 'Websites for Dentists and Clinics', id: 'industry-dentists' as PageId, description: 'Appointment booking, local SEO and a clinic result' },
         { name: 'Websites for CA Firms', id: 'industry-ca-firms' as PageId, description: 'Trust-focused websites for chartered accountants' },
         { name: 'Websites for Manufacturers', id: 'industry-manufacturers' as PageId, description: 'Catalogues, enquiry forms and admin panels for B2B suppliers' },
+        { name: 'Websites for Textile Businesses', id: 'industry-textile' as PageId, description: 'Product ranges, capacity and admin panels for mills, processors and traders' },
+        { name: 'Websites for Consultants', id: 'industry-consultants' as PageId, description: 'Service pages, credentials and consultation booking' },
+        { name: 'Sales Pages for Digital Products', id: 'industry-digital-products' as PageId, description: 'Sales pages for coaches, courses and digital products' },
         { name: 'High-Converting Copywriting', id: 'service-copywriting' as PageId, description: 'Direct sales copy designed specifically to drive inbound phone calls' },
       ]
     },

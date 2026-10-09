@@ -48,7 +48,10 @@ function pageComponentFor(page: PageId): LazyPage | null {
     case 'pricing': return Pricing;
     case 'industry-dentists':
     case 'industry-ca-firms':
-    case 'industry-manufacturers': return IndustryDetail;
+    case 'industry-manufacturers':
+    case 'industry-textile':
+    case 'industry-consultants':
+    case 'industry-digital-products': return IndustryDetail;
     case 'insights': return Insights;
     case 'insights-detail': return InsightDetail;
     case 'contact': return Contact;
@@ -237,6 +240,9 @@ function AppContent({ initialPath }: AppProps) {
       case 'industry-dentists':
       case 'industry-ca-firms':
       case 'industry-manufacturers':
+      case 'industry-textile':
+      case 'industry-consultants':
+      case 'industry-digital-products':
         return <IndustryDetail industryId={currentPage} onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
       case 'insights':
         return <Insights onPageChange={handlePageChange} onOpenPost={handleOpenPost} />;

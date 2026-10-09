@@ -160,6 +160,33 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
     ogType: 'website',
     twitterCard: 'summary_large_image'
   },
+  'industry-textile': {
+    title: 'Website Design for Textile Businesses in Surat | Mago Labs',
+    description: 'Websites for textile mills, processors, manufacturers and traders: product ranges, capacity, enquiry forms and an admin panel your team can update.',
+    ogTitle: 'Websites for Textile Businesses | Mago Labs',
+    ogDescription: 'A website that shows buyers the real scale of your textile business.',
+    ogImage: 'https://www.magolabs.in/og-image-manufacturers.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
+  'industry-consultants': {
+    title: 'Website Design for Consultants & Consulting Firms | Mago Labs',
+    description: 'Websites for consultants and professional service firms: clear service pages, credentials up front and a booking flow that turns visitors into consultations.',
+    ogTitle: 'Websites for Consultants | Mago Labs',
+    ogDescription: 'A website that wins trust before the first meeting.',
+    ogImage: 'https://www.magolabs.in/og-image-services.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
+  'industry-digital-products': {
+    title: 'Sales Pages for Coaches, Courses & Digital Products | Mago Labs',
+    description: 'High-converting sales pages for coaches, course creators and digital products: copy that sells, mobile-first design and checkout in one step.',
+    ogTitle: 'Sales Pages for Digital Products | Mago Labs',
+    ogDescription: 'A sales page that explains, earns trust and takes the order on its own.',
+    ogImage: 'https://www.magolabs.in/og-image-copywriting.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
   contact: {
     title: 'Contact Mago Labs | Free Website Audit in Surat',
     description: 'Get a free website audit from Mago Labs, Surat. Send your website address, or WhatsApp or call Burhan Kapasi directly on +91 9099245605.',

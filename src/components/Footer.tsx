@@ -111,6 +111,21 @@ export default function Footer({ onPageChange }: FooterProps) {
                   For manufacturers
                 </PageLink>
               </li>
+              <li>
+                <PageLink page="industry-textile" onNavigate={() => handleLinkClick('industry-textile')} className="hover:text-neutral-900 dark:hover:text-white transition-colors text-left">
+                  For textile businesses
+                </PageLink>
+              </li>
+              <li>
+                <PageLink page="industry-consultants" onNavigate={() => handleLinkClick('industry-consultants')} className="hover:text-neutral-900 dark:hover:text-white transition-colors text-left">
+                  For consultants
+                </PageLink>
+              </li>
+              <li>
+                <PageLink page="industry-digital-products" onNavigate={() => handleLinkClick('industry-digital-products')} className="hover:text-neutral-900 dark:hover:text-white transition-colors text-left">
+                  Sales pages
+                </PageLink>
+              </li>
               <li className="pt-2 text-[11px] font-semibold uppercase tracking-wider text-neutral-500">Alongside your website</li>
               <li>
                 <PageLink page="service-seo"
