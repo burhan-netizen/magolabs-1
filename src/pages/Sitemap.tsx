@@ -18,6 +18,7 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
         { name: 'Home / Agency Overview', id: 'home' as PageId, description: 'High-speed, custom-engineered landing experience' },
         { name: 'About & Why Choose Us', id: 'about' as PageId, description: 'Get to know Burhan Kapasi, our commitments, and our direct client partnership model' },
         { name: 'Pricing', id: 'pricing' as PageId, description: 'Four website packages with clear starting prices' },
+        { name: 'For Agencies', id: 'agencies' as PageId, description: 'White label website design and development for agencies' },
         { name: 'Book Consultation / Audits', id: 'contact' as PageId, description: 'Request a free 30-min performance and local search SEO checkup' },
       ]
     },

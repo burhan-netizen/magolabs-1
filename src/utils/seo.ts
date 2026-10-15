@@ -133,6 +133,15 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
     ogType: 'website',
     twitterCard: 'summary_large_image'
   },
+  agencies: {
+    title: 'White Label Web Development for Agencies | Mago Labs',
+    description: 'White label website design and development for agencies. Custom, hand-coded sites built under your brand, on time, with a direct line to the founder.',
+    ogTitle: 'White Label Web Development for Agencies | Mago Labs',
+    ogDescription: 'Custom websites built under your agency brand. You keep the client and the credit. We do the work, quietly and on time.',
+    ogImage: 'https://www.magolabs.in/og-image-services.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
   'industry-dentists': {
     title: 'Website Design for Dentists & Clinics | Mago Labs',
     description: 'Websites for dentists and clinics with appointment booking and local SEO. One clinic went from 25 to 58 patients a day within two months of launch.',

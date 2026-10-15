@@ -126,13 +126,15 @@ export default function WorkWall({ onOpenWork }: WorkWallProps) {
               {[0, 1].map((copy) =>
                 column.map((site) => {
                   const shot = FULL_SCREENSHOTS[site.id];
+                  // Projects with no public address open their case study instead.
+                  const external = Boolean(site.url);
                   return (
                     <a
                       key={`${site.id}-${copy}`}
-                      href={site.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={copy === 0 ? `${site.clientName}, ${site.industry}. Visit site (opens in a new tab)` : undefined}
+                      href={site.url ?? `/work/${site.id}`}
+                      target={external ? '_blank' : undefined}
+                      rel={external ? 'noopener noreferrer' : undefined}
+                      aria-label={copy === 0 ? `${site.clientName}, ${site.industry}. ${external ? 'Visit site (opens in a new tab)' : 'Read the case study'}` : undefined}
                       aria-hidden={copy === 1 ? true : undefined}
                       tabIndex={copy === 1 ? -1 : undefined}
                       className={`wall-tile ${copy === 1 ? 'wall-clone' : ''}`}
@@ -163,7 +165,7 @@ export default function WorkWall({ onOpenWork }: WorkWallProps) {
                             <span className="block truncate font-mono text-[10px] font-medium uppercase tracking-wider text-neutral-300">{site.industry}</span>
                           </span>
                           <span className="wall-visit">
-                            Visit site <ArrowUpRight className="h-3.5 w-3.5" />
+                            {external ? 'Visit site' : 'Case study'} <ArrowUpRight className="h-3.5 w-3.5" />
                           </span>
                         </span>
                       </span>

@@ -140,15 +140,17 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                     >
                       Read the case study <ArrowRight className="h-4 w-4" />
                     </PageLink>
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors"
-                    >
-                      <span className="sm:hidden">Live site</span>
-                      <span className="hidden sm:inline">Visit the live site</span> <ArrowUpRight className="h-4 w-4" />
-                    </a>
+                    {project.url && (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-600 hover:text-neutral-900 transition-colors"
+                      >
+                        <span className="sm:hidden">Live site</span>
+                        <span className="hidden sm:inline">Visit the live site</span> <ArrowUpRight className="h-4 w-4" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </article>
@@ -248,14 +250,16 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                         >
                           Case study <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                         </PageLink>
-                        <a
-                          href={project.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
-                        >
-                          Live site <ArrowUpRight className="h-3.5 w-3.5" />
-                        </a>
+                        {project.url && (
+                          <a
+                            href={project.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
+                          >
+                            Live site <ArrowUpRight className="h-3.5 w-3.5" />
+                          </a>
+                        )}
                       </div>
                     </div>
                   </article>

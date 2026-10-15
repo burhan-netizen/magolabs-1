@@ -89,7 +89,7 @@ const SERVICES_DATA: Record<string, Service> = {
       },
       {
         question: 'Do you help with hosting and domains?',
-        answer: 'Yes. We help you register the domain, set up professional email and host the site on fast, secure cloud servers. Everything stays in your name.'
+        answer: 'Yes. Hosting on fast, secure cloud servers is included at no cost for standard business websites. We also help you register your domain and set up professional email, all in your name.'
       }
     ]
   },
@@ -377,7 +377,7 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
                   How we work
                 </h4>
                 <p className="text-sm text-neutral-600 leading-relaxed">
-                  Regular updates. Direct access to Burhan Kapasi, the founder. Clean code. No markup on your domain or hosting costs.
+                  Regular updates. Direct access to Burhan Kapasi, the founder. Clean code. Hosting included, and no markup on your domain.
                 </p>
               </div>
             </div>

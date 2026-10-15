@@ -210,8 +210,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 'momrise',
     clientName: 'Momrise',
-    url: 'https://momrise.vercel.app',
-    domain: 'momrise.vercel.app',
+    domain: 'Momrise',
     industry: 'Digital Product Sales Page',
     business:
       "Momrise is our own brand for busy mothers building an income from home. Its first product is The 2 Hour Work From Home Plan.",
@@ -230,8 +229,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 'tinyhumans',
     clientName: 'Tiny Humans, Big Feelings',
-    url: 'https://tinyhumansbigfeelings.vercel.app',
-    domain: 'tinyhumansbigfeelings.vercel.app',
+    domain: 'Tiny Humans, Big Feelings',
     industry: 'Digital Product Sales Page',
     business:
       "A practical guide for parents of toddlers and preschoolers: 100 exact scripts for meltdowns and everyday battles. One of our own products.",

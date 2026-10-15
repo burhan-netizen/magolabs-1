@@ -177,6 +177,11 @@ export default function Footer({ onPageChange }: FooterProps) {
                 </PageLink>
               </li>
               <li>
+                <PageLink page="agencies" onNavigate={() => handleLinkClick('agencies')} className="hover:text-neutral-900 dark:hover:text-white transition-colors text-left">
+                  For agencies
+                </PageLink>
+              </li>
+              <li>
                 <PageLink page="insights" onNavigate={() => handleLinkClick('insights')} className="hover:text-neutral-900 dark:hover:text-white transition-colors flex items-center gap-2 text-left">
                   Insights
                 </PageLink>

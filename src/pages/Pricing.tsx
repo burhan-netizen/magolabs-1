@@ -62,6 +62,7 @@ const TIERS: Tier[] = [
       'Basic on-page SEO',
       'Speed optimization',
       'SSL setup',
+      'Hosting included, no monthly fee',
       'Google Analytics & Search Console',
       'Basic animations',
       '2 revision rounds',
@@ -191,7 +192,7 @@ const COMPARE_ROWS: { label: string; values: string[] }[] = [
 // True of every package, whatever its size.
 const ALWAYS = [
   { title: 'Designed for you', icon: Palette, desc: 'Every website starts from a blank canvas. No templates, at any price.' },
-  { title: 'Yours to own', icon: KeyRound, desc: 'Your domain, your code and your hosting stay in your hands.' },
+  { title: 'Yours to own', icon: KeyRound, desc: 'Your domain and your code stay in your name. Hosting is included.' },
   { title: 'A fixed quote first', icon: BadgeCheck, desc: 'You know the exact price before any work starts.' },
   { title: 'Direct with the founder', icon: Handshake, desc: 'You work with Burhan from the first call to launch.' },
 ];
@@ -207,7 +208,7 @@ const FAQS = [
   },
   {
     question: 'Are the domain and hosting included?',
-    answer: 'They are billed separately, at cost, with no markup. You keep full ownership of both.',
+    answer: 'Hosting is included at no cost for standard business websites, with no monthly fee. Your domain is registered in your name, and you keep full ownership of it and your code.',
   },
   {
     question: 'Can I start small and add more later?',

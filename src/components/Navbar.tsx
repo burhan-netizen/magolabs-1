@@ -1,5 +1,5 @@
 import { Fragment, useState, useEffect } from 'react';
-import { Menu, X, ChevronDown, PhoneCall, Sun, Moon } from 'lucide-react';
+import { Menu, X, ChevronDown, PhoneCall, Sun, Moon, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PageId } from '../types';
 import PageLink from './PageLink';
@@ -51,6 +51,7 @@ export default function Navbar({
         { label: t('nav.services.seo'), id: 'service-seo' as PageId },
         { label: t('nav.services.gbp'), id: 'service-gbp' as PageId },
         { label: t('nav.services.copywriting'), id: 'service-copywriting' as PageId },
+        { label: 'For agencies (white label)', id: 'agencies' as PageId },
       ],
     },
     { label: t('nav.work'), id: 'work' as PageId },
@@ -219,6 +220,14 @@ export default function Navbar({
 
           {/* Consultation Button */}
           <div className="hidden lg:flex items-center gap-3">
+            {/* Visitors from abroad go to the trades site. Wide screens only, so the
+                main navigation never wraps; the mobile menu has it too. */}
+            <a
+              href="https://trades.magolabs.in/"
+              className="hidden xl:inline-flex items-center gap-1 text-sm font-medium text-neutral-600 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white transition-colors whitespace-nowrap"
+            >
+              Outside India? <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
             {isDarkMode !== undefined && onToggleDarkMode && (
               <button
                 onClick={onToggleDarkMode}
@@ -335,6 +344,14 @@ export default function Navbar({
                   </PageLink>
                 );
               })}
+
+              <a
+                href="https://trades.magolabs.in/"
+                className="flex w-full items-center justify-between px-3 py-2.5 text-base font-medium text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 rounded-lg"
+              >
+                <span>Outside India? Websites for trades</span>
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
 
               <div className="pt-4 border-t border-neutral-100 dark:border-neutral-800/80 flex flex-col gap-3">
                 {isDarkMode !== undefined && onToggleDarkMode && (

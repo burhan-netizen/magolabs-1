@@ -48,6 +48,7 @@ export default function Contact(_props: ContactProps) {
     const pkg = params.get('package');
     if (pkg === 'Extras') setPreset('I would like to talk about pricing for: ');
     else if (pkg === 'Custom') setPreset('I have a specific requirement I would like to discuss: ');
+    else if (pkg === 'Agency') setPreset('I run an agency and would like to talk about white label work: ');
     else if (pkg && ['Launch', 'Growth', 'Scale', 'Commerce'].includes(pkg)) setPreset(`I am interested in the ${pkg} package.`);
   }, []);
   const copy = PAGE_COPY[mode];

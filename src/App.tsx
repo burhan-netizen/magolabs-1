@@ -24,6 +24,7 @@ const ServiceDetail = lazyPage(() => import('./pages/ServiceDetail'));
 const Work = lazyPage(() => import('./pages/Work'));
 const WorkDetail = lazyPage(() => import('./pages/WorkDetail'));
 const Pricing = lazyPage(() => import('./pages/Pricing'));
+const Agencies = lazyPage(() => import('./pages/Agencies'));
 const IndustryDetail = lazyPage(() => import('./pages/IndustryDetail'));
 const Insights = lazyPage(() => import('./pages/Insights'));
 const InsightDetail = lazyPage(() => import('./pages/InsightDetail'));
@@ -46,6 +47,7 @@ function pageComponentFor(page: PageId): LazyPage | null {
     case 'work': return Work;
     case 'work-detail': return WorkDetail;
     case 'pricing': return Pricing;
+    case 'agencies': return Agencies;
     case 'industry-dentists':
     case 'industry-ca-firms':
     case 'industry-manufacturers':
@@ -237,6 +239,8 @@ function AppContent({ initialPath }: AppProps) {
         return <WorkDetail id={currentSlug} onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
       case 'pricing':
         return <Pricing onPageChange={handlePageChange} />;
+      case 'agencies':
+        return <Agencies onPageChange={handlePageChange} />;
       case 'industry-dentists':
       case 'industry-ca-firms':
       case 'industry-manufacturers':

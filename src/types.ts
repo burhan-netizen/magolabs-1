@@ -9,6 +9,7 @@ export type PageId =
   | 'work'
   | 'work-detail'
   | 'pricing'
+  | 'agencies'
   | 'industry-dentists'
   | 'industry-ca-firms'
   | 'industry-manufacturers'
@@ -62,7 +63,9 @@ export interface ProcessStep {
 export interface CaseStudy {
   id: string;
   clientName: string;
-  url: string;
+  /** The live site. Left out for projects with no public address to link to;
+   *  those link to their case study instead. */
+  url?: string;
   domain: string;
   industry: string;
   business?: string;

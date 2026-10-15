@@ -18,6 +18,7 @@ export const PAGE_TO_PATH: Record<Exclude<PageId, 'not-found' | 'insights-detail
   'service-copywriting': '/services/copywriting',
   work: '/work',
   pricing: '/pricing',
+  agencies: '/agencies',
   'industry-dentists': '/industries/dentists',
   'industry-ca-firms': '/industries/ca-firms',
   'industry-manufacturers': '/industries/manufacturers',

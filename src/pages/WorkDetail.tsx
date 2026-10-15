@@ -109,14 +109,16 @@ export default function WorkDetail({ id, onPageChange, onOpenCaseStudy }: WorkDe
           )}
 
           <div className="flex flex-wrap gap-4 pt-2">
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-neutral-900 hover:bg-neutral-800 px-6 py-3 text-sm font-bold text-white transition-all"
-            >
-              Visit Live Site <ExternalLink className="h-4 w-4" />
-            </a>
+            {project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-neutral-900 hover:bg-neutral-800 px-6 py-3 text-sm font-bold text-white transition-all"
+              >
+                Visit Live Site <ExternalLink className="h-4 w-4" />
+              </a>
+            )}
             <button
               onClick={backToWork}
               className="inline-flex items-center gap-2 rounded-full border border-neutral-200 hover:bg-neutral-50 px-6 py-3 text-sm font-bold text-neutral-800 transition-all cursor-pointer"

@@ -173,7 +173,7 @@ const WITH_MAGO = [
   'A site that loads fast on any phone and any network.',
   'Copy written by a human who has studied your buyers.',
   'One person to talk to, the founder, from start to finish.',
-  'Your domain, your code and your hosting, in your name.',
+  'Your domain and code in your name, with hosting included.',
   'A fixed quote before any work starts.',
 ];
 
@@ -228,7 +228,7 @@ const FAQS = [
   },
   {
     question: 'How much does a custom website cost?',
-    answer: 'There are four packages, and the pricing page lists what each one includes and its starting price. You get a clear, fixed quote before any work starts. No hidden fees, and you keep full ownership of your domain, code and hosting.',
+    answer: 'There are four packages, and the pricing page lists what each one includes and its starting price. You get a clear, fixed quote before any work starts. No hidden fees: hosting is included, and you keep full ownership of your domain and code.',
   },
   {
     question: 'Will my website rank on Google?',
