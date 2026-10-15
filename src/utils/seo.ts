@@ -39,18 +39,18 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
     twitterCard: 'summary_large_image'
   },
   services: {
-    title: 'Website Design & Development Services in Surat | Mago Labs',
+    title: 'Website, SEO & Google Business Services in Surat | Mago Labs',
     description: 'Websites are our main service: custom-designed, hand-coded and live in 5 to 28 days. SEO, Google Business Profile, copywriting and branding alongside.',
-    ogTitle: 'Website Design & Development Services in Surat | Mago Labs',
+    ogTitle: 'Website, SEO & Google Business Services in Surat | Mago Labs',
     ogDescription: 'Websites are our main service: custom-designed, hand-coded and live in 5 to 28 days. SEO, Google Business Profile, copywriting and branding alongside.',
     ogImage: 'https://www.magolabs.in/og-image-services.jpg',
     ogType: 'website',
     twitterCard: 'summary_large_image'
   },
   'service-web-design': {
-    title: 'Custom Website Design & Development in Surat | Mago Labs',
+    title: 'Custom Hand-Coded Websites for Surat Businesses | Mago Labs',
     description: 'Custom websites, hand-coded from a blank canvas, never a template. Fast, mobile-first and built to bring enquiries. Four packages, live in 5 to 28 days.',
-    ogTitle: 'Custom Website Design & Development in Surat | Mago Labs',
+    ogTitle: 'Custom Hand-Coded Websites for Surat Businesses | Mago Labs',
     ogDescription: 'Custom-coded websites built for speed, mobile experience, and conversions, not templates.',
     ogImage: 'https://www.magolabs.in/og-image-web-design.jpg',
     ogType: 'website',
