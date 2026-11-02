@@ -329,6 +329,22 @@ body::after {
 .dark .insight-body code {
   background: #262626;
 }
+/* Code blocks (e.g. example links) scroll inside their box instead of widening the page. */
+.insight-body pre {
+  overflow-x: auto;
+  max-width: 100%;
+  background: #F3F4F6;
+  border-radius: 0.75rem;
+  padding: 1em 1.1em;
+  font-size: 0.9em;
+}
+.insight-body pre code {
+  background: none;
+  padding: 0;
+}
+.dark .insight-body pre {
+  background: #262626;
+}
 /* Tables scroll sideways on phones instead of stretching the page. */
 .insight-body table {
   display: block;
