@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, AlertCircle } from 'lucide-react';
 import { PageId, BlogPost } from '../types';
-import { getPostBySlug } from '../lib/contentful';
+import { getPostBySlug, absoluteUrl } from '../lib/insights';
 import { updateDocumentSEO } from '../utils/seo';
 import { getInsightDetailPath } from '../utils/pageRoutes';
 import { getInitialBlogData, formatPostDate } from '../lib/blogData';
@@ -53,7 +53,7 @@ export default function InsightDetail({ slug, onPageChange }: InsightDetailProps
         'insights-detail',
         `${post.title} | Mago Labs Insights`,
         post.excerpt,
-        post.coverImageUrl,
+        absoluteUrl(post.coverImageUrl),
         getInsightDetailPath(post.slug)
       );
     }
@@ -66,7 +66,7 @@ export default function InsightDetail({ slug, onPageChange }: InsightDetailProps
         '@type': 'BlogPosting',
         headline: post.title,
         description: post.excerpt,
-        image: post.coverImageUrl,
+        image: absoluteUrl(post.coverImageUrl),
         author: post.author
           ? { '@type': 'Person', name: post.author, url: 'https://www.magolabs.in/about' }
           : { '@id': 'https://www.magolabs.in/#founder' },
@@ -158,8 +158,8 @@ export default function InsightDetail({ slug, onPageChange }: InsightDetailProps
           />
         )}
 
-        {/* Post body comes from Contentful's rich text, converted to sanitized-by-structure HTML
-            in src/lib/contentful.ts. Only trusted editors should have publish access. */}
+        {/* Post body is the post's Markdown file (content/insights), turned into HTML by
+            scripts/build-insights.ts. Only add posts you have written or checked. */}
         <div
           className="insight-body text-neutral-700 dark:text-neutral-300 leading-relaxed"
           dangerouslySetInnerHTML={{ __html: post.bodyHtml }}

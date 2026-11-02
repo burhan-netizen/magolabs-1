@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { BookOpen, ArrowRight, AlertCircle } from 'lucide-react';
+import { BookOpen, ArrowRight } from 'lucide-react';
 import { PageId, BlogPostSummary } from '../types';
-import { getAllPosts, isContentfulConfigured } from '../lib/contentful';
+import { getAllPosts } from '../lib/insights';
 import SEO from '../components/SEO';
 import PageLink from '../components/PageLink';
-import { getInitialBlogData, formatPostDate } from '../lib/blogData';
+import { formatPostDate } from '../lib/blogData';
 import { getInsightDetailPath } from '../utils/pageRoutes';
 
 interface InsightsProps {
@@ -14,32 +13,8 @@ interface InsightsProps {
 }
 
 export default function Insights({ onOpenPost }: InsightsProps) {
-  // Posts fetched when the site was built are already in the page. They are
-  // refreshed quietly in the background, in case something was published since.
-  const initialPosts = getInitialBlogData()?.posts;
-  const [posts, setPosts] = useState<BlogPostSummary[]>(initialPosts ?? []);
-  const [status, setStatus] = useState<'loading' | 'ready' | 'error' | 'unconfigured'>(initialPosts ? 'ready' : 'loading');
-
-  useEffect(() => {
-    if (!isContentfulConfigured()) {
-      if (!initialPosts) setStatus('unconfigured');
-      return;
-    }
-    let cancelled = false;
-    getAllPosts()
-      .then((data) => {
-        if (cancelled) return;
-        setPosts(data);
-        setStatus('ready');
-      })
-      .catch(() => {
-        if (cancelled || initialPosts) return;
-        setStatus('error');
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  // Posts come from the Markdown files in content/insights, built into the site.
+  const posts: BlogPostSummary[] = getAllPosts();
 
   return (
     <>
@@ -62,39 +37,13 @@ export default function Insights({ onOpenPost }: InsightsProps) {
 
       <section className="pb-24 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {status === 'loading' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[0, 1, 2].map((i) => (
-                <div key={i} className="animate-pulse rounded-3xl border border-neutral-200/80 dark:border-neutral-800 p-6 space-y-4">
-                  <div className="h-40 rounded-2xl bg-neutral-100 dark:bg-neutral-800" />
-                  <div className="h-4 w-2/3 rounded bg-neutral-100 dark:bg-neutral-800" />
-                  <div className="h-4 w-full rounded bg-neutral-100 dark:bg-neutral-800" />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {status === 'error' && (
-            <div className="flex flex-col items-center text-center gap-3 py-16 text-neutral-500 dark:text-neutral-400">
-              <AlertCircle className="h-8 w-8" />
-              <p>Couldn't load posts right now. Please try again shortly.</p>
-            </div>
-          )}
-
-          {status === 'unconfigured' && (
-            <div className="flex flex-col items-center text-center gap-3 py-16 text-neutral-500 dark:text-neutral-400">
-              <AlertCircle className="h-8 w-8" />
-              <p>Blog isn't connected yet. Add your Contentful credentials to see posts here.</p>
-            </div>
-          )}
-
-          {status === 'ready' && posts.length === 0 && (
+          {posts.length === 0 && (
             <div className="text-center py-16 text-neutral-500 dark:text-neutral-400">
               <p>No posts published yet. Check back soon.</p>
             </div>
           )}
 
-          {status === 'ready' && posts.length > 0 && (
+          {posts.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post, idx) => (
                 <motion.div

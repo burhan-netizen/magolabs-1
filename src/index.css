@@ -281,7 +281,7 @@ body::after {
   mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
 }
 
-/* Styling for rendered Contentful "Body" rich text on the Insights detail page */
+/* Styling for the blog post body (from content/insights Markdown) on the Insights detail page */
 .insight-body > * + * {
   margin-top: 1.25em;
 }
@@ -327,6 +327,33 @@ body::after {
 }
 .dark .insight-body code {
   background: #262626;
+}
+/* Tables scroll sideways on phones instead of stretching the page. */
+.insight-body table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+.insight-body th,
+.insight-body td {
+  border: 1px solid #E5E5E5;
+  padding: 0.6em 0.8em;
+  text-align: left;
+  vertical-align: top;
+}
+.insight-body th {
+  background: #F5F5F5;
+  font-weight: 700;
+  color: #171717;
+}
+.dark .insight-body th,
+.dark .insight-body td {
+  border-color: #333333;
+}
+.dark .insight-body th {
+  background: #262626;
+  color: #FFFFFF;
 }
 
 

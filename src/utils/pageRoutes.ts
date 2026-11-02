@@ -44,7 +44,7 @@ const PATH_TO_PAGE: Record<string, PageId> = Object.entries(PAGE_TO_PATH).reduce
 const INSIGHT_DETAIL_PATTERN = /^\/insights\/([a-z0-9-]+)$/;
 
 /** Matches "/work/some-case-study-id" (but not bare "/work"). Unlike blog posts
- *  (managed externally in Contentful, so any slug-shaped path is provisionally
+ *  (Markdown files in content/insights, so any slug-shaped path is provisionally
  *  "known"), case studies are a small, local, static list - so a path is only
  *  treated as known if it names a real case study, and a typo'd URL correctly
  *  404s instead of rendering a fake page. */

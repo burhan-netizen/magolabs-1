@@ -81,7 +81,7 @@ export interface CaseStudy {
   screenshotUrl?: string;
 }
 
-/** Mirrors the Contentful "Blog Post" content type fields, as used on the Insights listing page. */
+/** A blog post's details from its content/insights Markdown header, as used on the Insights listing page. */
 export interface BlogPostSummary {
   id: string;
   title: string;

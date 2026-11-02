@@ -4,16 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx server.ts",
-    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && tsx scripts/prerender-seo.ts && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
+    "dev": "tsx scripts/build-insights.ts && tsx server.ts",
+    "build": "tsx scripts/build-insights.ts && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && tsx scripts/prerender-seo.ts && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
     "start": "node dist/server.cjs",
     "preview": "vite preview",
     "clean": "rm -rf dist dist-ssr server.js",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@contentful/rich-text-html-renderer": "^17.2.3",
-    "@contentful/rich-text-types": "^17.2.7",
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@fontsource/poppins": "^5.3.0",
     "@google/genai": "^2.4.0",
@@ -22,6 +20,7 @@
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "lucide-react": "^0.546.0",
+    "marked": "^14.1.4",
     "motion": "^12.23.24",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",

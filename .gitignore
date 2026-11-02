@@ -4,3 +4,7 @@ dist-ssr/
 .env
 .env.local
 .vercel/
+
+# Generated from content/insights by scripts/build-insights.ts
+src/data/insights.generated.json
+public/insights-data/

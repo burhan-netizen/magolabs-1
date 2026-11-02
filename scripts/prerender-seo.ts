@@ -20,20 +20,13 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import { renderSeoHtml, renderSeoHtmlForConfig } from '../src/utils/renderSeoHtml';
 import { PAGE_TO_PATH, getInsightDetailPath, getWorkDetailPath } from '../src/utils/pageRoutes';
 import { SEOConfig, SEO_CONFIG_MAP } from '../src/utils/seo';
-import { getAllPosts, getPostBySlug, isContentfulConfigured } from '../src/lib/contentful';
 import { BlogData, BLOG_DATA_ELEMENT_ID } from '../src/lib/blogData';
-import { BlogPostSummary } from '../src/types';
+import { BlogPost, BlogPostSummary } from '../src/types';
 import { CASE_STUDIES, getCaseStudySEO } from '../src/data/caseStudies';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// dotenv's default config() only reads a file literally named ".env" \u2014 but this
-// project (matching Vite's own convention) keeps real secrets in ".env.local", so
-// that has to be loaded explicitly. ".env" is still loaded after as a fallback for
-// CI environments that use that name instead. This must run before getAllPosts()/
-// isContentfulConfigured() are actually called below (not just before they're
-// imported \u2014 imports are hoisted, so this couldn't run early enough to affect
-// module-load-time reads; contentful.ts now reads its env vars lazily instead).
+// Loads local settings from ".env.local" (Vite's convention), then ".env" as a fallback.
 dotenv.config({ path: path.join(__dirname, '..', '.env.local') });
 dotenv.config();
 
@@ -124,7 +117,7 @@ const { renderPage } = (await import(pathToFileURL(ssrEntryPath).href)) as {
 };
 
 /** Renders the real page content for a route and places it inside the root element.
- *  For Insights pages, blogData is the content fetched from Contentful: it is rendered
+ *  For Insights pages, blogData is the post content from content/insights: it is rendered
  *  into the page and also written next to it as JSON, so the browser starts from the
  *  same content instead of fetching it again. */
 async function withContent(routePath: string, html: string, blogData?: BlogData): Promise<string> {
@@ -143,22 +136,19 @@ async function withContent(routePath: string, html: string, blogData?: BlogData)
   );
 }
 
-// Blog posts live in Contentful. Fetch the list once, up front, so the Insights
-// listing page and every post page can be written with their content included.
-let blogPosts: BlogPostSummary[] | null = null;
+// Blog posts are Markdown files in content/insights, already turned into data by
+// scripts/build-insights.ts (run at the start of the build). Read them up front, so the
+// Insights listing page and every post page are written with their content included.
+const blogPosts: BlogPostSummary[] = JSON.parse(
+  fs.readFileSync(path.join(__dirname, '..', 'src', 'data', 'insights.generated.json'), 'utf-8')
+);
+const absoluteUrl = (url?: string) => (url && url.startsWith('/') ? `https://www.magolabs.in${url}` : url);
+function readPost(slug: string): BlogPost | null {
+  const file = path.join(distDir, 'insights-data', `${slug}.json`);
+  return fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, 'utf-8')) as BlogPost) : null;
+}
 // Every blog post page that was written, with its date, for the sitemap.
 const writtenPosts: { path: string; date: string }[] = [];
-if (isContentfulConfigured()) {
-  try {
-    blogPosts = await getAllPosts();
-  } catch (err) {
-    // Don't fail the whole production build over a Contentful hiccup at build time:
-    // the site still works, posts just load in the browser as a fallback.
-    console.warn('[prerender-seo] Could not fetch Contentful posts, they will load in the browser instead:', err);
-  }
-} else {
-  console.warn('[prerender-seo] Contentful env vars not set, blog posts will load in the browser instead.');
-}
 
 function writeShell(routePath: string, html: string) {
   if (routePath === '/') {
@@ -173,7 +163,7 @@ function writeShell(routePath: string, html: string) {
 }
 
 for (const routePath of Object.values(PAGE_TO_PATH)) {
-  const blogData = routePath === PAGE_TO_PATH.insights && blogPosts ? { posts: blogPosts } : undefined;
+  const blogData = routePath === PAGE_TO_PATH.insights ? { posts: blogPosts } : undefined;
   writeShell(routePath, await withContent(routePath, renderSeoHtml(template, routePath), blogData));
 }
 
@@ -189,22 +179,23 @@ console.log(`[prerender-seo] Wrote ${CASE_STUDIES.length} case-study shell(s).`)
 // Blog posts don't have a fixed PageId path (one per slug), so they're written
 // separately here rather than through the static PAGE_TO_PATH loop above. Each
 // post page includes its full text.
-if (blogPosts) {
+{
   let included = 0;
   for (const summary of blogPosts) {
     const routePath = getInsightDetailPath(summary.slug);
     try {
-      const post = await getPostBySlug(summary.slug);
+      const post = readPost(summary.slug);
       if (!post) continue;
       const config: SEOConfig = {
         title: `${post.title} | Mago Labs Insights`,
         description: post.excerpt || 'Digital growth, SEO, and web design insights from Mago Labs.',
         ogTitle: post.title,
         ogDescription: post.excerpt,
-        ogImage: post.coverImageUrl,
+        ogImage: absoluteUrl(post.coverImageUrl),
         ogType: 'article',
         twitterCard: 'summary_large_image',
       };
+      // Social previews need full image addresses; the page itself keeps the short path.
       writeShell(routePath, await withContent(routePath, renderSeoHtmlForConfig(template, config, routePath), { post }));
       writtenPosts.push({ path: routePath, date: post.publishedDate });
       included++;
@@ -212,7 +203,11 @@ if (blogPosts) {
       console.warn(`[prerender-seo] Could not write ${routePath}, it will load in the browser instead:`, err);
     }
   }
-  console.log(`[prerender-seo] Included ${included} Contentful blog post(s) with full content.`);
+  if (included !== blogPosts.length) {
+    console.error(`[prerender-seo] Only ${included} of ${blogPosts.length} blog posts were written.`);
+    process.exit(1);
+  }
+  console.log(`[prerender-seo] Included ${included} blog post(s) with full content.`);
 }
 
 // The page for addresses that do not exist. The host serves dist/404.html with a

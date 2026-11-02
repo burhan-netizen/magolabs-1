@@ -15,7 +15,7 @@ function escapeHtml(value: string): string {
 /**
  * Fills the %%SEO_...%% placeholder tokens in the built index.html template with the
  * given config's values for the given URL path. Shared by renderSeoHtml (static, fixed
- * PageId routes) and scripts/prerender-seo.ts's per-post loop (dynamic Contentful routes
+ * PageId routes) and scripts/prerender-seo.ts's per-post loop (blog post routes
  * that have no fixed PageId path), so both ship crawlable, request-independent meta tags.
  */
 export function renderSeoHtmlForConfig(template: string, config: SEOConfig, path: string): string {

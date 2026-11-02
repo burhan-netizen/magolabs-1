@@ -101,7 +101,7 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
     ogType: 'website',
     twitterCard: 'summary_large_image'
   },
-  // Generic fallback only , real values for each post come from Contentful and are
+  // Generic fallback only , real values for each post come from content/insights and are
   // applied via updateDocumentSEO's custom* params once the post loads (see InsightDetail.tsx).
   'insights-detail': {
     title: 'Insights | Mago Labs',
