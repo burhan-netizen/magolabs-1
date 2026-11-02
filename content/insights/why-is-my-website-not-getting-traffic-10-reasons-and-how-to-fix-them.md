@@ -6,8 +6,6 @@ author: "Burhan Kapasi"
 publishedDate: "2026-10-22T00:00+05:30"
 coverImage: "/images/insights/why-is-my-website-not-getting-traffic-10-reasons-and-how-to-fix-them.webp"
 ---
-# Why Is My Website Not Getting Traffic? 10 Reasons and How to Fix Them
-
 You launched your website, added your services, published your contact details, and waited for customers to find you. But the traffic is barely moving.
 
 If you are asking, **"Why is my website not getting traffic?"**, you are not alone. Many business websites struggle to attract visitors from Google, even when the business itself offers excellent products or services.

@@ -285,16 +285,17 @@ body::after {
 .insight-body > * + * {
   margin-top: 1.25em;
 }
-.insight-body h1, .insight-body h2, .insight-body h3 {
+.insight-body h1, .insight-body h2, .insight-body h3, .insight-body h4 {
   font-weight: 800;
   color: #171717;
   line-height: 1.3;
 }
-.dark .insight-body h1, .dark .insight-body h2, .dark .insight-body h3 {
+.dark .insight-body h1, .dark .insight-body h2, .dark .insight-body h3, .dark .insight-body h4 {
   color: #F8F9FA;
 }
 .insight-body h2 { font-size: 1.5em; }
 .insight-body h3 { font-size: 1.25em; }
+.insight-body h4 { font-size: 1.1em; }
 .insight-body a {
   color: inherit;
   font-weight: 600;
