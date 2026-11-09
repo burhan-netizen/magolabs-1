@@ -42,9 +42,9 @@ const LOGOS: WallLogo[] = [
   { caseId: 'centurion', name: 'Centurion Strategic Ventures', file: 'centurion', width: 217, height: 167, h: 76, proof: 'Separate paths for borrowers and partners' },
   { caseId: 'solway', name: 'SolWay Energies', file: 'solway', width: 376, height: 42, h: 25, proof: 'A website that backs up every sales call' },
   { caseId: 'astrabizz', name: 'Astrabizz Consultancy', file: 'astrabizz', width: 208, height: 167, h: 76, proof: 'Enquiries directly through the site' },
-  { caseId: 'kdmayani', name: 'K.D. Mayani & Co.', file: 'kdmayani', width: 447, height: 68, h: 36, proof: 'A stronger first impression' },
-  { caseId: 'jaymehta', name: 'Jay Mehta & Co.', file: 'jaymehta', width: 309, height: 46, h: 36, proof: 'Clear, professional, easy to trust' },
-  { caseId: 'mnp', name: 'MNP & Co.', file: 'mnp', width: 178, height: 33, h: 38, proof: 'A real difference in how prospects respond' },
+  { caseId: 'kdmayani', name: 'K.D. Mayani & Co.', file: 'kdmayani', width: 604, height: 91, h: 35, proof: 'A stronger first impression' },
+  { caseId: 'jaymehta', name: 'Jay Mehta & Co.', file: 'jaymehta', width: 237, height: 198, h: 76, proof: 'Clear, professional, easy to trust' },
+  { caseId: 'mnp', name: 'MNP & Co.', file: 'mnp', width: 516, height: 81, h: 27, proof: 'A real difference in how prospects respond' },
 ];
 
 interface LogoWallProps {
