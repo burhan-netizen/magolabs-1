@@ -29,6 +29,10 @@ interface WallLogo {
   dark?: boolean;
 }
 
+/** Bump when any wall image changes, so browsers and the CDN fetch the new file
+ *  instead of a copy cached during an earlier deploy. */
+const WALL_VERSION = 2;
+
 const LOGOS: WallLogo[] = [
   { caseId: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care Clinic', file: 'drmihirshah', width: 428, height: 113, h: 54, proof: '25 to 58 patients a day' },
   { caseId: 'darshangalani', name: 'Darshan Galani & Co.', file: 'darshangalani', width: 512, height: 90, h: 41, proof: '34 new clients in 3 months' },
@@ -91,7 +95,7 @@ export default function LogoWall({ onOpenCaseStudy, onOpenContact }: LogoWallPro
           <span className="lw-paper" aria-hidden="true" />
           <span className="lw-logo" aria-hidden="true" style={{ ['--h' as string]: `${logo.h}px` }}>
             <img
-              src={`/logos/wall/${logo.file}.webp`}
+              src={`/logos/wall/${logo.file}.webp?v=${WALL_VERSION}`}
               alt=""
               width={logo.width}
               height={logo.height}
@@ -100,7 +104,7 @@ export default function LogoWall({ onOpenCaseStudy, onOpenContact }: LogoWallPro
               className="lw-img lw-mono"
             />
             <img
-              src={`/logos/wall/${logo.file}.webp`}
+              src={`/logos/wall/${logo.file}.webp?v=${WALL_VERSION}`}
               alt=""
               width={logo.width}
               height={logo.height}
