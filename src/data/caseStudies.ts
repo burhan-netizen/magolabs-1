@@ -208,6 +208,48 @@ export const CASE_STUDIES: CaseStudy[] = [
     screenshotUrl: '/screenshots/prabhakarprocessors.webp',
   },
   {
+    id: 'jaymocivil',
+    clientName: 'Jaymo Civil',
+    url: 'https://jaymocivil.com.au',
+    domain: 'jaymocivil.com.au',
+    industry: 'Excavation & Civil, Sydney',
+    business:
+      "A Sydney excavation and civil contractor that builders and developers trust for bulk and detail excavation, shoring, remediation works and service trenches.",
+    challenge:
+      "Their old website had gone offline, so a builder checking them out found nothing. For a contractor that wins work on reputation, a missing site makes a serious crew look smaller than it really is.",
+    approach:
+      "We built a premium, corporate site in Jaymo's own black and yellow, made to feel as solid as the work itself. Real job photos from across Sydney lead the way, and every section points a builder to one next step: request a quote or call.",
+    build:
+      "A custom website with Jaymo's logo animation as the intro, a 3D gallery of real Sydney projects, a section for each service, a wall of the builders they work with and a quote form that lands straight in their inbox. We also set up and optimised their Google Business Profile.",
+    outcome:
+      "Jaymo Civil now has a website that matches the size of the jobs they take on. Builders see real work, real clients and a clear way to get a quote, and the business shows up on Google again.",
+    scope: ['Website Design', 'Quote Form', 'Google Business Profile'],
+    accent: '#B45309',
+    logoUrl: '/logos/sm/jaymocivil.webp',
+    screenshotUrl: '/screenshots/jaymocivil.webp',
+  },
+  {
+    id: 'centurion',
+    clientName: 'Centurion Strategic Ventures',
+    url: 'https://www.csventures.co.in',
+    domain: 'www.csventures.co.in',
+    industry: 'Loan Advisory & Finance',
+    business:
+      "A loan advisory and debt syndication firm in Ahmedabad, led by directors with 20+ years inside India's leading banks and NBFCs, launching a brand new name.",
+    challenge:
+      "Loan advisors are everywhere, and most of them look the same. As a new company, Centurion had to look established from day one and speak to two very different visitors: borrowers who need funding, and DSA partners who could send them business.",
+    approach:
+      "We positioned Centurion as strategic finance partners rather than another loan agent. The copy stays calm and free of jargon, reveals detail gradually, and gives borrowers and partners their own clear path through the site.",
+    build:
+      "A fast, premium website with separate enquiry flows for borrowers and partners, each going to its own inbox, plus EMI and eligibility calculators, a WhatsApp shortcut and a directors section that puts their banking experience front and centre.",
+    outcome:
+      "Centurion launched looking like the established firm its directors' experience says it is. Borrowers can check their numbers and reach an expert in a few taps, and partners get a clear reason to work with them.",
+    scope: ['Brand Positioning', 'Website Design', 'EMI & Eligibility Calculators'],
+    accent: '#1E3A8A',
+    logoUrl: '/logos/sm/centurion.webp',
+    screenshotUrl: '/screenshots/centurion.webp',
+  },
+  {
     id: 'momrise',
     clientName: 'Momrise',
     domain: 'Momrise',
@@ -254,10 +296,10 @@ export function getCaseStudyById(id: string): CaseStudy | undefined {
   return CASE_STUDIES.find((cs) => cs.id === id);
 }
 
-/** The 5 strongest stories (the two with measured results, then the biggest
- *  businesses) get featured, larger cards with the full 5-part narrative visible on /work.
+/** The 7 strongest stories (the two with measured results, then the biggest
+ *  businesses and the newest builds) get featured, larger cards with the full 5-part narrative visible on /work.
  *  The rest sit in a compact row so the section reads as "range of work." */
-export const FEATURED_CASE_STUDY_IDS = ['drmihirshah', 'darshangalani', 'santoshtimbers', 'prabhakarprocessors', 'solway'];
+export const FEATURED_CASE_STUDY_IDS = ['drmihirshah', 'darshangalani', 'jaymocivil', 'santoshtimbers', 'prabhakarprocessors', 'centurion', 'solway'];
 
 /** Derives real, non-duplicate SEO metadata for a case study's dedicated page
  *  straight from its own already-written copy, rather than hand-writing (and

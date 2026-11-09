@@ -51,10 +51,10 @@ interface HomeProps {
    House style: short sentences, plain words, written to "you".
 --------------------------------------------------------------------------- */
 
-// The logo strip uses small copies made for it (public/logos/sm, about 78 KB for
-// all nine). Each one carries its pixel size so its tile is the right width
-// before the file arrives.
-const CLIENT_LOGOS = [
+// The logo strip uses small copies made for it (public/logos/sm, about 100 KB for
+// all eleven). Each one carries its pixel size so its tile is the right width
+// before the file arrives. A logo drawn for a dark background sets `dark`.
+const CLIENT_LOGOS: { name: string; src: string; width: number; height: number; dark?: boolean }[] = [
   { name: 'Santosh Timbers', src: '/logos/sm/santoshtimbers.webp', width: 120, height: 120 },
   { name: 'Astrabizz Consultancy', src: '/logos/sm/astrabizz.webp', width: 180, height: 120 },
   { name: 'Dr. Mihir Shah Smile Care Clinic', src: '/logos/sm/drmihirshah.webp', width: 349, height: 120 },
@@ -64,6 +64,8 @@ const CLIENT_LOGOS = [
   { name: 'MNP & Co.', src: '/logos/sm/mnp.webp', width: 212, height: 61 },
   { name: 'K.D. Mayani & Co.', src: '/logos/sm/kdmayani.webp', width: 289, height: 120 },
   { name: 'Prabhakar Processors', src: '/logos/sm/prabhakarprocessors.webp', width: 390, height: 99 },
+  { name: 'Jaymo Civil', src: '/logos/sm/jaymocivil.webp', width: 390, height: 68, dark: true },
+  { name: 'Centurion Strategic Ventures', src: '/logos/sm/centurion.webp', width: 119, height: 120 },
 ];
 
 /** One logo in the strip. The white tile stays hidden until its logo has loaded,
@@ -77,7 +79,7 @@ function LogoTile({ logo, decorative }: { logo: (typeof CLIENT_LOGOS)[number]; d
   }, []);
   return (
     <div
-      className={`flex items-center justify-center h-16 sm:h-[4.5rem] px-6 sm:px-7 rounded-2xl bg-[#ffffff] shrink-0 transition-opacity duration-500 ${ready ? 'opacity-100' : 'opacity-0'}`}
+      className={`flex items-center justify-center h-16 sm:h-[4.5rem] px-6 sm:px-7 rounded-2xl ${logo.dark ? 'bg-[#0b0b0b] ring-1 ring-inset ring-white/20' : 'bg-[#ffffff]'} shrink-0 transition-opacity duration-500 ${ready ? 'opacity-100' : 'opacity-0'}`}
     >
       <img
         ref={imgRef}

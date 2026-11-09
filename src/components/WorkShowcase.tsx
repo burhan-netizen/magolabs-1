@@ -51,7 +51,7 @@ function BrowserFrame({ project, eager }: { project: CaseStudy; eager?: boolean 
 }
 
 /**
- * The Work page's portfolio: five featured stories that stack like a deck as you
+ * The Work page's portfolio: seven featured stories that stack like a deck as you
  * scroll, then every other project in a grid you can filter.
  */
 export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
@@ -80,7 +80,7 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
           <div className="max-w-3xl mb-12 space-y-4">
             <span className="eyebrow">Featured</span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              Five stories worth reading.
+              Seven stories worth reading.
             </h2>
           </div>
 
