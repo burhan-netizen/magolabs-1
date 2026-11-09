@@ -6,7 +6,7 @@
  */
 
 /** Screenshots that have a 1920px version. Add a name here once its file exists. */
-const SHARP = new Set(['jaymocivil', 'centurion']);
+const SHARP = new Set(['jaymocivil', 'centurion', 'prabhakarprocessors']);
 
 export function screenshotSrcSet(url: string): string | undefined {
   const match = /^\/screenshots\/([\w-]+)\.webp$/.exec(url);
