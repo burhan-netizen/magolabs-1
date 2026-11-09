@@ -52,6 +52,42 @@ Read the full [Santosh Timbers case study](/work/santoshtimbers).
 - Does it load fast and read well for buyers in other countries?
 - Does it look as established as your business really is?
 
+## Common mistakes on timber business websites
+
+**No product information.** A homepage that says "we deal in all kinds of timber" makes every buyer call to ask. List what you actually supply.
+
+**Hiding the scale of the business.** Many established suppliers are modest online. Bulk buyers want proof you can deliver their volume, so show your experience, stock and reach clearly.
+
+**Stock photos of wood.** Buyers want to see your yard, your stock and your operation. Real photos prove you are the business you say you are.
+
+**Long, complicated enquiry forms.** Ask for what you need to quote and nothing more. A buyer comparing suppliers will not fill in fifteen fields.
+
+**Relying only on marketplaces.** Directory listings bring enquiries, but they also put you next to every competitor. Your own website is the one place where buyers see only you.
+
+## How long it takes and what it costs
+
+Every website we build starts from a blank canvas, and **hosting is included** in every package. Prices start from **₹17,999** for a Launch website of up to 5 pages, live in **5 days**. A timber business site needs room for the company story, a product catalogue and an enquiry path. Most timber and wood trading businesses fit our **Growth** package: up to 10 pages, a simple way to update content yourself, and live in about **14 days**, from **₹29,999**. If you want a large catalogue with many product pages, **Scale** gives you 15 or more pages, live in about **21 days**, from **₹49,999**.
+
+The right package depends on how many services you want to explain and what you need the site to do. See every package side by side on our [pricing page](/pricing), or [tell us what you have in mind](/contact) and we will recommend one.
+
+## Frequently asked questions
+
+### Does a timber business really need a website if most orders come from contacts?
+
+Yes. Even buyers who come through a contact usually search your name before a large order. A website confirms you are established and gives new buyers, including those abroad, a way to find you.
+
+### What should a timber product catalogue include?
+
+The species and types you supply, the forms (logs, sawn, seasoned and so on), typical uses, and how to enquire. Exact prices can stay off the site if they change often.
+
+### Should we list on IndiaMART or build our own website?
+
+Both have a role. Read our comparison of [IndiaMART vs your own website](/insights/indiamart-vs-own-website-for-manufacturers) to decide what fits your business.
+
+### Can the website help us reach buyers in other countries?
+
+Yes. A fast site written in clear English, showing the markets you serve, makes it easy for international buyers to check you before getting in touch.
+
 ## Want a website like this for your business?
 
 We build websites for [manufacturers, traders and B2B suppliers](/industries/manufacturers), designed from a blank canvas to win serious enquiries. If you are weighing marketplaces against your own site, read [IndiaMART vs your own website](/insights/indiamart-vs-own-website-for-manufacturers). Or [get a free website audit](/contact) and we will show you what buyers see when they look you up.

@@ -52,6 +52,44 @@ Read the full [Astrabizz Consultancy case study](/work/astrabizz).
 - Can a visitor book a consultation from any page?
 - Would it stand up next to the biggest firm on a client's shortlist?
 
+## Common mistakes on consulting firm websites
+
+**Buzzwords instead of specifics.** "Innovative digital solutions" says nothing. Name the platforms you work with and the problems you solve.
+
+**No clear service structure.** A single page covering ERP, CRM, AI and support leaves buyers unsure what you actually focus on. Give each service its own space.
+
+**Hiding the experts.** Enterprise buyers want to know who will run their project. A site with no names, roles or experience feels like a reseller, not a partner.
+
+**No route to a conversation.** If booking a consultation means hunting for a contact page, many buyers will not bother. Put the next step on every page.
+
+**A cluttered design.** A consultancy sells clear thinking. A crowded, busy website suggests the opposite.
+
+**Nothing for the second reader.** The person who visits your site often forwards it to a manager. Make sure the site explains your offer to someone who has never spoken to you.
+
+## How long it takes and what it costs
+
+Every website we build starts from a blank canvas, and **hosting is included** in every package. Prices start from **₹17,999** for a Launch website of up to 5 pages, live in **5 days**. A consulting site needs a page for each main service and a clear path to a consultation. Most consulting firms fit our **Growth** package: up to 10 pages, a simple way to update content yourself, and live in about **14 days**, from **₹29,999**. Larger firms with many services, or a separate page for each location, usually choose **Scale**: 15 or more pages, live in about **21 days**, from **₹49,999**.
+
+The right package depends on how many services you want to explain and what you need the site to do. See every package side by side on our [pricing page](/pricing), or [tell us what you have in mind](/contact) and we will recommend one.
+
+## Frequently asked questions
+
+### What should an ERP consultant's website include?
+
+The platforms you implement, the industries you serve, a page for each main service, the experts behind the firm, and a clear way to book a consultation.
+
+### How can a smaller consulting firm compete with big firms online?
+
+By being specific. Name your technologies, explain your approach clearly and show who the client will actually work with. Large firms often hide behind generic copy, which gives a focused firm a real edge.
+
+### Should consulting firms show case studies on their website?
+
+Yes, where clients allow it. Even a short description of a project, the problem and the outcome helps a buyer picture working with you.
+
+### How do we get more consultation bookings from our website?
+
+Put a clear booking option on every page, keep the first step simple, and make sure visitors understand what happens after they book.
+
 ## Want a website like this for your firm?
 
 We build websites for [consultants and professional firms](/industries/consultants), designed from a blank canvas to turn visitors into consultations. [Get a free website audit](/contact), or read [why most business websites do not generate leads](/insights/why-most-business-websites-dont-generate-leads-and-how-to-fix-it-in-2026).

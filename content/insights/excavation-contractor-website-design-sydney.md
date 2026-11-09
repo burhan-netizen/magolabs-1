@@ -57,6 +57,42 @@ Read the full [Jaymo Civil case study](/work/jaymocivil).
 - Is a quote request one tap away from every page?
 - Is your Google Business Profile set up and active?
 
+## Common mistakes on contractor websites
+
+**No real job photos.** Stock images of machinery tell a builder nothing. Your own sites, machines and finished work are your strongest proof.
+
+**One page for every service.** Bulk excavation, detail excavation and shoring are different jobs. Lumping them together makes it harder for a builder, and for Google, to see exactly what you do.
+
+**A quote form that goes nowhere.** Forms that send to an old inbox, or nowhere at all, lose real jobs. Test your form and make sure enquiries reach the person who quotes.
+
+**A site that breaks on a phone.** Builders often check you from site, on their phone. If your site is slow or hard to use on mobile, they move on.
+
+**Letting the site lapse.** An expired domain or hosting plan takes your site offline, which is exactly what happened before this rebuild. Keep renewals with someone who will not let them slip.
+
+**No Google Business Profile.** Many builders search "excavation contractor near me". Without a profile, you do not appear on the map at all.
+
+## How long it takes and what it costs
+
+Every website we build starts from a blank canvas, with **hosting included**. For Australian contractors, prices start from **A$1,149** for a Launch website of up to 5 pages, live in **5 days**. Most contractors with several services fit our **Growth** package: up to 10 pages, live in about **14 days**, from **A$1,649**. Prices show automatically in your own currency in the USA, UK, New Zealand and Canada too. See packages for contractors at [trades.magolabs.in](https://trades.magolabs.in).
+
+## Frequently asked questions
+
+### Do builders really check a contractor's website?
+
+Yes. Builders and developers usually hear about a contractor through word of mouth, then look them up before calling. A missing or weak site makes a capable crew look smaller than it is.
+
+### What photos should an excavation company put on its website?
+
+Your own work: sites before and after, machinery in action, large and tricky jobs, and the crew. Clear, real photos beat polished stock images every time.
+
+### Should each excavation service have its own page?
+
+Ideally, yes. Separate pages for bulk excavation, detail excavation, shoring, remediation and service trenches help builders find what they need and help you show up for those specific searches.
+
+### Is a Google Business Profile worth it for a contractor?
+
+Yes. It is how you appear on Google Maps and in local searches. Set it up with the right category, service areas and real photos, and collect reviews from the builders you work with.
+
 ## Want a website like this for your crew?
 
 We build websites for contractors in Australia, the USA, the UK, New Zealand and Canada. See what we do for trades at [trades.magolabs.in](https://trades.magolabs.in), read about our [Google Business Profile service](/services/google-business-profile), or [get a free website audit](/contact).

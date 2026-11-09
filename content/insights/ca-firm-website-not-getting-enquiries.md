@@ -60,6 +60,42 @@ Read the full [MNP & Co. case study](/work/mnp).
 
 If several answers disappoint you, read [why most business websites do not generate leads](/insights/why-most-business-websites-dont-generate-leads-and-how-to-fix-it-in-2026), and our guide to [ICAI website guidelines](/insights/icai-website-guidelines-ca-firm-website) before you rewrite anything.
 
+## Other reasons your site may be quiet
+
+**Nobody is finding it.** If the site does not appear on Google for your services and city, the problem is visibility, not design. Our guide on [why a website gets no traffic](/insights/why-is-my-website-not-getting-traffic-10-reasons-and-how-to-fix-them) covers the common causes.
+
+**The contact form is broken.** It happens more often than you would think. Send yourself a test enquiry today and check it arrives.
+
+**Visitors land on the wrong page.** If people arrive on an old blog post or a page with no clear next step, they leave. Every page should point to getting in touch.
+
+**The site is slow.** Large images and old code make pages slow, especially on mobile data. Many visitors leave before the page finishes loading.
+
+**It does not feel current.** Old news, outdated deadlines and a stale design make visitors wonder if the firm is still active.
+
+## How long it takes and what it costs
+
+Every website we build starts from a blank canvas, and **hosting is included** in every package. Prices start from **₹17,999** for a Launch website of up to 5 pages, live in **5 days**. A rebuild focused on enquiries usually needs the same core pages, restructured around the client. Most CA practice rebuilds fit our **Growth** package: up to 10 pages, a simple way to update content yourself, and live in about **14 days**, from **₹29,999**. Larger firms with many services, or a separate page for each location, usually choose **Scale**: 15 or more pages, live in about **21 days**, from **₹49,999**.
+
+The right package depends on how many services you want to explain and what you need the site to do. See every package side by side on our [pricing page](/pricing), or [tell us what you have in mind](/contact) and we will recommend one.
+
+## Frequently asked questions
+
+### Why does my website get visitors but no enquiries?
+
+Usually because visitors cannot quickly see what you do, find no reason to trust you, or find it awkward to get in touch. Fixing structure, trust signals and the contact path often makes the biggest difference.
+
+### Should I fix my old website or rebuild it?
+
+If the problems are small, fixes can work. If the structure, design and mobile experience are all weak, a rebuild from scratch is usually faster and better value.
+
+### How can I tell if my website is working?
+
+Count the enquiries it brings each month, and ask new clients how they found you. If the answer is rarely "your website", it is not doing its job.
+
+### What is the quickest improvement I can make today?
+
+Make sure a phone number, WhatsApp and a short enquiry form are visible on every page, and test that the form actually works.
+
 ## Want your website to start bringing enquiries?
 
 We rebuild websites for [CA firms](/industries/ca-firms) around enquiries, not decoration. [Get a free website audit](/contact) and we will show you exactly what is stopping visitors from getting in touch.

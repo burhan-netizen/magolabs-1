@@ -58,6 +58,44 @@ Read the full [K.D. Mayani & Co. case study](/work/kdmayani).
 
 For the full picture, read our [complete local SEO guide for small businesses](/insights/local-seo-in-2026-the-complete-guide-for-small-businesses-to-rank-higher-on-google).
 
+## Common local SEO mistakes CA firms make
+
+**Different details in different places.** A slightly different address or phone number on your website, profile and directories confuses Google. Keep them identical.
+
+**The wrong Google category.** Choosing a broad or wrong category on your Google Business Profile can keep you out of the searches that matter.
+
+**No service pages.** Without pages for your main services, Google has little reason to show your site for searches like "GST registration in Surat".
+
+**Asking for reviews only once.** A burst of reviews followed by nothing looks odd. Make asking a steady habit.
+
+**Ignoring the profile after setup.** An inactive profile with old hours and no photos loses ground to firms that keep theirs current.
+
+**Expecting results overnight.** Local SEO builds over weeks and months. Firms that keep going steadily usually overtake those that give up early.
+
+## How long it takes and what it costs
+
+Every website we build starts from a blank canvas, and **hosting is included** in every package. Prices start from **₹17,999** for a Launch website of up to 5 pages, live in **5 days**. A local-SEO-ready CA site needs a page for each main service, with your location and contact details right. Most CA practices fit our **Growth** package: up to 10 pages, a simple way to update content yourself, and live in about **14 days**, from **₹29,999**. Local SEO and Google Business Profile work can also be done on its own, without a new website. See our [SEO service](/services/seo).
+
+The right package depends on how many services you want to explain and what you need the site to do. See every package side by side on our [pricing page](/pricing), or [tell us what you have in mind](/contact) and we will recommend one.
+
+## Frequently asked questions
+
+### How long does local SEO take for a CA firm?
+
+Setting up your profile and fixing your website can improve local visibility within weeks. Ranking for competitive searches in a big city usually takes a few months of steady work.
+
+### Do Google reviews help a CA firm rank higher?
+
+Yes. The number, quality and recency of reviews all affect how you appear on Google Maps. Ask happy clients steadily, and stay within ICAI guidelines.
+
+### Can a CA firm rank without a website?
+
+A Google Business Profile alone can appear on the map, but a website with clear service pages makes you far more likely to rank and to be chosen.
+
+### What is a citation in local SEO?
+
+Any mention of your firm's name, address and phone number on another website, such as a business directory. Consistent citations help Google trust your location.
+
 ## Want help getting your firm found?
 
 We build websites with local SEO for [CA firms](/industries/ca-firms), and offer [SEO services](/services/seo) on their own. [Get a free website audit](/contact) and we will show you where your firm stands on Google today.

@@ -56,6 +56,44 @@ Read the full [Centurion Strategic Ventures case study](/work/centurion).
 - Is the copy calm and free of jargon and big promises?
 - Can someone reach you on WhatsApp in one tap?
 
+## Common mistakes on loan advisory websites
+
+**Promising approvals.** "Guaranteed loan approval" or "lowest rates in India" sounds desperate and can mislead. Calm, accurate language builds more trust and attracts better clients.
+
+**Listing every loan product on the homepage.** Twenty loan types in a grid overwhelm the visitor. Lead with who you help, then let people go deeper.
+
+**No faces behind the firm.** In finance, experience is the selling point. A site that hides who runs the firm gives borrowers no reason to trust it with their details.
+
+**Asking for too much information too soon.** Long forms asking for income, PAN and loan history put people off. Start with a short enquiry and collect details on the call.
+
+**One path for everyone.** Borrowers and referral partners need different information. Mixing them confuses both.
+
+**Ignoring mobile.** Most borrowers search on their phone. Calculators and forms must work perfectly on a small screen.
+
+## How long it takes and what it costs
+
+Every website we build starts from a blank canvas, and **hosting is included** in every package. Prices start from **₹17,999** for a Launch website of up to 5 pages, live in **5 days**. A loan advisory site needs separate paths for borrowers and partners, so a Launch site suits only a very small practice. Most loan advisory firms fit our **Growth** package: up to 10 pages, a simple way to update content yourself, and live in about **14 days**, from **₹29,999**. Calculators and separate enquiry flows can add to the scope, and we will price those clearly before we start.
+
+The right package depends on how many services you want to explain and what you need the site to do. See every package side by side on our [pricing page](/pricing), or [tell us what you have in mind](/contact) and we will recommend one.
+
+## Frequently asked questions
+
+### What should a DSA or loan consultant website include?
+
+A clear statement of who you help, the types of funding you arrange, the people behind the firm and their experience, simple calculators, and separate enquiry options for borrowers and partners.
+
+### Are EMI calculators worth adding to a loan advisor website?
+
+Yes. Borrowers want to check affordability before they talk to anyone. A calculator answers that first question and brings in enquiries from people who are better prepared.
+
+### How do we make a new loan advisory firm look established?
+
+Lead with the experience of the people behind it, use calm and accurate language, keep the design clean and premium, and make it easy to reach a real expert.
+
+### Can borrower and partner enquiries go to different people?
+
+Yes. In the project above, each enquiry flow goes to its own inbox, so borrower requests reach the right person quickly and partner conversations do not get lost.
+
 ## Want a website like this for your firm?
 
 We build websites for [consultants and advisory firms](/industries/consultants), designed from a blank canvas around how your clients decide. [Get a free website audit](/contact), or see our [website packages and pricing](/pricing).

@@ -65,6 +65,44 @@ The full story is in the [Dr. Mihir Shah Smile Care Clinic case study](/work/drm
 
 If you answered no to two or more, your website is probably sending patients to another clinic.
 
+## Common mistakes on dental clinic websites
+
+**Stock photos instead of the real clinic.** Patients can tell. A real photo of the dentist, the chair and the reception area builds far more confidence than a smiling model who has never been to your clinic.
+
+**Hiding the phone number.** A patient with tooth pain wants to call now. If the number is buried in the footer or only on a contact page, they call the clinic whose number they can see.
+
+**A list of treatments with no explanation.** "Implants, RCT, aligners" means little to a nervous patient. A short, plain explanation of each treatment answers their worry before they have to ask.
+
+**Booking that needs too many steps.** Every extra field or page loses people. Ask for a name, a phone number and a preferred time, and confirm the rest on the call.
+
+**Breaking medical advertising rules.** Before-and-after claims, guarantees and patient testimonials can cross the line. Check the rules before you publish anything that sounds like a promise.
+
+**A slow site on mobile.** Most patients search on their phone. A page that takes several seconds to load loses visitors before they see a single word.
+
+## How long it takes and what it costs
+
+Every website we build starts from a blank canvas, and **hosting is included** in every package. Prices start from **₹17,999** for a Launch website of up to 5 pages, live in **5 days**. A clinic site needs room for the dentist, the main treatments and booking, so a Launch site suits a new practice with a few core treatments. Most single clinics fit our **Growth** package: up to 10 pages, a simple way to update content yourself, and live in about **14 days**, from **₹29,999**. Clinics with several locations or a long list of specialised treatments usually choose **Scale**: 15 or more pages, live in about **21 days**, from **₹49,999**.
+
+The right package depends on how many services you want to explain and what you need the site to do. See every package side by side on our [pricing page](/pricing), or [tell us what you have in mind](/contact) and we will recommend one.
+
+## Frequently asked questions
+
+### How much does a dental clinic website cost in India?
+
+It depends on the number of pages and features such as online booking. Our packages start from ₹17,999, and most single clinics fit the Growth package from ₹29,999, with hosting included. Our guide to [website costs in Surat](/insights/how-much-does-a-website-cost-in-surat-2026-guide) explains what affects the price.
+
+### Should a dental clinic website have online booking?
+
+Yes, if your clinic can confirm bookings quickly. A booking flow, a one-tap call button and WhatsApp together cover every type of patient: those who plan ahead, those in pain, and those who prefer to message.
+
+### Can I show patient reviews on my clinic website?
+
+Be careful. Medical advertising rules in India limit how doctors can use testimonials and claims. Read our guide to the [NMC advertising guidelines](/insights/nmc-advertising-guidelines-2026-doctor-clinic-website) first. Your Google reviews, on your Google Business Profile, are a safer place for patients to see what others think.
+
+### How long before a new clinic website brings in patients?
+
+It varies with your area and competition. In the project above, the clinic went from 25 to 58 patients a day within two months of launch, helped by local SEO set up from the start. A strong Google Business Profile alongside the website speeds things up.
+
 ## Want a website like this for your clinic?
 
 We build websites for [dentists and clinics](/industries/dentists), designed from a blank canvas and focused on booked appointments. [Get a free website audit](/contact) and we will tell you exactly what is stopping patients from booking, or see our [website packages and pricing](/pricing).

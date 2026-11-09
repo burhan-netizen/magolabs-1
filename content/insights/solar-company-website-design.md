@@ -52,6 +52,42 @@ Read the full [SolWay Energies case study](/work/solway).
 - Is there a clear way to send an enquiry on every page?
 - Does it look as modern as the technology you sell?
 
+## Common mistakes on solar company websites
+
+**Only talking about the planet.** Sustainability matters, but a corporate buyer is deciding on cost, reliability and delivery. Lead with what they need to know.
+
+**No clarity on who you serve.** Residential, commercial and industrial buyers have different needs. A site that does not say which you focus on loses all three.
+
+**Generic product information.** Copying manufacturer brochures adds nothing. Explain the systems you supply and install, and why buyers choose them.
+
+**No proof of delivery.** Buyers want to know you have done this before. Describe the kinds of projects you take on and how you handle them.
+
+**Weak lead capture.** If the only way to enquire is a contact page, ready buyers slip away. Make the next step obvious on every page.
+
+## How long it takes and what it costs
+
+Every website we build starts from a blank canvas, and **hosting is included** in every package. Prices start from **₹17,999** for a Launch website of up to 5 pages, live in **5 days**. A solar company site needs room for products, services and the kinds of projects you take on. Most solar and energy businesses fit our **Growth** package: up to 10 pages, a simple way to update content yourself, and live in about **14 days**, from **₹29,999**. If you cover several segments or locations, **Scale** gives you 15 or more pages, live in about **21 days**, from **₹49,999**.
+
+The right package depends on how many services you want to explain and what you need the site to do. See every package side by side on our [pricing page](/pricing), or [tell us what you have in mind](/contact) and we will recommend one.
+
+## Frequently asked questions
+
+### What should a solar EPC company website include?
+
+Who you serve, the services you deliver (design, supply, installation and maintenance), the products and systems you work with, the kinds of projects you take on, and a clear way to request a quote or site assessment.
+
+### How does a website help B2B solar sales?
+
+Most corporate buyers research you after the first meeting and share your website with colleagues who sign off on the purchase. A clear site supports your sales team in conversations they are not part of.
+
+### Should a solar company show prices on its website?
+
+For commercial and industrial projects, usually not, since every site is different. Explain what affects the cost and invite buyers to request an assessment instead.
+
+### How do solar companies get more leads online?
+
+A clear website, local SEO for the areas you serve, a complete Google Business Profile and a simple quote request on every page are the foundation.
+
 ## Want a website like this for your business?
 
 We build websites for [manufacturers and B2B suppliers](/industries/manufacturers), designed from a blank canvas to support your sales team. [Get a free website audit](/contact), or see our [website packages and pricing](/pricing).

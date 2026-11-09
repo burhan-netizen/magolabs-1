@@ -56,6 +56,42 @@ Read the full [Prabhakar Processors case study](/work/prabhakarprocessors).
 - Does it show real photos of your plant and work?
 - Can a buyer send an enquiry from any page?
 
+## Common mistakes on textile mill websites
+
+**A site the team cannot update.** When every change needs a developer, the site falls out of date within months. An admin panel fixes this for good.
+
+**Vague capabilities.** "We do all types of processing" makes buyers call just to find out if you can handle their fabric. List your processes clearly.
+
+**No real photos.** Your plant, machinery and finished fabric are your best proof. Stock photos of colourful cloth say nothing about your mill.
+
+**Ignoring buyers outside Surat.** Brands and exporters across India and abroad look for processors online. A clear site in good English helps them find and trust you.
+
+**A slow, heavy site.** Huge image files make pages crawl on mobile data. Images should be compressed so the site stays fast.
+
+## How long it takes and what it costs
+
+Every website we build starts from a blank canvas, and **hosting is included** in every package. Prices start from **₹17,999** for a Launch website of up to 5 pages, live in **5 days**. A mill site needs room for processes, capabilities and an enquiry path, plus a way for your team to keep it current. Most mills and processors fit our **Growth** package: up to 10 pages, a simple way to update content yourself, and live in about **14 days**, from **₹29,999**. A custom admin panel or many process pages can add to the scope, and we price those clearly before we start. See our [Scale](/pricing) package for larger sites.
+
+The right package depends on how many services you want to explain and what you need the site to do. See every package side by side on our [pricing page](/pricing), or [tell us what you have in mind](/contact) and we will recommend one.
+
+## Frequently asked questions
+
+### What is an admin panel on a website?
+
+A private, simple screen where your team can log in and update text, photos and other content themselves, without editing code or calling a developer.
+
+### What should a dyeing and printing mill show on its website?
+
+Your processes, the fabrics you work with, your capacity and quality checks, real photos of your plant, and a simple way for buyers to send their requirement.
+
+### Do textile buyers really search for mills online?
+
+Yes. Brands, traders and exporters increasingly check processors online before sending work, especially when they are trying a new supplier.
+
+### How often should a mill update its website?
+
+Whenever something changes: new machines, certifications, processes or photos. With an admin panel, these updates take minutes.
+
 ## Want a website like this for your mill?
 
 We build websites for [textile businesses](/industries/textile), from mills and processors to traders, with admin panels where you need them. [Get a free website audit](/contact), or see our [website packages and pricing](/pricing).

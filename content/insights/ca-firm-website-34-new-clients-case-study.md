@@ -59,6 +59,44 @@ Read the full [Darshan Galani & Co. case study](/work/darshangalani).
 - Can someone contact you in one tap on a phone?
 - Does your firm appear when someone searches for your services in your city?
 
+## Common mistakes on CA firm websites
+
+**A generic homepage.** "Your trusted financial partner" could be any firm in India. Say plainly which services you offer, for whom, and in which city.
+
+**No people on the site.** Clients choose a CA, not a logo. A site with no names, photos or qualifications gives a careful client nothing to trust.
+
+**One long services page.** A single page listing twenty services in a row is hard to read and hard for Google to rank. Your main services deserve their own clear sections or pages.
+
+**Only an email address to contact you.** Many clients would rather call or WhatsApp. Give them every easy option, on every page.
+
+**Ignoring ICAI guidelines.** Claims of being the best, aggressive offers or the wrong use of client names can create problems. A confident site can stay fully within the rules.
+
+**A site that is never updated.** Old tax deadlines, outdated news and a copyright year from years ago quietly tell visitors the firm may not be active.
+
+## How long it takes and what it costs
+
+Every website we build starts from a blank canvas, and **hosting is included** in every package. Prices start from **₹17,999** for a Launch website of up to 5 pages, live in **5 days**. A CA firm site needs to explain the partners, the main services and how to get in touch. Most CA practices fit our **Growth** package: up to 10 pages, a simple way to update content yourself, and live in about **14 days**, from **₹29,999**. Larger firms with many services, or a separate page for each location, usually choose **Scale**: 15 or more pages, live in about **21 days**, from **₹49,999**.
+
+The right package depends on how many services you want to explain and what you need the site to do. See every package side by side on our [pricing page](/pricing), or [tell us what you have in mind](/contact) and we will recommend one.
+
+## Frequently asked questions
+
+### Can a CA firm have a website under ICAI rules?
+
+Yes. ICAI allows chartered accountants and firms to have websites, within guidelines on what they can include. Our article on [ICAI website guidelines](/insights/icai-website-guidelines-ca-firm-website) explains what is allowed and what to avoid.
+
+### How do CA firms get clients from Google?
+
+Through a website that explains each service clearly, local SEO so the firm appears for searches in its city, and a complete Google Business Profile. Our guide to [local SEO for CA firms](/insights/local-seo-for-ca-firms) covers it step by step.
+
+### How much does a CA firm website cost?
+
+Our packages start from ₹17,999, and most CA practices fit the Growth package from ₹29,999, with hosting included. See [all packages](/pricing).
+
+### How quickly can a CA firm website bring in clients?
+
+It depends on your city, services and competition. In the project above, the firm signed 34 new clients within three months of launch, with enquiries coming from Google for the first time.
+
 ## Want a website like this for your practice?
 
 We build websites for [CA firms](/industries/ca-firms) from a blank canvas, focused on trust and enquiries. [Get a free website audit](/contact) and we will show you what is holding your current site back, or see our [website packages and pricing](/pricing).
