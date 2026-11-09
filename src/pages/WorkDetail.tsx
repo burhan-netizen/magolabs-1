@@ -16,6 +16,7 @@ import {
 import { PageId } from '../types';
 import { getCaseStudyById, getCaseStudySEO, CASE_STUDIES } from '../data/caseStudies';
 import { TESTIMONIALS } from '../data/testimonials';
+import { screenshotSrcSet } from '../utils/images';
 import { updateDocumentSEO } from '../utils/seo';
 import { getWorkDetailPath } from '../utils/pageRoutes';
 import { WhatsAppLogo } from '../components/BrandIcons';
@@ -151,7 +152,11 @@ export default function WorkDetail({ id, onPageChange, onOpenCaseStudy }: WorkDe
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <img
               src={project.screenshotUrl}
+              srcSet={screenshotSrcSet(project.screenshotUrl)}
+              sizes="(max-width: 1024px) 100vw, 960px"
               alt={`${project.clientName} website homepage`}
+              width={1920}
+              height={900}
               loading="lazy"
               className="w-full rounded-2xl border border-neutral-200 shadow-sm object-cover"
             />
