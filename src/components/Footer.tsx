@@ -154,6 +154,33 @@ export default function Footer({ onPageChange }: FooterProps) {
                   <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </PageLink>
               </li>
+              <li>
+                <PageLink page="service-social-media"
+                  onNavigate={() => handleLinkClick('service-social-media')}
+                  className="hover:text-neutral-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-left"
+                >
+                  Social media management
+                  <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </PageLink>
+              </li>
+              <li>
+                <PageLink page="service-lead-generation"
+                  onNavigate={() => handleLinkClick('service-lead-generation')}
+                  className="hover:text-neutral-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-left"
+                >
+                  Lead generation
+                  <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </PageLink>
+              </li>
+              <li>
+                <PageLink page="service-paid-ads"
+                  onNavigate={() => handleLinkClick('service-paid-ads')}
+                  className="hover:text-neutral-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-left"
+                >
+                  Paid ads
+                  <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </PageLink>
+              </li>
             </ul>
           </div>
 

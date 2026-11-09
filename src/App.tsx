@@ -43,7 +43,10 @@ function pageComponentFor(page: PageId): LazyPage | null {
     case 'service-web-design':
     case 'service-seo':
     case 'service-gbp':
-    case 'service-copywriting': return ServiceDetail;
+    case 'service-copywriting':
+    case 'service-social-media':
+    case 'service-lead-generation':
+    case 'service-paid-ads': return ServiceDetail;
     case 'work': return Work;
     case 'work-detail': return WorkDetail;
     case 'pricing': return Pricing;
@@ -232,6 +235,9 @@ function AppContent({ initialPath }: AppProps) {
       case 'service-seo':
       case 'service-gbp':
       case 'service-copywriting':
+      case 'service-social-media':
+      case 'service-lead-generation':
+      case 'service-paid-ads':
         return <ServiceDetail serviceId={currentPage} onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
       case 'work':
         return <Work onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;

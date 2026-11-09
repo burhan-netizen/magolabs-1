@@ -40,7 +40,7 @@ const RELATED_WORK: Record<string, string[]> = {
   'service-gbp': ['drmihirshah', 'kdmayani'],
 };
 
-// Copy for each of the 4 services. Benefits and process steps are written as
+// Copy for each service. Benefits and process steps are written as
 // "Label: description" and split on the first colon when rendered.
 const SERVICES_DATA: Record<string, Service> = {
   'service-web-design': {
@@ -230,6 +230,168 @@ const SERVICES_DATA: Record<string, Service> = {
         answer: 'Yes. We turn long, hard-to-read pages into clear, scannable text that leads the reader to act.'
       }
     ]
+  },
+  'service-social-media': {
+    id: 'service-social-media',
+    title: 'Social Media Management',
+    headline: 'Your social pages are the first thing people check.',
+    shortDesc: 'Instagram, Facebook and LinkedIn managed for you. Content planned, designed, written and posted on schedule, in a voice that sounds like your business.',
+    longDesc: 'Before someone calls you, they look you up. A page that has not posted in months, or one full of random stock images, makes even a strong business look closed or careless. We plan a month of content around what your customers want to know, design it in your brand, write it in plain words, and post it on time, so your pages look as active and trustworthy as your business is.',
+    iconName: 'Share2',
+    benefits: [
+      'Consistent posting: A planned calendar, so your pages never go quiet for weeks at a time.',
+      'Designed in your brand: Your colours, fonts and logo on every post, so people recognise you at a glance.',
+      'Written by a person: Captions that sound like you, not like every other page using the same AI phrases.',
+      'Content with a purpose: Posts that answer real customer questions, show your work and move people towards an enquiry.',
+      'A clear monthly report: What was posted, what people engaged with, and what we will change next month.'
+    ],
+    features: [
+      'Monthly content calendar',
+      'Post and carousel design',
+      'Reels editing',
+      'Caption and hashtag writing',
+      'Scheduling and posting',
+      'Profile and bio set-up',
+      'Brand style kit',
+      'Monthly performance report'
+    ],
+    process: [
+      'Discovery: Learning your business, your customers and the pages you admire.',
+      'Brand kit: Setting up your colours, fonts and post templates so every post looks like you.',
+      'Content plan: A month of posts planned and shared with you for approval.',
+      'Create and post: Posts designed, written and published on schedule.',
+      'Review: A monthly report and a short call to decide what to do more of.'
+    ],
+    faqs: [
+      {
+        question: 'Which platforms do you manage?',
+        answer: 'Instagram, Facebook and LinkedIn. We recommend the ones your customers actually use, rather than spreading thin across every app.'
+      },
+      {
+        question: 'Do I get to approve posts before they go live?',
+        answer: 'Yes. You see the month\'s plan before anything is posted, and nothing goes live without your go-ahead.'
+      },
+      {
+        question: 'Do I need to send you photos and videos?',
+        answer: 'Real photos of your work, team and premises always perform best, so we will ask for them. We guide you on what to capture with your phone, and we edit it into finished posts and reels.'
+      },
+      {
+        question: 'How much does it cost?',
+        answer: 'It depends on the platforms and how many posts and reels you need each month. Tell us what you have in mind and we will send a clear monthly price.'
+      }
+    ],
+    ctaLabel: 'Talk to us about pricing',
+    whatsappText: 'Hi Mago Labs, I would like to talk about social media management for my business.',
+    howWeWork: 'Every post planned with you and approved before it goes live. Direct access to Burhan Kapasi, the founder. A plain-English report every month.',
+    pricingNote: 'Priced per client, based on your platforms and how much content you need each month. No hidden extras.'
+  },
+  'service-lead-generation': {
+    id: 'service-lead-generation',
+    title: 'Lead Generation',
+    headline: 'A full pipeline beats waiting for the phone to ring.',
+    shortDesc: 'We find the businesses most likely to buy from you, verify the right person to speak to, and reach them with a message worth replying to. Then we make sure every enquiry is captured and followed up.',
+    longDesc: 'Most businesses rely on referrals and hope. When those slow down, so does the business. We research the companies that match your best customers, find the actual decision maker at each one, and write personal outreach that references something real about them. On your side, we set up the landing pages and forms that turn interest into a proper enquiry, so no lead slips through.',
+    iconName: 'Target',
+    benefits: [
+      'Researched, not scraped: Every prospect checked by hand against your ideal customer, with the reason they are a fit.',
+      'The right person: Named decision makers with verified contact details, not a generic info@ inbox.',
+      'Personal outreach: Messages written for each prospect, in your voice, that read like they came from you.',
+      'Nothing slips through: Landing pages, forms and alerts set up so every enquiry reaches you straight away.',
+      'Clear tracking: A simple sheet showing who was contacted, who replied and what happens next.'
+    ],
+    features: [
+      'Ideal customer profile',
+      'Prospect research',
+      'Decision maker contacts',
+      'Contact verification',
+      'Personalised outreach copy',
+      'Follow-up sequences',
+      'Landing page and forms',
+      'Lead tracking sheet'
+    ],
+    process: [
+      'Ideal customer: Defining exactly who you want to win, using your best existing clients.',
+      'Research: Building a list of matching businesses and the decision maker at each one.',
+      'Verify: Checking every contact so messages reach real people.',
+      'Outreach: Personal first messages and polite follow-ups, approved by you.',
+      'Hand over and refine: Replies passed to you quickly, and the targeting sharpened every month.'
+    ],
+    faqs: [
+      {
+        question: 'Do you buy or rent email lists?',
+        answer: 'No. Bought lists are out of date, full of the wrong people and damage your email reputation. Every prospect we find is researched individually.'
+      },
+      {
+        question: 'Who sends the messages?',
+        answer: 'Usually they go out from your own email or LinkedIn, so replies come straight to you and the relationship stays yours. We write them and can manage the sending if you prefer.'
+      },
+      {
+        question: 'Do you guarantee a number of sales?',
+        answer: 'No one can honestly promise sales, because closing depends on your offer and your follow-up. What we commit to is the work: well-researched prospects, verified contacts and outreach done properly and on schedule.'
+      },
+      {
+        question: 'How much does it cost?',
+        answer: 'It depends on your market and how many prospects you want reached each month. Tell us who your ideal customer is and we will send a clear price.'
+      }
+    ],
+    ctaLabel: 'Talk to us about pricing',
+    whatsappText: 'Hi Mago Labs, I would like to talk about lead generation for my business.',
+    howWeWork: 'Every list researched by a person, never bought. Outreach approved by you before it is sent. Direct access to Burhan Kapasi, the founder.',
+    pricingNote: 'Priced per client, based on your market and how many prospects you want reached each month.'
+  },
+  'service-paid-ads': {
+    id: 'service-paid-ads',
+    title: 'Paid Ads (Meta and Google)',
+    headline: 'Ads should bring enquiries, not just likes.',
+    shortDesc: 'Facebook, Instagram and Google ads planned, set up and managed around one goal: more calls, forms and WhatsApp messages from the right people.',
+    longDesc: 'It is easy to spend money on ads and get clicks, likes and nothing else. The difference is in the setup: who you target, what the ad says, where it sends people and whether the tracking is honest. We build each campaign around enquiries, send traffic to a page made to convert, track every call and form properly, and report on cost per enquiry in plain words.',
+    iconName: 'Megaphone',
+    benefits: [
+      'Built around enquiries: Campaigns optimised for calls, forms and WhatsApp messages, not vanity numbers.',
+      'Honest tracking: Pixel, conversion and call tracking set up properly, so the numbers you see are real.',
+      'Ads people stop for: Ad copy and creative made for your customers, tested against each other.',
+      'Pages that convert: Landing pages built to turn a click into an enquiry, which is where most ad budgets leak.',
+      'Clear reporting: What you spent, what it brought in and what we are changing, every month.'
+    ],
+    features: [
+      'Meta Ads (Facebook and Instagram)',
+      'Google Search Ads',
+      'Audience and keyword research',
+      'Ad copy and creative',
+      'Landing page',
+      'Pixel and conversion tracking',
+      'Ongoing optimisation',
+      'Monthly performance report'
+    ],
+    process: [
+      'Goals and budget: Agreeing what an enquiry is worth to you and how much to test with.',
+      'Tracking: Setting up conversion tracking before a single rupee is spent.',
+      'Build: Audiences, keywords, ads and the landing page, approved by you.',
+      'Launch and test: Running the campaigns and testing ads against each other.',
+      'Optimise and report: Cutting what does not work, scaling what does, and reporting monthly.'
+    ],
+    faqs: [
+      {
+        question: 'Should I run Meta ads or Google ads?',
+        answer: 'Google Search reaches people already looking for what you sell. Meta (Facebook and Instagram) reaches people who match your customer but are not searching yet. Many businesses need one more than the other, and we will tell you which suits yours.'
+      },
+      {
+        question: 'Is the ad budget included in your fee?',
+        answer: 'No. Your ad budget is paid directly to Meta or Google from your own account, so you always see exactly what was spent. Our fee covers setting up and managing the campaigns.'
+      },
+      {
+        question: 'How soon will I see results?',
+        answer: 'Ads start getting clicks within days. The first few weeks are for testing, and campaigns usually improve over the first one to two months as we learn what works.'
+      },
+      {
+        question: 'How much does it cost?',
+        answer: 'It depends on the platforms, the number of campaigns and your budget. Tell us your goals and we will send a clear monthly management fee.'
+      }
+    ],
+    ctaLabel: 'Talk to us about pricing',
+    whatsappText: 'Hi Mago Labs, I would like to talk about running Meta or Google ads for my business.',
+    howWeWork: 'Ad budget paid directly to Meta or Google, so you see every rupee. Ad accounts set up in your name. Direct access to Burhan Kapasi, the founder.',
+    pricingNote: 'Priced per client: a monthly management fee based on your platforms and campaigns. Ad budget is separate and paid by you directly to Meta or Google.'
   }
 };
 
@@ -321,17 +483,20 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => {
+                    if (data.pricingNote) {
+                      window.history.pushState({}, '', `/contact?package=${encodeURIComponent(data.title)}`);
+                    }
                     onPageChange('contact');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className="inline-flex items-center justify-center rounded-full bg-brand hover:bg-brand-deep px-6 py-3.5 text-sm font-bold text-ink transition-all shadow-lg shadow-brand/10 cursor-pointer"
                 >
-                  Get a free website audit
+                  {data.ctaLabel ?? 'Get a free website audit'}
                 </motion.button>
                 <motion.a
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
-                  href="https://wa.me/919099245605?text=Hi%20Mago%20Labs%2C%20I%20would%20like%20to%20discuss%20my%20website."
+                  href={`https://wa.me/919099245605?text=${encodeURIComponent(data.whatsappText ?? 'Hi Mago Labs, I would like to discuss my website.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-neutral-200 hover:bg-neutral-50 px-6 py-3.5 text-sm font-bold text-neutral-800 transition-all cursor-pointer"
@@ -340,6 +505,12 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
                   Chat on WhatsApp
                 </motion.a>
               </div>
+              {data.pricingNote && (
+                <p className="flex items-start gap-2 text-sm text-neutral-600 max-w-xl">
+                  <span className="mt-1.5 h-2 w-2 shrink-0 bg-brand" aria-hidden="true" />
+                  <span><strong className="font-semibold text-neutral-900">Pricing: </strong>{data.pricingNote}</span>
+                </p>
+              )}
             </div>
 
             <div className="lg:col-span-5 bg-neutral-50 rounded-2xl p-8 border border-neutral-100 space-y-6 self-center">
@@ -377,7 +548,7 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
                   How we work
                 </h4>
                 <p className="text-sm text-neutral-600 leading-relaxed">
-                  Regular updates. Direct access to Burhan Kapasi, the founder. Clean code. Hosting included, and no markup on your domain.
+                  {data.howWeWork ?? 'Regular updates. Direct access to Burhan Kapasi, the founder. Clean code. Hosting included, and no markup on your domain.'}
                 </p>
               </div>
             </div>

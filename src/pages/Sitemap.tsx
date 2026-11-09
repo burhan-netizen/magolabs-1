@@ -38,6 +38,9 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
         { name: 'Websites for Consultants', id: 'industry-consultants' as PageId, description: 'Service pages, credentials and consultation booking' },
         { name: 'Sales Pages for Digital Products', id: 'industry-digital-products' as PageId, description: 'Sales pages for coaches, courses and digital products' },
         { name: 'High-Converting Copywriting', id: 'service-copywriting' as PageId, description: 'Direct sales copy designed specifically to drive inbound phone calls' },
+        { name: 'Social Media Management', id: 'service-social-media' as PageId, description: 'Instagram, Facebook and LinkedIn planned, designed and posted for you' },
+        { name: 'Lead Generation', id: 'service-lead-generation' as PageId, description: 'Researched prospects, verified contacts and personalised outreach' },
+        { name: 'Paid Ads (Meta and Google)', id: 'service-paid-ads' as PageId, description: 'Facebook, Instagram and Google ads managed around enquiries' },
       ]
     },
     {

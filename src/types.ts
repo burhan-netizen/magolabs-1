@@ -6,6 +6,9 @@ export type PageId =
   | 'service-seo'
   | 'service-gbp'
   | 'service-copywriting'
+  | 'service-social-media'
+  | 'service-lead-generation'
+  | 'service-paid-ads'
   | 'work'
   | 'work-detail'
   | 'pricing'
@@ -36,6 +39,14 @@ export interface Service {
   features: string[];
   process: string[];
   faqs: { question: string; answer: string }[];
+  /** Main button text in the hero. Defaults to the free website audit. */
+  ctaLabel?: string;
+  /** Pre-filled WhatsApp message for this service. */
+  whatsappText?: string;
+  /** Replaces the default "How we work" note. */
+  howWeWork?: string;
+  /** Shown as a pricing note: services priced per client, not from a package. */
+  pricingNote?: string;
 }
 
 export interface Industry {

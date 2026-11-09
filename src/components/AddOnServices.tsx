@@ -1,4 +1,4 @@
-import { ArrowRight, Search, MapPin, PenTool, Palette, Wrench } from 'lucide-react';
+import { ArrowRight, Search, MapPin, PenTool, Palette, Wrench, Share2, Target, Megaphone } from 'lucide-react';
 import { PageId } from '../types';
 import PageLink from './PageLink';
 import { WhatsAppLogo } from './BrandIcons';
@@ -13,6 +13,9 @@ const ADD_ONS: { name: string; desc: string; icon: typeof Search; page?: PageId 
   { name: 'SEO', desc: 'Get found on Google by people already searching for what you sell.', icon: Search, page: 'service-seo' },
   { name: 'Google Business Profile', desc: 'Show up on Maps when someone nearby needs you.', icon: MapPin, page: 'service-gbp' },
   { name: 'Copywriting', desc: 'Words that make a visitor trust you and get in touch.', icon: PenTool, page: 'service-copywriting' },
+  { name: 'Social media management', desc: 'Your pages posted to, consistently, in your voice.', icon: Share2, page: 'service-social-media' },
+  { name: 'Lead generation', desc: 'The right prospects found, verified and reached.', icon: Target, page: 'service-lead-generation' },
+  { name: 'Paid ads', desc: 'Meta and Google ads built around enquiries.', icon: Megaphone, page: 'service-paid-ads' },
   { name: 'Branding', desc: 'A logo, colours and a look people remember.', icon: Palette },
   { name: 'Website care', desc: 'Updates, changes and fixes after your support period ends.', icon: Wrench },
 ];
@@ -46,7 +49,7 @@ export default function AddOnServices({ onPageChange }: AddOnServicesProps) {
           </p>
         </div>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {ADD_ONS.map((item) => {
             const Icon = item.icon;
             return (

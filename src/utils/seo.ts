@@ -83,6 +83,33 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
     ogType: 'website',
     twitterCard: 'summary_large_image'
   },
+  'service-social-media': {
+    title: 'Social Media Management for Businesses | Mago Labs',
+    description: 'Instagram, Facebook and LinkedIn managed for your business: content planned, designed, written and posted on schedule, with a plain-English report every month.',
+    ogTitle: 'Social Media Management for Businesses | Mago Labs',
+    ogDescription: 'Planned, designed and posted for you, in a voice that sounds like your business.',
+    ogImage: 'https://www.magolabs.in/og-image-services.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
+  'service-lead-generation': {
+    title: 'Lead Generation Services for Businesses | Mago Labs',
+    description: 'Researched prospect lists, verified decision makers and personalised outreach, plus landing pages and forms that turn interest into enquiries you can follow up.',
+    ogTitle: 'Lead Generation Services for Businesses | Mago Labs',
+    ogDescription: 'The right prospects, the right contacts, and a message worth replying to.',
+    ogImage: 'https://www.magolabs.in/og-image-services.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
+  'service-paid-ads': {
+    title: 'Meta Ads and Google Ads Management | Mago Labs',
+    description: 'Facebook, Instagram and Google ads planned, set up and managed around enquiries, not likes. Tracking set up properly and a clear report on where every rupee went.',
+    ogTitle: 'Meta Ads and Google Ads Management | Mago Labs',
+    ogDescription: 'Ads built around enquiries, with tracking you can trust and reports you can read.',
+    ogImage: 'https://www.magolabs.in/og-image-services.jpg',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  },
   work: {
     title: 'Website Design Portfolio & Case Studies | Mago Labs',
     description: 'Websites Mago Labs has built for clinics, CA firms, manufacturers and more, and what changed after launch. One CA firm signed 34 new clients.',
