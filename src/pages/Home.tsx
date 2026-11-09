@@ -208,7 +208,7 @@ const FAQS = [
 const HERO_FACTS = [
   { value: '75+', label: 'Businesses helped' },
   { value: '5 to 28', label: 'Days to launch' },
-  { value: '100%', label: 'Yours to own' },
+  { value: '5.0', star: true, label: '7 Google reviews', href: 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8' },
 ];
 
 /** The one primary action on the page, repeated wherever a visitor might be ready. */
@@ -372,12 +372,31 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
               <HeroShowcase onOpenCaseStudy={onOpenCaseStudy} />
 
               <dl className="grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-6 text-center">
-                {HERO_FACTS.map((fact) => (
-                  <div key={fact.label} className="px-2">
-                    <dd className="text-xl sm:text-2xl font-bold text-[#ffffff]">{fact.value}</dd>
-                    <dt className="mt-1 font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-neutral-400">{fact.label}</dt>
-                  </div>
-                ))}
+                {HERO_FACTS.map((fact) => {
+                  const body = (
+                    <>
+                      <dd className="text-xl sm:text-2xl font-bold text-[#ffffff]">
+                        {fact.value}
+                        {fact.star && <span aria-hidden="true" className="ml-1 text-[#FBBC04]">★</span>}
+                      </dd>
+                      <dt className="mt-1 font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-neutral-400">{fact.label}</dt>
+                    </>
+                  );
+                  return fact.href ? (
+                    <a
+                      key={fact.label}
+                      href={fact.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Rated ${fact.value} out of 5 from ${fact.label}, opens our Google profile in a new tab`}
+                      className="group block px-2 rounded-md transition-colors hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+                    >
+                      {body}
+                    </a>
+                  ) : (
+                    <div key={fact.label} className="px-2">{body}</div>
+                  );
+                })}
               </dl>
             </motion.div>
           </div>

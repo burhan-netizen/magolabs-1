@@ -17,12 +17,12 @@ interface WorkProps {
 const WALL_ROW_A = CASE_STUDIES.filter((_, i) => i % 2 === 0);
 const WALL_ROW_B = CASE_STUDIES.filter((_, i) => i % 2 === 1);
 
-// The same three facts as the home page hero. The number counts up; the words
-// around it stay put.
+// The same three facts as the home page hero. The numbers count up (the Google
+// rating stays fixed); the words around them stay put.
 const HERO_STATS = [
   { before: '', value: 75, after: '+', label: 'Businesses helped' },
   { before: '5 to ', value: 28, after: '', label: 'Days to launch' },
-  { before: '', value: 100, after: '%', label: 'Yours to own' },
+  { before: '', value: 5, after: '', label: '7 Google reviews', rating: '5.0', href: 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8' },
 ];
 
 export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
@@ -91,12 +91,29 @@ export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.15 + idx * 0.1 }}
-                className="rounded-2xl border border-white/10 bg-white/5 px-5 py-6 backdrop-blur-xl"
+                className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl transition-colors has-[a:hover]:bg-white/10"
               >
-                <dd className="text-4xl font-bold tracking-tight text-brand">
-                  {stat.before}<CountUp to={stat.value} duration={1.4} />{stat.after}
-                </dd>
-                <dt className="mt-2 text-sm text-neutral-300">{stat.label}</dt>
+                {stat.href ? (
+                  <a
+                    href={stat.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Rated ${stat.rating} out of 5 from ${stat.label}, opens our Google profile in a new tab`}
+                    className="block px-5 py-6 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+                  >
+                    <dd className="text-4xl font-bold tracking-tight text-brand">
+                      {stat.rating}<span aria-hidden="true" className="ml-1.5 text-[#FBBC04]">★</span>
+                    </dd>
+                    <dt className="mt-2 text-sm text-neutral-300">{stat.label}</dt>
+                  </a>
+                ) : (
+                  <div className="px-5 py-6">
+                    <dd className="text-4xl font-bold tracking-tight text-brand">
+                      {stat.before}<CountUp to={stat.value} duration={1.4} />{stat.after}
+                    </dd>
+                    <dt className="mt-2 text-sm text-neutral-300">{stat.label}</dt>
+                  </div>
+                )}
               </motion.div>
             ))}
           </dl>
