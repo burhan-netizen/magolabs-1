@@ -258,27 +258,161 @@ body::after {
   background: radial-gradient(450px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px), color-mix(in srgb, var(--color-brand) 8%, transparent), transparent 80%);
 }
 
-/* Infinite logo marquee: two copies of the track sit side by side and scroll
-   left together, when the first copy fully exits, the second is in the exact
-   same position, so the loop reads as seamless. Pauses on hover so visitors
-   can actually read a logo they stop to look at. */
-@keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+/* Client logo wall on the home page (components/LogoWall.tsx). Still logos in one
+   white tone; pointing at one opens a card from the cursor with the real colours
+   and one line on what changed. Touch screens light the row in mid-screen. */
+.lw-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.08);
 }
-.logo-marquee-track {
-  animation: marquee-scroll 28s linear infinite;
-  width: max-content;
+@media (min-width: 640px) { .lw-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .lw-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.lw-cell {
+  --x: 50%;
+  --y: 50%;
+  --paper: #ffffff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 7.5rem;
+  overflow: hidden;
+  isolation: isolate;
+  background: #141414;
+  outline: none;
+  cursor: pointer;
 }
-.logo-marquee-track:hover {
-  animation-play-state: paused;
+@media (min-width: 640px) { .lw-cell { height: 8.5rem; } }
+.lw-dark { --paper: #050505; }
+
+.lw-paper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--paper);
+  clip-path: circle(0px at var(--x) var(--y));
+  transition: clip-path 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-/* Fixed-pixel (not %) fade: a percentage-based stop eats roughly a whole
-   logo card at each edge on narrow/mobile widths, since the fade width
-   scales with the container instead of staying a thin edge vignette. */
-.logo-marquee-mask {
-  -webkit-mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
-  mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+.lw-dark .lw-paper { box-shadow: inset 0 0 0 1px rgba(255, 197, 61, 0.35); }
+
+.lw-logo {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 66%;
+  height: 2.6rem;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (min-width: 640px) {
+  .lw-logo { height: 2.9rem; width: 60%; }
+  .lw-img { max-height: 2.9rem; }
+}
+/* Square marks would look tiny at a wordmark's height, so they get a little more. */
+.lw-square .lw-img { max-height: 3.6rem; }
+@media (min-width: 640px) { .lw-square .lw-img { max-height: 4.2rem; } }
+.lw-img {
+  grid-area: 1 / 1;
+  max-width: 100%;
+  max-height: 2.6rem;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: opacity 0.35s ease;
+}
+.lw-mono { filter: brightness(0) invert(1); opacity: 0.55; }
+.lw-color { opacity: 0; }
+
+.lw-proof {
+  position: absolute;
+  inset: auto 0.75rem 0.7rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 11px;
+  line-height: 1.25;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (min-width: 640px) { .lw-proof { font-size: 12px; inset: auto 1rem 0.85rem; } }
+.lw-proof-text { font-weight: 600; color: #262626; text-align: left; }
+.lw-proof-link {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #737373;
+}
+@media (min-width: 1024px) { .lw-proof-link { display: inline-flex; } }
+.lw-dark .lw-proof-text { color: #f5f5f5; }
+.lw-dark .lw-proof-link { color: var(--color-brand); }
+
+/* Open state: hover on a mouse, keyboard focus, or mid-screen on a phone. */
+.lw-cell.is-lit .lw-paper,
+.lw-cell:focus-visible .lw-paper { clip-path: circle(150% at var(--x) var(--y)); }
+.lw-cell.is-lit .lw-mono,
+.lw-cell:focus-visible .lw-mono { opacity: 0; }
+.lw-cell.is-lit .lw-color,
+.lw-cell:focus-visible .lw-color { opacity: 1; }
+.lw-cell.is-lit .lw-logo,
+.lw-cell:focus-visible .lw-logo { transform: translateY(-0.7rem); }
+.lw-cell.is-lit .lw-proof,
+.lw-cell:focus-visible .lw-proof { opacity: 1; transform: none; }
+.lw-square.is-lit .lw-logo,
+.lw-square:focus-visible .lw-logo { transform: translateY(-1.15rem) scale(0.7); }
+@media (hover: hover) {
+  .lw-cell:hover .lw-paper { clip-path: circle(150% at var(--x) var(--y)); }
+  .lw-cell:hover .lw-mono { opacity: 0; }
+  .lw-cell:hover .lw-color { opacity: 1; }
+  .lw-cell:hover .lw-logo { transform: translateY(-0.7rem); }
+  .lw-cell:hover .lw-proof { opacity: 1; transform: none; }
+  .lw-square:hover .lw-logo { transform: translateY(-1.15rem) scale(0.7); }
+}
+.lw-cell:focus-visible { box-shadow: inset 0 0 0 2px var(--color-brand); }
+
+/* The closing cell: an invitation instead of a logo. */
+.lw-cta { --paper: var(--color-brand); }
+.lw-cta-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.75rem;
+  text-align: center;
+}
+.lw-cta-title { font-size: 0.95rem; font-weight: 700; color: #ffffff; transition: color 0.3s ease; }
+.lw-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-brand);
+  transition: color 0.3s ease;
+}
+.lw-cta.is-lit .lw-cta-title, .lw-cta:focus-visible .lw-cta-title,
+.lw-cta.is-lit .lw-cta-link, .lw-cta:focus-visible .lw-cta-link { color: #0a0a0a; }
+@media (hover: hover) {
+  .lw-cta:hover .lw-cta-title, .lw-cta:hover .lw-cta-link { color: #0a0a0a; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lw-paper, .lw-logo, .lw-img, .lw-proof { transition-duration: 0.01ms; }
 }
 
 /* Styling for the blog post body (from content/insights Markdown) on the Insights detail page */

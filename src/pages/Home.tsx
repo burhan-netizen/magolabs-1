@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import { PageId } from '../types';
 import SEO from '../components/SEO';
 import PageLink from '../components/PageLink';
+import LogoWall from '../components/LogoWall';
 import LeadForm, { LeadMode } from '../components/LeadForm';
 import HeroShowcase from '../components/HeroShowcase';
 import CountUp from '../components/CountUp';
@@ -51,50 +52,6 @@ interface HomeProps {
    House style: short sentences, plain words, written to "you".
 --------------------------------------------------------------------------- */
 
-// The logo strip uses small copies made for it (public/logos/sm, about 100 KB for
-// all eleven). Each one carries its pixel size so its tile is the right width
-// before the file arrives. A logo drawn for a dark background sets `dark`.
-const CLIENT_LOGOS: { name: string; src: string; width: number; height: number; dark?: boolean }[] = [
-  { name: 'Santosh Timbers', src: '/logos/sm/santoshtimbers.webp', width: 120, height: 120 },
-  { name: 'Astrabizz Consultancy', src: '/logos/sm/astrabizz.webp', width: 180, height: 120 },
-  { name: 'Dr. Mihir Shah Smile Care Clinic', src: '/logos/sm/drmihirshah.webp', width: 349, height: 120 },
-  { name: 'SolWay Energies', src: '/logos/sm/solway.webp', width: 341, height: 120 },
-  { name: 'Darshan Galani & Co.', src: '/logos/sm/darshangalani.webp', width: 390, height: 79 },
-  { name: 'Jay Mehta & Co.', src: '/logos/sm/jaymehta.webp', width: 362, height: 73 },
-  { name: 'MNP & Co.', src: '/logos/sm/mnp.webp', width: 212, height: 61 },
-  { name: 'K.D. Mayani & Co.', src: '/logos/sm/kdmayani.webp', width: 289, height: 120 },
-  { name: 'Prabhakar Processors', src: '/logos/sm/prabhakarprocessors.webp', width: 390, height: 99 },
-  { name: 'Jaymo Civil', src: '/logos/sm/jaymocivil.webp', width: 390, height: 68, dark: true },
-  { name: 'Centurion Strategic Ventures', src: '/logos/sm/centurion.webp', width: 119, height: 120 },
-];
-
-/** One logo in the strip. The white tile stays hidden until its logo has loaded,
- *  so a slow connection never shows a row of blank tiles. */
-function LogoTile({ logo, decorative }: { logo: (typeof CLIENT_LOGOS)[number]; decorative: boolean; key?: string }) {
-  const imgRef = useRef<HTMLImageElement>(null);
-  const [ready, setReady] = useState(false);
-  // A logo that finished loading before the page became interactive never fires onLoad.
-  useEffect(() => {
-    if (imgRef.current?.complete) setReady(true);
-  }, []);
-  return (
-    <div
-      className={`flex items-center justify-center h-16 sm:h-[4.5rem] px-6 sm:px-7 rounded-2xl ${logo.dark ? 'bg-[#0b0b0b] ring-1 ring-inset ring-white/20' : 'bg-[#ffffff]'} shrink-0 transition-opacity duration-500 ${ready ? 'opacity-100' : 'opacity-0'}`}
-    >
-      <img
-        ref={imgRef}
-        src={logo.src}
-        alt={decorative ? '' : logo.name}
-        width={logo.width}
-        height={logo.height}
-        decoding="async"
-        onLoad={() => setReady(true)}
-        onError={() => setReady(true)}
-        className="h-9 sm:h-10 w-auto max-w-[130px] object-contain"
-      />
-    </div>
-  );
-}
 
 const PROBLEMS = [
   { icon: EyeOff, title: 'People can’t tell what you do.', desc: 'They land, get confused, and leave within seconds.' },
@@ -426,18 +383,10 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
           </div>
 
           {/* Who already trusts us */}
-          <div className="mt-14 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl py-7">
+          <div className="mt-14 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl pt-7 pb-3 sm:pb-4">
             <p className="px-7 mb-5 text-sm font-medium text-neutral-400">Trusted by businesses across Surat and beyond</p>
-            <div className="logo-marquee-mask overflow-hidden">
-              <div className="flex items-center gap-4 sm:gap-5 logo-marquee-track">
-                {[...Array(2)].map((_, loopIdx) => (
-                  <div key={loopIdx} className="flex items-center gap-4 sm:gap-5 shrink-0" aria-hidden={loopIdx === 1 ? 'true' : undefined}>
-                    {CLIENT_LOGOS.map((logo, idx) => (
-                      <LogoTile key={`${loopIdx}-${logo.name}-${idx}`} logo={logo} decorative={loopIdx === 1} />
-                    ))}
-                  </div>
-                ))}
-              </div>
+            <div className="px-3 sm:px-4">
+              <LogoWall onOpenCaseStudy={onOpenCaseStudy} onOpenContact={() => onPageChange('contact')} />
             </div>
           </div>
         </div>
