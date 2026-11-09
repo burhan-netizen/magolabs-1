@@ -21,22 +21,26 @@ interface WallLogo {
   height: number;
   /** One line on what changed, taken from the case study or the client's review. */
   proof: string;
+  /** Display height in px on wide screens. Set per logo so every one covers about
+   *  the same visual area (wide wordmarks shorter, square marks taller, thin or
+   *  light logos a touch bigger), instead of one fixed height for all. */
+  h: number;
   /** A logo drawn for a dark background opens onto a dark card instead of white. */
   dark?: boolean;
 }
 
 const LOGOS: WallLogo[] = [
-  { caseId: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care Clinic', file: 'drmihirshah', width: 315, height: 87, proof: '25 to 58 patients a day' },
-  { caseId: 'darshangalani', name: 'Darshan Galani & Co.', file: 'darshangalani', width: 380, height: 68, proof: '34 new clients in 3 months' },
-  { caseId: 'jaymocivil', name: 'Jaymo Civil', file: 'jaymocivil', width: 390, height: 68, proof: 'A Sydney civil crew, back online', dark: true },
-  { caseId: 'santoshtimbers', name: 'Santosh Timbers', file: 'santoshtimbers', width: 114, height: 105, proof: 'From no website to a full catalogue' },
-  { caseId: 'prabhakarprocessors', name: 'Prabhakar Processors', file: 'prabhakarprocessors', width: 390, height: 99, proof: 'Content managed in-house' },
-  { caseId: 'centurion', name: 'Centurion Strategic Ventures', file: 'centurion', width: 156, height: 120, proof: 'Separate paths for borrowers and partners' },
-  { caseId: 'solway', name: 'SolWay Energies', file: 'solway', width: 272, height: 34, proof: 'A website that backs up every sales call' },
-  { caseId: 'astrabizz', name: 'Astrabizz Consultancy', file: 'astrabizz', width: 116, height: 94, proof: 'Enquiries directly through the site' },
-  { caseId: 'kdmayani', name: 'K.D. Mayani & Co.', file: 'kdmayani', width: 270, height: 42, proof: 'A stronger first impression' },
-  { caseId: 'jaymehta', name: 'Jay Mehta & Co.', file: 'jaymehta', width: 309, height: 48, proof: 'Clear, professional, easy to trust' },
-  { caseId: 'mnp', name: 'MNP & Co.', file: 'mnp', width: 179, height: 34, proof: 'A real difference in how prospects respond' },
+  { caseId: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care Clinic', file: 'drmihirshah', width: 428, height: 113, h: 54, proof: '25 to 58 patients a day' },
+  { caseId: 'darshangalani', name: 'Darshan Galani & Co.', file: 'darshangalani', width: 512, height: 90, h: 41, proof: '34 new clients in 3 months' },
+  { caseId: 'jaymocivil', name: 'Jaymo Civil', file: 'jaymocivil', width: 481, height: 84, h: 34, proof: 'A Sydney civil crew, back online', dark: true },
+  { caseId: 'santoshtimbers', name: 'Santosh Timbers', file: 'santoshtimbers', width: 182, height: 167, h: 76, proof: 'From no website to a full catalogue' },
+  { caseId: 'prabhakarprocessors', name: 'Prabhakar Processors', file: 'prabhakarprocessors', width: 407, height: 103, h: 47, proof: 'Content managed in-house' },
+  { caseId: 'centurion', name: 'Centurion Strategic Ventures', file: 'centurion', width: 217, height: 167, h: 76, proof: 'Separate paths for borrowers and partners' },
+  { caseId: 'solway', name: 'SolWay Energies', file: 'solway', width: 376, height: 42, h: 25, proof: 'A website that backs up every sales call' },
+  { caseId: 'astrabizz', name: 'Astrabizz Consultancy', file: 'astrabizz', width: 208, height: 167, h: 76, proof: 'Enquiries directly through the site' },
+  { caseId: 'kdmayani', name: 'K.D. Mayani & Co.', file: 'kdmayani', width: 447, height: 68, h: 36, proof: 'A stronger first impression' },
+  { caseId: 'jaymehta', name: 'Jay Mehta & Co.', file: 'jaymehta', width: 309, height: 46, h: 36, proof: 'Clear, professional, easy to trust' },
+  { caseId: 'mnp', name: 'MNP & Co.', file: 'mnp', width: 178, height: 33, h: 38, proof: 'A real difference in how prospects respond' },
 ];
 
 interface LogoWallProps {
@@ -85,7 +89,7 @@ export default function LogoWall({ onOpenCaseStudy, onOpenContact }: LogoWallPro
           className={`lw-cell group ${logo.dark ? 'lw-dark' : ''} ${logo.width / logo.height < 1.5 ? 'lw-square' : ''}`}
         >
           <span className="lw-paper" aria-hidden="true" />
-          <span className="lw-logo" aria-hidden="true">
+          <span className="lw-logo" aria-hidden="true" style={{ ['--h' as string]: `${logo.h}px` }}>
             <img
               src={`/logos/wall/${logo.file}.webp`}
               alt=""

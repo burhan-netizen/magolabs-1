@@ -306,26 +306,20 @@ body::after {
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 66%;
-  height: 2.6rem;
+  max-width: 78%;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
-@media (min-width: 640px) {
-  .lw-logo { height: 2.9rem; width: 60%; }
-  .lw-img { max-height: 2.9rem; }
-}
-/* Square marks would look tiny at a wordmark's height, so they get a little more. */
-.lw-square .lw-img { max-height: 3.6rem; }
-@media (min-width: 640px) { .lw-square .lw-img { max-height: 4.2rem; } }
 .lw-img {
   grid-area: 1 / 1;
-  max-width: 100%;
-  max-height: 2.6rem;
+  /* Each logo's own height (set in LogoWall.tsx), a little smaller on phones. */
+  height: calc(var(--h, 40px) * 0.72);
   width: auto;
-  height: auto;
+  max-width: 100%;
   object-fit: contain;
   transition: opacity 0.35s ease;
 }
+@media (min-width: 640px) { .lw-img { height: calc(var(--h, 40px) * 0.86); } }
+@media (min-width: 1024px) { .lw-img { height: var(--h, 40px); } }
 .lw-mono { filter: brightness(0) invert(1); opacity: 0.55; }
 .lw-color { opacity: 0; }
 
