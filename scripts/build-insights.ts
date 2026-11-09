@@ -11,6 +11,9 @@
  *   publishedDate: "2026-11-02T00:00+05:30"
  *   coverImage: "/images/insights/post-address.webp"   (file in public/images/insights/)
  *   draft: true                     (optional: hides the post)
+ *
+ * A post dated in the future stays hidden until a build runs on or after that date,
+ * so posts can be written ahead and released one at a time by a daily rebuild.
  *   ---
  *   The post itself, in Markdown.
  *
@@ -51,6 +54,8 @@ function parseFrontmatter(raw: string, file: string): { data: Record<string, str
 }
 
 const posts: BlogPost[] = [];
+const now = Date.now();
+const scheduled: string[] = [];
 for (const name of fs.readdirSync(contentDir).filter((f) => f.endsWith('.md')).sort()) {
 	const file = path.join('content', 'insights', name);
 	const { data, body } = parseFrontmatter(fs.readFileSync(path.join(contentDir, name), 'utf-8'), file);
@@ -61,6 +66,10 @@ for (const name of fs.readdirSync(contentDir).filter((f) => f.endsWith('.md')).s
 	}
 	if (!SLUG.test(slug)) throw new Error(`${file}: slug "${slug}" may only use lowercase letters, numbers and dashes.`);
 	if (Number.isNaN(new Date(String(data.publishedDate)).getTime())) throw new Error(`${file}: publishedDate "${data.publishedDate}" is not a valid date.`);
+	if (new Date(String(data.publishedDate)).getTime() > now) {
+		scheduled.push(`${slug} (${data.publishedDate})`);
+		continue;
+	}
 	const cover = data.coverImage ? String(data.coverImage) : undefined;
 	if (cover && cover.startsWith('/') && !fs.existsSync(path.join(root, 'public', cover))) {
 		throw new Error(`${file}: cover image ${cover} is not in public/.`);
@@ -90,3 +99,4 @@ fs.mkdirSync(postsDir, { recursive: true });
 for (const post of posts) fs.writeFileSync(path.join(postsDir, `${post.slug}.json`), JSON.stringify(post));
 
 console.log(`[build-insights] ${posts.length} post(s) ready from content/insights.`);
+if (scheduled.length) console.log(`[build-insights] ${scheduled.length} scheduled for later: ${scheduled.join(', ')}`);
