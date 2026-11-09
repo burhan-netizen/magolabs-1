@@ -1,7 +1,28 @@
 import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
 import { animate, motion, useMotionValue, useReducedMotion, useSpring, useTransform, type PanInfo } from 'motion/react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { TESTIMONIALS, TESTIMONIAL_INDUSTRIES, type Testimonial } from '../data/testimonials';
+import { getCaseStudyById } from '../data/caseStudies';
+import { getWorkDetailPath } from '../utils/pageRoutes';
+import PageLink from './PageLink';
+
+/** Mago Labs on Google. Update the rating and count here when new reviews come in. */
+const GOOGLE_PROFILE = 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8';
+const GOOGLE_RATING = '5.0';
+const GOOGLE_REVIEWS = 7;
+/** Client logos drawn for a dark background (same as the home page logo wall). */
+const DARK_LOGOS = new Set(['jaymocivil']);
+
+function GoogleMark({ className = '' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 48 48" aria-hidden="true">
+      <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z" />
+      <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
+      <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z" />
+      <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z" />
+    </svg>
+  );
+}
 
 /** The one line on each card that says what changed. Each is either the client's
  *  own words from their review, or a result already published on the Work page. */
@@ -45,9 +66,10 @@ interface DeckCardProps {
   onThrown: () => void;
   register: (id: string, fn: ((dx: number, dy: number) => void) | null) => void;
   setDragging: (dragging: boolean) => void;
+  onOpenCaseStudy?: (id: string) => void;
 }
 
-function DeckCard({ item, index, depth, total, reduced, returning, onThrown, register, setDragging }: DeckCardProps) {
+function DeckCard({ item, index, depth, total, reduced, returning, onThrown, register, setDragging, onOpenCaseStudy }: DeckCardProps) {
   const isTop = depth === 0;
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -141,6 +163,8 @@ function DeckCard({ item, index, depth, total, reduced, returning, onThrown, reg
   const hidden = depth > VISIBLE && !leaving;
   const long = item.quote.length > 320;
   const medium = item.quote.length > 180;
+  const study = item.caseStudyId ? getCaseStudyById(item.caseStudyId) : undefined;
+  const logo = study?.logoUrl;
 
   return (
     <motion.div
@@ -166,9 +190,8 @@ function DeckCard({ item, index, depth, total, reduced, returning, onThrown, reg
         onDragEnd={onDragEnd}
         whileDrag={{ scale: 1.03 }}
       >
-        <svg className="deck-mark" viewBox="0 0 48 36" aria-hidden="true">
-          <path d="M0 36V21.6C0 9.4 6.6 2 19.2 0l2 5.4C14.6 7 11.4 10.6 11 16h9.2v20H0Zm26.8 0V21.6C26.8 9.4 33.4 2 46 0l2 5.4c-6.6 1.6-9.8 5.2-10.2 10.6H47v20H26.8Z" />
-        </svg>
+        {/* What changed for them leads; their words back it up. */}
+        <p className="deck-result">{RESULT[item.id]}</p>
 
         <blockquote ref={quoteRef} className={`deck-quote ${long ? 'is-long' : medium ? 'is-medium' : ''}`}>
           {item.quote.split(/\s+/).map((word, w) => (
@@ -181,15 +204,38 @@ function DeckCard({ item, index, depth, total, reduced, returning, onThrown, reg
           ))}
         </blockquote>
 
-        <p className="deck-result">{RESULT[item.id]}</p>
-
         <footer className="deck-by">
-          <span className="deck-initials">{item.initials}</span>
-          <span className="min-w-0">
+          {logo ? (
+            <span className={`deck-logo ${DARK_LOGOS.has(study?.id ?? '') ? 'is-dark' : ''}`}>
+              <img src={logo} alt="" loading="lazy" decoding="async" draggable={false} />
+            </span>
+          ) : (
+            <span className="deck-initials">{item.initials}</span>
+          )}
+          <span className="min-w-0 flex-1">
             <span className="block truncate text-sm sm:text-base font-semibold">{item.name}</span>
             <span className="deck-business block truncate text-xs sm:text-sm">{item.company}</span>
           </span>
+          {item.source === 'google' && (
+            <span className="deck-source">
+              <GoogleMark className="h-3.5 w-3.5" />
+              Google review
+            </span>
+          )}
         </footer>
+
+        {study && onOpenCaseStudy && (
+          <PageLink
+            href={getWorkDetailPath(study.id)}
+            onNavigate={() => onOpenCaseStudy(study.id)}
+            className="deck-case"
+            tabIndex={isTop ? 0 : -1}
+            onPointerDownCapture={(event: ReactPointerEvent) => event.stopPropagation()}
+            aria-label={`Read the ${study.clientName} case study`}
+          >
+            View case study <ArrowUpRight className="h-4 w-4" />
+          </PageLink>
+        )}
       </motion.article>
     </motion.div>
   );
@@ -200,6 +246,8 @@ interface TestimonialDeckProps {
   heading?: string;
   /** Shows the industry filter above the cards. */
   filter?: boolean;
+  /** Opens a client's case study from their card. */
+  onOpenCaseStudy?: (id: string) => void;
 }
 
 type Industry = Testimonial['industry'] | 'All';
@@ -208,15 +256,16 @@ type Industry = Testimonial['industry'] | 'All';
  * Client reviews as a pile of cards. The top card can be dragged or flicked away
  * in any direction: let go far or fast enough and it flies off and goes to the
  * bottom of the pile, otherwise it springs back. The next card springs up to take
- * its place and its words rise into view a line at a time. The pile never says
- * how many cards it holds.
+ * its place and its words rise into view a line at a time. A counter beside the
+ * arrows shows which card is on top. Beside the heading, the Google rating links
+ * to the full list of reviews.
  *
  * Works by touch, by mouse (with a "Drag" badge that follows the pointer), with the
  * arrow keys, and with the previous and next buttons. Never moves on its own.
  * With `filter`, the pile can be narrowed to one industry.
  * With reduced motion the cards simply change, with a fade.
  */
-export default function TestimonialDeck({ eyebrow = 'In their words', heading = 'What our clients say.', filter = false }: TestimonialDeckProps) {
+export default function TestimonialDeck({ eyebrow = 'In their words', heading = 'What our clients say.', filter = false, onOpenCaseStudy }: TestimonialDeckProps) {
   const reduced = Boolean(useReducedMotion());
   // The ids in pile order, top card first.
   const [pile, setPile] = useState<string[]>(() => CARDS.map((card) => card.id));
@@ -280,6 +329,8 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
 
   const top = cards.find((card) => card.id === pile[0]) ?? cards[0];
   const single = cards.length < 2;
+  const position = Math.max(0, cards.indexOf(top)) + 1;
+  const pad = (n: number) => String(n).padStart(2, '0');
 
   return (
     <section id="client-quotes" className="deck-section py-24 sm:py-28 bg-neutral-100 font-sans overflow-hidden">
@@ -289,10 +340,29 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
             <div className="space-y-4">
               <span className="eyebrow">{eyebrow}</span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">{heading}</h2>
-              <p className="text-base sm:text-lg text-neutral-600 leading-relaxed max-w-md">
-                Don&rsquo;t take our word for it. Take theirs. Drag a card away to read the next.
-              </p>
+              <p className="text-base sm:text-lg text-neutral-600 leading-relaxed max-w-md">Real reviews from real clients.</p>
             </div>
+
+            <a
+              href={GOOGLE_PROFILE}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="deck-google group"
+              aria-label={`Rated ${GOOGLE_RATING} out of 5 from ${GOOGLE_REVIEWS} Google reviews. Read all reviews on Google, opens in a new tab`}
+            >
+              <GoogleMark className="h-10 w-10 flex-none" />
+              <span className="min-w-0">
+                <span className="flex items-center gap-2">
+                  <span className="text-2xl font-bold text-neutral-900 leading-none">{GOOGLE_RATING}</span>
+                  <span className="text-[#FBBC04] text-lg leading-none tracking-[0.08em]" aria-hidden="true">★★★★★</span>
+                </span>
+                <span className="mt-1.5 block text-sm text-neutral-600">from {GOOGLE_REVIEWS} Google reviews</span>
+              </span>
+              <span className="deck-google-cta">
+                Read all reviews
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
+            </a>
           </div>
 
           {/* Under the cards on a phone, where a thumb can reach them */}
@@ -305,6 +375,9 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
                 <button type="button" onClick={next} aria-label="Next review" className="deck-button" disabled={single}>
                   <ArrowRight className="h-5 w-5" />
                 </button>
+                <span className="deck-count" aria-hidden="true">
+                  <span className="text-neutral-900">{pad(position)}</span> / {pad(cards.length)}
+                </span>
               </div>
             </div>
           </div>
@@ -350,6 +423,7 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
                   onThrown={toBack}
                   register={register}
                   setDragging={setDragging}
+                  onOpenCaseStudy={onOpenCaseStudy}
                 />
               ))}
 
@@ -369,7 +443,7 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
 
             {/* Read out to screen readers when the card changes */}
             <p className="sr-only" aria-live="polite">
-              {top.name}, {top.company}: {top.quote}
+              Review {position} of {cards.length}. {top.name}, {top.company}: {top.quote}
             </p>
           </div>
         </div>

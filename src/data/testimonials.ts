@@ -7,6 +7,10 @@ export interface Testimonial {
   quote: string;
   accent: string;
   initials: string;
+  /** The case study on the Work page for this client, if there is one. */
+  caseStudyId?: string;
+  /** Set to 'google' when the review was left on the Mago Labs Google profile. */
+  source?: 'google';
 }
 
 // Real client feedback, collected from Google Reviews and direct client conversations.
@@ -21,6 +25,7 @@ export const TESTIMONIALS: Testimonial[] = [
       "Big thanks to Burhan Bhai at Mago Labs for an amazing job on our website! He listened carefully to what we wanted, suggested smart improvements, and turned everything around faster than expected. The site looks great on phones and desktop, loads quickly, and is easy to manage. He was always available for questions and gave clear guidance after launch. Highly recommend him for anyone needing a professional, friendly web developer.",
     accent: '#7C3AED',
     initials: 'DG',
+    caseStudyId: 'darshangalani',
   },
   {
     id: 'smit-antala',
@@ -42,6 +47,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote: 'Very good website designs. Incredibly responsive team. Quick feedback turnaround. Great value.',
     accent: '#D97706',
     initials: 'MS',
+    caseStudyId: 'solway',
   },
   {
     id: 'jay-mehta',
@@ -53,6 +59,7 @@ export const TESTIMONIALS: Testimonial[] = [
       "Working with Burhan at Mago Labs was refreshing. We finally have a website that reflects how we work with our clients: clear, professional, and easy to trust. He handled everything from structure to launch without us ever having to chase for updates, and the site works beautifully on mobile too. Exactly what our practice needed.",
     accent: '#0891B2',
     initials: 'JM',
+    caseStudyId: 'jaymehta',
   },
   {
     id: 'manish-khandelwal',
@@ -64,6 +71,7 @@ export const TESTIMONIALS: Testimonial[] = [
       "Our old website barely got us any enquiries. Mago Labs rebuilt it from scratch with a clean layout and much better structure, and we've noticed a real difference in how prospective clients respond after visiting the site. Burhan was responsive throughout and made revisions quickly whenever we asked.",
     accent: '#2563EB',
     initials: 'MK',
+    caseStudyId: 'mnp',
   },
   {
     id: 'ketan-mayani',
@@ -75,6 +83,7 @@ export const TESTIMONIALS: Testimonial[] = [
       "A very professional experience from start to finish. Burhan understood exactly what a CA firm needs online: credibility, clarity, and easy navigation for clients. The site was delivered on schedule and he was quick to make small adjustments even after launch. Would recommend Mago Labs to any professional firm looking to build trust online.",
     accent: '#059669',
     initials: 'KM',
+    caseStudyId: 'kdmayani',
   },
   {
     id: 'mihir-shah',
@@ -85,6 +94,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote: 'Absolutely professional people, know their work in best manner, I will absolutely recommend these people for website related work.',
     accent: '#0D9488',
     initials: 'MSC',
+    caseStudyId: 'drmihirshah',
   },
   {
     id: 'harshit-chopra',
@@ -96,6 +106,7 @@ export const TESTIMONIALS: Testimonial[] = [
       "Gorgeous website and amazing service from start to finish. The Mago Labs team gave us great design and amazing support throughout, exactly what we needed for the business.",
     accent: '#92400E',
     initials: 'HC',
+    caseStudyId: 'santoshtimbers',
   },
   {
     id: 'denish-dalal',
@@ -107,6 +118,7 @@ export const TESTIMONIALS: Testimonial[] = [
       "Our website finally reflects the seriousness of the work we do. Since launch we have started receiving enquiries directly through the site, and prospects come to the first conversation already knowing what we offer. Burhan and the Mago Labs team were responsive at every step.",
     accent: '#16A34A',
     initials: 'DD',
+    caseStudyId: 'astrabizz',
   },
   {
     id: 'john-mouawad',
@@ -118,6 +130,7 @@ export const TESTIMONIALS: Testimonial[] = [
       "I needed a whole new look, and that was a walk in the park for the team. The process was smooth, easy and understanding. The team at Mago Labs smashed it! I'm getting so much good feedback about how good their work is. Can't wait to start referring.",
     accent: '#B45309',
     initials: 'JM',
+    caseStudyId: 'jaymocivil',
   },
   {
     id: 'juhi-bais',
@@ -128,6 +141,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote: 'Prompt responses, open to inputs and feedback, and accommodating changes without any issues.',
     accent: '#1E3A8A',
     initials: 'JB',
+    caseStudyId: 'centurion',
   },
 ];
 

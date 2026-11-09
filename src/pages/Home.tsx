@@ -657,7 +657,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       <WorkWall onOpenWork={() => navigateTo('work')} />
 
       {/* What clients say: a pile of review cards to drag through */}
-      <TestimonialDeck />
+      <TestimonialDeck onOpenCaseStudy={onOpenCaseStudy} />
 
       {/* 6. What the customer gets, against the common alternative */}
       <section id="why-choose-us-overview" className="py-24 bg-neutral-50 font-sans border-y border-neutral-200/50">

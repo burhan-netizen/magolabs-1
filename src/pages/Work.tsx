@@ -123,7 +123,7 @@ export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
       <WorkShowcase onOpenCaseStudy={onOpenCaseStudy} />
 
       {/* A pile of review cards to drag through, which can be narrowed by industry */}
-      <TestimonialDeck eyebrow="In their own words" heading="What our clients say." filter />
+      <TestimonialDeck eyebrow="In their own words" heading="What our clients say." filter onOpenCaseStudy={onOpenCaseStudy} />
     </>
   );
 }

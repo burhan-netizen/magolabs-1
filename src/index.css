@@ -1147,6 +1147,7 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
   color: var(--color-ink);
   --deck-soft: #57534e;
   --deck-accent: var(--color-brand);
+  --deck-result: var(--color-ink);
   --deck-disc: var(--color-ink);
   --deck-disc-text: #ffffff;
 }
@@ -1155,6 +1156,7 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
   color: #ffffff;
   --deck-soft: #a8a6a0;
   --deck-accent: var(--color-brand);
+  --deck-result: var(--color-brand);
   --deck-disc: var(--color-brand);
   --deck-disc-text: var(--color-ink);
 }
@@ -1163,28 +1165,24 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
   color: var(--color-ink);
   --deck-soft: #4a3a10;
   --deck-accent: var(--color-ink);
+  --deck-result: var(--color-ink);
   --deck-disc: var(--color-ink);
   --deck-disc-text: #ffffff;
 }
-.deck-mark {
-  width: 2.5rem;
-  height: auto;
-  fill: var(--deck-accent);
-}
 .deck-quote {
   font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
-  font-size: 1.625rem;
-  line-height: 1.28;
-  letter-spacing: -0.01em;
+  font-size: 1.25rem;
+  line-height: 1.38;
+  letter-spacing: -0.005em;
   flex: 1;
 }
 .deck-quote.is-medium {
-  font-size: 1.3125rem;
-  line-height: 1.36;
+  font-size: 1.0625rem;
+  line-height: 1.45;
 }
 .deck-quote.is-long {
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 0.9375rem;
+  line-height: 1.55;
 }
 /* Each word is a small window; the word itself rises into it. Words on one line
    share a delay, so the quote arrives a line at a time. */
@@ -1206,17 +1204,118 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
   transition-delay: calc(var(--line, 0) * 70ms + 120ms);
 }
 .deck-result {
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  padding-top: 1.25rem;
-  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--deck-result);
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
 }
 .deck-by {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.875rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+/* Client logo on a white tile, so it reads the same on every card face. */
+.deck-logo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 6.5rem;
+  height: 3.25rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.875rem;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(13, 13, 13, 0.1);
+}
+/* A logo drawn for a dark background. */
+.deck-logo.is-dark {
+  background: var(--color-ink);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+.deck-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+.deck-source {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #3c4043;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(13, 13, 13, 0.1);
+}
+.deck-case {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: -0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+  transition: text-decoration-color 0.2s ease;
+}
+.deck-case:hover {
+  text-decoration-color: currentColor;
+}
+.deck-card.is-top .deck-case {
+  cursor: pointer;
+}
+/* Google rating beside the heading. */
+.deck-google {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.875rem 1rem;
+  margin-top: 2rem;
+  max-width: 28rem;
+  padding: 1.125rem 1.25rem;
+  border-radius: 1.25rem;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(13, 13, 13, 0.08), 0 18px 40px -28px rgba(13, 13, 13, 0.35);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.deck-google:hover {
+  box-shadow: 0 0 0 1px rgba(13, 13, 13, 0.2), 0 22px 44px -26px rgba(13, 13, 13, 0.4);
+  transform: translateY(-2px);
+}
+.deck-google:focus-visible {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 3px;
+}
+.deck-google-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+.deck-count {
+  margin-left: 0.75rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  color: #78716c;
+  font-variant-numeric: tabular-nums;
 }
 .deck-initials {
   display: flex;
@@ -1322,19 +1421,19 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
     padding: 2.5rem 2.75rem 2.25rem;
   }
   .deck-quote {
-    font-size: 2.125rem;
-    line-height: 1.22;
+    font-size: 1.5rem;
+    line-height: 1.34;
   }
   .deck-quote.is-medium {
-    font-size: 1.5rem;
-    line-height: 1.32;
+    font-size: 1.25rem;
+    line-height: 1.42;
   }
   .deck-quote.is-long {
-    font-size: 1.125rem;
-    line-height: 1.5;
+    font-size: 1.0625rem;
+    line-height: 1.55;
   }
   .deck-result {
-    font-size: 1.375rem;
+    font-size: 2.25rem;
   }
 }
 

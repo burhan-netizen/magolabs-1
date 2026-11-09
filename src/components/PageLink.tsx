@@ -14,6 +14,8 @@ interface PageLinkProps {
   title?: string;
   'aria-label'?: string;
   'aria-current'?: 'page';
+  tabIndex?: number;
+  onPointerDownCapture?: React.PointerEventHandler<HTMLAnchorElement>;
   children?: React.ReactNode;
   key?: string | number;
 }
