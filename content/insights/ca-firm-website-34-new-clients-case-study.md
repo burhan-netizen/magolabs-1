@@ -87,7 +87,7 @@ Yes. ICAI allows chartered accountants and firms to have websites, within guidel
 
 ### How do CA firms get clients from Google?
 
-Through a website that explains each service clearly, local SEO so the firm appears for searches in its city, and a complete Google Business Profile. Our guide to [local SEO for CA firms](/insights/local-seo-for-ca-firms) covers it step by step.
+Through a website that explains each service clearly, local SEO so the firm appears for searches in its city, and a complete Google Business Profile. Our [complete local SEO guide](/insights/local-seo-in-2026-the-complete-guide-for-small-businesses-to-rank-higher-on-google) covers it step by step.
 
 ### How much does a CA firm website cost?
 
