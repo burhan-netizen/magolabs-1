@@ -114,7 +114,8 @@ export const TESTIMONIALS: Testimonial[] = [
     role: 'Owner',
     company: 'Jaymo Civil',
     industry: 'Excavation & Civil',
-    quote: 'I needed a whole new look, and that was a walk in the park for the team.',
+    quote:
+      "I needed a whole new look, and that was a walk in the park for the team. The process was smooth, easy and understanding. The team at Mago Labs smashed it! I'm getting so much good feedback about how good their work is. Can't wait to start referring.",
     accent: '#B45309',
     initials: 'JM',
   },
@@ -124,7 +125,7 @@ export const TESTIMONIALS: Testimonial[] = [
     role: 'Director',
     company: 'Centurion Strategic Ventures',
     industry: 'Finance & Lending',
-    quote: 'The prompt responses and open to inputs and feedback, accommodating changes without issues.',
+    quote: 'Prompt responses, open to inputs and feedback, and accommodating changes without any issues.',
     accent: '#1E3A8A',
     initials: 'JB',
   },

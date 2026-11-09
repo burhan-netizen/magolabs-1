@@ -15,7 +15,7 @@ const RESULT: Record<string, string> = {
   'mihir-shah': '25 to 58 patients a day',
   'harshit-chopra': 'From no website to a full catalogue',
   'denish-dalal': 'Enquiries directly through the site',
-  'john-mouawad': 'A walk in the park',
+  'john-mouawad': 'The team smashed it',
   'juhi-bais': 'Changes made without issues',
 };
 
