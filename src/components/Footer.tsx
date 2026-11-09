@@ -229,7 +229,7 @@ export default function Footer({ onPageChange }: FooterProps) {
                 <div>
                   <p className="text-xs text-neutral-500 dark:text-neutral-500 uppercase font-medium">Surat, Gujarat</p>
                   <a
-                    href="https://maps.app.goo.gl/MT8QiwA56T7NtyC18"
+                    href="https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-neutral-800 dark:text-white hover:text-neutral-600 dark:hover:text-brand transition-colors font-medium"

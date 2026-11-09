@@ -135,7 +135,7 @@ export default function Contact(_props: ContactProps) {
                 <p className="text-sm text-neutral-600">
                   Monday to Saturday, 9:00 AM to 7:00 PM. Surat, Gujarat.{' '}
                   <a
-                    href="https://maps.app.goo.gl/MT8QiwA56T7NtyC18"
+                    href="https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4"

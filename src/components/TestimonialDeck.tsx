@@ -15,10 +15,12 @@ const RESULT: Record<string, string> = {
   'mihir-shah': '25 to 58 patients a day',
   'harshit-chopra': 'From no website to a full catalogue',
   'denish-dalal': 'Enquiries directly through the site',
+  'john-mouawad': 'A walk in the park',
+  'juhi-bais': 'Changes made without issues',
 };
 
 // The cards with a number to show lead; a short review opens the deck.
-const ORDER = ['mihir-shah', 'darshan-galani', 'denish-dalal', 'manish-khandelwal', 'jay-mehta', 'harshit-chopra', 'smit-antala', 'manav-shah', 'ketan-mayani'];
+const ORDER = ['mihir-shah', 'darshan-galani', 'john-mouawad', 'denish-dalal', 'manish-khandelwal', 'juhi-bais', 'jay-mehta', 'harshit-chopra', 'smit-antala', 'manav-shah', 'ketan-mayani'];
 const CARDS = ORDER.map((id) => TESTIMONIALS.find((t) => t.id === id)).filter((t): t is Testimonial => Boolean(t));
 
 /** Card faces, in rotation, so the edges of the pile read as separate cards. */

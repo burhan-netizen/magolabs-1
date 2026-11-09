@@ -313,6 +313,8 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       'telephone': '+91 9099245605',
       'email': 'burhan@magolabs.in',
       'priceRange': '₹₹',
+      'hasMap': 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8',
+      'sameAs': ['https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8'],
       'address': {
         '@type': 'PostalAddress',
         'addressLocality': 'Surat',

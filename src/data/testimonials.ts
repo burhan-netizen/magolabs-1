@@ -3,7 +3,7 @@ export interface Testimonial {
   name: string;
   role: string;
   company: string;
-  industry: 'Chartered Accountancy' | 'Manufacturing' | 'Solar & B2B Energy' | 'Timber & Wood Trading' | 'Dental & Healthcare' | 'Business & IT Consulting';
+  industry: 'Chartered Accountancy' | 'Manufacturing' | 'Solar & B2B Energy' | 'Timber & Wood Trading' | 'Dental & Healthcare' | 'Business & IT Consulting' | 'Excavation & Civil' | 'Finance & Lending';
   quote: string;
   accent: string;
   initials: string;
@@ -108,6 +108,26 @@ export const TESTIMONIALS: Testimonial[] = [
     accent: '#16A34A',
     initials: 'DD',
   },
+  {
+    id: 'john-mouawad',
+    name: 'John Mouawad',
+    role: 'Owner',
+    company: 'Jaymo Civil',
+    industry: 'Excavation & Civil',
+    quote: 'I needed a whole new look, and that was a walk in the park for the team.',
+    accent: '#B45309',
+    initials: 'JM',
+  },
+  {
+    id: 'juhi-bais',
+    name: 'Juhi Bais',
+    role: 'Director',
+    company: 'Centurion Strategic Ventures',
+    industry: 'Finance & Lending',
+    quote: 'The prompt responses and open to inputs and feedback, accommodating changes without issues.',
+    accent: '#1E3A8A',
+    initials: 'JB',
+  },
 ];
 
 /** The industries the reviews come from, in the order the filter shows them. */
@@ -118,4 +138,6 @@ export const TESTIMONIAL_INDUSTRIES: Testimonial['industry'][] = [
   'Timber & Wood Trading',
   'Dental & Healthcare',
   'Business & IT Consulting',
+  'Excavation & Civil',
+  'Finance & Lending',
 ];
