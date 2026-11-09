@@ -31,7 +31,7 @@ const LOGOS: WallLogo[] = [
   { caseId: 'jaymocivil', name: 'Jaymo Civil', file: 'jaymocivil', width: 390, height: 68, proof: 'A Sydney civil crew, back online', dark: true },
   { caseId: 'santoshtimbers', name: 'Santosh Timbers', file: 'santoshtimbers', width: 114, height: 105, proof: 'From no website to a full catalogue' },
   { caseId: 'prabhakarprocessors', name: 'Prabhakar Processors', file: 'prabhakarprocessors', width: 390, height: 99, proof: 'Content managed in-house' },
-  { caseId: 'centurion', name: 'Centurion Strategic Ventures', file: 'centurion', width: 119, height: 120, proof: 'Separate paths for borrowers and partners' },
+  { caseId: 'centurion', name: 'Centurion Strategic Ventures', file: 'centurion', width: 156, height: 120, proof: 'Separate paths for borrowers and partners' },
   { caseId: 'solway', name: 'SolWay Energies', file: 'solway', width: 272, height: 34, proof: 'A website that backs up every sales call' },
   { caseId: 'astrabizz', name: 'Astrabizz Consultancy', file: 'astrabizz', width: 116, height: 94, proof: 'Enquiries directly through the site' },
   { caseId: 'kdmayani', name: 'K.D. Mayani & Co.', file: 'kdmayani', width: 270, height: 42, proof: 'A stronger first impression' },
