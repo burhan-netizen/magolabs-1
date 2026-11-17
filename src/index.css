@@ -378,7 +378,8 @@ body::after {
 .lw-cell:focus-visible { box-shadow: inset 0 0 0 2px var(--color-brand); }
 
 /* The closing cell: an invitation instead of a logo. */
-.lw-cta { --paper: var(--color-brand); }
+.lw-cta { --paper: var(--color-brand); grid-column: 1 / -1; height: 5.5rem; }
+@media (min-width: 640px) { .lw-cta { height: 6rem; } }
 .lw-cta-text {
   position: relative;
   z-index: 1;

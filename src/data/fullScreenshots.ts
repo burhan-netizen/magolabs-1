@@ -18,4 +18,5 @@ export const FULL_SCREENSHOTS: Record<string, { width: number; height: number }>
   prabhakarprocessors: { width: 560, height: 2275 },
   jaymocivil: { width: 560, height: 2275 },
   centurion: { width: 560, height: 2275 },
+  ladsonconcrete: { width: 560, height: 2275 },
 };

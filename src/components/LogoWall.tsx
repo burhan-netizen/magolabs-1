@@ -31,7 +31,7 @@ interface WallLogo {
 
 /** Bump when any wall image changes, so browsers and the CDN fetch the new file
  *  instead of a copy cached during an earlier deploy. */
-const WALL_VERSION = 2;
+const WALL_VERSION = 3;
 
 const LOGOS: WallLogo[] = [
   { caseId: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care Clinic', file: 'drmihirshah', width: 428, height: 113, h: 54, proof: '25 to 58 patients a day' },
@@ -40,6 +40,7 @@ const LOGOS: WallLogo[] = [
   { caseId: 'santoshtimbers', name: 'Santosh Timbers', file: 'santoshtimbers', width: 182, height: 167, h: 76, proof: 'From no website to a full catalogue' },
   { caseId: 'prabhakarprocessors', name: 'Prabhakar Processors', file: 'prabhakarprocessors', width: 407, height: 103, h: 47, proof: 'Content managed in-house' },
   { caseId: 'centurion', name: 'Centurion Strategic Ventures', file: 'centurion', width: 217, height: 167, h: 76, proof: 'Separate paths for borrowers and partners' },
+  { caseId: 'ladsonconcrete', name: 'Ladson Concrete', file: 'ladsonconcrete', width: 292, height: 167, h: 54, proof: 'Real pours, one tap to an estimate' },
   { caseId: 'solway', name: 'SolWay Energies', file: 'solway', width: 376, height: 42, h: 25, proof: 'A website that backs up every sales call' },
   { caseId: 'astrabizz', name: 'Astrabizz Consultancy', file: 'astrabizz', width: 208, height: 167, h: 76, proof: 'Enquiries directly through the site' },
   { caseId: 'kdmayani', name: 'K.D. Mayani & Co.', file: 'kdmayani', width: 604, height: 91, h: 35, proof: 'A stronger first impression' },
@@ -122,7 +123,7 @@ export default function LogoWall({ onOpenCaseStudy, onOpenContact }: LogoWallPro
         </PageLink>
       ))}
 
-      {/* The twelfth cell squares the grid off and asks the obvious question. */}
+      {/* The last cell runs the full width under the logos and asks the obvious question. */}
       <PageLink page="contact" onNavigate={onOpenContact} className="lw-cell lw-cta group">
         <span className="lw-paper" aria-hidden="true" />
         <span className="lw-cta-text">

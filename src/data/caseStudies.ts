@@ -250,6 +250,27 @@ export const CASE_STUDIES: CaseStudy[] = [
     screenshotUrl: '/screenshots/centurion.webp',
   },
   {
+    id: 'ladsonconcrete',
+    clientName: 'Ladson Concrete',
+    url: 'https://www.ladsonconcretefl.com',
+    domain: 'ladsonconcretefl.com',
+    industry: 'Concrete Contractor, Jacksonville FL',
+    business:
+      "An owner-run concrete crew serving Jacksonville and Northeast Florida. Gage Ladson and his team pour driveways, patios, sidewalks, steps and slabs for homes, farms and businesses, and take on tractor work too.",
+    challenge:
+      "Homeowners pick a concrete contractor by searching Google and checking reviews, and Ladson Concrete had no website and no Google Business Profile for them to find. Good work was being done, but the people searching for it never saw it.",
+    approach:
+      "We built the site around the homeowner's biggest worry: the contractor who never shows up. Real job photos from around Jacksonville carry the proof, Gage is named as the owner on every job, and every section leads to one of three easy next steps: call, text a photo or request a free estimate.",
+    build:
+      "A fast, mobile-first website with a step-by-step estimate form, tap-to-call and text-a-photo buttons, a gallery of real pours, a service area section and local SEO for Jacksonville searches. We also created and set up their Google Business Profile so they show up on Google Maps.",
+    outcome:
+      "Ladson Concrete now has a website and a Google presence that match the quality of the work. A homeowner searching for a concrete contractor in Jacksonville can find them, see real jobs and ask for an estimate in under a minute.",
+    scope: ['Website Design', 'Local SEO', 'Google Business Profile'],
+    accent: '#1BA3C2',
+    logoUrl: '/logos/sm/ladsonconcrete.webp',
+    screenshotUrl: '/screenshots/ladsonconcrete.webp',
+  },
+  {
     id: 'momrise',
     clientName: 'Momrise',
     domain: 'Momrise',
@@ -296,10 +317,10 @@ export function getCaseStudyById(id: string): CaseStudy | undefined {
   return CASE_STUDIES.find((cs) => cs.id === id);
 }
 
-/** The 7 strongest stories (the two with measured results, then the biggest
+/** The 8 strongest stories (the two with measured results, then the biggest
  *  businesses and the newest builds) get featured, larger cards with the full 5-part narrative visible on /work.
  *  The rest sit in a compact row so the section reads as "range of work." */
-export const FEATURED_CASE_STUDY_IDS = ['drmihirshah', 'darshangalani', 'jaymocivil', 'santoshtimbers', 'prabhakarprocessors', 'centurion', 'solway'];
+export const FEATURED_CASE_STUDY_IDS = ['drmihirshah', 'darshangalani', 'jaymocivil', 'santoshtimbers', 'prabhakarprocessors', 'centurion', 'ladsonconcrete', 'solway'];
 
 /** Derives real, non-duplicate SEO metadata for a case study's dedicated page
  *  straight from its own already-written copy, rather than hand-writing (and
