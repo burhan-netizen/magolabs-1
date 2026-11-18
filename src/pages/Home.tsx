@@ -1,54 +1,80 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from 'react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
 import PageLink from '../components/PageLink';
 import CountUp from '../components/CountUp';
 import Price from '../components/Price';
 import { PACKAGES } from '../data/packages';
+import { TESTIMONIALS } from '../data/testimonials';
 import { getWorkDetailPath } from '../utils/pageRoutes';
+import { GOOGLE_PROFILE_URL, GOOGLE_RATING, GOOGLE_REVIEWS } from '../studio/googleReviews';
 
 /* ---------------------------------------------------------------------------
-   Mago Labs homepage, "Studio Ink" redesign.
-   Story order: promise and proof, the problem, the work, the results, who it is
-   for, how it works, why us, prices, the founder, reviews, questions, next step.
+   Mago Labs homepage, Direction 02 "Studio Play".
+   Story: promise, proof, the problem, the work, results, who it is for, how it
+   works, why us, prices, the founder, every client's words, questions, next step.
    House style: short sentences, plain words, written to "you". No em dashes.
 --------------------------------------------------------------------------- */
-
-const GOOGLE_PROFILE = 'https://maps.app.goo.gl/fnTiihMdcem2z4fn7';
 
 interface HomeProps {
   onPageChange: (page: PageId) => void;
   onOpenCaseStudy: (id: string) => void;
 }
 
-const PROBLEMS = [
-  { title: 'Visitors can’t tell what you do', desc: 'So they leave before they call, and you never know they were there.' },
-  { title: 'Nothing proves you’re good', desc: 'No reviews, results or real work on the page means no reason to trust you.' },
-  { title: 'It looks older than your business', desc: 'Next to a competitor’s new site, a dated one quietly costs you the job.' },
-  { title: 'Google can’t find you', desc: 'Or you have no website at all, and customers find the business next door.' },
+type ShapeKind = 'circle' | 'half' | 'quarter' | 'ring' | 'pill' | 'split' | 'square' | 'dots' | 'arch';
+
+function Shape({ kind, color, style }: { kind: ShapeKind; color: string; style?: CSSProperties }) {
+  return <span className={`sh sh-${kind}`} style={{ background: color, color, ...style }} aria-hidden="true" />;
+}
+
+const TILES: { bg: string; sh: ShapeKind; c: string; back?: string }[] = [
+  { bg: 'var(--accent)', sh: 'circle', c: 'var(--lime)' },
+  { bg: 'var(--paper)', sh: 'quarter', c: 'var(--ember)', back: 'drmihirshah' },
+  { bg: 'var(--ink-3)', sh: 'ring', c: 'var(--peri)' },
+  { bg: 'var(--lime)', sh: 'half', c: 'var(--ink)' },
+  { bg: 'var(--ember)', sh: 'arch', c: 'var(--paper)', back: 'jaymocivil' },
+  { bg: 'var(--peri)', sh: 'dots', c: 'var(--accent)' },
+  { bg: 'var(--paper)', sh: 'split', c: 'var(--accent)' },
+  { bg: 'var(--ink-3)', sh: 'circle', c: 'var(--ember)', back: 'ladsonconcrete' },
+  { bg: 'var(--lime)', sh: 'square', c: 'var(--accent)' },
+  { bg: 'var(--accent)', sh: 'pill', c: 'var(--paper)', back: 'darshangalani' },
+  { bg: 'var(--paper)', sh: 'ring', c: 'var(--ink)' },
+  { bg: 'var(--ember)', sh: 'quarter', c: 'var(--lime)' },
+  { bg: 'var(--ink-3)', sh: 'half', c: 'var(--lime)', back: 'centurion' },
+  { bg: 'var(--peri)', sh: 'circle', c: 'var(--ink)' },
+  { bg: 'var(--accent)', sh: 'split', c: 'var(--peri)', back: 'prabhakarprocessors' },
+  { bg: 'var(--paper)', sh: 'dots', c: 'var(--ember)' },
+];
+
+const BAND_1 = ['Websites that win the call', '25 → 58 patients a day', '34 new clients in 3 months', '5.0 on Google', '6 countries'];
+const BAND_2 = ['Design', 'Build', 'SEO', 'Copy', 'Google Profile', 'Social', 'Ads'];
+
+const PROBLEMS: { title: string; desc: string; bg: string; sh: ShapeKind; c: string }[] = [
+  { title: 'Visitors can’t tell what you do.', desc: 'They land, get confused and leave before they call. You never even know they were there.', bg: 'var(--lime)', sh: 'circle', c: 'var(--accent)' },
+  { title: 'Nothing proves you’re good.', desc: 'No reviews, results or real work on the page means no reason to pick you over the next search result.', bg: 'var(--peri)', sh: 'quarter', c: 'var(--ink)' },
+  { title: 'It looks older than your business.', desc: 'Next to a competitor’s new site, a dated one quietly costs you the job, even when your work is better.', bg: 'var(--ember)', sh: 'ring', c: 'var(--paper)' },
+  { title: 'Google can’t find you.', desc: 'Or there’s no website at all, and the customer who searched for you finds the business next door.', bg: 'var(--paper)', sh: 'half', c: 'var(--accent)' },
 ];
 
 const WORK = [
-  { id: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care', tag: 'Dental, Surat', caption: 'A polished site with online booking for a new clinic. Walk-ins went from 25 to 58 patients a day within two months.' },
-  { id: 'darshangalani', name: 'Darshan Galani & Co.', tag: 'CA firm', caption: 'A first website for a chartered accountancy practice. 34 new clients signed in the first three months.' },
-  { id: 'jaymocivil', name: 'Jaymo Civil', tag: 'Civil, Sydney', caption: 'A website that matches the size of the jobs they take on. Builders see real work and a clear way to get a quote.' },
-  { id: 'ladsonconcrete', name: 'Ladson Concrete', tag: 'Concrete, Florida', caption: 'A Jacksonville concrete contractor, with a website and Google Business Profile built to win local quotes.' },
-  { id: 'centurion', name: 'Centurion Strategic Ventures', tag: 'Finance', caption: 'A loan advisory firm, presented with the credibility its clients look for before the first call.' },
-  { id: 'prabhakarprocessors', name: 'Prabhakar Processors', tag: 'Textile', caption: 'A dyeing and printing mill whose old site undersold its standing, now shown the way buyers expect.' },
-  { id: 'solway', name: 'SolWay Energies', tag: 'Solar', caption: 'A solar and B2B energy company, positioned for serious commercial enquiries.' },
+  { id: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care', tag: 'Dental · Surat', big: '25→58', small: 'patients a day, within two months of launch', desc: 'A polished site with online booking for a second clinic, built to turn 25 years of experience into trust a first-time visitor can feel.' },
+  { id: 'darshangalani', name: 'Darshan Galani & Co.', tag: 'Chartered accountants', big: '34', small: 'new clients in the first three months', desc: 'A first website for a CA practice that had never had one. Enquiries started arriving through Google for the first time.' },
+  { id: 'jaymocivil', name: 'Jaymo Civil', tag: 'Excavation & civil · Sydney', big: 'SYD', small: 'built to win builder and developer enquiries', desc: 'A website that matches the size of the jobs they take on. Builders see real work, real clients and a clear way to get a quote.' },
+  { id: 'ladsonconcrete', name: 'Ladson Concrete', tag: 'Concrete · Jacksonville, FL', big: 'USA', small: 'website and Google Business Profile', desc: 'A Jacksonville concrete contractor, set up to be found on Google and to turn local searches into quote requests.' },
+  { id: 'centurion', name: 'Centurion Strategic Ventures', tag: 'Loan advisory · India', big: 'FIN', small: 'one-page site for a lending consultancy', desc: 'A loan advisory firm, presented with the credibility its clients look for before the first call.' },
 ];
 
-const INDUSTRIES: { name: string; page?: PageId }[] = [
-  { name: 'Dentists & clinics', page: 'industry-dentists' },
-  { name: 'Chartered accountants', page: 'industry-ca-firms' },
-  { name: 'Textile & processing', page: 'industry-textile' },
-  { name: 'Manufacturing', page: 'industry-manufacturers' },
-  { name: 'Financial services' },
-  { name: 'Contractors & construction' },
-  { name: 'Consulting & IT', page: 'industry-consultants' },
-  { name: 'Solar & energy' },
-  { name: 'Trading & distribution' },
-  { name: 'Online stores & brands' },
+const INDUSTRIES: { name: string; page?: PageId; site: string; note: string; bg: string; c: string }[] = [
+  { name: 'Dentists & clinics', page: 'industry-dentists', site: 'drmihirshah', note: 'Calm, credentials and easy booking.', bg: 'var(--peri)', c: 'var(--accent)' },
+  { name: 'Chartered accountants', page: 'industry-ca-firms', site: 'darshangalani', note: 'Authority, clarity and ICAI-friendly content.', bg: 'var(--lime)', c: 'var(--ink)' },
+  { name: 'Textile & processing', page: 'industry-textile', site: 'prabhakarprocessors', note: 'Capacity, processes and buyer confidence.', bg: 'var(--ember)', c: 'var(--paper)' },
+  { name: 'Manufacturing', page: 'industry-manufacturers', site: 'prabhakarprocessors', note: 'Products, plant and proof for serious buyers.', bg: 'var(--accent)', c: 'var(--lime)' },
+  { name: 'Financial services', site: 'centurion', note: 'Trust first, then a clear next step.', bg: 'var(--paper)', c: 'var(--accent)' },
+  { name: 'Contractors & construction', site: 'jaymocivil', note: 'Real jobs, service areas and fast quotes.', bg: 'var(--ember)', c: 'var(--ink)' },
+  { name: 'Consulting & IT', page: 'industry-consultants', site: 'astrabizz', note: 'Expertise made easy to understand.', bg: 'var(--peri)', c: 'var(--ink)' },
+  { name: 'Solar & energy', site: 'solway', note: 'Credibility for big-ticket B2B decisions.', bg: 'var(--lime)', c: 'var(--accent)' },
+  { name: 'Trading & distribution', site: 'santoshtimbers', note: 'Scale and catalogue for bulk buyers.', bg: 'var(--accent)', c: 'var(--peri)' },
+  { name: 'Online stores & brands', site: 'momrise', note: 'Pages built to sell, not just to look nice.', bg: 'var(--paper)', c: 'var(--ember)' },
 ];
 
 const ALONGSIDE: { name: string; page?: PageId }[] = [
@@ -62,9 +88,9 @@ const ALONGSIDE: { name: string; page?: PageId }[] = [
 ];
 
 const STEPS = [
-  { title: 'Free audit', desc: 'Send your site, or your business name if you don’t have one. Plain-English findings within one business day.' },
+  { title: 'Free audit', desc: 'Send your website, or just your business name if you don’t have one. You get plain-English findings within one business day.' },
   { title: 'Fixed quote', desc: 'Scope, price and launch date agreed and signed before any work starts. No surprises later.' },
-  { title: 'Design & build', desc: 'Designed and hand-coded for you, with copy written to win the call. 5 to 28 days.' },
+  { title: 'Design & build', desc: 'Designed and hand-coded for your business, with copy written to win the call. Live in 5 to 28 days.' },
   { title: 'Launch & support', desc: 'Hosting included, set up for Google, then 90 days of support after you go live.' },
 ];
 
@@ -77,17 +103,17 @@ const COMPARE = [
 ];
 
 const PACKAGE_DESC: Record<string, string> = {
-  launch: 'Up to 5 pages. A professional presence, live in 5 days.',
-  growth: 'Up to 10 pages with a content editor. Built to generate enquiries, in 14 days.',
-  scale: '15+ pages. A premium presence for bigger firms, in 21 days.',
-  commerce: 'An online store with up to 50 products to start, in 28 days.',
+  launch: 'Up to 5 pages. A professional presence, fast.',
+  growth: 'Up to 10 pages with a content editor. Built to generate enquiries.',
+  scale: '15+ pages. A premium presence for bigger firms.',
+  commerce: 'An online store with up to 50 products to start.',
 };
-
-const REVIEWS = [
-  { quote: 'It’s been just 40 days and I have already started receiving organic inquiries. Design, taste, speed, execution, everything was up to the mark.', name: 'Laxman Selukar', where: 'Google review' },
-  { quote: 'He listened carefully to what we wanted, suggested smart improvements, and turned everything around faster than expected.', name: 'CA Darshan Galani', where: 'Darshan Galani & Co.' },
-  { quote: 'The final website turned out even better than we expected. The team made the whole experience completely stress-free.', name: 'Smit Antala', where: 'Antala Metals' },
-];
+const PACKAGE_SHAPE: Record<string, { sh: ShapeKind; c: string }> = {
+  launch: { sh: 'circle', c: 'var(--lime)' },
+  growth: { sh: 'quarter', c: 'var(--accent)' },
+  scale: { sh: 'ring', c: 'var(--ember)' },
+  commerce: { sh: 'half', c: 'var(--peri)' },
+};
 
 export const FAQS = [
   { q: 'What do I get in the free audit?', a: 'A short, plain-English review of your website, or of your Google presence if you have no site yet: what stops visitors from calling, how you show up on Google, and what we would fix first. It arrives within one business day and there is no obligation.' },
@@ -103,13 +129,12 @@ export const FAQS = [
   { q: 'Can you help with SEO, ads and social media too?', a: 'Yes, alongside your website: SEO, Google Business Profile, copywriting, social media management, paid ads and lead generation. Ask us for pricing on any of these.' },
 ];
 
-/** Surat time, shown in the hero status line. Written after mount so the
- *  prerendered HTML and the first browser render always match. */
+/* ---------- small hooks ---------- */
+
 function useSuratTime(): string | null {
   const [time, setTime] = useState<string | null>(null);
   useEffect(() => {
-    const fmt = () =>
-      new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Kolkata' }).format(new Date());
+    const fmt = () => new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Kolkata' }).format(new Date());
     setTime(fmt());
     const id = window.setInterval(() => setTime(fmt()), 30_000);
     return () => window.clearInterval(id);
@@ -117,60 +142,122 @@ function useSuratTime(): string | null {
   return time;
 }
 
-/** Fades sections up as they enter. Content is visible by default; the hidden
- *  start state only applies once this observer is running (html.st-io). */
+/** Fades blocks up as they arrive. Content is visible by default; the hidden start
+ *  state only applies while this observer is running (html.st-io). */
 function useReveals() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
     const els = Array.from(document.querySelectorAll<HTMLElement>('.studio .st-reveal'));
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       }),
-      { rootMargin: '0px 0px -12% 0px', threshold: 0.08 }
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.06 }
     );
     els.forEach((el) => {
-      // Anything already on screen stays put instead of flashing out and back.
       if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
       io.observe(el);
     });
     document.documentElement.classList.add('st-io');
-    return () => {
-      io.disconnect();
-      document.documentElement.classList.remove('st-io');
-    };
+    return () => { io.disconnect(); document.documentElement.classList.remove('st-io'); };
   }, []);
 }
 
-function SectionHead({ num, label, children, aside }: { num: string; label: string; children: ReactNode; aside?: ReactNode }) {
+/** Lets a mouse drag the testimonial rail sideways (touch scrolls natively). */
+function useDragScroll(ref: RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let down = false; let startX = 0; let startLeft = 0; let moved = false;
+    const onDown = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      down = true; moved = false; startX = e.clientX; startLeft = el.scrollLeft;
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) { moved = true; el.classList.add('dragging'); }
+      el.scrollLeft = startLeft - dx;
+    };
+    const onUp = () => { down = false; el.classList.remove('dragging'); };
+    const onClick = (e: MouseEvent) => { if (moved) { e.preventDefault(); e.stopPropagation(); } };
+    el.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    el.addEventListener('click', onClick, true);
+    return () => {
+      el.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      el.removeEventListener('click', onClick, true);
+    };
+  }, [ref]);
+}
+
+function Head({ label, children, aside, dark }: { label: string; children: ReactNode; aside?: ReactNode; dark?: boolean }) {
   return (
-    <div className="st-head-row">
-      <div className="st-head">
-        <div className="st-mono st-label">{num} · {label}</div>
+    <div className="st-row st-reveal" style={{ marginBottom: 'clamp(40px, 5vw, 72px)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+        <span className="st-mono st-label">{label}</span>
         {children}
       </div>
-      {aside}
+      {aside && <div style={{ maxWidth: 420, color: dark ? 'var(--body-dark)' : 'var(--body)' }}>{aside}</div>}
     </div>
   );
 }
 
+type ReviewCard = { key: string; kind: 'google' | 'client'; name: string; meta: string; quote: string | null; initials: string; shape: { sh: ShapeKind; c: string } };
+
 export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
   const time = useSuratTime();
-  const [active, setActive] = useState(2);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const [ind, setInd] = useState(0);
+  const [filter, setFilter] = useState<'all' | 'google' | 'client'>('all');
   useReveals();
+  useDragScroll(railRef);
 
-  const go = (page: PageId) => {
-    onPageChange(page);
-    window.scrollTo({ top: 0 });
+  useEffect(() => {
+    let cleanup: (() => void) | undefined;
+    let cancelled = false;
+    const root = rootRef.current;
+    if (!root) return;
+    import('../studio/motion').then(({ initStudioMotion }) => initStudioMotion(root)).then((fn) => {
+      if (cancelled) fn(); else cleanup = fn;
+    }).catch(() => undefined);
+    return () => { cancelled = true; cleanup?.(); };
+  }, []);
+
+  const go = (page: PageId) => { onPageChange(page); window.scrollTo({ top: 0 }); };
+  const openCase = (id: string) => { onOpenCaseStudy(id); window.scrollTo({ top: 0 }); };
+
+  const reviews: ReviewCard[] = useMemo(() => {
+    const shapes: { sh: ShapeKind; c: string }[] = [
+      { sh: 'circle', c: 'var(--lime)' }, { sh: 'quarter', c: 'var(--ember)' }, { sh: 'ring', c: 'var(--peri)' }, { sh: 'half', c: 'var(--accent)' },
+    ];
+    const initials = (n: string) => n.replace(/^(CA|Dr\.)\s+/i, '').split(/\s+/).map((p) => p[0]).join('').slice(0, 2).toUpperCase();
+    const g: ReviewCard[] = GOOGLE_REVIEWS.map((r, i) => ({
+      key: `g-${i}`, kind: 'google', name: r.name, meta: 'Google review', quote: r.quote, initials: initials(r.name), shape: shapes[i % 4],
+    }));
+    const c: ReviewCard[] = TESTIMONIALS.map((t, i) => ({
+      key: `c-${t.id}`, kind: 'client', name: t.name, meta: `${t.role}, ${t.company}`, quote: t.quote, initials: t.initials || initials(t.name), shape: shapes[(i + 2) % 4],
+    }));
+    // Interleave so the rail mixes both kinds when showing everything.
+    const all: ReviewCard[] = [];
+    for (let i = 0; i < Math.max(g.length, c.length); i++) {
+      if (g[i]) all.push(g[i]);
+      if (c[i]) all.push(c[i]);
+    }
+    return all;
+  }, []);
+  const shown = reviews.filter((r) => filter === 'all' || r.kind === filter);
+  const scrollRail = (dir: number) => {
+    const el = railRef.current;
+    if (el) el.scrollBy({ left: dir * Math.min(el.clientWidth * 0.8, 880), behavior: 'smooth' });
   };
-  const openCase = (id: string) => {
-    onOpenCaseStudy(id);
-    window.scrollTo({ top: 0 });
-  };
-  const activeWork = WORK[active];
+
+  const activeInd = INDUSTRIES[ind];
+  const indSites = Array.from(new Set(INDUSTRIES.map((x) => x.site)));
 
   const homeSchemas = [
     {
@@ -184,24 +271,12 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       'telephone': '+91 9099245605',
       'email': 'burhan@magolabs.in',
       'priceRange': '₹17,999 to ₹64,999',
-      'hasMap': GOOGLE_PROFILE,
-      'sameAs': [GOOGLE_PROFILE, 'https://www.instagram.com/magolabs.in/', 'https://www.linkedin.com/in/burhanuddinkapasi/'],
-      'aggregateRating': { '@type': 'AggregateRating', 'ratingValue': '5.0', 'reviewCount': '8' },
+      'hasMap': GOOGLE_PROFILE_URL,
+      'sameAs': [GOOGLE_PROFILE_URL, 'https://www.instagram.com/magolabs.in/', 'https://www.linkedin.com/in/burhanuddinkapasi/'],
+      'aggregateRating': { '@type': 'AggregateRating', 'ratingValue': GOOGLE_RATING, 'reviewCount': String(GOOGLE_REVIEWS.length) },
       'areaServed': ['India', 'Australia', 'United States', 'United Kingdom', 'Canada', 'United Arab Emirates'],
-      'address': {
-        '@type': 'PostalAddress',
-        'streetAddress': 'Flat 102, Salute Residency, Central Bank Lane, Nanpura',
-        'addressLocality': 'Surat',
-        'postalCode': '395001',
-        'addressRegion': 'Gujarat',
-        'addressCountry': 'IN',
-      },
-      'openingHoursSpecification': {
-        '@type': 'OpeningHoursSpecification',
-        'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        'opens': '09:00',
-        'closes': '19:00',
-      },
+      'address': { '@type': 'PostalAddress', 'streetAddress': 'Flat 102, Salute Residency, Central Bank Lane, Nanpura', 'addressLocality': 'Surat', 'postalCode': '395001', 'addressRegion': 'Gujarat', 'addressCountry': 'IN' },
+      'openingHoursSpecification': { '@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], 'opens': '09:00', 'closes': '19:00' },
     },
     {
       '@context': 'https://schema.org',
@@ -211,31 +286,54 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
   ];
 
   return (
-    <div className="studio">
+    <div className="studio" ref={rootRef}>
       <SEO path="/" schemas={homeSchemas} />
 
-      {/* HERO */}
-      <section className="st-wrap" style={{ paddingTop: 'clamp(32px, 5vw, 56px)', paddingBottom: 40, display: 'flex', flexDirection: 'column', gap: 36 }}>
-        <div className="st-mono" style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--muted)' }}>
-          <span className="st-dot" aria-hidden="true" />
-          <span>Taking new projects · Surat, India{time ? ` · ${time} IST` : ''}</span>
+      {/* ================= HERO ================= */}
+      <section className="st-hero st-dark st-grain">
+        <div className="st-wrap st-hero-grid">
+          <div>
+            <div className="st-mono st-hero-meta">
+              <span className="st-dot" aria-hidden="true" />
+              <span>Taking new projects · Surat, India{time ? ` · ${time} IST` : ''}</span>
+            </div>
+            <h1 className="st-xl st-h1">
+              <span className="st-line"><span className="st-stretch">Websites</span></span>
+              <span className="st-line"><span className="st-stretch">that win</span></span>
+              <span className="st-line"><span className="st-serif" style={{ color: 'var(--lime)' }}>the call.</span></span>
+            </h1>
+          </div>
+          <div className="st-tiles-wrap" aria-hidden="true">
+            <div className="st-tiles">
+              {TILES.map((t, i) => (
+                <div className="tile-slot" key={i}>
+                  <div className="tile" data-back={t.back || undefined}>
+                    <div className="tile-face" style={{ background: t.bg }}>
+                      <Shape kind={t.sh} color={t.c} />
+                    </div>
+                    {t.back && (
+                      <div className="tile-face tile-back">
+                        <img src={`/screenshots/full/${t.back}-300.webp`} alt="" width={300} height={1219} loading="lazy" decoding="async" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <h1 className="st-h1" style={{ maxWidth: 1180 }}>
-          <span className="st-line"><span>We design websites</span></span>
-          <span className="st-line">
-            <span>
-              <span className="st-hero-thumb" aria-hidden="true">
-                <img src="/screenshots/full/jaymocivil-300.webp" alt="" width={300} height={1219} />
-              </span>{' '}
-              people trust
-            </span>
-          </span>
-          <span className="st-line"><span className="st-serif" style={{ color: 'var(--accent)' }}>on sight.</span></span>
-        </h1>
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-end', gap: 32 }}>
-          <p style={{ margin: 0, maxWidth: 540, fontSize: 19, lineHeight: 1.5, color: 'var(--body)' }}>
-            Mago Labs is an independent web design studio. We design and build custom websites for clinics, CA firms, manufacturers and contractors in India, Australia, the USA, the UK, Canada and the UAE, and judge every one by the enquiries it brings in.
-          </p>
+        <div className="st-wrap st-hero-foot">
+          <div>
+            <p className="st-lede">
+              Mago Labs is an independent web design studio. We design and build custom websites for clinics, CA firms, manufacturers and contractors in 6 countries, and judge every one by the enquiries it brings in.
+            </p>
+            <div className="st-proof">
+              <span style={{ color: 'var(--lime)', letterSpacing: 2 }} aria-hidden="true">★★★★★</span>
+              <a href={GOOGLE_PROFILE_URL} target="_blank" rel="noopener"><b>{GOOGLE_RATING}</b> on Google · {GOOGLE_REVIEWS.length} reviews</a>
+              <span aria-hidden="true">·</span>
+              <span><b>75+</b> businesses</span>
+            </div>
+          </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             <a href="#audit" className="st-btn st-btn-primary">Get a free website audit <span className="st-arrow" aria-hidden="true">→</span></a>
             <a href="#work" className="st-btn st-btn-ghost">See the work</a>
@@ -243,287 +341,309 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
         </div>
       </section>
 
-      {/* RECENT WORK FRAMES */}
-      <section aria-label="Recent websites" className="st-wrap" style={{ paddingBottom: 64 }}>
-        <div className="st-frames">
-          {[
-            { id: 'drmihirshah', src: '/screenshots/drmihirshah.webp', alt: 'Dr. Mihir Shah Smile Care Clinic website by Mago Labs', cap: 'Dental · Surat', cls: 'left' },
-            { id: 'jaymocivil', src: '/screenshots/jaymocivil-1920.webp', alt: 'Jaymo Civil website by Mago Labs', cap: 'Excavation & civil · Sydney', cls: '' },
-            { id: 'ladsonconcrete', src: '/screenshots/ladsonconcrete.webp', alt: 'Ladson Concrete website by Mago Labs', cap: 'Concrete · Jacksonville, FL', cls: 'right' },
-          ].map((f) => (
-            <figure key={f.id} className={`st-frame ${f.cls}`}>
-              <PageLink href={getWorkDetailPath(f.id)} onNavigate={() => openCase(f.id)} className="st-frame-box" aria-label={`${f.cap} case study`}>
-                <div className="st-frame-bar" aria-hidden="true"><i /><i /><i /></div>
-                <img src={f.src} alt={f.alt} width={900} height={562} loading={f.cls ? 'lazy' : 'eager'} decoding="async" />
-              </PageLink>
-              <figcaption className="st-mono" style={{ color: 'var(--muted)' }}>{f.cap}</figcaption>
-            </figure>
+      {/* ================= MARQUEE BAND ================= */}
+      <section className="st-band" aria-label="Highlights">
+        <div className="st-band-row">
+          {[0, 1].map((k) => (
+            <span key={k} aria-hidden={k === 1 ? true : undefined}>
+              {BAND_1.map((t, i) => (<span key={t}>{t}<i className={i % 2 ? 'sq' : undefined} /></span>))}
+            </span>
+          ))}
+        </div>
+        <div className="st-band-row alt" aria-hidden="true">
+          {[0, 1, 2].map((k) => (
+            <span key={k}>{BAND_2.map((t) => (<span key={t}>{t}<i /></span>))}</span>
           ))}
         </div>
       </section>
 
-      {/* STATS */}
-      <section aria-label="Studio in numbers" className="st-wrap st-section" style={{ paddingTop: 56 }}>
-        <div className="st-g4 st-reveal" style={{ borderTop: '1px solid var(--ink)', paddingTop: 24 }}>
-          <div><div className="st-stat-num"><CountUp to={75} />+</div><div className="st-stat-label">Businesses helped across 10 industries</div></div>
-          <div><div className="st-stat-num">5 to 28</div><div className="st-stat-label">Days from kickoff to launch</div></div>
-          <div><div className="st-stat-num">5.0</div><div className="st-stat-label"><a className="st-link" href={GOOGLE_PROFILE} target="_blank" rel="noopener">On Google, from 8 reviews ↗</a></div></div>
-          <div><div className="st-stat-num">6</div><div className="st-stat-label">Countries: India, Australia, USA, UK, Canada, UAE</div></div>
+      {/* ================= PROBLEM (pinned, sideways) ================= */}
+      <section className="st-prob st-dark st-grain" aria-labelledby="prob-h">
+        <div style={{ paddingTop: 'clamp(96px, 10vw, 140px)', paddingBottom: 'clamp(72px, 8vw, 120px)', minHeight: '100svh', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div className="st-wrap st-prob-head">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+              <span className="st-mono st-label">The problem</span>
+              <h2 id="prob-h" className="st-xl st-h2">Most websites <span className="st-serif" style={{ color: 'var(--peri)' }}>lose the call.</span></h2>
+            </div>
+            <p className="st-lede" style={{ maxWidth: 380, color: 'var(--body-dark)' }}>Your website is the first meeting. Here’s how most of them lose it in five seconds.</p>
+          </div>
+          <div className="st-prob-track">
+            {PROBLEMS.map((p, i) => (
+              <article key={p.title} className="st-pcard" style={{ background: p.bg }}>
+                <span className="shape-zone"><Shape kind={p.sh} color={p.c} /></span>
+                <span className="num">0{i + 1}</span>
+                <div><h3>{p.title}</h3><p>{p.desc}</p></div>
+              </article>
+            ))}
+            <article className="st-pcard end">
+              <span className="st-mono" style={{ color: 'var(--lime)' }}>No website yet?</span>
+              <h3 className="st-xl" style={{ fontSize: 'clamp(48px, 5vw, 80px)', margin: 0 }}>Start with a <span className="st-serif">free plan.</span></h3>
+              <p style={{ color: 'var(--body-dark)' }}>Tell us what you do. We’ll show you how customers find you today and what your first website should be.</p>
+              <a href="#audit" className="st-btn st-btn-primary" style={{ alignSelf: 'flex-start' }}>Get my free plan <span className="st-arrow" aria-hidden="true">→</span></a>
+            </article>
+          </div>
         </div>
       </section>
 
-      {/* PROBLEM */}
-      <section aria-labelledby="problem-h" className="st-wrap st-section">
-        <div className="st-split">
-          <div className="st-head st-reveal">
-            <div className="st-mono st-label">01 · The problem</div>
-            <h2 id="problem-h" className="st-h2">Your website is the first meeting. Most lose it in <span className="st-serif" style={{ color: 'var(--accent)' }}>five seconds.</span></h2>
+      {/* ================= WORK (stacking cards) ================= */}
+      <section id="work" className="st-dark st-pad" aria-labelledby="work-h" style={{ paddingTop: 40 }}>
+        <div className="st-wrap">
+          <Head
+            label="Selected work"
+            dark
+            aside={<PageLink page="work" onNavigate={() => go('work')} className="st-btn st-btn-ghost">See all 14 projects <span className="st-arrow" aria-hidden="true">→</span></PageLink>}
+          >
+            <h2 id="work-h" className="st-xl st-h2">Work that <span className="st-serif" style={{ color: 'var(--lime)' }}>earns its keep.</span></h2>
+          </Head>
+          <div className="st-stack">
+            {WORK.map((w, i) => (
+              <article key={w.id} className="st-wcard">
+                <div className="st-wcard-info">
+                  <div className="idx st-mono"><span>0{i + 1} / 0{WORK.length}</span><span>{w.tag}</span></div>
+                  <div>
+                    <h3>{w.name}</h3>
+                    <p style={{ marginTop: 18 }}>{w.desc}</p>
+                  </div>
+                  <div>
+                    <div className="st-wcard-result"><b style={{ color: i % 2 ? 'var(--peri)' : 'var(--lime)' }}>{w.big}</b><span>{w.small}</span></div>
+                    <PageLink href={getWorkDetailPath(w.id)} onNavigate={() => openCase(w.id)} className="st-link" style={{ display: 'inline-block', marginTop: 22 }}>
+                      Read the case study <span className="st-arrow" aria-hidden="true">→</span>
+                    </PageLink>
+                  </div>
+                </div>
+                <PageLink href={getWorkDetailPath(w.id)} onNavigate={() => openCase(w.id)} className="st-wcard-shot" aria-label={`${w.name} case study`}>
+                  <img src={`/screenshots/full/${w.id}.webp`} alt={`${w.name} website, designed by Mago Labs`} width={560} height={2275} loading="lazy" decoding="async" />
+                  <span className="pill st-mono">Hover to scroll the site</span>
+                </PageLink>
+              </article>
+            ))}
           </div>
-          <ol className="st-list st-reveal">
-            {PROBLEMS.map((p, i) => (
-              <li key={p.title}>
-                <span className="st-mono" style={{ color: 'var(--muted)' }}>0{i + 1}</span>
-                <div><h3>{p.title}</h3><p>{p.desc}</p></div>
+        </div>
+      </section>
+
+      {/* ================= RESULTS ================= */}
+      <section className="st-light st-pad" aria-labelledby="res-h">
+        <div className="st-wrap">
+          <Head label="Results" aside={<p className="st-lede">Real numbers from real clients. Every site we build is judged by what happens after launch.</p>}>
+            <h2 id="res-h" className="st-xl st-h2">Pretty is the minimum. <span className="st-serif" style={{ color: 'var(--accent)' }}>Enquiries are the point.</span></h2>
+          </Head>
+          <div className="st-results st-reveal">
+            <div className="st-res" style={{ background: 'var(--lime)' }}>
+              <span className="shape-zone"><Shape kind="circle" color="var(--accent)" /></span>
+              <div className="st-res-num">25<span style={{ fontSize: '0.6em' }}>→</span><CountUp from={25} to={58} duration={1.6} /></div>
+              <div>
+                <p>Patients a day at Dr. Mihir Shah’s new clinic, within two months of launch.</p>
+                <PageLink href={getWorkDetailPath('drmihirshah')} onNavigate={() => openCase('drmihirshah')} className="st-link" style={{ color: 'var(--ink)' }}>Read the case study →</PageLink>
+              </div>
+            </div>
+            <div className="st-res" style={{ background: 'var(--ink)', color: 'var(--paper)' }}>
+              <span className="shape-zone"><Shape kind="ring" color="var(--ember)" /></span>
+              <div className="st-res-num">+<CountUp to={63} />%</div>
+              <div>
+                <p>More appointment calls for the same clinic, which also started showing up in Google searches.</p>
+                <PageLink href={getWorkDetailPath('drmihirshah')} onNavigate={() => openCase('drmihirshah')} className="st-link" style={{ color: 'var(--accent-on-dark)' }}>Read the case study →</PageLink>
+              </div>
+            </div>
+            <div className="st-res" style={{ background: 'var(--peri)' }}>
+              <span className="shape-zone"><Shape kind="quarter" color="var(--paper)" /></span>
+              <div className="st-res-num"><CountUp to={34} /></div>
+              <div>
+                <p>New clients in three months for Darshan Galani &amp; Co., a CA firm that had never had a website.</p>
+                <PageLink href={getWorkDetailPath('darshangalani')} onNavigate={() => openCase('darshangalani')} className="st-link" style={{ color: 'var(--ink)' }}>Read the case study →</PageLink>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= INDUSTRIES ================= */}
+      <section id="services" className="st-dark st-pad st-grain" aria-labelledby="ind-h">
+        <div className="st-wrap">
+          <Head label="Who we build for" dark aside={<p className="st-lede">Each industry wins trust differently. A clinic needs calm and credentials, a contractor needs proof of the work. We design for that.</p>}>
+            <h2 id="ind-h" className="st-xl st-h2">75+ businesses. <span className="st-serif" style={{ color: 'var(--peri)' }}>10 industries.</span></h2>
+          </Head>
+          <div className="st-ind-grid">
+            <ul className="st-ind-list">
+              {INDUSTRIES.map((x, i) => {
+                const inner = (
+                  <>
+                    <span className="t">{x.name}</span>
+                    <span className="st-mono" style={{ fontSize: 11 }}>{String(i + 1).padStart(2, '0')}</span>
+                  </>
+                );
+                return (
+                  <li key={x.name}>
+                    {x.page ? (
+                      <PageLink page={x.page} onNavigate={() => go(x.page as PageId)} className={`st-ind-btn${i === ind ? ' on' : ''}`} onMouseEnter={() => setInd(i)} onFocus={() => setInd(i)}>{inner}</PageLink>
+                    ) : (
+                      <button type="button" className={`st-ind-btn${i === ind ? ' on' : ''}`} onMouseEnter={() => setInd(i)} onFocus={() => setInd(i)} onClick={() => setInd(i)} aria-pressed={i === ind}>{inner}</button>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+            <div>
+              <div className="st-ind-stage" aria-hidden="true">
+                <div className="cell shot">
+                  {indSites.map((s) => (
+                    <img key={s} className={s === activeInd.site ? 'on' : undefined} src={`/screenshots/full/${s}-300.webp`} alt="" width={300} height={1219} loading="lazy" decoding="async" />
+                  ))}
+                </div>
+                <div className="cell" style={{ background: activeInd.bg }}><Shape kind="circle" color={activeInd.c} style={{ transform: `rotate(${ind * 40}deg)` }} /></div>
+                <div className="cell" style={{ background: 'var(--ink-3)' }}><Shape kind="quarter" color={activeInd.bg} style={{ transform: `rotate(${ind * 90}deg)` }} /></div>
+                <div className="cell" style={{ background: activeInd.c === 'var(--ink)' ? 'var(--paper)' : activeInd.c }}><Shape kind="half" color={activeInd.bg} style={{ transform: `rotate(${ind * 180}deg)` }} /></div>
+                <div className="cell" style={{ background: activeInd.bg }}><Shape kind="ring" color={activeInd.c} /></div>
+                <div className="cell" style={{ background: 'var(--ink-3)' }}><Shape kind="dots" color={activeInd.bg} /></div>
+              </div>
+              <p className="st-ind-cap" aria-live="polite"><b style={{ color: 'var(--paper)' }}>{activeInd.name}:</b> {activeInd.note}</p>
+            </div>
+          </div>
+          <div className="st-chips st-reveal">
+            <span>Alongside every website:</span>
+            {ALONGSIDE.map((s) => s.page ? (
+              <PageLink key={s.name} page={s.page} onNavigate={() => go(s.page as PageId)} className="st-chip">{s.name}</PageLink>
+            ) : (<span key={s.name} className="st-chip">{s.name}</span>))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= PROCESS ================= */}
+      <section className="st-light st-pad" aria-labelledby="proc-h">
+        <div className="st-wrap st-proc">
+          <div className="st-proc-sticky st-reveal">
+            <span className="st-mono st-label">How it works</span>
+            <h2 id="proc-h" className="st-xl st-h2" style={{ margin: '22px 0 26px' }}>Call to live site. <span className="st-serif" style={{ color: 'var(--accent)' }}>Four steps.</span></h2>
+            <p className="st-lede" style={{ color: 'var(--body)', maxWidth: 420, marginBottom: 28 }}>No jargon, no surprise invoices. You always know what happens next and when.</p>
+            <a href="#audit" className="st-btn st-btn-primary">Start with step one <span className="st-arrow" aria-hidden="true">→</span></a>
+          </div>
+          <ol className="st-steps">
+            <span className="bar" aria-hidden="true" />
+            {STEPS.map((s, i) => (
+              <li key={s.title} className="st-step st-reveal">
+                <span className="st-mono n">Step {i + 1} / 4</span>
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
               </li>
             ))}
           </ol>
         </div>
-        <p className="st-reveal" style={{ margin: '40px 0 0', fontSize: 17, color: 'var(--body)' }}>
-          No website yet? <a href="#audit" className="st-link">Get a free plan for your first one →</a>
-        </p>
       </section>
 
-      {/* SELECTED WORK */}
-      <section id="work" aria-labelledby="work-h" className="st-section">
-        <div className="st-panel st-on-dark st-reveal">
-          <div className="st-wrap">
-            <SectionHead
-              num="02"
-              label="Selected work"
-              aside={<PageLink page="work" onNavigate={() => go('work')} className="st-btn st-btn-primary st-btn-sm">See all 14 projects <span className="st-arrow" aria-hidden="true">→</span></PageLink>}
-            >
-              <h2 id="work-h" className="st-h2">Work that <span className="st-serif">earns its keep.</span></h2>
-            </SectionHead>
-            <div className="st-split" style={{ alignItems: 'start' }}>
-              <ol className="st-work-list">
-                {WORK.map((w, i) => (
-                  <li key={w.id}>
-                    <PageLink
-                      href={getWorkDetailPath(w.id)}
-                      onNavigate={() => openCase(w.id)}
-                      className={`st-work-item${i === active ? ' active' : ''}`}
-                    >
-                      <span className="st-mono num" onMouseEnter={() => setActive(i)}>0{i + 1}</span>
-                      <span className="name" onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)}>{w.name}</span>
-                      <span className="st-mono tag">{w.tag}</span>
-                    </PageLink>
-                  </li>
+      {/* ================= COMPARISON ================= */}
+      <section className="st-dark st-pad st-grain" aria-labelledby="cmp-h">
+        <div className="st-wrap">
+          <Head label="Why Mago Labs" dark aside={<p className="st-lede">The craft of a big agency, the attention of a small studio, and a price you know before we start.</p>}>
+            <h2 id="cmp-h" className="st-xl st-h2">Agency craft. <span className="st-serif" style={{ color: 'var(--lime)' }}>Studio attention.</span></h2>
+          </Head>
+          <div className="st-cmp st-reveal" tabIndex={0} aria-label="Comparison table, scrolls sideways on small screens">
+            <table>
+              <thead>
+                <tr><td /><th scope="col" className="us">Mago Labs</th><th scope="col" className="them">Template site</th><th scope="col" className="them">Big agency</th></tr>
+              </thead>
+              <tbody>
+                {COMPARE.map((r) => (
+                  <tr key={r.row}><th scope="row">{r.row}</th><td className="us">{r.us}</td><td className="them">{r.template}</td><td className="them">{r.agency}</td></tr>
                 ))}
-              </ol>
-              <div className="st-work-preview-col">
-                <PageLink href={getWorkDetailPath(activeWork.id)} onNavigate={() => openCase(activeWork.id)} className="st-preview" aria-label={`${activeWork.name} case study`}>
-                  {WORK.map((w, i) => (
-                    <img
-                      key={w.id}
-                      className={i === active ? 'on' : undefined}
-                      src={`/screenshots/full/${w.id}.webp`}
-                      alt={i === active ? `${w.name} website, designed by Mago Labs` : ''}
-                      width={560}
-                      height={2275}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ))}
-                  <span className="st-pill st-mono">View case study</span>
-                </PageLink>
-                <div className="st-work-cap" aria-live="polite">
-                  <span style={{ maxWidth: 460 }}>{activeWork.caption}</span>
-                  <span className="st-mono" style={{ color: 'var(--muted-dark)' }}>{activeWork.tag}</span>
-                </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= PRICING + FOUNDER ================= */}
+      <section id="pricing" className="st-light st-pad" aria-labelledby="price-h">
+        <div className="st-wrap">
+          <Head label="Pricing" aside={<p className="st-lede">Every package is custom designed and includes hosting. Prices show in your own currency.</p>}>
+            <h2 id="price-h" className="st-xl st-h2">Clear prices. <span className="st-serif" style={{ color: 'var(--accent)' }}>Fixed first.</span></h2>
+          </Head>
+          <div className="st-g4 st-g4-stack st-reveal">
+            {PACKAGES.map((p) => (
+              <PageLink key={p.id} page="pricing" onNavigate={() => go('pricing')} className={`st-price${p.id === 'growth' ? ' featured' : ''}`}>
+                <span className="corner" aria-hidden="true"><Shape kind={PACKAGE_SHAPE[p.id].sh} color={PACKAGE_SHAPE[p.id].c} /></span>
+                <span className="st-mono" style={{ display: 'flex', gap: 10, alignItems: 'center' }}>{p.number} · {p.name}{p.id === 'growth' && <span className="st-badge">Most picked</span>}</span>
+                <span>
+                  <span className="from" style={{ display: 'block' }}>from</span>
+                  <span className="amt"><Price pkg={p} /></span>
+                </span>
+                <span className="desc">{PACKAGE_DESC[p.id]}</span>
+                <span className="days st-mono">Live in {p.days} days</span>
+              </PageLink>
+            ))}
+          </div>
+          <p className="st-reveal" style={{ margin: '28px 0 0', fontSize: 16, color: 'var(--body)' }}>
+            Need something specific? <PageLink page="pricing" onNavigate={() => go('pricing')} className="st-link">Compare packages and add-ons →</PageLink>
+          </p>
+
+          <div id="about" className="st-founder" style={{ marginTop: 'clamp(120px, 14vw, 200px)' }}>
+            <div className="st-founder-art st-reveal">
+              <span className="b1" aria-hidden="true" />
+              <img src="/burhan-founder.jpg" alt="Burhan Kapasi, founder of Mago Labs" width={768} height={960} loading="lazy" decoding="async" />
+              <span className="b2" aria-hidden="true" />
+            </div>
+            <div className="st-reveal">
+              <span className="st-mono st-label">A note from the founder</span>
+              <h2 className="st-xl st-h3" style={{ margin: '22px 0 28px' }}>Most good businesses are better than they <span className="st-serif" style={{ color: 'var(--accent)' }}>look online.</span></h2>
+              <p>I spent eight years in banking, fintech and insurance before starting Mago Labs. I saw strong businesses lose deals because their website made them look small. That’s what we fix.</p>
+              <p>The studio stays small on purpose. You talk to me from the first call to launch, and every site is designed for one job: make the right people trust you enough to get in touch.</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginTop: 10 }}>
+                <span className="st-sign" aria-hidden="true">Burhan</span>
+                <span style={{ fontSize: 14, color: 'var(--muted)', lineHeight: 1.4 }}>Burhan Kapasi<br />Founder, Mago Labs</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* RESULTS */}
-      <section aria-labelledby="results-h" className="st-wrap st-section">
-        <SectionHead num="03" label="Results">
-          <h2 id="results-h" className="st-h2" style={{ maxWidth: 900 }}>Pretty is the minimum. <span className="st-serif" style={{ color: 'var(--accent)' }}>Enquiries</span> are the point.</h2>
-        </SectionHead>
-        <div className="st-g3 st-reveal">
-          <div className="st-result">
-            <div className="st-result-num">25<span style={{ color: 'var(--accent)' }}>→</span><CountUp from={25} to={58} duration={1.6} /></div>
-            <p>Patients a day at Dr. Mihir Shah’s new clinic, within two months of launch.</p>
-            <PageLink href={getWorkDetailPath('drmihirshah')} onNavigate={() => openCase('drmihirshah')} className="st-link">Read the case study →</PageLink>
-          </div>
-          <div className="st-result">
-            <div className="st-result-num">+<CountUp to={63} />%</div>
-            <p>More appointment calls for the same clinic, which also started showing up in Google searches.</p>
-            <PageLink href={getWorkDetailPath('drmihirshah')} onNavigate={() => openCase('drmihirshah')} className="st-link">Read the case study →</PageLink>
-          </div>
-          <div className="st-result">
-            <div className="st-result-num"><CountUp to={34} /></div>
-            <p>New clients in three months for Darshan Galani &amp; Co., a CA firm that had never had a website.</p>
-            <PageLink href={getWorkDetailPath('darshangalani')} onNavigate={() => openCase('darshangalani')} className="st-link">Read the case study →</PageLink>
-          </div>
-        </div>
-      </section>
-
-      {/* INDUSTRIES */}
-      <section id="industries" aria-labelledby="ind-h" className="st-wrap st-section">
-        <SectionHead
-          num="04"
-          label="Who we build for"
-          aside={<p style={{ margin: 0, maxWidth: 420, fontSize: 16, lineHeight: 1.5, color: 'var(--muted)' }}>Each industry wins trust differently. A clinic needs calm and credentials, a contractor needs proof of the work. We design for that.</p>}
-        >
-          <h2 id="ind-h" className="st-h2">75+ businesses. <span className="st-serif">10 industries.</span></h2>
-        </SectionHead>
-        <div className="st-g5 st-reveal">
-          {INDUSTRIES.map((ind, i) => {
-            const inner = (
-              <>
-                <span className="st-mono n">{String(i + 1).padStart(2, '0')}</span>
-                <span className="t">{ind.name}</span>
-              </>
-            );
-            return ind.page ? (
-              <PageLink key={ind.name} page={ind.page} onNavigate={() => go(ind.page as PageId)} className="st-ind">{inner}</PageLink>
-            ) : (
-              <div key={ind.name} className="st-ind">{inner}</div>
-            );
-          })}
-        </div>
-        <div className="st-reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center', fontSize: 15, color: 'var(--muted)', marginTop: 32 }}>
-          <span>Alongside every website:</span>
-          {ALONGSIDE.map((s) =>
-            s.page ? (
-              <PageLink key={s.name} page={s.page} onNavigate={() => go(s.page as PageId)} className="st-chip">{s.name}</PageLink>
-            ) : (
-              <span key={s.name} className="st-chip">{s.name}</span>
-            )
-          )}
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section aria-labelledby="proc-h" className="st-wrap st-section">
-        <SectionHead num="05" label="How it works">
-          <h2 id="proc-h" className="st-h2">From first call to live site in <span className="st-serif" style={{ color: 'var(--accent)' }}>four steps.</span></h2>
-        </SectionHead>
-        <ol className="st-g4 st-steps st-reveal">
-          {STEPS.map((s, i) => (
-            <li key={s.title} className={`st-step${i === 3 ? ' dark' : ''}`}>
-              <span className="st-mono" style={{ color: i === 3 ? 'var(--accent-on-dark)' : 'var(--muted)' }}>{i + 1}/4</span>
-              <div><h3>{s.title}</h3><p>{s.desc}</p></div>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      {/* COMPARISON */}
-      <section aria-labelledby="cmp-h" className="st-wrap st-section">
-        <SectionHead num="06" label="Why Mago Labs">
-          <h2 id="cmp-h" className="st-h2">Agency craft. <span className="st-serif">Studio attention.</span></h2>
-        </SectionHead>
-        <div className="st-cmp st-reveal" tabIndex={0} aria-label="Comparison table, scrolls sideways on small screens">
-          <table>
-            <thead>
-              <tr>
-                <td />
-                <th scope="col" className="us">Mago Labs</th>
-                <th scope="col" className="them">Template site</th>
-                <th scope="col" className="them">Big agency</th>
-              </tr>
-            </thead>
-            <tbody>
-              {COMPARE.map((r) => (
-                <tr key={r.row}>
-                  <th scope="row">{r.row}</th>
-                  <td className="us">{r.us}</td>
-                  <td className="them">{r.template}</td>
-                  <td className="them">{r.agency}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* PRICING */}
-      <section id="pricing" aria-labelledby="price-h" className="st-wrap st-section">
-        <SectionHead
-          num="07"
-          label="Pricing"
-          aside={<p style={{ margin: 0, maxWidth: 360, fontSize: 15, lineHeight: 1.5, color: 'var(--muted)' }}>Every package is custom designed and includes hosting. Prices show in your own currency.</p>}
-        >
-          <h2 id="price-h" className="st-h2">Clear prices. <span className="st-serif">Fixed before we start.</span></h2>
-        </SectionHead>
-        <div className="st-g4 st-reveal">
-          {PACKAGES.map((p) => (
-            <PageLink key={p.id} page="pricing" onNavigate={() => go('pricing')} className={`st-price${p.id === 'growth' ? ' featured' : ''}`}>
-              <span className="st-mono" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: p.id === 'growth' ? undefined : 'var(--muted)' }}>
-                {p.number} · {p.name}
-                {p.id === 'growth' && <span className="st-badge">Most picked</span>}
-              </span>
-              <span>
-                <span className="from" style={{ display: 'block' }}>from</span>
-                <span className="amt"><Price pkg={p} /></span>
-              </span>
-              <span className="desc">{PACKAGE_DESC[p.id]}</span>
-            </PageLink>
-          ))}
-        </div>
-        <p className="st-reveal" style={{ margin: '28px 0 0', fontSize: 16, color: 'var(--body)' }}>
-          Need something specific? <PageLink page="pricing" onNavigate={() => go('pricing')} className="st-link">Compare packages and add-ons →</PageLink>
-        </p>
-      </section>
-
-      {/* FOUNDER */}
-      <section id="about" aria-labelledby="founder-h" className="st-wrap st-section">
-        <div className="st-split st-founder st-reveal">
-          <img src="/burhan-founder.jpg" alt="Burhan Kapasi, founder of Mago Labs" width={768} height={960} loading="lazy" decoding="async" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
-            <div className="st-mono st-label">08 · A note from the founder</div>
-            <h2 id="founder-h" style={{ margin: 0, fontSize: 'clamp(30px, 3.4vw, 48px)', lineHeight: 1.05 }}>Most good businesses are better than they <span className="st-serif" style={{ color: 'var(--accent)' }}>look online.</span></h2>
-            <p>I spent eight years in banking, fintech and insurance before starting Mago Labs. I saw strong businesses lose deals because their website made them look small. That’s what we fix.</p>
-            <p>The studio stays small on purpose. You talk to me from the first call to launch, and every site is designed for one job: make the right people trust you enough to get in touch.</p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, paddingTop: 8 }}>
-              <span className="st-serif" style={{ fontSize: 34 }} aria-hidden="true">Burhan</span>
-              <span style={{ fontSize: 14, color: 'var(--muted)', lineHeight: 1.4 }}>Burhan Kapasi<br />Founder, Mago Labs</span>
+      {/* ================= TESTIMONIALS ================= */}
+      <section className="st-dark st-pad st-grain" aria-labelledby="rev-h">
+        <div className="st-wrap">
+          <Head
+            label="Clients"
+            dark
+            aside={<a className="st-gbadge" href={GOOGLE_PROFILE_URL} target="_blank" rel="noopener"><b>{GOOGLE_RATING}</b><span>Rated on Google from {GOOGLE_REVIEWS.length} reviews ↗</span></a>}
+          >
+            <h2 id="rev-h" className="st-xl st-h2">{reviews.length} clients. <span className="st-serif" style={{ color: 'var(--peri)' }}>In their words.</span></h2>
+          </Head>
+          <div className="st-row" style={{ marginBottom: 28, alignItems: 'center' }}>
+            <div className="st-filters" role="group" aria-label="Filter testimonials">
+              <button type="button" className="st-filter" aria-pressed={filter === 'all'} onClick={() => setFilter('all')}>All ({reviews.length})</button>
+              <button type="button" className="st-filter" aria-pressed={filter === 'google'} onClick={() => setFilter('google')}>Google reviews ({GOOGLE_REVIEWS.length})</button>
+              <button type="button" className="st-filter" aria-pressed={filter === 'client'} onClick={() => setFilter('client')}>Client stories ({TESTIMONIALS.length})</button>
+            </div>
+            <div className="st-rail-nav">
+              <button type="button" onClick={() => scrollRail(-1)} aria-label="Previous testimonials">←</button>
+              <button type="button" onClick={() => scrollRail(1)} aria-label="Next testimonials">→</button>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* REVIEWS */}
-      <section aria-labelledby="rev-h" className="st-wrap st-section">
-        <SectionHead
-          num="09"
-          label="Clients"
-          aside={<a href={GOOGLE_PROFILE} target="_blank" rel="noopener" className="st-link" style={{ fontSize: 15 }}>Read all 8 Google reviews ↗</a>}
-        >
-          <h2 id="rev-h" className="st-h2">5.0 on Google. <span className="st-serif">In their words.</span></h2>
-        </SectionHead>
-        <div className="st-g3 st-reveal">
-          {REVIEWS.map((r) => (
-            <figure key={r.name} className="st-review">
+        <div className="st-rail" ref={railRef} tabIndex={0} aria-label="Testimonials, scroll sideways">
+          {shown.map((r) => (
+            <figure key={r.key} className={`st-tcard ${r.kind}${r.quote && r.quote.length > 300 ? ' long' : ''}`} style={{ margin: 0 }}>
+              <span className="corner" aria-hidden="true"><Shape kind={r.shape.sh} color={r.shape.c} /></span>
               <div>
-                <div className="st-stars" aria-label="5 out of 5 stars">★★★★★</div>
-                <blockquote style={{ marginTop: 14 }}>“{r.quote}”</blockquote>
+                <div className="top">
+                  <span className="stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span className="src st-mono">{r.kind === 'google' ? 'Google review' : 'Client story'}</span>
+                </div>
+                <blockquote style={{ marginTop: 18 }}>
+                  {r.quote ? `“${r.quote}”` : <span style={{ opacity: 0.75 }}>Left a 5-star rating on Google.</span>}
+                </blockquote>
               </div>
-              <figcaption><b>{r.name}</b> · {r.where}</figcaption>
+              <figcaption className="who">
+                <span className="av" style={{ background: r.shape.c, color: 'var(--ink)' }} aria-hidden="true">{r.initials}</span>
+                <span><b>{r.name}</b><span>{r.meta}</span></span>
+              </figcaption>
             </figure>
           ))}
         </div>
       </section>
 
-      {/* FAQ */}
-      <section aria-labelledby="faq-h" className="st-wrap st-section">
-        <div className="st-split">
-          <div className="st-head st-reveal" style={{ alignSelf: 'start' }}>
-            <div className="st-mono st-label">10 · Questions</div>
-            <h2 id="faq-h" className="st-h2">Straight <span className="st-serif">answers.</span></h2>
+      {/* ================= FAQ ================= */}
+      <section className="st-light st-pad" aria-labelledby="faq-h">
+        <div className="st-wrap st-split">
+          <div className="st-reveal" style={{ alignSelf: 'start' }}>
+            <span className="st-mono st-label">Questions</span>
+            <h2 id="faq-h" className="st-xl st-h2" style={{ marginTop: 22 }}>Straight <span className="st-serif" style={{ color: 'var(--accent)' }}>answers.</span></h2>
           </div>
           <div className="st-faq st-reveal">
             {FAQS.map((f, i) => (

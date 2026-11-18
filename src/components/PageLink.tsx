@@ -17,6 +17,9 @@ interface PageLinkProps {
   tabIndex?: number;
   onPointerDownCapture?: React.PointerEventHandler<HTMLAnchorElement>;
   children?: React.ReactNode;
+  style?: React.CSSProperties;
+  onMouseEnter?: React.MouseEventHandler<HTMLAnchorElement>;
+  onFocus?: React.FocusEventHandler<HTMLAnchorElement>;
   key?: string | number;
 }
 

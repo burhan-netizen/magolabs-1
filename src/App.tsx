@@ -281,8 +281,8 @@ function AppContent({ initialPath }: AppProps) {
   const isStudio = currentPage === 'home';
 
   return (
-    <div className={`min-h-screen flex flex-col ${isStudio ? 'bg-[#F2EFE9]' : 'bg-white'} dark:bg-[#1A1A1A] text-neutral-900 dark:text-[#F8F9FA] selection:bg-brand selection:text-ink transition-colors duration-300`}>
-      <motion.div className="scroll-progress" style={{ scaleX: progressScale }} aria-hidden="true" />
+    <div className={`min-h-screen flex flex-col ${isStudio ? 'bg-[#0C0C0B]' : 'bg-white'} dark:bg-[#1A1A1A] text-neutral-900 dark:text-[#F8F9FA] selection:bg-brand selection:text-ink transition-colors duration-300`}>
+      {!isStudio && <motion.div className="scroll-progress" style={{ scaleX: progressScale }} aria-hidden="true" />}
 
       {/* Dynamic Header */}
       {isStudio ? (
@@ -325,7 +325,7 @@ function AppContent({ initialPath }: AppProps) {
 
       {/* Floating CTA and Scroll-to-top Buttons */}
       {!isStudio && <StickyCTA />}
-      <ScrollToTop />
+      {!isStudio && <ScrollToTop />}
       
       {/* Design Customizer Studio Hub: internal demo tool only, not for real visitors.
           Opt in during a client pitch/demo with ?demo=true, never shown by default. */}
