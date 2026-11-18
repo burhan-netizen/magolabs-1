@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export type Currency = 'INR' | 'USD' | 'AUD' | 'GBP' | 'EUR' | 'NZD';
+export type Currency = 'INR' | 'USD' | 'AUD' | 'GBP' | 'EUR' | 'NZD' | 'CAD';
 
 /** India's time zone goes by two names depending on the device. */
 const INDIA_TIME_ZONES = ['Asia/Kolkata', 'Asia/Calcutta'];
@@ -18,9 +18,20 @@ const EURO_TIME_ZONES = [
   'Europe/Sofia',
 ];
 
+/** Canadian time zones. */
+const CANADA_TIME_ZONES = [
+  'America/Toronto', 'America/Montreal', 'America/Vancouver', 'America/Edmonton', 'America/Winnipeg', 'America/Halifax',
+  'America/St_Johns', 'America/Regina', 'America/Moncton', 'America/Goose_Bay', 'America/Glace_Bay', 'America/Swift_Current',
+  'America/Whitehorse', 'America/Dawson', 'America/Dawson_Creek', 'America/Creston', 'America/Fort_Nelson', 'America/Yellowknife',
+  'America/Inuvik', 'America/Iqaluit', 'America/Pangnirtung', 'America/Rankin_Inlet', 'America/Resolute', 'America/Cambridge_Bay',
+  'America/Atikokan', 'America/Blanc-Sablon', 'America/Nipigon', 'America/Thunder_Bay', 'America/Rainy_River',
+  'Canada/Atlantic', 'Canada/Central', 'Canada/Eastern', 'Canada/Mountain', 'Canada/Newfoundland', 'Canada/Pacific',
+  'Canada/Saskatchewan', 'Canada/Yukon',
+];
+
 /** Works out which price list a visitor should see, from their device's time zone.
- *  India sees rupees, Australia AUD, New Zealand NZD, the UK pounds, euro countries
- *  euros, and everywhere else US dollars. If the time zone cannot be read, rupees
+ *  India sees rupees, Australia AUD, New Zealand NZD, Canada CAD, the UK pounds,
+ *  euro countries euros, and everywhere else US dollars. If the time zone cannot be read, rupees
  *  are shown. Keep this in step with the small script in index.html. */
 export function detectCurrency(): Currency {
   try {
@@ -28,6 +39,7 @@ export function detectCurrency(): Currency {
     if (!zone || INDIA_TIME_ZONES.includes(zone)) return 'INR';
     if (zone.startsWith('Australia/')) return 'AUD';
     if (zone === 'Pacific/Auckland' || zone === 'Pacific/Chatham') return 'NZD';
+    if (CANADA_TIME_ZONES.includes(zone)) return 'CAD';
     if (UK_TIME_ZONES.includes(zone)) return 'GBP';
     if (EURO_TIME_ZONES.includes(zone)) return 'EUR';
     return 'USD';

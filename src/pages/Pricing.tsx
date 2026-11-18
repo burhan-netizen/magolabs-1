@@ -50,7 +50,7 @@ const TIERS: Tier[] = [
     name: 'Launch',
     tagline: 'For businesses ready to build a professional online presence.',
     pkg: getPackage('launch'),
-    facts: ['Up to 5 pages', 'Live in 5 days', '90-day support'],
+    facts: ['Up to 5 pages', 'Live in 5 days', '1 year free support'],
     features: [
       'Up to 5 pages',
       'Custom UI/UX design',
@@ -62,11 +62,12 @@ const TIERS: Tier[] = [
       'Basic on-page SEO',
       'Speed optimization',
       'SSL setup',
-      'Hosting included, no monthly fee',
+      'Easy-edit CMS',
+      'Free hosting for life, no monthly fees',
       'Google Analytics & Search Console',
       'Basic animations',
       '2 revision rounds',
-      '90-day post-launch support',
+      '1 year free support',
     ],
   },
   {
@@ -74,7 +75,7 @@ const TIERS: Tier[] = [
     name: 'Growth',
     tagline: 'For businesses that want their website to generate enquiries.',
     pkg: getPackage('growth'),
-    facts: ['Up to 10 pages', 'Live in 14 days', '90-day support'],
+    facts: ['Up to 10 pages', 'Live in 14 days', '1 year free support'],
     inherits: 'Everything in Launch, plus:',
     popular: true,
     features: [
@@ -86,11 +87,11 @@ const TIERS: Tier[] = [
       'Local SEO setup',
       'Google Business Profile integration',
       'Blog / Insights section',
-      'Basic CMS',
+      'Editable blog & pages',
       'Testimonials & case studies',
       'Basic schema markup',
-      '3 revision rounds',
-      '90-day post-launch support',
+      '2 revision rounds',
+      '1 year free support',
     ],
   },
   {
@@ -98,7 +99,7 @@ const TIERS: Tier[] = [
     name: 'Scale',
     tagline: 'For established businesses that need a premium digital presence.',
     pkg: getPackage('scale'),
-    facts: ['15+ pages', 'Live in 21 days', '90-day support'],
+    facts: ['15+ pages', 'Live in 21 days', '1 year free support'],
     inherits: 'Everything in Growth, plus:',
     features: [
       '15+ pages',
@@ -113,8 +114,8 @@ const TIERS: Tier[] = [
       'Advanced lead routing',
       'Custom functionality',
       'Advanced performance optimization',
-      '3 revision rounds',
-      '90-day post-launch support',
+      '2 revision rounds',
+      '1 year free support',
     ],
   },
 ];
@@ -125,7 +126,7 @@ const COMMERCE = {
   name: 'Commerce',
   tagline: 'For businesses ready to sell online.',
   pkg: getPackage('commerce'),
-  facts: ['Up to 50 products initially', 'Live in 28 days', '90-day support'],
+  facts: ['Up to 50 products initially', 'Live in 28 days', '1 year free support'],
   groups: [
     {
       title: 'Your store',
@@ -170,8 +171,9 @@ const COMMERCE = {
         'Basic on-page SEO',
         'SSL configuration',
         'Performance optimization',
-        '3 revision rounds',
-        '90-day post-launch support',
+        'Free hosting for life',
+        '2 revision rounds',
+        '1 year free support',
       ],
     },
   ],
@@ -183,16 +185,17 @@ const COMPARE_ROWS: { label: string; values: string[] }[] = [
   { label: 'Best for', values: ['A professional presence', 'Generating enquiries', 'A premium presence', 'Selling online'] },
   { label: 'Size', values: ['Up to 5 pages', 'Up to 10 pages', '15+ pages', 'Up to 50 products'] },
   { label: 'SEO', values: ['Basic on-page', 'Local SEO setup', 'Technical SEO', 'Basic on-page'] },
-  { label: 'Edit it yourself', values: ['', 'Basic CMS', 'Advanced CMS', 'Admin panel / CMS'] },
-  { label: 'Revision rounds', values: ['2', '3', '3', '3'] },
-  { label: 'Post-launch support', values: ['90 days', '90 days', '90 days', '90 days'] },
+  { label: 'Edit it yourself', values: ['Easy-edit CMS', 'Easy-edit CMS', 'Advanced CMS', 'Admin panel / CMS'] },
+  { label: 'Revision rounds', values: ['2', '2', '2', '2'] },
+  { label: 'Hosting', values: ['Free for life', 'Free for life', 'Free for life', 'Free for life'] },
+  { label: 'Free support', values: ['1 year', '1 year', '1 year', '1 year'] },
   { label: 'Live in', values: PACKAGES.map((pkg) => `${pkg.days} days`) },
 ];
 
 // True of every package, whatever its size.
 const ALWAYS = [
   { title: 'Designed for you', icon: Palette, desc: 'Every website starts from a blank canvas. No templates, at any price.' },
-  { title: 'Yours to own', icon: KeyRound, desc: 'Your domain and your code stay in your name. Hosting is included.' },
+  { title: 'Yours to own', icon: KeyRound, desc: 'Your domain and your code stay in your name. Hosting is free for life, with no monthly fees.' },
   { title: 'A fixed quote first', icon: BadgeCheck, desc: 'You know the exact price before any work starts.' },
   { title: 'Direct with the founder', icon: Handshake, desc: 'You work with Burhan from the first call to launch.' },
 ];
@@ -208,7 +211,15 @@ const FAQS = [
   },
   {
     question: 'Are the domain and hosting included?',
-    answer: 'Hosting is included at no cost for standard business websites, with no monthly fee. Your domain is registered in your name, and you keep full ownership of it and your code.',
+    answer: 'Hosting is included free for life for standard business websites (fair use), with no monthly fees. Your domain is registered in your name, and you keep full ownership of it and your code.',
+  },
+  {
+    question: 'Are there any monthly fees?',
+    answer: 'No. You pay once: 50% to start and 50% at launch. Hosting is free for life, and the first year of support (bug fixes and small edits) is free too.',
+  },
+  {
+    question: 'What happens after the first year?',
+    answer: 'Every website comes with an easy-edit CMS, so you can update text and photos yourself. If you would rather we did it, we make changes at a simple hourly rate.',
   },
   {
     question: 'Can I start small and add more later?',
@@ -308,10 +319,10 @@ export default function Pricing({ onPageChange }: PricingProps) {
               Clear prices. <span className="marker whitespace-nowrap">No surprises.</span>
             </h1>
             <p className="price-rise text-neutral-600 text-base sm:text-lg leading-relaxed" style={{ '--i': 2 } as CSSProperties}>
-              Four packages, each designed from scratch for your business. Pick the one closest to what you need. Live in as little as 5 days, with a fixed quote before any work starts.
+              Four packages, each designed from scratch for your business. One-off price, no monthly fees. Live in as little as 5 days, with a fixed quote before any work starts.
             </p>
             <div className="price-rise flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-sm font-medium text-neutral-700" style={{ '--i': 3 } as CSSProperties}>
-              {['No templates', 'No hidden fees', 'You own everything'].map((item) => (
+              {['No templates', 'No monthly fees', 'You own everything'].map((item) => (
                 <span key={item} className="inline-flex items-center gap-2">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand text-ink">
                     <Check className="h-3 w-3" strokeWidth={3} />
