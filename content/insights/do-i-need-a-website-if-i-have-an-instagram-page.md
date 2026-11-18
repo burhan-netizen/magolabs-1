@@ -121,7 +121,7 @@ When done properly, the results can be significant. A CA firm we worked with, Da
 
 A basic professional website in India usually costs from around ₹15,000 to ₹60,000, depending on pages, design and content. Template sites can be cheaper, and ecommerce costs more.
 
-At Mago Labs, our packages start at ₹17,999 for a Launch site that goes live in 5 days, which suits many businesses moving beyond Instagram for the first time. You get a fixed quote before we start.
+At Mago Labs, our packages start at ₹17,999 for a Launch site that goes live in 5 days, which suits many businesses moving beyond Instagram for the first time. It is a one-off price with no monthly fees: hosting is free for life, you get an easy-edit CMS, and the first year of support is free. You get a fixed quote before we start.
 
 ## FAQ
 

@@ -10,7 +10,8 @@ import PageLink from '../components/PageLink';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import AddOnServices from '../components/AddOnServices';
 import Price from '../components/Price';
-import { PACKAGES, getPackage, PackageInfo } from '../data/packages';
+import { PACKAGES, getPackage, PackageInfo, HOURLY_RATE } from '../data/packages';
+import { useCurrency } from '../hooks/useCurrency';
 import { spotlight } from '../utils/tilt';
 
 interface PricingProps {
@@ -252,6 +253,10 @@ export default function Pricing({ onPageChange }: PricingProps) {
   const [picked, setPicked] = useState<PackageId | null>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [hoverCol, setHoverCol] = useState<number | null>(null);
+  const currency = useCurrency();
+  // Outside India the after-year-one answer names the hourly rate in the visitor's currency.
+  const faqAnswer = (answer: string) =>
+    currency === 'INR' ? answer : answer.replace('at a simple hourly rate', `at ${HOURLY_RATE[currency]} an hour`);
 
   // Opens the contact page with the chosen package already filled into the message.
   const goToQuote = (pkg?: string) => {
@@ -783,7 +788,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
                     className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
                   >
                     <div className="overflow-hidden">
-                      <p className={`pb-6 pl-9 pr-10 text-sm sm:text-base text-neutral-600 leading-relaxed transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{faq.answer}</p>
+                      <p className={`pb-6 pl-9 pr-10 text-sm sm:text-base text-neutral-600 leading-relaxed transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{faqAnswer(faq.answer)}</p>
                     </div>
                   </div>
                 </div>

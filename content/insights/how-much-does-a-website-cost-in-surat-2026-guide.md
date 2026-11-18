@@ -28,7 +28,7 @@ This is where most small and mid-size Surat businesses buy. You should expect a 
 
 Larger firms with bigger teams charge more because they carry more overhead (sales staff, project managers, offices). For complex projects, multiple languages, integrations with your ERP or CRM, or a large ecommerce catalogue, this can be the right choice.
 
-For reference, our own packages start at ₹17,999 (Launch, live in 5 days), ₹29,999 (Growth, 14 days), ₹49,999 (Scale, 21 days) and ₹64,999 (Commerce, 28 days). Every project gets a fixed quote before work starts.
+For reference, our own packages start at ₹17,999 (Launch, live in 5 days), ₹29,999 (Growth, 14 days), ₹49,999 (Scale, 21 days) and ₹64,999 (Commerce, 28 days). Every project gets a fixed quote before work starts, and each one is a one-off price: hosting is free for life, with 1 year of free support and no monthly fees.
 
 ## Why do website prices vary so much in Surat?
 
@@ -149,7 +149,7 @@ Send the same brief to two or three providers.
 
 **How much does an ecommerce website cost in Surat?** Most ecommerce builds start around ₹40,000 and can go past ₹2,50,000 for large catalogues, custom features or integrations. Our Commerce package starts at ₹64,999.
 
-**How much should I pay yearly after the website is built?** Budget for domain renewal, hosting and any maintenance. For a small business site, domain plus hosting is often ₹4,000 to ₹12,000 a year, with maintenance contracts on top if you choose one.
+**How much should I pay yearly after the website is built?** Budget for domain renewal, hosting and any maintenance. For a small business site, domain plus hosting is often ₹4,000 to ₹12,000 a year, with maintenance contracts on top if you choose one. With Mago Labs, hosting is free for life, so your only yearly cost is the domain.
 
 **How long does it take to build a website?** A simple site can go live in about a week. Most business sites take 2 to 4 weeks, and ecommerce takes longer. Delays usually come from content, so have your text and photos ready.
 

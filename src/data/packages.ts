@@ -35,3 +35,9 @@ export const PACKAGES: PackageInfo[] = [
 export function getPackage(id: PackageInfo['id']): PackageInfo {
   return PACKAGES.find((pkg) => pkg.id === id) as PackageInfo;
 }
+
+/** Hourly rate for changes after the first year of free support, outside India.
+ *  Indian visitors see "a simple hourly rate" with no number. */
+export const HOURLY_RATE: Record<keyof PackageInfo['prices'], string> = {
+  USD: '$30', GBP: '£25', EUR: '€28', CAD: '$40', AUD: '$45', NZD: '$50',
+};
