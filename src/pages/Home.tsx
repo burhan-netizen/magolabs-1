@@ -1,848 +1,540 @@
-import { ArrowRight, Check, EyeOff, Plus, Minus, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
-import TestimonialDeck from '../components/TestimonialDeck';
-import WorkWall from '../components/WorkWall';
-import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
 import PageLink from '../components/PageLink';
-import LogoWall from '../components/LogoWall';
-import LeadForm, { LeadMode } from '../components/LeadForm';
-import HeroShowcase from '../components/HeroShowcase';
 import CountUp from '../components/CountUp';
-import { WhatsAppLogo } from '../components/BrandIcons';
-import { useLanguage } from '../context/LanguageContext';
+import Price from '../components/Price';
+import { PACKAGES } from '../data/packages';
 import { getWorkDetailPath } from '../utils/pageRoutes';
-import { WHATSAPP_URL } from '../utils/contactLinks';
-import { spotlight } from '../utils/tilt';
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
-  },
-};
+/* ---------------------------------------------------------------------------
+   Mago Labs homepage, "Studio Ink" redesign.
+   Story order: promise and proof, the problem, the work, the results, who it is
+   for, how it works, why us, prices, the founder, reviews, questions, next step.
+   House style: short sentences, plain words, written to "you". No em dashes.
+--------------------------------------------------------------------------- */
 
-const fadeUpItem = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.215, 0.61, 0.355, 1],
-    },
-  },
-};
+const GOOGLE_PROFILE = 'https://maps.app.goo.gl/fnTiihMdcem2z4fn7';
 
 interface HomeProps {
   onPageChange: (page: PageId) => void;
   onOpenCaseStudy: (id: string) => void;
 }
 
-/* ---------------------------------------------------------------------------
-   Page content, kept as plain data so the copy is easy to find and edit.
-
-   The page tells one story, in the customer's order:
-   their problem -> how we fix it -> what happened for others -> their next step.
-   House style: short sentences, plain words, written to "you".
---------------------------------------------------------------------------- */
-
-
 const PROBLEMS = [
-  { icon: EyeOff, title: 'People can’t tell what you do.', desc: 'They land, get confused, and leave within seconds.' },
-  { icon: ShieldAlert, title: 'Nothing gives them a reason to trust you.', desc: 'No proof, no results, nothing that sets you apart from the next search result.' },
-  { icon: Trophy, title: 'A competitor looks more established.', desc: 'Side by side, the dated website loses, even when your work is better.' },
-  { icon: SearchX, title: 'Google is not showing you.', desc: 'People searching for exactly what you sell are finding someone else.' },
+  { title: 'Visitors can’t tell what you do', desc: 'So they leave before they call, and you never know they were there.' },
+  { title: 'Nothing proves you’re good', desc: 'No reviews, results or real work on the page means no reason to trust you.' },
+  { title: 'It looks older than your business', desc: 'Next to a competitor’s new site, a dated one quietly costs you the job.' },
+  { title: 'Google can’t find you', desc: 'Or you have no website at all, and customers find the business next door.' },
 ];
 
-// Each fix leads with what the customer gets; the service name is the small label.
-const FIXES = [
-  {
-    id: 'service-web-design' as PageId,
-    service: 'Website design & development',
-    title: 'A website that makes people call.',
-    desc: 'Designed around your customers and hand-coded to load fast. Every page leads to a call, a form or a WhatsApp message.',
-  },
-  {
-    id: 'service-seo' as PageId,
-    service: 'Search engine optimisation',
-    title: 'Found when people search for what you sell.',
-    desc: 'We target the searches that lead to enquiries in your area, not traffic that never calls.',
-  },
-  {
-    id: 'service-gbp' as PageId,
-    service: 'Google Business Profile',
-    title: 'On the map when someone nearby needs you.',
-    desc: 'Your profile set up, optimised and collecting reviews, so you show up ahead of the business down the road.',
-  },
-  {
-    id: 'service-copywriting' as PageId,
-    service: 'Conversion copywriting',
-    title: 'Words that make visitors trust you.',
-    desc: 'Human-written copy that says what you do and why to choose you. No generic AI filler.',
-  },
+const WORK = [
+  { id: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care', tag: 'Dental, Surat', caption: 'A polished site with online booking for a new clinic. Walk-ins went from 25 to 58 patients a day within two months.' },
+  { id: 'darshangalani', name: 'Darshan Galani & Co.', tag: 'CA firm', caption: 'A first website for a chartered accountancy practice. 34 new clients signed in the first three months.' },
+  { id: 'jaymocivil', name: 'Jaymo Civil', tag: 'Civil, Sydney', caption: 'A website that matches the size of the jobs they take on. Builders see real work and a clear way to get a quote.' },
+  { id: 'ladsonconcrete', name: 'Ladson Concrete', tag: 'Concrete, Florida', caption: 'A Jacksonville concrete contractor, with a website and Google Business Profile built to win local quotes.' },
+  { id: 'centurion', name: 'Centurion Strategic Ventures', tag: 'Finance', caption: 'A loan advisory firm, presented with the credibility its clients look for before the first call.' },
+  { id: 'prabhakarprocessors', name: 'Prabhakar Processors', tag: 'Textile', caption: 'A dyeing and printing mill whose old site undersold its standing, now shown the way buyers expect.' },
+  { id: 'solway', name: 'SolWay Energies', tag: 'Solar', caption: 'A solar and B2B energy company, positioned for serious commercial enquiries.' },
 ];
 
-// Measured client results.
-const RESULTS = [
-  {
-    value: '25 to 58',
-    count: { prefix: '25 to ', from: 25, to: 58, suffix: '' },
-    label: 'patients a day',
-    detail: 'A new dental clinic, within two months of launch. They had to hire more staff to keep up.',
-    client: 'Dr. Mihir Shah Smile Care Clinic',
-    caseStudyId: 'drmihirshah',
-  },
-  {
-    value: '63%',
-    count: { prefix: '', from: 0, to: 63, suffix: '%' },
-    label: 'more appointment calls',
-    detail: 'The same clinic, over the same two months, as it started appearing in Google searches.',
-    client: 'Dr. Mihir Shah Smile Care Clinic',
-    caseStudyId: 'drmihirshah',
-  },
-  {
-    value: '34',
-    count: { prefix: '', from: 0, to: 34, suffix: '' },
-    label: 'new clients in three months',
-    detail: 'A chartered accountancy firm that had never received an enquiry through Google before.',
-    client: 'Darshan Galani & Co.',
-    caseStudyId: 'darshangalani',
-  },
+const INDUSTRIES: { name: string; page?: PageId }[] = [
+  { name: 'Dentists & clinics', page: 'industry-dentists' },
+  { name: 'Chartered accountants', page: 'industry-ca-firms' },
+  { name: 'Textile & processing', page: 'industry-textile' },
+  { name: 'Manufacturing', page: 'industry-manufacturers' },
+  { name: 'Financial services' },
+  { name: 'Contractors & construction' },
+  { name: 'Consulting & IT', page: 'industry-consultants' },
+  { name: 'Solar & energy' },
+  { name: 'Trading & distribution' },
+  { name: 'Online stores & brands' },
 ];
 
-// "With Mago Labs" against the usual agency: rows arrive one after another.
-const versusList = { hidden: {}, visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } } };
-const versusRow = {
-  hidden: { opacity: 0, x: -16 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.2, 0.7, 0.2, 1] as const } },
-};
-const versusTick = {
-  hidden: { scale: 0 },
-  visible: { scale: 1, transition: { type: 'spring' as const, stiffness: 420, damping: 16 } },
+const ALONGSIDE: { name: string; page?: PageId }[] = [
+  { name: 'SEO', page: 'service-seo' },
+  { name: 'Google Business Profile', page: 'service-gbp' },
+  { name: 'Copywriting', page: 'service-copywriting' },
+  { name: 'Social media', page: 'service-social-media' },
+  { name: 'Paid ads', page: 'service-paid-ads' },
+  { name: 'Lead generation', page: 'service-lead-generation' },
+  { name: 'Website care' },
+];
+
+const STEPS = [
+  { title: 'Free audit', desc: 'Send your site, or your business name if you don’t have one. Plain-English findings within one business day.' },
+  { title: 'Fixed quote', desc: 'Scope, price and launch date agreed and signed before any work starts. No surprises later.' },
+  { title: 'Design & build', desc: 'Designed and hand-coded for you, with copy written to win the call. 5 to 28 days.' },
+  { title: 'Launch & support', desc: 'Hosting included, set up for Google, then 90 days of support after you go live.' },
+];
+
+const COMPARE = [
+  { row: 'Designed for', us: 'Your business, from scratch', template: 'Whoever bought the theme', agency: 'Your business' },
+  { row: 'Price', us: 'Fixed quote, from ₹17,999', template: 'Cheap, then add-ons', agency: 'Premium, plus retainers' },
+  { row: 'Time to launch', us: '5 to 28 days', template: 'Fast, but looks like everyone', agency: 'Months' },
+  { row: 'Who you talk to', us: 'The founder, directly', template: 'A support ticket', agency: 'An account manager' },
+  { row: 'After launch', us: '90 days support, hosting included', template: 'You’re on your own', agency: 'Billed by the hour' },
+];
+
+const PACKAGE_DESC: Record<string, string> = {
+  launch: 'Up to 5 pages. A professional presence, live in 5 days.',
+  growth: 'Up to 10 pages with a content editor. Built to generate enquiries, in 14 days.',
+  scale: '15+ pages. A premium presence for bigger firms, in 21 days.',
+  commerce: 'An online store with up to 50 products to start, in 28 days.',
 };
 
-const WITH_MAGO = [
-  'A design made for your business, from a blank canvas.',
-  'A site that loads fast on any phone and any network.',
-  'Copy written by a human who has studied your buyers.',
-  'One person to talk to, the founder, from start to finish.',
-  'Your domain and code in your name, with hosting included.',
-  'A fixed quote before any work starts.',
+const REVIEWS = [
+  { quote: 'It’s been just 40 days and I have already started receiving organic inquiries. Design, taste, speed, execution, everything was up to the mark.', name: 'Laxman Selukar', where: 'Google review' },
+  { quote: 'He listened carefully to what we wanted, suggested smart improvements, and turned everything around faster than expected.', name: 'CA Darshan Galani', where: 'Darshan Galani & Co.' },
+  { quote: 'The final website turned out even better than we expected. The team made the whole experience completely stress-free.', name: 'Smit Antala', where: 'Antala Metals' },
 ];
 
-const THE_USUAL = [
-  'A template that other clients also get.',
-  'Page builders and plug-ins that slow everything down.',
-  'Generic filler text that could describe anyone.',
-  'Your project passed between account managers.',
-  'Your own domain and code kept out of your reach.',
-  'A scope and a bill that shift after you sign.',
+export const FAQS = [
+  { q: 'What do I get in the free audit?', a: 'A short, plain-English review of your website, or of your Google presence if you have no site yet: what stops visitors from calling, how you show up on Google, and what we would fix first. It arrives within one business day and there is no obligation.' },
+  { q: 'How much does a website cost?', a: 'In India, packages start at ₹17,999 (Launch), ₹29,999 (Growth), ₹49,999 (Scale) and ₹64,999 (Commerce). Overseas prices start at $799 and show in your own currency. You get a fixed quote before any work starts, and hosting is included.' },
+  { q: 'How long does it take?', a: '5 days for Launch, 14 for Growth, 21 for Scale and 28 for an online store, counted from when we have your content and your sign-off on the plan.' },
+  { q: 'Will my website rank on Google?', a: 'Every site is built with the SEO groundwork done properly: fast pages, clean structure, local search setup and content written around what your customers search for. Rankings still take time, and anyone who promises you the top spot is guessing. We can also run ongoing SEO if you want to push further.' },
+  { q: 'Do you use templates or website builders?', a: 'No. Every site is designed for your business and hand-coded by us, so it looks like you, loads fast and is not shared with anyone else.' },
+  { q: 'I don’t have a website yet. Where do I start?', a: 'Send us your business name and what you do. We will check how customers find you today and send you a simple plan for your first website, usually the Launch or Growth package.' },
+  { q: 'Who writes the content?', a: 'We do, as part of the build. We talk to you about your business, then write copy built to earn trust and enquiries. You approve every word before launch.' },
+  { q: 'Can I update the website myself?', a: 'Yes. Growth and the larger packages come with an easy content editor for text, photos and blog posts. On Launch, we handle small updates for you during the support period.' },
+  { q: 'What happens after launch?', a: 'You get 90 days of support for fixes and small changes. After that you can move to a website care plan, or simply get in touch when you need something.' },
+  { q: 'Do you work with businesses outside India?', a: 'Yes. We work with clients in Australia, the USA, the UK, Canada and the UAE. Prices show in your own currency and calls happen at a time that suits you.' },
+  { q: 'Can you help with SEO, ads and social media too?', a: 'Yes, alongside your website: SEO, Google Business Profile, copywriting, social media management, paid ads and lead generation. Ask us for pricing on any of these.' },
 ];
 
-// The first step differs by starting point; the rest is the same for everyone.
-const FIRST_STEP: Record<LeadMode, { heading: string; intro: string; title: string; desc: string }> = {
-  audit: {
-    heading: 'Start with a free audit.',
-    intro: 'It takes a minute to ask, and you will know exactly where your website stands.',
-    title: 'Send us your website address.',
-    desc: 'We review it for free and tell you plainly what is costing you enquiries.',
-  },
-  new: {
-    heading: 'Start with a free website plan.',
-    intro: 'It takes a minute to ask, and you will know exactly what your first website needs.',
-    title: 'Tell us what your business does.',
-    desc: 'We send you a free plan: the pages you need, what they should say, and how customers will find you.',
-  },
-};
+/** Surat time, shown in the hero status line. Written after mount so the
+ *  prerendered HTML and the first browser render always match. */
+function useSuratTime(): string | null {
+  const [time, setTime] = useState<string | null>(null);
+  useEffect(() => {
+    const fmt = () =>
+      new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Kolkata' }).format(new Date());
+    setTime(fmt());
+    const id = window.setInterval(() => setTime(fmt()), 30_000);
+    return () => window.clearInterval(id);
+  }, []);
+  return time;
+}
 
-const NEXT_STEPS = [
-  {
-    title: 'Get a fixed quote.',
-    desc: 'You see exactly what we would build and what it costs. No obligation to go ahead.',
-  },
-  {
-    title: 'Launch in 5 to 28 days.',
-    desc: 'You approve the design before we build it, and you own everything at the end.',
-  },
-];
+/** Fades sections up as they enter. Content is visible by default; the hidden
+ *  start state only applies once this observer is running (html.st-io). */
+function useReveals() {
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    const els = Array.from(document.querySelectorAll<HTMLElement>('.studio .st-reveal'));
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      }),
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.08 }
+    );
+    els.forEach((el) => {
+      // Anything already on screen stays put instead of flashing out and back.
+      if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
+      io.observe(el);
+    });
+    document.documentElement.classList.add('st-io');
+    return () => {
+      io.disconnect();
+      document.documentElement.classList.remove('st-io');
+    };
+  }, []);
+}
 
-const FAQS = [
-  {
-    question: 'What does the free audit include?',
-    answer: 'Burhan reviews your website himself: how it looks, how fast it loads, how easy it is to contact you, and how you show up on Google. You get a short, plain-English summary of what to fix first. There is no charge and no obligation.',
-  },
-  {
-    question: 'I don’t have a website yet. Where do I start?',
-    answer: 'Ask for a free website plan. Tell us what your business does, and Burhan will send you a short plan: the pages you need, what they should say, and how customers will find you. Several of our clients, including a CA firm that went on to sign 34 new clients, started with no website at all.',
-  },
-  {
-    question: 'How long does a website take to build?',
-    answer: 'It depends on the package. A Launch website is live in 5 days, Growth in 14 days, Scale in 21 days, and an online store in 28 days.',
-  },
-  {
-    question: 'How much does a custom website cost?',
-    answer: 'There are four packages, and the pricing page lists what each one includes and its starting price. You get a clear, fixed quote before any work starts. No hidden fees: hosting is included, and you keep full ownership of your domain and code.',
-  },
-  {
-    question: 'Will my website rank on Google?',
-    answer: 'Every site we build is set up to rank: clean structure, proper headings, local schema markup and fast load times. Pair that with a well-run Google Business Profile and you give yourself the best chance. Nobody can honestly promise a specific position.',
-  },
-  {
-    question: 'Can I edit the website myself later?',
-    answer: 'Yes. We set up simple content controls so you can change text, prices and photos in a couple of minutes, without touching code.',
-  },
-  {
-    question: 'What happens after launch?',
-    answer: 'We don’t disappear. Content changes, security updates and new features are a WhatsApp message or a call away.',
-  },
-];
-
-// Three plain facts for the hero's trust card. Deliberately not the same numbers
-// as the results section further down.
-const HERO_FACTS = [
-  { value: '75+', label: 'Businesses helped' },
-  { value: '5 to 28', label: 'Days to launch' },
-  { value: '5.0', star: true, label: '7 Google reviews', href: 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8' },
-];
-
-/** The one primary action on the page, repeated wherever a visitor might be ready. */
-function AuditButton({ onNavigate, label, className = '' }: { onNavigate: () => void; label: string; className?: string }) {
+function SectionHead({ num, label, children, aside }: { num: string; label: string; children: ReactNode; aside?: ReactNode }) {
   return (
-    <PageLink
-      page="contact"
-      onNavigate={onNavigate}
-      className={`inline-flex items-center justify-center gap-2 rounded-full bg-brand px-7 py-4 text-base font-semibold text-ink hover:bg-brand-deep transition-colors cursor-pointer ${className}`}
-    >
-      {label}
-      <ArrowRight className="h-4 w-4" />
-    </PageLink>
+    <div className="st-head-row">
+      <div className="st-head">
+        <div className="st-mono st-label">{num} · {label}</div>
+        {children}
+      </div>
+      {aside}
+    </div>
   );
 }
 
 export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
-  const { t } = useLanguage();
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const toggleFaq = (idx: number) => setOpenFaq(openFaq === idx ? null : idx);
+  const time = useSuratTime();
+  const [active, setActive] = useState(2);
+  useReveals();
 
-  const navigateTo = (page: PageId) => {
+  const go = (page: PageId) => {
     onPageChange(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0 });
   };
-  const goToAudit = () => navigateTo('contact');
-
-  // Which starting point the form on this page shows. The "no website yet" buttons
-  // switch it and bring the form into view, so the visitor never leaves the page.
-  const [leadMode, setLeadMode] = useState<LeadMode>('audit');
-  const startWithoutWebsite = () => {
-    setLeadMode('new');
-    document.getElementById('next-step')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const openCase = (id: string) => {
+    onOpenCaseStudy(id);
+    window.scrollTo({ top: 0 });
   };
-  const firstStep = FIRST_STEP[leadMode];
+  const activeWork = WORK[active];
 
-  // The service selector in "How we fix it".
-  const [activeFix, setActiveFix] = useState(0);
-
-  // Gentle hero parallax: as the page scrolls, the cards drift up a little faster
-  // than the text and the glow drifts down. Switched off for reduced motion.
-  const reduceMotion = useReducedMotion();
-  // Starts the "no results" search animation once that row scrolls into view.
-  const [searchSeen, setSearchSeen] = useState(false);
-  const { scrollY } = useScroll();
-  const cardsY = useTransform(scrollY, [0, 700], [0, reduceMotion ? 0 : -48]);
-  const glowY = useTransform(scrollY, [0, 700], [0, reduceMotion ? 0 : 90]);
-  const steps = [{ title: firstStep.title, desc: firstStep.desc }, ...NEXT_STEPS];
-
-  // Structured data: the business, the organisation, and the FAQ on this page.
   const homeSchemas = [
     {
       '@context': 'https://schema.org',
-      '@type': 'LocalBusiness',
+      '@type': 'ProfessionalService',
       'name': 'Mago Labs',
+      'description': 'Independent web design studio building custom websites for clinics, CA firms, manufacturers and contractors.',
       'image': 'https://www.magolabs.in/logo.png',
       '@id': 'https://www.magolabs.in/#localbusiness',
       'url': 'https://www.magolabs.in',
       'telephone': '+91 9099245605',
       'email': 'burhan@magolabs.in',
-      'priceRange': '₹₹',
-      'hasMap': 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8',
-      'sameAs': ['https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8'],
+      'priceRange': '₹17,999 to ₹64,999',
+      'hasMap': GOOGLE_PROFILE,
+      'sameAs': [GOOGLE_PROFILE, 'https://www.instagram.com/magolabs.in/', 'https://www.linkedin.com/in/burhanuddinkapasi/'],
+      'aggregateRating': { '@type': 'AggregateRating', 'ratingValue': '5.0', 'reviewCount': '8' },
+      'areaServed': ['India', 'Australia', 'United States', 'United Kingdom', 'Canada', 'United Arab Emirates'],
       'address': {
         '@type': 'PostalAddress',
+        'streetAddress': 'Flat 102, Salute Residency, Central Bank Lane, Nanpura',
         'addressLocality': 'Surat',
+        'postalCode': '395001',
         'addressRegion': 'Gujarat',
-        'addressCountry': 'IN'
+        'addressCountry': 'IN',
       },
       'openingHoursSpecification': {
         '@type': 'OpeningHoursSpecification',
         'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
         'opens': '09:00',
-        'closes': '19:00'
-      }
+        'closes': '19:00',
+      },
     },
     {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      'mainEntity': FAQS.map((faq) => ({
-        '@type': 'Question',
-        'name': faq.question,
-        'acceptedAnswer': { '@type': 'Answer', 'text': faq.answer }
-      }))
-    }
+      'mainEntity': FAQS.map((f) => ({ '@type': 'Question', 'name': f.q, 'acceptedAnswer': { '@type': 'Answer', 'text': f.a } })),
+    },
   ];
 
   return (
-    <>
+    <div className="studio">
       <SEO path="/" schemas={homeSchemas} />
 
-      {/* 1. Hero: the promise, one action, and proof beside it. Dark, with glass cards.
-          The text has no entrance animation: it is in the page HTML and should be
-          visible the instant it paints. */}
-      <section id="hero" className="glow-follow relative pt-32 pb-14 md:pt-40 md:pb-16 bg-neutral-950 text-[#ffffff] overflow-hidden font-sans">
-        {/* Background: a faint grid and one amber glow that drifts on scroll */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:44px_44px] pointer-events-none [mask-image:linear-gradient(180deg,black_0%,black_70%,transparent_100%)]" />
-        <motion.div
-          style={{ y: glowY }}
-          className="absolute -top-40 right-[-10%] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(255,197,61,0.20),transparent_65%)] pointer-events-none"
-          aria-hidden="true"
-        />
-
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
-            <div className="lg:col-span-6 space-y-7 text-center lg:text-left">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#ffffff] leading-[1.08]">
-                Websites that turn visitors into <span className="marker">customers.</span>
-              </h1>
-
-              <p className="text-base sm:text-lg text-neutral-300 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                {t('hero.desc')}
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-1">
-                <AuditButton onNavigate={goToAudit} label={t('hero.cta.primary')} className="w-full sm:w-auto" />
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-7 py-4 text-base font-semibold text-[#ffffff] backdrop-blur-sm hover:bg-white/10 hover:border-white/30 transition-colors"
-                >
-                  <WhatsAppLogo className="h-5 w-5 text-emerald-400" />
-                  {t('hero.cta.secondary')}
-                </a>
-                {/* Phones get the portfolio link as a third button; wider screens get it as a text link below */}
-                <PageLink
-                  page="work"
-                  onNavigate={() => navigateTo('work')}
-                  className="group sm:hidden w-full inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-[#ffffff] hover:bg-white/10 hover:border-white/30 transition-colors"
-                >
-                  See our work
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </PageLink>
-              </div>
-
-              <p className="flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-neutral-400">
-                <span>
-                  <a
-                    href="#next-step"
-                    onClick={(e) => { e.preventDefault(); startWithoutWebsite(); }}
-                    className="font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
-                  >
-                    No website yet? Start here
-                  </a>
-                </span>
-                {/* Straight to the portfolio, for visitors who want to see the work first */}
-                <PageLink
-                  page="work"
-                  onNavigate={() => navigateTo('work')}
-                  className="group hidden sm:inline-flex items-center gap-1.5 font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
-                >
-                  See our work
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </PageLink>
-              </p>
-            </div>
-
-            {/* Proof: real client websites on a 3D rail, then three plain facts */}
-            <motion.div style={{ y: cardsY }} className="lg:col-span-6 space-y-7">
-              <HeroShowcase onOpenCaseStudy={onOpenCaseStudy} />
-
-              <dl className="grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-6 text-center">
-                {HERO_FACTS.map((fact) => {
-                  const body = (
-                    <>
-                      <dd className="text-xl sm:text-2xl font-bold text-[#ffffff]">
-                        {fact.value}
-                        {fact.star && <span aria-hidden="true" className="ml-1 text-[#FBBC04]">★</span>}
-                      </dd>
-                      <dt className="mt-1 font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-neutral-400">{fact.label}</dt>
-                    </>
-                  );
-                  return fact.href ? (
-                    <a
-                      key={fact.label}
-                      href={fact.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Rated ${fact.value} out of 5 from ${fact.label}, opens our Google profile in a new tab`}
-                      className="group block px-2 rounded-md transition-colors hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
-                    >
-                      {body}
-                    </a>
-                  ) : (
-                    <div key={fact.label} className="px-2">{body}</div>
-                  );
-                })}
-              </dl>
-            </motion.div>
-          </div>
-
-          {/* Who already trusts us */}
-          <div className="mt-14 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl pt-7 pb-3 sm:pb-4">
-            <p className="px-7 mb-5 text-sm font-medium text-neutral-400">Trusted by businesses across Surat and beyond</p>
-            <div className="px-3 sm:px-4">
-              <LogoWall onOpenCaseStudy={onOpenCaseStudy} onOpenContact={() => onPageChange('contact')} />
-            </div>
+      {/* HERO */}
+      <section className="st-wrap" style={{ paddingTop: 'clamp(32px, 5vw, 56px)', paddingBottom: 40, display: 'flex', flexDirection: 'column', gap: 36 }}>
+        <div className="st-mono" style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--muted)' }}>
+          <span className="st-dot" aria-hidden="true" />
+          <span>Taking new projects · Surat, India{time ? ` · ${time} IST` : ''}</span>
+        </div>
+        <h1 className="st-h1" style={{ maxWidth: 1180 }}>
+          <span className="st-line"><span>We design websites</span></span>
+          <span className="st-line">
+            <span>
+              <span className="st-hero-thumb" aria-hidden="true">
+                <img src="/screenshots/full/jaymocivil-300.webp" alt="" width={300} height={1219} />
+              </span>{' '}
+              people trust
+            </span>
+          </span>
+          <span className="st-line"><span className="st-serif" style={{ color: 'var(--accent)' }}>on sight.</span></span>
+        </h1>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-end', gap: 32 }}>
+          <p style={{ margin: 0, maxWidth: 540, fontSize: 19, lineHeight: 1.5, color: 'var(--body)' }}>
+            Mago Labs is an independent web design studio. We design and build custom websites for clinics, CA firms, manufacturers and contractors in India, Australia, the USA, the UK, Canada and the UAE, and judge every one by the enquiries it brings in.
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+            <a href="#audit" className="st-btn st-btn-primary">Get a free website audit <span className="st-arrow" aria-hidden="true">→</span></a>
+            <a href="#work" className="st-btn st-btn-ghost">See the work</a>
           </div>
         </div>
       </section>
 
-      {/* 2. The problem, in the customer's words */}
-      <section id="problem-section" className="py-24 bg-white font-sans">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-14 space-y-4">
-            <span className="eyebrow">The problem</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              Is your website quietly losing you customers?
-            </h2>
-            <p className="text-neutral-600 text-base sm:text-lg leading-relaxed">
-              You would never know. Nobody calls to say they chose someone else. These are the four reasons it usually happens.
-            </p>
-          </div>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {PROBLEMS.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={idx}
-                  variants={fadeUpItem}
-                  onPointerMove={spotlight}
-                  className="spot-card group p-6 rounded-2xl border border-neutral-200 bg-neutral-50 hover:border-neutral-300"
-                >
-                  {/* An amber line draws across the top on hover */}
-                  <span className="absolute inset-x-0 top-0 h-1 bg-brand origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" aria-hidden="true" />
-                  <span className="spot-number spot-number-light" aria-hidden="true">0{idx + 1}</span>
-                  <div className="relative flex items-center justify-between">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white border border-neutral-200 text-neutral-700 transition-[background-color,color,border-color,rotate] duration-300 group-hover:bg-brand group-hover:border-brand group-hover:text-ink group-hover:-rotate-6">
-                      <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
-                    </span>
-                    <span className="font-mono text-xs font-bold text-neutral-500">0{idx + 1}</span>
-                  </div>
-                  <h3 className="relative mt-5 text-base font-semibold text-neutral-900 leading-snug">{item.title}</h3>
-                  <p className="relative mt-3 text-sm text-neutral-600 leading-relaxed">{item.desc}</p>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-12 flex flex-col sm:flex-row sm:items-center gap-5"
-          >
-            <AuditButton onNavigate={goToAudit} label="Find out what yours is costing you" />
-            <p className="text-sm text-neutral-600">A free review of your website, in plain English.</p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* For businesses with no website at all: their own problem, proof and action */}
-      <section id="no-website" className="relative overflow-hidden bg-brand text-ink font-sans">
-        <div className="brand-orb brand-orb-a" aria-hidden="true" />
-        <div className="brand-orb brand-orb-b" aria-hidden="true" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-            <div className="lg:col-span-7 space-y-4">
-              <span className="font-mono text-xs font-bold uppercase tracking-widest">No website yet?</span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-                Then customers are finding nothing when they look for you.
-              </h2>
-              <p className="text-base sm:text-lg leading-relaxed max-w-2xl">
-                People search for a business before they call it. When nothing comes up, many assume you are small, new, or no longer around, and they call the next name on the list.
-              </p>
-              {/* What a customer sees today: a search that finds nothing */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-                onViewportEnter={() => setSearchSeen(true)}
-                data-seen={searchSeen || undefined}
-                className="search-mock mt-3 flex flex-wrap items-center gap-x-4 gap-y-3"
-                aria-hidden="true"
-              >
-                <span className="inline-flex items-center gap-3 rounded-full bg-[#ffffff] px-5 py-3 shadow-[0_18px_40px_-22px_rgba(13,13,13,0.55)]">
-                  <Search className="h-4 w-4 text-neutral-500" />
-                  <span className="search-mock-text font-mono text-sm text-neutral-900">your business name</span>
-                </span>
-                <span className="search-mock-result inline-flex items-center gap-2 rounded-full bg-ink/10 px-4 py-2 text-sm font-semibold text-ink">
-                  <SearchX className="h-4 w-4" />
-                  No results found
-                </span>
-              </motion.div>
-            </div>
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.7, ease: [0.2, 0.7, 0.2, 1] }}
-              className="lg:col-span-5 space-y-5"
-            >
-              <div onPointerMove={spotlight} className="spot-card rounded-2xl bg-neutral-950 text-[#ffffff] p-6 sm:p-7 shadow-2xl shadow-neutral-900/30">
-                <p className="relative text-3xl sm:text-4xl font-bold tracking-tight text-brand leading-none">
-                  <CountUp to={34} duration={1.6} /> new clients
-                </p>
-                <p className="relative mt-3 text-sm sm:text-base text-neutral-300 leading-relaxed">
-                  Darshan Galani &amp; Co. had never had a website. Three months after their first one launched, enquiries from Google had turned into 34 new clients.
-                </p>
-              </div>
-              <button
-                onClick={startWithoutWebsite}
-                className="group w-full inline-flex items-center justify-center gap-2 rounded-full bg-neutral-950 hover:bg-neutral-800 px-7 py-4 text-base font-semibold text-[#ffffff] transition-colors cursor-pointer"
-              >
-                Get a free website plan
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. How we fix it: what the customer gets, with the service as a small label */}
-      <section id="services-overview" className="py-24 bg-neutral-50 font-sans border-b border-neutral-200/50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-14 space-y-4">
-            <span className="eyebrow">How we fix it</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              You get a website that does its job.
-            </h2>
-            <p className="text-neutral-600 text-base sm:text-lg leading-relaxed">
-              Everything we build has one purpose: to turn someone who has never heard of you into someone who calls.
-            </p>
-          </div>
-
-          {/* Selector: pick what you need on the left, read about it on the right.
-              Every panel stays in the page HTML; only the chosen one is shown. */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-            <div role="tablist" aria-label="What we fix" aria-orientation="vertical" className="lg:col-span-5 flex flex-col gap-3">
-              {FIXES.map((fix, idx) => {
-                const selected = activeFix === idx;
-                return (
-                  <button
-                    key={fix.id}
-                    role="tab"
-                    id={`fix-tab-${idx}`}
-                    aria-selected={selected}
-                    aria-controls={`fix-panel-${idx}`}
-                    onClick={() => setActiveFix(idx)}
-                    onMouseEnter={() => setActiveFix(idx)}
-                    onFocus={() => setActiveFix(idx)}
-                    className={`group flex items-center gap-4 rounded-2xl border px-5 py-5 text-left transition-colors cursor-pointer ${
-                      selected
-                        ? 'border-neutral-950 bg-neutral-950 text-[#ffffff]'
-                        : 'border-neutral-200 bg-white text-neutral-900 hover:border-neutral-400'
-                    }`}
-                  >
-                    <span className={`font-mono text-xs font-bold ${selected ? 'text-brand' : 'text-neutral-500'}`}>0{idx + 1}</span>
-                    <span className="flex-1 text-base sm:text-lg font-semibold leading-snug">{fix.title}</span>
-                    <ArrowRight className={`h-4 w-4 shrink-0 transition-transform ${selected ? 'text-brand translate-x-0.5' : 'text-neutral-400'}`} />
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="lg:col-span-7">
-              {FIXES.map((fix, idx) => (
-                <div
-                  key={fix.id}
-                  role="tabpanel"
-                  id={`fix-panel-${idx}`}
-                  aria-labelledby={`fix-tab-${idx}`}
-                  hidden={activeFix !== idx}
-                  className="h-full"
-                >
-                  <motion.div
-                    initial={false}
-                    animate={{ opacity: activeFix === idx ? 1 : 0, y: activeFix === idx ? 0 : 10 }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
-                    className="h-full flex flex-col justify-between rounded-2xl bg-white border border-neutral-200 p-8 sm:p-10 lg:p-12"
-                  >
-                    <div>
-                      <span className="eyebrow">{fix.service}</span>
-                      <h3 className="mt-5 text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 leading-tight">{fix.title}</h3>
-                      <p className="mt-4 text-neutral-600 text-base sm:text-lg leading-relaxed max-w-xl">{fix.desc}</p>
-                    </div>
-                    <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
-                      <AuditButton onNavigate={goToAudit} label="Get a free website audit" />
-                      <PageLink
-                        page={fix.id}
-                        onNavigate={() => navigateTo(fix.id)}
-                        aria-label={`${fix.service}: see how it works`}
-                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4 hover:decoration-neutral-900"
-                      >
-                        See how it works
-                        <ArrowRight className="h-4 w-4" />
-                      </PageLink>
-                    </div>
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Results */}
-      <section id="results" className="relative py-24 bg-neutral-950 text-white font-sans overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl space-y-4 mb-12">
-            <span className="eyebrow eyebrow-on-dark">The results</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-              Here is what changed for our clients.
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {RESULTS.map((r) => (
-              <PageLink
-                key={r.label}
-                href={getWorkDetailPath(r.caseStudyId)}
-                onNavigate={() => onOpenCaseStudy(r.caseStudyId)}
-                className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/20 transition-colors p-7 sm:p-8"
-              >
-                <p className="text-5xl sm:text-6xl font-bold tracking-tight text-brand leading-none" aria-label={r.value}>
-                  <span aria-hidden="true">
-                    {r.count.prefix}
-                    <CountUp from={r.count.from} to={r.count.to} />
-                    {r.count.suffix}
-                  </span>
-                </p>
-                <p className="mt-3 text-lg font-semibold text-white">{r.label}</p>
-                <p className="mt-3 text-sm text-neutral-400 leading-relaxed flex-1">{r.detail}</p>
-                <p className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between gap-3 text-xs font-medium text-neutral-300">
-                  {r.client}
-                  <ArrowRight className="h-4 w-4 shrink-0 text-brand transition-transform group-hover:translate-x-1" />
-                </p>
+      {/* RECENT WORK FRAMES */}
+      <section aria-label="Recent websites" className="st-wrap" style={{ paddingBottom: 64 }}>
+        <div className="st-frames">
+          {[
+            { id: 'drmihirshah', src: '/screenshots/drmihirshah.webp', alt: 'Dr. Mihir Shah Smile Care Clinic website by Mago Labs', cap: 'Dental · Surat', cls: 'left' },
+            { id: 'jaymocivil', src: '/screenshots/jaymocivil-1920.webp', alt: 'Jaymo Civil website by Mago Labs', cap: 'Excavation & civil · Sydney', cls: '' },
+            { id: 'ladsonconcrete', src: '/screenshots/ladsonconcrete.webp', alt: 'Ladson Concrete website by Mago Labs', cap: 'Concrete · Jacksonville, FL', cls: 'right' },
+          ].map((f) => (
+            <figure key={f.id} className={`st-frame ${f.cls}`}>
+              <PageLink href={getWorkDetailPath(f.id)} onNavigate={() => openCase(f.id)} className="st-frame-box" aria-label={`${f.cap} case study`}>
+                <div className="st-frame-bar" aria-hidden="true"><i /><i /><i /></div>
+                <img src={f.src} alt={f.alt} width={900} height={562} loading={f.cls ? 'lazy' : 'eager'} decoding="async" />
               </PageLink>
+              <figcaption className="st-mono" style={{ color: 'var(--muted)' }}>{f.cap}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section aria-label="Studio in numbers" className="st-wrap st-section" style={{ paddingTop: 56 }}>
+        <div className="st-g4 st-reveal" style={{ borderTop: '1px solid var(--ink)', paddingTop: 24 }}>
+          <div><div className="st-stat-num"><CountUp to={75} />+</div><div className="st-stat-label">Businesses helped across 10 industries</div></div>
+          <div><div className="st-stat-num">5 to 28</div><div className="st-stat-label">Days from kickoff to launch</div></div>
+          <div><div className="st-stat-num">5.0</div><div className="st-stat-label"><a className="st-link" href={GOOGLE_PROFILE} target="_blank" rel="noopener">On Google, from 8 reviews ↗</a></div></div>
+          <div><div className="st-stat-num">6</div><div className="st-stat-label">Countries: India, Australia, USA, UK, Canada, UAE</div></div>
+        </div>
+      </section>
+
+      {/* PROBLEM */}
+      <section aria-labelledby="problem-h" className="st-wrap st-section">
+        <div className="st-split">
+          <div className="st-head st-reveal">
+            <div className="st-mono st-label">01 · The problem</div>
+            <h2 id="problem-h" className="st-h2">Your website is the first meeting. Most lose it in <span className="st-serif" style={{ color: 'var(--accent)' }}>five seconds.</span></h2>
+          </div>
+          <ol className="st-list st-reveal">
+            {PROBLEMS.map((p, i) => (
+              <li key={p.title}>
+                <span className="st-mono" style={{ color: 'var(--muted)' }}>0{i + 1}</span>
+                <div><h3>{p.title}</h3><p>{p.desc}</p></div>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <p className="st-reveal" style={{ margin: '40px 0 0', fontSize: 17, color: 'var(--body)' }}>
+          No website yet? <a href="#audit" className="st-link">Get a free plan for your first one →</a>
+        </p>
+      </section>
+
+      {/* SELECTED WORK */}
+      <section id="work" aria-labelledby="work-h" className="st-section">
+        <div className="st-panel st-on-dark st-reveal">
+          <div className="st-wrap">
+            <SectionHead
+              num="02"
+              label="Selected work"
+              aside={<PageLink page="work" onNavigate={() => go('work')} className="st-btn st-btn-primary st-btn-sm">See all 14 projects <span className="st-arrow" aria-hidden="true">→</span></PageLink>}
+            >
+              <h2 id="work-h" className="st-h2">Work that <span className="st-serif">earns its keep.</span></h2>
+            </SectionHead>
+            <div className="st-split" style={{ alignItems: 'start' }}>
+              <ol className="st-work-list">
+                {WORK.map((w, i) => (
+                  <li key={w.id}>
+                    <PageLink
+                      href={getWorkDetailPath(w.id)}
+                      onNavigate={() => openCase(w.id)}
+                      className={`st-work-item${i === active ? ' active' : ''}`}
+                    >
+                      <span className="st-mono num" onMouseEnter={() => setActive(i)}>0{i + 1}</span>
+                      <span className="name" onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)}>{w.name}</span>
+                      <span className="st-mono tag">{w.tag}</span>
+                    </PageLink>
+                  </li>
+                ))}
+              </ol>
+              <div className="st-work-preview-col">
+                <PageLink href={getWorkDetailPath(activeWork.id)} onNavigate={() => openCase(activeWork.id)} className="st-preview" aria-label={`${activeWork.name} case study`}>
+                  {WORK.map((w, i) => (
+                    <img
+                      key={w.id}
+                      className={i === active ? 'on' : undefined}
+                      src={`/screenshots/full/${w.id}.webp`}
+                      alt={i === active ? `${w.name} website, designed by Mago Labs` : ''}
+                      width={560}
+                      height={2275}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ))}
+                  <span className="st-pill st-mono">View case study</span>
+                </PageLink>
+                <div className="st-work-cap" aria-live="polite">
+                  <span style={{ maxWidth: 460 }}>{activeWork.caption}</span>
+                  <span className="st-mono" style={{ color: 'var(--muted-dark)' }}>{activeWork.tag}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* RESULTS */}
+      <section aria-labelledby="results-h" className="st-wrap st-section">
+        <SectionHead num="03" label="Results">
+          <h2 id="results-h" className="st-h2" style={{ maxWidth: 900 }}>Pretty is the minimum. <span className="st-serif" style={{ color: 'var(--accent)' }}>Enquiries</span> are the point.</h2>
+        </SectionHead>
+        <div className="st-g3 st-reveal">
+          <div className="st-result">
+            <div className="st-result-num">25<span style={{ color: 'var(--accent)' }}>→</span><CountUp from={25} to={58} duration={1.6} /></div>
+            <p>Patients a day at Dr. Mihir Shah’s new clinic, within two months of launch.</p>
+            <PageLink href={getWorkDetailPath('drmihirshah')} onNavigate={() => openCase('drmihirshah')} className="st-link">Read the case study →</PageLink>
+          </div>
+          <div className="st-result">
+            <div className="st-result-num">+<CountUp to={63} />%</div>
+            <p>More appointment calls for the same clinic, which also started showing up in Google searches.</p>
+            <PageLink href={getWorkDetailPath('drmihirshah')} onNavigate={() => openCase('drmihirshah')} className="st-link">Read the case study →</PageLink>
+          </div>
+          <div className="st-result">
+            <div className="st-result-num"><CountUp to={34} /></div>
+            <p>New clients in three months for Darshan Galani &amp; Co., a CA firm that had never had a website.</p>
+            <PageLink href={getWorkDetailPath('darshangalani')} onNavigate={() => openCase('darshangalani')} className="st-link">Read the case study →</PageLink>
+          </div>
+        </div>
+      </section>
+
+      {/* INDUSTRIES */}
+      <section id="industries" aria-labelledby="ind-h" className="st-wrap st-section">
+        <SectionHead
+          num="04"
+          label="Who we build for"
+          aside={<p style={{ margin: 0, maxWidth: 420, fontSize: 16, lineHeight: 1.5, color: 'var(--muted)' }}>Each industry wins trust differently. A clinic needs calm and credentials, a contractor needs proof of the work. We design for that.</p>}
+        >
+          <h2 id="ind-h" className="st-h2">75+ businesses. <span className="st-serif">10 industries.</span></h2>
+        </SectionHead>
+        <div className="st-g5 st-reveal">
+          {INDUSTRIES.map((ind, i) => {
+            const inner = (
+              <>
+                <span className="st-mono n">{String(i + 1).padStart(2, '0')}</span>
+                <span className="t">{ind.name}</span>
+              </>
+            );
+            return ind.page ? (
+              <PageLink key={ind.name} page={ind.page} onNavigate={() => go(ind.page as PageId)} className="st-ind">{inner}</PageLink>
+            ) : (
+              <div key={ind.name} className="st-ind">{inner}</div>
+            );
+          })}
+        </div>
+        <div className="st-reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center', fontSize: 15, color: 'var(--muted)', marginTop: 32 }}>
+          <span>Alongside every website:</span>
+          {ALONGSIDE.map((s) =>
+            s.page ? (
+              <PageLink key={s.name} page={s.page} onNavigate={() => go(s.page as PageId)} className="st-chip">{s.name}</PageLink>
+            ) : (
+              <span key={s.name} className="st-chip">{s.name}</span>
+            )
+          )}
+        </div>
+      </section>
+
+      {/* PROCESS */}
+      <section aria-labelledby="proc-h" className="st-wrap st-section">
+        <SectionHead num="05" label="How it works">
+          <h2 id="proc-h" className="st-h2">From first call to live site in <span className="st-serif" style={{ color: 'var(--accent)' }}>four steps.</span></h2>
+        </SectionHead>
+        <ol className="st-g4 st-steps st-reveal">
+          {STEPS.map((s, i) => (
+            <li key={s.title} className={`st-step${i === 3 ? ' dark' : ''}`}>
+              <span className="st-mono" style={{ color: i === 3 ? 'var(--accent-on-dark)' : 'var(--muted)' }}>{i + 1}/4</span>
+              <div><h3>{s.title}</h3><p>{s.desc}</p></div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* COMPARISON */}
+      <section aria-labelledby="cmp-h" className="st-wrap st-section">
+        <SectionHead num="06" label="Why Mago Labs">
+          <h2 id="cmp-h" className="st-h2">Agency craft. <span className="st-serif">Studio attention.</span></h2>
+        </SectionHead>
+        <div className="st-cmp st-reveal" tabIndex={0} aria-label="Comparison table, scrolls sideways on small screens">
+          <table>
+            <thead>
+              <tr>
+                <td />
+                <th scope="col" className="us">Mago Labs</th>
+                <th scope="col" className="them">Template site</th>
+                <th scope="col" className="them">Big agency</th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMPARE.map((r) => (
+                <tr key={r.row}>
+                  <th scope="row">{r.row}</th>
+                  <td className="us">{r.us}</td>
+                  <td className="them">{r.template}</td>
+                  <td className="them">{r.agency}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section id="pricing" aria-labelledby="price-h" className="st-wrap st-section">
+        <SectionHead
+          num="07"
+          label="Pricing"
+          aside={<p style={{ margin: 0, maxWidth: 360, fontSize: 15, lineHeight: 1.5, color: 'var(--muted)' }}>Every package is custom designed and includes hosting. Prices show in your own currency.</p>}
+        >
+          <h2 id="price-h" className="st-h2">Clear prices. <span className="st-serif">Fixed before we start.</span></h2>
+        </SectionHead>
+        <div className="st-g4 st-reveal">
+          {PACKAGES.map((p) => (
+            <PageLink key={p.id} page="pricing" onNavigate={() => go('pricing')} className={`st-price${p.id === 'growth' ? ' featured' : ''}`}>
+              <span className="st-mono" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: p.id === 'growth' ? undefined : 'var(--muted)' }}>
+                {p.number} · {p.name}
+                {p.id === 'growth' && <span className="st-badge">Most picked</span>}
+              </span>
+              <span>
+                <span className="from" style={{ display: 'block' }}>from</span>
+                <span className="amt"><Price pkg={p} /></span>
+              </span>
+              <span className="desc">{PACKAGE_DESC[p.id]}</span>
+            </PageLink>
+          ))}
+        </div>
+        <p className="st-reveal" style={{ margin: '28px 0 0', fontSize: 16, color: 'var(--body)' }}>
+          Need something specific? <PageLink page="pricing" onNavigate={() => go('pricing')} className="st-link">Compare packages and add-ons →</PageLink>
+        </p>
+      </section>
+
+      {/* FOUNDER */}
+      <section id="about" aria-labelledby="founder-h" className="st-wrap st-section">
+        <div className="st-split st-founder st-reveal">
+          <img src="/burhan-founder.jpg" alt="Burhan Kapasi, founder of Mago Labs" width={768} height={960} loading="lazy" decoding="async" />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+            <div className="st-mono st-label">08 · A note from the founder</div>
+            <h2 id="founder-h" style={{ margin: 0, fontSize: 'clamp(30px, 3.4vw, 48px)', lineHeight: 1.05 }}>Most good businesses are better than they <span className="st-serif" style={{ color: 'var(--accent)' }}>look online.</span></h2>
+            <p>I spent eight years in banking, fintech and insurance before starting Mago Labs. I saw strong businesses lose deals because their website made them look small. That’s what we fix.</p>
+            <p>The studio stays small on purpose. You talk to me from the first call to launch, and every site is designed for one job: make the right people trust you enough to get in touch.</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, paddingTop: 8 }}>
+              <span className="st-serif" style={{ fontSize: 34 }} aria-hidden="true">Burhan</span>
+              <span style={{ fontSize: 14, color: 'var(--muted)', lineHeight: 1.4 }}>Burhan Kapasi<br />Founder, Mago Labs</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEWS */}
+      <section aria-labelledby="rev-h" className="st-wrap st-section">
+        <SectionHead
+          num="09"
+          label="Clients"
+          aside={<a href={GOOGLE_PROFILE} target="_blank" rel="noopener" className="st-link" style={{ fontSize: 15 }}>Read all 8 Google reviews ↗</a>}
+        >
+          <h2 id="rev-h" className="st-h2">5.0 on Google. <span className="st-serif">In their words.</span></h2>
+        </SectionHead>
+        <div className="st-g3 st-reveal">
+          {REVIEWS.map((r) => (
+            <figure key={r.name} className="st-review">
+              <div>
+                <div className="st-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <blockquote style={{ marginTop: 14 }}>“{r.quote}”</blockquote>
+              </div>
+              <figcaption><b>{r.name}</b> · {r.where}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section aria-labelledby="faq-h" className="st-wrap st-section">
+        <div className="st-split">
+          <div className="st-head st-reveal" style={{ alignSelf: 'start' }}>
+            <div className="st-mono st-label">10 · Questions</div>
+            <h2 id="faq-h" className="st-h2">Straight <span className="st-serif">answers.</span></h2>
+          </div>
+          <div className="st-faq st-reveal">
+            {FAQS.map((f, i) => (
+              <details key={f.q} open={i === 0}>
+                <summary>{f.q}<span className="pm" aria-hidden="true">+</span></summary>
+                <p className="ans">{f.a}</p>
+              </details>
             ))}
           </div>
         </div>
       </section>
-
-      {/* 5. The work behind the results: a selection of websites, on a tilted wall that turns to face the visitor */}
-      <WorkWall onOpenWork={() => navigateTo('work')} />
-
-      {/* What clients say: a pile of review cards to drag through */}
-      <TestimonialDeck onOpenCaseStudy={onOpenCaseStudy} />
-
-      {/* 6. What the customer gets, against the common alternative */}
-      <section id="why-choose-us-overview" className="py-24 bg-neutral-50 font-sans border-y border-neutral-200/50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-14 space-y-4">
-            <span className="eyebrow">What you get</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              Most agencies hand you a template. You deserve a website built for you.
-            </h2>
-          </div>
-
-          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* With Mago Labs: the lit, raised card */}
-            <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.6, ease: [0.2, 0.7, 0.2, 1] }}
-              className="relative"
-            >
-              <div className="versus-glow" aria-hidden="true" />
-              <div className="versus-card glow-follow h-full overflow-hidden rounded-3xl bg-neutral-950 text-white border border-brand/50 p-8 sm:p-10 shadow-2xl shadow-neutral-900/25">
-                <div className="relative z-10">
-                  <h3 className="flex items-center gap-1 text-2xl font-bold tracking-tight">
-                    With
-                    {/* The logo file has empty space around the wordmark, which the negative margins cancel. */}
-                    <img
-                      src="/logo.png"
-                      alt="Mago Labs"
-                      width={99}
-                      height={66}
-                      className="h-[66px] w-auto -my-6 translate-y-[3px] invert select-none"
-                    />
-                  </h3>
-                  <motion.ul
-                    variants={versusList}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: '-80px' }}
-                    className="mt-7"
-                  >
-                    {WITH_MAGO.map((line) => (
-                      <motion.li key={line} variants={versusRow} className="versus-row flex items-start gap-3.5 py-4 border-t border-white/10 text-sm sm:text-base text-neutral-100 leading-relaxed">
-                        <motion.span variants={versusTick} className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-ink" aria-hidden="true">
-                          <Check className="h-3 w-3" strokeWidth={3.5} />
-                        </motion.span>
-                        <span>{line}</span>
-                      </motion.li>
-                    ))}
-                  </motion.ul>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* The usual agency: flat and quiet on purpose */}
-            <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.6, delay: 0.15, ease: [0.2, 0.7, 0.2, 1] }}
-              className="h-full rounded-3xl bg-white border border-neutral-200 p-8 sm:p-10"
-            >
-              <h3 className="text-2xl font-semibold tracking-tight text-neutral-500">With the usual agency</h3>
-              <motion.ul
-                variants={versusList}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-80px' }}
-                className="mt-7"
-              >
-                {THE_USUAL.map((line) => (
-                  <motion.li key={line} variants={versusRow} className="flex items-start gap-3.5 py-4 border-t border-neutral-200 text-sm sm:text-base text-neutral-500 leading-relaxed">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-400" aria-hidden="true">
-                      <X className="h-3 w-3" strokeWidth={3} />
-                    </span>
-                    <span>{line}</span>
-                  </motion.li>
-                ))}
-              </motion.ul>
-            </motion.div>
-
-            <motion.span
-              initial={{ opacity: 0, scale: 0.4 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ type: 'spring', stiffness: 320, damping: 18, delay: 0.45 }}
-              className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 h-12 w-12 items-center justify-center rounded-full bg-brand text-ink font-mono text-xs font-bold ring-8 ring-neutral-50 dark:ring-[#262626]"
-              aria-hidden="true"
-            >
-              VS
-            </motion.span>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. The next step, with the form right here so nobody has to go looking for it */}
-      <section id="next-step" className="py-24 bg-white font-sans scroll-mt-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            <div className="lg:col-span-5 space-y-8">
-              <div className="space-y-4">
-                <span className="eyebrow">Your next step</span>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-                  {firstStep.heading}
-                </h2>
-                <p className="text-neutral-600 text-base sm:text-lg leading-relaxed">
-                  {firstStep.intro}
-                </p>
-              </div>
-
-              <ol className="space-y-6">
-                {steps.map((step, idx) => (
-                  <li key={step.title} className="flex gap-5">
-                    <span className="font-mono text-sm font-bold text-neutral-900 bg-brand h-8 w-8 shrink-0 flex items-center justify-center">{idx + 1}</span>
-                    <div className="space-y-1">
-                      <h3 className="text-lg font-semibold text-neutral-900 leading-snug">{step.title}</h3>
-                      <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">{step.desc}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-
-              <p className="text-sm text-neutral-600">
-                Would you rather talk?{' '}
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4"
-                >
-                  Message Burhan on WhatsApp.
-                </a>
-              </p>
-            </div>
-
-            <div className="lg:col-span-7">
-              <LeadForm idPrefix="home" source="Homepage" mode={leadMode} onModeChange={setLeadMode} />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 8. FAQ. Every answer stays in the page markup (collapsed with CSS, not
-          removed), so search engines and assistants can read them. */}
-      <section id="faq-section" className="py-24 bg-neutral-50 font-sans border-t border-neutral-200/50">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="space-y-4 mb-12">
-            <span className="eyebrow">Questions</span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900 leading-tight">
-              Straight answers.
-            </h2>
-          </div>
-
-          <div className="border-t border-neutral-200">
-            {FAQS.map((faq, idx) => {
-              const isOpen = openFaq === idx;
-              return (
-                <div key={idx} className="border-b border-neutral-200">
-                  <h3>
-                    <button
-                      onClick={() => toggleFaq(idx)}
-                      aria-expanded={isOpen}
-                      aria-controls={`home-faq-panel-${idx}`}
-                      className="w-full flex items-center justify-between gap-4 py-6 text-left cursor-pointer"
-                    >
-                      <span className="font-semibold text-neutral-900 text-base sm:text-lg">{faq.question}</span>
-                      <span className={`flex-shrink-0 rounded-full p-1.5 transition-colors ${isOpen ? 'bg-brand text-ink' : 'bg-neutral-200 text-neutral-800'}`}>
-                        {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                      </span>
-                    </button>
-                  </h3>
-                  <div
-                    id={`home-faq-panel-${idx}`}
-                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
-                  >
-                    <div className="overflow-hidden">
-                      <p className="pb-6 pr-10 text-sm sm:text-base text-neutral-600 leading-relaxed">{faq.answer}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    </>
+    </div>
   );
 }

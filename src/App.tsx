@@ -12,6 +12,9 @@ import StickyCTA from './components/StickyCTA';
 import ScrollToTop from './components/ScrollToTop';
 import ContactCTA from './components/ContactCTA';
 import Home from './pages/Home';
+import StudioNav from './studio/StudioNav';
+import StudioFooter from './studio/StudioFooter';
+import './studio/studio.css';
 
 // Everything except Home is code-split: most visitors land on Home first, so it
 // stays in the main bundle, while every other route only downloads its JS when
@@ -273,17 +276,25 @@ function AppContent({ initialPath }: AppProps) {
     }
   };
 
+  // The homepage runs the new "Studio Ink" design (its own nav and footer).
+  // Other pages keep the current design until the redesign is rolled out to them.
+  const isStudio = currentPage === 'home';
+
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-[#1A1A1A] text-neutral-900 dark:text-[#F8F9FA] selection:bg-brand selection:text-ink transition-colors duration-300">
+    <div className={`min-h-screen flex flex-col ${isStudio ? 'bg-[#F2EFE9]' : 'bg-white'} dark:bg-[#1A1A1A] text-neutral-900 dark:text-[#F8F9FA] selection:bg-brand selection:text-ink transition-colors duration-300`}>
       <motion.div className="scroll-progress" style={{ scaleX: progressScale }} aria-hidden="true" />
 
       {/* Dynamic Header */}
-      <Navbar
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-        isDarkMode={isDarkMode}
-        onToggleDarkMode={toggleDarkMode}
-      />
+      {isStudio ? (
+        <StudioNav onPageChange={handlePageChange} />
+      ) : (
+        <Navbar
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          isDarkMode={isDarkMode}
+          onToggleDarkMode={toggleDarkMode}
+        />
+      )}
 
       {/* Main Page Area with Route Entrance Animations */}
       <main className="flex-grow">
@@ -303,15 +314,17 @@ function AppContent({ initialPath }: AppProps) {
       </main>
 
       {/* Strategic Call To Action Banner (show on all pages except Contact itself) */}
-      {currentPage !== 'contact' && (
-        <ContactCTA onPageChange={handlePageChange} />
+      {isStudio ? (
+        <StudioFooter onPageChange={handlePageChange} />
+      ) : (
+        <>
+          {currentPage !== 'contact' && <ContactCTA onPageChange={handlePageChange} />}
+          <Footer onPageChange={handlePageChange} />
+        </>
       )}
 
-      {/* Dynamic Footer */}
-      <Footer onPageChange={handlePageChange} />
-
       {/* Floating CTA and Scroll-to-top Buttons */}
-      <StickyCTA />
+      {!isStudio && <StickyCTA />}
       <ScrollToTop />
       
       {/* Design Customizer Studio Hub: internal demo tool only, not for real visitors.
