@@ -24,7 +24,7 @@ export default function Footer({ onPageChange }: FooterProps) {
   ];
 
   return (
-    <footer id="main-footer" className="bg-white dark:bg-[#1A1A1A] text-neutral-600 dark:text-neutral-400 border-t border-neutral-200 dark:border-neutral-800 pt-20 pb-12 font-sans transition-colors duration-300">
+    <footer id="main-footer" className="bg-paper dark:bg-[#1A1A1A] text-neutral-600 dark:text-neutral-400 border-t border-neutral-200 dark:border-neutral-800 pt-20 pb-12 font-sans transition-colors duration-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
           {/* Brand Column */}

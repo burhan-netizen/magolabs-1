@@ -274,7 +274,7 @@ function AppContent({ initialPath }: AppProps) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-[#1A1A1A] text-neutral-900 dark:text-[#F8F9FA] selection:bg-brand selection:text-ink transition-colors duration-300">
+    <div className="min-h-screen flex flex-col bg-paper dark:bg-[#1A1A1A] text-neutral-900 dark:text-[#F8F9FA] selection:bg-brand selection:text-ink transition-colors duration-300">
       <motion.div className="scroll-progress" style={{ scaleX: progressScale }} aria-hidden="true" />
 
       {/* Dynamic Header */}
@@ -303,7 +303,7 @@ function AppContent({ initialPath }: AppProps) {
       </main>
 
       {/* Strategic Call To Action Banner (show on all pages except Contact itself) */}
-      {currentPage !== 'contact' && (
+      {currentPage !== 'contact' && currentPage !== 'home' && (
         <ContactCTA onPageChange={handlePageChange} />
       )}
 
@@ -312,7 +312,7 @@ function AppContent({ initialPath }: AppProps) {
 
       {/* Floating CTA and Scroll-to-top Buttons */}
       <StickyCTA />
-      <ScrollToTop />
+      {currentPage !== 'home' && <ScrollToTop />}
       
       {/* Design Customizer Studio Hub: internal demo tool only, not for real visitors.
           Opt in during a client pitch/demo with ?demo=true, never shown by default. */}

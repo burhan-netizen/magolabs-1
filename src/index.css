@@ -7,16 +7,17 @@
   /* Plain values on purpose: writing these as var(--font-sans, ...) makes the
      variable refer to itself, which browsers treat as invalid, so the whole
      site silently falls back to the system font. */
-  --font-sans: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-display: "Poppins", system-ui, sans-serif;
+  --font-sans: "Bricolage Grotesque Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   /* Signal Amber: highlights, tags, primary buttons. Always paired with ink text. */
   --color-brand: #FFC53D;
   --color-brand-deep: #F0B323;
   --color-brand-soft: #FFF4D6;
-  --color-ink: #0D0D0D;
-  --color-paper: #FAFAF8;
+  --color-ink: #16130F;
+  --color-paper: #F5F1E8;
   --color-hairline: #E4E1D9;
   --color-slate: #7E7E7E;
 
@@ -37,8 +38,8 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #FFFFFF;
-  color: #0D0D0D;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   position: relative;
 }
 
@@ -1790,4 +1791,175 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
   .work-card { transform: none; transition: none; }
   .work-card::after { display: none; }
   .work-wall-row { animation: none; }
+}
+
+/* ===========================================================================
+   Homepage v2 (Nov 2026 revamp). Warm paper, ink, one Mago yellow accent.
+   Display type is Bricolage Grotesque, set heavy and tight; Instrument Serif
+   italic is used for one accent word at a time.
+   Every animation here is transform or opacity only, and each one is switched
+   off for visitors who ask for reduced motion.
+=========================================================================== */
+.font-serif-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 760;
+  font-variation-settings: "opsz" 96;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+}
+.display-lg {
+  font-family: var(--font-display);
+  font-weight: 720;
+  font-variation-settings: "opsz" 72;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+.label-v2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6B655B;
+}
+.label-v2::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 2px;
+  background: var(--color-brand);
+}
+.label-v2.on-dark { color: #B9B2A5; }
+
+/* Hero headline: each line rises out of its own mask on first paint. CSS only,
+   so the words are in the HTML and on screen even if scripts are slow. */
+.rise-line { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.rise-line > span { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .rise-line > span { animation: riseIn 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .rise-line:nth-child(2) > span { animation-delay: 0.08s; }
+  .rise-line:nth-child(3) > span { animation-delay: 0.16s; }
+  .rise-line:nth-child(4) > span { animation-delay: 0.24s; }
+  .fade-late { animation: fadeLate 0.9s 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+}
+@keyframes riseIn { from { transform: translateY(105%); } to { transform: none; } }
+@keyframes fadeLate { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* The yellow marker sweeps in behind the key word. */
+.marker-draw {
+  position: relative;
+  z-index: 0;
+  white-space: nowrap;
+}
+.marker-draw::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -0.06em;
+  right: -0.08em;
+  top: 0.16em;
+  bottom: 0.02em;
+  background: var(--color-brand);
+  border-radius: 0.08em;
+  transform-origin: left center;
+  transform: rotate(-1.2deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marker-draw::before { animation: markerDraw 0.9s 0.55s cubic-bezier(0.65, 0, 0.35, 1) both; }
+}
+@keyframes markerDraw { from { transform: rotate(-1.2deg) scaleX(0); } to { transform: rotate(-1.2deg) scaleX(1); } }
+
+/* Floating client cards in the hero drift slowly. */
+@media (prefers-reduced-motion: no-preference) {
+  .float-a { animation: floatA 9s ease-in-out infinite alternate; }
+  .float-b { animation: floatB 11s ease-in-out infinite alternate; }
+}
+@keyframes floatA { from { translate: 0 0; } to { translate: 0 -14px; } }
+@keyframes floatB { from { translate: 0 -8px; } to { translate: 0 10px; } }
+
+/* Mobile hero strip of client sites, scrolling sideways. */
+.strip-track { display: flex; gap: 0.9rem; width: max-content; }
+@media (prefers-reduced-motion: no-preference) {
+  .strip-track { animation: stripMove 38s linear infinite; }
+}
+@keyframes stripMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Available-for-work dot. */
+.live-dot { position: relative; width: 8px; height: 8px; border-radius: 9999px; background: #1F9D55; }
+@media (prefers-reduced-motion: no-preference) {
+  .live-dot::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: #1F9D55; animation: livePulse 2s ease-out infinite; }
+}
+@keyframes livePulse { from { transform: scale(1); opacity: 0.6; } to { transform: scale(3); opacity: 0; } }
+
+/* Testimonial columns that drift up and down; they stop under the pointer. */
+.tcol-track { display: flex; flex-direction: column; gap: 1rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .tcol-anim .tcol-track { animation: tcolUp var(--dur, 60s) linear infinite; }
+  .tcol-anim.reverse .tcol-track { animation-direction: reverse; }
+  .tcol-anim:hover .tcol-track, .tcol-anim:focus-within .tcol-track { animation-play-state: paused; }
+}
+@keyframes tcolUp { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 0.5rem)); } }
+.mask-y { -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); }
+.mask-x { -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); }
+
+/* The "no results" search box types and then shows its empty result. */
+@media (prefers-reduced-motion: no-preference) {
+  .search-demo .type-in { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom; max-width: 0; }
+  .search-demo .after-type { opacity: 0; }
+  .search-demo[data-play] .type-in { animation: typeIn 1.6s steps(18) 0.2s both; }
+  .search-demo[data-play] .after-type { animation: fadeLate 0.6s 1.9s both; }
+}
+@keyframes typeIn { from { max-width: 0; } to { max-width: 14em; } }
+
+/* Photo strip in the founder section. */
+.photo-strip { scrollbar-width: none; cursor: grab; }
+.photo-strip::-webkit-scrollbar { display: none; }
+.photo-strip.dragging { cursor: grabbing; scroll-snap-type: none; }
+
+/* Pill buttons share one shape across the page. */
+.btn-v2 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 52px;
+  padding: 0 1.6rem;
+  border-radius: 9999px;
+  font-weight: 640;
+  font-size: 1rem;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s, color 0.2s, box-shadow 0.25s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-v2:active { transform: scale(0.97); }
+.btn-v2:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px; }
+.btn-primary { background: var(--color-brand); color: var(--color-ink); box-shadow: 0 1px 0 rgba(22, 19, 15, 0.25), 0 10px 30px -12px rgba(240, 179, 35, 0.8); }
+.btn-primary:hover { background: var(--color-brand-deep); transform: translateY(-2px); }
+.btn-ink { background: var(--color-ink); color: var(--color-paper); }
+.btn-ink:hover { background: #2a251e; transform: translateY(-2px); }
+.btn-ghost { border: 1.5px solid currentColor; }
+.btn-ghost:hover { transform: translateY(-2px); }
+.btn-v2 .arrow { transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.btn-v2:hover .arrow { transform: translateX(4px); }
+
+/* Link underline that grows from the left. */
+.link-grow { background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0% 1.5px; transition: background-size 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); padding-bottom: 2px; }
+.link-grow:hover, .link-grow:focus-visible { background-size: 100% 1.5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .float-a, .float-b, .strip-track, .tcol-track { animation: none !important; }
+}
+
+html.motion-ok .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+html.motion-ok .reveal[data-in], html.motion-ok.reveal-all .reveal { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .tcol-anim { overflow-y: auto !important; }
 }
