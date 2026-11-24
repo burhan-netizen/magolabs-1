@@ -268,6 +268,6 @@ The website still needs to communicate your value, work reliably, provide a good
 
 At Mago Labs, we combine modern web development tools with design, functionality, and business-focused thinking to build websites tailored to each client's requirements.
 
-If you need a website that goes beyond a generic template, explore [Mago Labs](https://www.magolabs.in/) and our [website portfolio](https://trades.magolabs.in/) to see examples of our work.
+If you need a website that goes beyond a generic template, explore [Mago Labs](https://www.magolabs.in/) and our [website portfolio](https://themagolabs.com/work/) to see examples of our work.
 
 The question is no longer simply whether AI can build a website. It is whether the website it helps you build is the right one for your business.

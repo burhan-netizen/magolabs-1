@@ -59,4 +59,4 @@ Read the full [Jaymo Civil case study](/work/jaymocivil).
 
 ## Want a website like this for your crew?
 
-We build websites for contractors in Australia, the USA, the UK, New Zealand and Canada. See what we do for trades at [trades.magolabs.in](https://trades.magolabs.in), read about our [Google Business Profile service](/services/google-business-profile), or [get a free website audit](/contact).
+We build websites for contractors in Australia, the USA, the UK, New Zealand and Canada. See what we do for excavation and civil contractors at [themagolabs.com](https://themagolabs.com/trades/excavation/), read about our [Google Business Profile service](/services/google-business-profile), or [get a free website audit](/contact).

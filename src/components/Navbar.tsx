@@ -223,10 +223,10 @@ export default function Navbar({
 
           {/* Consultation Button */}
           <div className="hidden lg:flex items-center gap-3">
-            {/* Visitors from abroad go to the trades site. Wide screens only, so the
+            {/* Visitors from abroad go to themagolabs.com. Wide screens only, so the
                 main navigation never wraps; the mobile menu has it too. */}
             <a
-              href="https://trades.magolabs.in/"
+              href="https://themagolabs.com/"
               className="hidden xl:inline-flex items-center gap-1 text-sm font-medium text-neutral-600 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white transition-colors whitespace-nowrap"
             >
               Outside India? <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -349,10 +349,10 @@ export default function Navbar({
               })}
 
               <a
-                href="https://trades.magolabs.in/"
+                href="https://themagolabs.com/"
                 className="flex w-full items-center justify-between px-3 py-2.5 text-base font-medium text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 rounded-lg"
               >
-                <span>Outside India? Websites for trades</span>
+                <span>Outside India? Visit the Mago Labs</span>
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </a>
 
