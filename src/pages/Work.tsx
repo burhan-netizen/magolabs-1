@@ -22,7 +22,7 @@ const WALL_ROW_B = CASE_STUDIES.filter((_, i) => i % 2 === 1);
 const HERO_STATS = [
   { before: '', value: 75, after: '+', label: 'Businesses helped' },
   { before: '5 to ', value: 28, after: '', label: 'Days to launch' },
-  { before: '', value: 5, after: '', label: '7 Google reviews', rating: '5.0', href: 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8' },
+  { before: '', value: 5, after: '', label: '8 Google reviews', rating: '5.0', href: 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8' },
 ];
 
 export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {

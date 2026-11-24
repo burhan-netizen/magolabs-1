@@ -208,7 +208,7 @@ const FAQS = [
 const HERO_FACTS = [
   { value: '75+', label: 'Businesses helped' },
   { value: '5 to 28', label: 'Days to launch' },
-  { value: '5.0', star: true, label: '7 Google reviews', href: 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8' },
+  { value: '5.0', star: true, label: '8 Google reviews', href: 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8' },
 ];
 
 /** The one primary action on the page, repeated wherever a visitor might be ready. */

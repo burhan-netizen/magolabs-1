@@ -9,7 +9,7 @@ import PageLink from './PageLink';
 /** Mago Labs on Google. Update the rating and count here when new reviews come in. */
 const GOOGLE_PROFILE = 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8';
 const GOOGLE_RATING = '5.0';
-const GOOGLE_REVIEWS = 7;
+const GOOGLE_REVIEWS = 8;
 /** Client logos drawn for a dark background (same as the home page logo wall). */
 const DARK_LOGOS = new Set(['jaymocivil']);
 
