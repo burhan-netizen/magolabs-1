@@ -262,16 +262,40 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
   const homeSchemas = [
     {
       '@context': 'https://schema.org',
-      '@type': 'LocalBusiness',
+      '@type': ['LocalBusiness', 'ProfessionalService'],
       'name': 'Mago Labs',
+      'description': 'Website design and development company in Surat, Gujarat. Custom, hand-coded websites, local SEO and Google Business Profile optimisation for small and mid-sized businesses.',
       'image': 'https://www.magolabs.in/logo.png',
+      'logo': 'https://www.magolabs.in/logo.png',
       '@id': 'https://www.magolabs.in/#localbusiness',
       'url': 'https://www.magolabs.in',
       'telephone': '+91 9099245605',
       'email': 'burhan@magolabs.in',
       'priceRange': '₹₹',
+      'foundingDate': '2024',
+      'founder': {
+        '@type': 'Person',
+        'name': 'Burhan Kapasi',
+        'url': 'https://www.magolabs.in/about',
+        'sameAs': ['https://www.linkedin.com/in/burhanuddinkapasi/']
+      },
+      'areaServed': [
+        { '@type': 'City', 'name': 'Surat' },
+        { '@type': 'State', 'name': 'Gujarat' },
+        { '@type': 'Country', 'name': 'India' }
+      ],
+      'knowsAbout': ['Website design', 'Website development', 'Local SEO', 'Google Business Profile optimisation', 'Conversion copywriting'],
       'hasMap': 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8',
-      'sameAs': ['https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8'],
+      // Every profile that is this business, so search engines can join them up.
+      'sameAs': [
+        'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8',
+        'https://www.instagram.com/magolabs.in/',
+        'https://www.threads.com/@magolabs.in',
+        'https://www.facebook.com/profile.php?id=61591983492179',
+        'https://clutch.co/profile/mago-labs',
+        'https://themanifest.com/company/mago-labs',
+        'https://themagolabs.com/'
+      ],
       'address': {
         '@type': 'PostalAddress',
         'addressLocality': 'Surat',
@@ -284,6 +308,15 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
         'opens': '09:00',
         'closes': '19:00'
       }
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': 'https://www.magolabs.in/#website',
+      'name': 'Mago Labs',
+      'url': 'https://www.magolabs.in',
+      'inLanguage': 'en-IN',
+      'publisher': { '@id': 'https://www.magolabs.in/#localbusiness' }
     },
     {
       '@context': 'https://schema.org',
@@ -316,6 +349,10 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
             <div className="lg:col-span-6 space-y-7 text-center lg:text-left">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#ffffff] leading-[1.08]">
+                {/* The search phrase this page targets, set small above the promise. */}
+                <span className="block mb-4 font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-brand leading-snug">
+                  Website Design &amp; Development Company in Surat
+                </span>
                 Websites that turn visitors into <span className="marker">customers.</span>
               </h1>
 

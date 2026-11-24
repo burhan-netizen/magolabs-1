@@ -97,7 +97,7 @@ export default function LogoWall({ onOpenCaseStudy, onOpenContact }: LogoWallPro
           <span className="lw-logo" aria-hidden="true" style={{ ['--h' as string]: `${logo.h}px` }}>
             <img
               src={`/logos/wall/${logo.file}.webp?v=${WALL_VERSION}`}
-              alt=""
+              alt={`${logo.name} logo`}
               width={logo.width}
               height={logo.height}
               loading="lazy"

@@ -21,7 +21,7 @@ import ReadingProgress from '../components/ReadingProgress';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import { getCaseStudyById } from '../data/caseStudies';
-import { getPathFromPage, getWorkDetailPath } from '../utils/pageRoutes';
+import { getPathFromPage, getWorkDetailPath, getInsightDetailPath } from '../utils/pageRoutes';
 import PageLink from '../components/PageLink';
 import { ArrowRight } from 'lucide-react';
 
@@ -29,6 +29,8 @@ interface ServiceDetailProps {
   serviceId: PageId;
   onPageChange: (page: PageId) => void;
   onOpenCaseStudy: (id: string) => void;
+  /** Opens an Insights post in place. Optional so the page still renders without it. */
+  onOpenPost?: (slug: string) => void;
 }
 
 // Real case studies most relevant to each service, used for the "Related Work"
@@ -40,6 +42,12 @@ const RELATED_WORK: Record<string, string[]> = {
   'service-gbp': ['drmihirshah', 'kdmayani'],
 };
 
+// Parts of Surat and nearby towns we work with, listed on the local services.
+const SURAT_AREAS = [
+  'Adajan', 'Vesu', 'Piplod', 'Athwa', 'Ghod Dod Road', 'City Light', 'Pal', 'Varachha',
+  'Katargam', 'Ring Road', 'Udhna', 'Sachin GIDC', 'Hazira', 'Dumas Road', 'Bharuch', 'Navsari', 'Vapi'
+];
+
 // Copy for each service. Benefits and process steps are written as
 // "Label: description" and split on the first colon when rendered.
 const SERVICES_DATA: Record<string, Service> = {
@@ -50,6 +58,50 @@ const SERVICES_DATA: Record<string, Service> = {
     shortDesc: 'Custom business websites, designed from a blank canvas and hand-coded. Built to turn visitors into calls, enquiries and WhatsApp messages.',
     longDesc: 'If your site looks like a template, loads slowly on a phone, or hides the way to contact you, customers go to a competitor, in Surat or anywhere else they are searching. We design and hand-code lightweight websites that load fast and make your business look as established as it is.',
     iconName: 'LayoutTemplate',
+    h1: 'Website Design Company in Surat',
+    localGuide: {
+      eyebrow: 'Website design in Surat',
+      heading: 'A Surat website design company that builds for enquiries, not just looks.',
+      intro: 'Surat has hundreds of web design companies, and most business owners we meet have already paid one of them for a site that looks fine and brings nothing in. We are a founder-led website design and development studio in Surat. Every site is planned around one question: when a customer finds you on Google, does the page make them call, WhatsApp or fill in the form?',
+      sections: [
+        {
+          heading: 'What a website from a Surat web design company should include',
+          paragraphs: [
+            'A business website in Surat has to do three jobs. It has to be found when people search for what you sell, it has to look established enough that they trust you over the next result, and it has to make contacting you effortless on a phone. Most visitors arrive on mobile data, often on a mid-range Android phone, so speed is not optional.',
+            'Every website we build includes a custom design, hand-written code instead of a heavy theme, a click-to-call button, a WhatsApp button with a pre-filled message, an enquiry form that reaches your inbox, SSL security, Google Search Console setup and the basic on-page SEO each page needs to rank: titles, descriptions, headings, structured data and image alt text.'
+          ]
+        },
+        {
+          heading: 'Website design cost in Surat',
+          paragraphs: [
+            'Our prices are published, so you know the number before the first call. A Launch website starts at ₹17,999 and is live in 5 days. Growth starts at ₹29,999 and takes 14 days. Scale starts at ₹49,999 and takes 21 days. An online store (Commerce) starts at ₹64,999 and takes 28 days. Hosting on fast cloud servers is included for standard business websites, and your domain and email stay in your name.',
+            'You will find cheaper websites in Surat, sometimes for a few thousand rupees. Those are usually a template with your logo dropped in. The difference shows up later: slow pages, no enquiries, and a redesign within two years. Our full breakdown of what websites cost in Surat is in the guide linked below.'
+          ]
+        },
+        {
+          heading: 'Who we build websites for',
+          paragraphs: [
+            'Most of our clients are businesses where trust decides the sale: dental and medical clinics, CA firms and tax consultants, textile mills and traders, diamond and jewellery businesses, manufacturers and B2B suppliers, consultants and coaches. We have also built for clients in Sydney, Florida and other cities outside India, so the same standard applies whether your buyers are in Surat or overseas.',
+            'One dental clinic we rebuilt went from 25 to 58 patients a day within two months of launch. A CA firm signed 34 new clients in three months from enquiries that came through Google. Both case studies are linked on this page.'
+          ]
+        },
+        {
+          heading: 'Why Surat businesses choose a founder-led studio',
+          paragraphs: [
+            'At a large agency, the person who sells you the website is rarely the person who builds it. At Mago Labs you work directly with Burhan Kapasi, the founder, from the first call to launch. You get one point of contact on WhatsApp, a clear timeline, and a design you approve before any code is written.',
+            'Most projects run over WhatsApp and short video calls, so you never have to take half a day out to sit in a meeting, and you always know what is happening and what comes next.'
+          ]
+        }
+      ],
+      areas: SURAT_AREAS,
+      guides: [
+        { slug: 'how-much-does-a-website-cost-in-surat-2026-guide', label: 'How much does a website cost in Surat? (2026 guide)' },
+        { slug: 'how-to-choose-a-website-design-company-in-surat', label: 'How to choose a website design company in Surat' },
+        { slug: 'website-for-textile-business-surat', label: 'Website for a textile business in Surat' },
+        { slug: 'website-for-diamond-jewellery-business-surat', label: 'Website for diamond and jewellery businesses in Surat' },
+        { slug: 'signs-your-business-website-needs-a-redesign', label: '12 signs your business website needs a redesign' }
+      ]
+    },
     benefits: [
       'Custom code: No pre-made themes or page builders slowing the site down.',
       'Works on every screen: Tested on iPhones, Android phones, tablets and wide desktop monitors.',
@@ -76,6 +128,14 @@ const SERVICES_DATA: Record<string, Service> = {
     ],
     faqs: [
       {
+        question: 'How much does website design cost in Surat?',
+        answer: 'Our websites start at ₹17,999 for a Launch site, ₹29,999 for Growth, ₹49,999 for Scale and ₹64,999 for an online store. Every price is published on our pricing page, and hosting is included for standard business websites.'
+      },
+      {
+        question: 'Do you only work with businesses in Surat?',
+        answer: 'No. We are based in Surat and most of our clients are in Surat and the rest of Gujarat, but we also build websites for businesses across India and overseas, including Australia and the USA.'
+      },
+      {
         question: 'Do you use WordPress templates or themes?',
         answer: 'Never. Templates carry code you will never use, which slows the site down, and they make you look like fifty other businesses. Every page we build starts from a blank canvas.'
       },
@@ -100,6 +160,50 @@ const SERVICES_DATA: Record<string, Service> = {
     shortDesc: 'SEO aimed at people who are ready to buy. We tune your site structure, speed and content for the searches that bring enquiries.',
     longDesc: 'A lot of SEO is sold on rankings for phrases nobody searches when they are ready to buy. We do the opposite. We find the exact words your patients, clients and customers in Surat and nearby use when they are ready to call, and we build your site to rank for those.',
     iconName: 'Search',
+    h1: 'SEO Company in Surat',
+    localGuide: {
+      eyebrow: 'SEO in Surat',
+      heading: 'Local SEO for Surat businesses, measured in enquiries.',
+      intro: 'When someone in Surat searches "CA near me", "dentist in Adajan" or "fabric manufacturer in Surat", Google shows three businesses on the map and around ten websites below it. Almost every enquiry goes to those. Our SEO work has one goal: getting your business into those positions for the searches that lead to a call, and keeping it there.',
+      sections: [
+        {
+          heading: 'What our SEO services in Surat cover',
+          paragraphs: [
+            'Local SEO in Surat comes down to three things working together. Your website has to be technically sound and clearly about the right service in the right city. Your Google Business Profile has to be complete, active and well reviewed. And other trusted sites, such as directories, local listings and industry pages, have to mention your business with the same name, address and phone number.',
+            'We handle all three. That means keyword research for real Surat buyer searches, page titles and headings rewritten around those searches, service and area pages where they are genuinely useful, structured data, site speed, internal linking, Google Business Profile optimisation and consistent citations on the directories Google already trusts for local results.'
+          ]
+        },
+        {
+          heading: 'How we choose keywords for Surat businesses',
+          paragraphs: [
+            'Ranking for a phrase nobody searches is worthless. Before any work starts, we look at what your customers type, how many people type it, and who is ranking today. A textile trader and a dental clinic need completely different keyword plans, even if both are in Surat.',
+            'We separate searches that lead to a call ("SEO company in Surat", "skin clinic in Vesu") from searches that are only research ("what is SEO"). The first kind goes on your service pages. The second kind is best answered with helpful guides that build trust and link back to those pages.'
+          ]
+        },
+        {
+          heading: 'Google Maps and the local pack',
+          paragraphs: [
+            'For most local searches, the map results get more clicks than the websites below them. Your position there depends on how relevant your Google Business Profile is, how close you are to the person searching, and how prominent your business looks: reviews, photos, activity and mentions elsewhere on the web.',
+            'We set the right primary and secondary categories, write a description that matches what people search, add services and photos, set up a simple way to ask customers for reviews, and keep the profile active with regular posts. Our separate Google Business Profile service covers this in more depth.'
+          ]
+        },
+        {
+          heading: 'What results to expect, and when',
+          paragraphs: [
+            'Technical fixes and Google Business Profile work often improve local visibility within 4 to 6 weeks. Competitive phrases like "website design company in Surat" usually take 3 to 6 months of steady work. Anyone promising a guaranteed number one ranking in Surat is guessing.',
+            'You get a plain-English monthly report with the searches you now appear for, clicks and calls from Google, and what we are working on next. Search Console and analytics stay in your name, so you can always check the numbers yourself.'
+          ]
+        }
+      ],
+      areas: SURAT_AREAS,
+      guides: [
+        { slug: 'how-to-choose-seo-company-in-surat', label: 'How to choose an SEO company in Surat (without getting burned)' },
+        { slug: 'how-to-rank-on-google-maps-in-surat', label: 'How to rank your business on Google Maps in Surat' },
+        { slug: 'why-is-my-business-not-showing-on-google-maps', label: 'Why is my business not showing on Google Maps?' },
+        { slug: 'local-seo-in-2026-the-complete-guide-for-small-businesses-to-rank-higher-on-google', label: 'Local SEO in 2026: the complete guide' },
+        { slug: 'google-ads-vs-seo-for-small-business', label: 'Google Ads vs SEO: which should a small business start with?' }
+      ]
+    },
     benefits: [
       'Local buyer keywords: Terms like "CA firm in Surat" or "dentist near me" that lead straight to calls.',
       'Technical fixes: Broken links, crawl problems and anything else stopping Google from reading your site.',
@@ -126,6 +230,14 @@ const SERVICES_DATA: Record<string, Service> = {
     ],
     faqs: [
       {
+        question: 'Why hire a local SEO company in Surat?',
+        answer: 'A Surat-based team knows how people here search, which areas and industries are competitive, and which local directories Google trusts. That matters most for Google Maps results, where being relevant to Surat decides who gets the call.'
+      },
+      {
+        question: 'How much do SEO services cost in Surat?',
+        answer: 'SEO is priced per client, based on how competitive your keywords are and how much work your website and Google Business Profile need. After a free audit, you get a clear monthly fee and a written list of what it covers.'
+      },
+      {
         question: 'How long before SEO shows results?',
         answer: 'SEO builds over time. Technical fixes and Google Business Profile work can improve local visibility within 4 to 6 weeks. Competitive page-one keywords usually take 3 to 6 months of steady work.'
       },
@@ -142,6 +254,7 @@ const SERVICES_DATA: Record<string, Service> = {
   'service-gbp': {
     id: 'service-gbp',
     title: 'Google Business Profile (GBP)',
+    h1: 'Google Business Profile Optimisation in Surat',
     headline: 'Be one of the three businesses people see.',
     shortDesc: 'Get your business onto Google Maps properly. We set up, verify and optimise your profile so you show up when people nearby search for what you do.',
     longDesc: 'If you run a clinic, a firm, a factory or a restaurant in Surat, your Google Maps profile is one of the most valuable things you own online. When someone nearby searches for your service, Google shows a map with three businesses, and most people choose from those three. We optimise your profile to earn one of those places and turn it into calls and visits.',
@@ -188,6 +301,7 @@ const SERVICES_DATA: Record<string, Service> = {
   'service-copywriting': {
     id: 'service-copywriting',
     title: 'Conversion Copywriting',
+    h1: 'Website Copywriting Services in Surat',
     headline: 'Most websites are let down by their words.',
     shortDesc: 'Clear, human-written copy for your website, service pages and landing pages. Written to connect with buyers and move them to act.',
     longDesc: 'The copy on most business websites is either dry and stiff, or full of phrases like "revolutionize" and "seamless" that every reader has learned to skip. We write the way a trusted advisor talks: plainly, about how you solve the customer\'s problem and why they should choose you.',
@@ -395,7 +509,7 @@ const SERVICES_DATA: Record<string, Service> = {
   }
 };
 
-export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy }: ServiceDetailProps) {
+export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy, onOpenPost }: ServiceDetailProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const data = SERVICES_DATA[serviceId];
   const relatedWork = (RELATED_WORK[serviceId] ?? [])
@@ -421,8 +535,13 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
     {
       '@context': 'https://schema.org',
       '@type': 'Service',
-      'name': data.title,
+      'name': data.h1 ?? data.title,
+      'serviceType': data.title,
+      'url': `https://www.magolabs.in${getPathFromPage(serviceId)}`,
       'provider': { '@id': 'https://www.magolabs.in/#localbusiness' },
+      'areaServed': data.localGuide
+        ? [{ '@type': 'City', 'name': 'Surat' }, { '@type': 'Country', 'name': 'India' }]
+        : { '@type': 'Country', 'name': 'India' },
       'description': data.shortDesc
     },
     ...(data.faqs && data.faqs.length > 0
@@ -473,7 +592,7 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
             <div className="lg:col-span-7 space-y-6">
               <span className="eyebrow">Service</span>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 leading-[1.15]">
-                {data.title}
+                {data.h1 ?? data.title}
               </h1>
               <p className="text-neutral-600 text-sm sm:text-base md:text-lg leading-relaxed">
                 {data.shortDesc}
@@ -578,6 +697,54 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
           </div>
         </div>
       </section>
+
+      {/* Local guide: the longer, Surat-specific copy for services that compete on "in Surat" searches */}
+      {data.localGuide && (
+        <section id="service-local" className="py-24 bg-neutral-50 font-sans border-t border-neutral-200/50">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-12">
+            <div className="space-y-4">
+              <span className="eyebrow">{data.localGuide.eyebrow}</span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 leading-tight">{data.localGuide.heading}</h2>
+              <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">{data.localGuide.intro}</p>
+            </div>
+
+            {data.localGuide.sections.map((section) => (
+              <div key={section.heading} className="space-y-3">
+                <h3 className="text-lg sm:text-xl font-bold text-neutral-900">{section.heading}</h3>
+                {section.paragraphs.map((para, idx) => (
+                  <p key={idx} className="text-neutral-600 text-sm sm:text-base leading-relaxed">{para}</p>
+                ))}
+              </div>
+            ))}
+
+            <div className="space-y-3">
+              <h3 className="text-lg sm:text-xl font-bold text-neutral-900">Areas we work with in and around Surat</h3>
+              <ul className="flex flex-wrap gap-2">
+                {data.localGuide.areas.map((area) => (
+                  <li key={area} className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs sm:text-sm text-neutral-700">{area}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-lg sm:text-xl font-bold text-neutral-900">Guides worth reading first</h3>
+              <ul className="space-y-2">
+                {data.localGuide.guides.map((guide) => (
+                  <li key={guide.slug}>
+                    <PageLink
+                      href={getInsightDetailPath(guide.slug)}
+                      onNavigate={() => (onOpenPost ? onOpenPost(guide.slug) : window.location.assign(getInsightDetailPath(guide.slug)))}
+                      className="inline-flex items-center gap-1.5 text-sm sm:text-base font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4 hover:decoration-neutral-900"
+                    >
+                      {guide.label} <ArrowRight className="h-3.5 w-3.5" />
+                    </PageLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Process Section */}
       <motion.section 

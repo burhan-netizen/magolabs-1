@@ -16,9 +16,27 @@ export default function Insights({ onOpenPost }: InsightsProps) {
   // Posts come from the Markdown files in content/insights, built into the site.
   const posts: BlogPostSummary[] = getAllPosts();
 
+  // Structured data: this page is the blog, and lists every post in it.
+  const blogSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': 'https://www.magolabs.in/insights#blog',
+    'name': 'Mago Labs Insights',
+    'url': 'https://www.magolabs.in/insights',
+    'description': 'Plain-English guides on website design, local SEO and digital growth for businesses in Surat and across India.',
+    'inLanguage': 'en-IN',
+    'publisher': { '@id': 'https://www.magolabs.in/#localbusiness' },
+    'blogPost': posts.map((post) => ({
+      '@type': 'BlogPosting',
+      'headline': post.title,
+      'url': `https://www.magolabs.in${getInsightDetailPath(post.slug)}`,
+      'datePublished': post.publishedDate
+    }))
+  };
+
   return (
     <>
-      <SEO path="/insights" />
+      <SEO path="/insights" schemas={[blogSchema]} />
 
       <section className="pt-32 pb-16 sm:pt-40 sm:pb-20 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">

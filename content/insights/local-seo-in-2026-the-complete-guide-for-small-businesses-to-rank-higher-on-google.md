@@ -255,7 +255,7 @@ Your customers are already searching.
 
 The real question is whether they can find you.
 
-If you're looking for professional Local SEO Services in Surat, Google Business Profile optimization, or a high-performing SEO-friendly website, Mago Labs helps businesses build a strong digital presence that turns searches into enquiries.
+If you're looking for professional [local SEO services in Surat](/services/seo), [Google Business Profile optimization](/services/google-business-profile), or a high-performing [SEO-friendly website](/services/web-design), Mago Labs helps businesses build a strong digital presence that turns searches into enquiries.
 
 The best time to invest in Local SEO was yesterday.
 

@@ -48,9 +48,9 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
     twitterCard: 'summary_large_image'
   },
   'service-web-design': {
-    title: 'Custom Hand-Coded Websites for Surat Businesses | Mago Labs',
-    description: 'Custom websites, hand-coded from a blank canvas, never a template. Fast, mobile-first and built to bring enquiries. Four packages, live in 5 to 28 days.',
-    ogTitle: 'Custom Hand-Coded Websites for Surat Businesses | Mago Labs',
+    title: 'Website Design Services in Surat, Custom-Coded | Mago Labs',
+    description: 'Website design company in Surat building custom, hand-coded websites that bring enquiries. Published prices from ₹17,999, live in 5 to 28 days.',
+    ogTitle: 'Website Design Services in Surat, Custom-Coded | Mago Labs',
     ogDescription: 'Custom-coded websites built for speed, mobile experience, and conversions, not templates.',
     ogImage: 'https://www.magolabs.in/og-image-web-design.jpg',
     ogType: 'website',
@@ -359,4 +359,22 @@ export function updateSEO(title: string, description: string): void {
     document.head.appendChild(metaDesc);
   }
   metaDesc.setAttribute('content', description);
+}
+
+/** The page title for an Insights post. Google cuts titles at roughly 60 characters,
+ *  so the brand is added only when it still fits. Long post titles stand alone. */
+export function insightPageTitle(postTitle: string): string {
+  const branded = `${postTitle} | Mago Labs`;
+  return branded.length <= 60 ? branded : postTitle;
+}
+
+/** A meta description Google will show in full (about 160 characters). Longer text is
+ *  cut at the last full sentence that fits, or failing that at a word, never mid-word. */
+export function metaDescription(text: string, max = 160): string {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+  const slice = clean.slice(0, max);
+  const sentenceEnd = Math.max(slice.lastIndexOf('. '), slice.lastIndexOf('? '), slice.lastIndexOf('! '));
+  if (sentenceEnd >= 100) return slice.slice(0, sentenceEnd + 1);
+  return `${slice.slice(0, slice.lastIndexOf(' ', max - 1)).replace(/[,;:.\s]+$/, '')}…`;
 }

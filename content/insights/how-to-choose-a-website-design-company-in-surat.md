@@ -115,4 +115,4 @@ The clearest red flags are vague answers to the questions above. Specifically, w
 
 ## Want an honest second opinion?
 
-If you are comparing quotes or not sure what to ask, we are happy to help, even if you do not choose us. Mago Labs offers a free website audit and a straight answer on what your business actually needs. Message us on WhatsApp at +91 9099245605.
+If you are comparing quotes or not sure what to ask, we are happy to help, even if you do not choose us. Mago Labs is a founder-led [website design company in Surat](/services/web-design), and we offer a free website audit and a straight answer on what your business actually needs. Message us on WhatsApp at +91 9099245605.

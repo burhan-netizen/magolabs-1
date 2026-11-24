@@ -238,7 +238,7 @@ function AppContent({ initialPath }: AppProps) {
       case 'service-social-media':
       case 'service-lead-generation':
       case 'service-paid-ads':
-        return <ServiceDetail serviceId={currentPage} onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
+        return <ServiceDetail serviceId={currentPage} onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} onOpenPost={handleOpenPost} />;
       case 'work':
         return <Work onPageChange={handlePageChange} onOpenCaseStudy={handleOpenWork} />;
       case 'work-detail':

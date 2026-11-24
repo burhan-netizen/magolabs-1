@@ -157,4 +157,4 @@ It depends on the problem. A rough guide:
 
 ## Still not showing up on Google Maps?
 
-If you have tried the steps above and your business is still missing or stuck, we can take a look. Mago Labs offers a free website audit that includes a check of your Google Business Profile, with clear next steps. Message us on WhatsApp at +91 9099245605.
+If you have tried the steps above and your business is still missing or stuck, we can take a look. Mago Labs handles [Google Business Profile optimisation](/services/google-business-profile) and [local SEO in Surat](/services/seo), and we offer a free website audit that includes a check of your Google Business Profile, with clear next steps. Message us on WhatsApp at +91 9099245605.

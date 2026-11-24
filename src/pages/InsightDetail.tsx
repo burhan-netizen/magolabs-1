@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ArrowLeft, AlertCircle } from 'lucide-react';
 import { PageId, BlogPost } from '../types';
 import { getPostBySlug, absoluteUrl } from '../lib/insights';
-import { updateDocumentSEO } from '../utils/seo';
+import { updateDocumentSEO, insightPageTitle, metaDescription } from '../utils/seo';
 import { getInsightDetailPath } from '../utils/pageRoutes';
 import { getInitialBlogData, formatPostDate } from '../lib/blogData';
 import JsonLd from '../components/JsonLd';
@@ -51,8 +51,8 @@ export default function InsightDetail({ slug, onPageChange }: InsightDetailProps
     if (status === 'ready' && post) {
       updateDocumentSEO(
         'insights-detail',
-        `${post.title} | Mago Labs Insights`,
-        post.excerpt,
+        insightPageTitle(post.title),
+        metaDescription(post.excerpt),
         absoluteUrl(post.coverImageUrl),
         getInsightDetailPath(post.slug)
       );

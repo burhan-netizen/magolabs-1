@@ -47,6 +47,20 @@ export interface Service {
   howWeWork?: string;
   /** Shown as a pricing note: services priced per client, not from a package. */
   pricingNote?: string;
+  /** The page heading, written as the phrase people search for (e.g. "SEO Company in Surat").
+   *  Defaults to the title. The title stays the short name used in breadcrumbs and lists. */
+  h1?: string;
+  /** A longer local section for the services that compete on "in Surat" searches. */
+  localGuide?: {
+    eyebrow: string;
+    heading: string;
+    intro: string;
+    sections: { heading: string; paragraphs: string[] }[];
+    /** Areas of the city served, listed as plain text. */
+    areas: string[];
+    /** Related guides from /insights, linked by slug. */
+    guides: { slug: string; label: string }[];
+  };
 }
 
 export interface Industry {

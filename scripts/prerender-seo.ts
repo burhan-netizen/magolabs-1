@@ -19,7 +19,7 @@ import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { renderSeoHtml, renderSeoHtmlForConfig } from '../src/utils/renderSeoHtml';
 import { PAGE_TO_PATH, getInsightDetailPath, getWorkDetailPath } from '../src/utils/pageRoutes';
-import { SEOConfig, SEO_CONFIG_MAP } from '../src/utils/seo';
+import { SEOConfig, SEO_CONFIG_MAP, insightPageTitle, metaDescription } from '../src/utils/seo';
 import { BlogData, BLOG_DATA_ELEMENT_ID } from '../src/lib/blogData';
 import { BlogPost, BlogPostSummary } from '../src/types';
 import { CASE_STUDIES, getCaseStudySEO } from '../src/data/caseStudies';
@@ -187,8 +187,8 @@ console.log(`[prerender-seo] Wrote ${CASE_STUDIES.length} case-study shell(s).`)
       const post = readPost(summary.slug);
       if (!post) continue;
       const config: SEOConfig = {
-        title: `${post.title} | Mago Labs Insights`,
-        description: post.excerpt || 'Digital growth, SEO, and web design insights from Mago Labs.',
+        title: insightPageTitle(post.title),
+        description: metaDescription(post.excerpt || 'Digital growth, SEO, and web design insights from Mago Labs.'),
         ogTitle: post.title,
         ogDescription: post.excerpt,
         ogImage: absoluteUrl(post.coverImageUrl),
@@ -233,17 +233,20 @@ console.log(`[prerender-seo] Wrote ${CASE_STUDIES.length} case-study shell(s).`)
     const parsed = new Date(value);
     return Number.isNaN(parsed.getTime()) ? today : parsed.toISOString().slice(0, 10);
   };
-  const entries: { path: string; date: string }[] = [
+  // Only blog posts carry a real "last changed" date. Stamping every other page with
+  // the build date told Google they all changed on every deploy, which teaches it to
+  // ignore the dates altogether, so those pages are listed without one.
+  const entries: { path: string; date?: string }[] = [
     ...Object.values(PAGE_TO_PATH)
       .filter((routePath) => routePath !== PAGE_TO_PATH.sitemap)
-      .map((routePath) => ({ path: routePath, date: today })),
-    ...CASE_STUDIES.map((cs) => ({ path: getWorkDetailPath(cs.id), date: today })),
+      .map((routePath) => ({ path: routePath })),
+    ...CASE_STUDIES.map((cs) => ({ path: getWorkDetailPath(cs.id) })),
     ...writtenPosts.map((post) => ({ path: post.path, date: isoDate(post.date) })),
   ];
   const xml =
     '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     entries
-      .map((entry) => `  <url>\n    <loc>https://www.magolabs.in${entry.path}</loc>\n    <lastmod>${entry.date}</lastmod>\n  </url>\n`)
+      .map((entry) => `  <url>\n    <loc>https://www.magolabs.in${entry.path}</loc>\n` + (entry.date ? `    <lastmod>${entry.date}</lastmod>\n` : '') + `  </url>\n`)
       .join('') +
     '</urlset>\n';
   fs.writeFileSync(path.join(distDir, 'sitemap.xml'), xml, 'utf-8');

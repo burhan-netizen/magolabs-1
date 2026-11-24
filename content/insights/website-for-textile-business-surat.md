@@ -98,4 +98,4 @@ Marketplaces and B2B portals can bring leads, but you share the page with compet
 
 ## Building a website for your textile business?
 
-We work with Surat textile businesses on catalogue websites built around WhatsApp enquiries and Google searches. See our [websites for textile businesses](/industries/textile), or message us on WhatsApp at +91 9099245605 for a free website audit.
+We work with Surat textile businesses on catalogue websites built around WhatsApp enquiries and Google searches. See our [websites for textile businesses](/industries/textile) and our [website design services in Surat](/services/web-design), or message us on WhatsApp at +91 9099245605 for a free website audit.

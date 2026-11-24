@@ -150,7 +150,7 @@ export default function WorkWall({ onOpenWork }: WorkWallProps) {
                           src={`/screenshots/full/${site.id}.webp`}
                           srcSet={`/screenshots/full/${site.id}-300.webp 300w, /screenshots/full/${site.id}.webp 560w`}
                           sizes="(max-width: 639px) 46vw, 400px"
-                          alt=""
+                          alt={copy === 0 ? `${site.clientName} website designed by Mago Labs` : ''}
                           width={shot.width}
                           height={shot.height}
                           loading="lazy"

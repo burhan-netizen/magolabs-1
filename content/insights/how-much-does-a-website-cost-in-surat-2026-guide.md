@@ -157,4 +157,4 @@ Send the same brief to two or three providers.
 
 ## Not sure what your website should cost?
 
-If you have a quote in hand and want a second opinion, or you want to know what your current site is missing, we are happy to help. Mago Labs offers a free website audit with honest, practical feedback, no pressure. Message us on WhatsApp at +91 9099245605 and we will take a look.
+If you have a quote in hand and want a second opinion, or you want to know what your current site is missing, we are happy to help. Mago Labs is a [website design company in Surat](/services/web-design) with [published prices](/pricing), and we offer a free website audit with honest, practical feedback, no pressure. Message us on WhatsApp at +91 9099245605 and we will take a look.

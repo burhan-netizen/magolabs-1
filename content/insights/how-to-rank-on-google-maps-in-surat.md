@@ -86,4 +86,4 @@ If you can't find your business on Maps, the problem is usually verification, a 
 
 ## Want help ranking on Google Maps?
 
-We set up and optimise Google Business Profiles for Surat businesses, alongside websites that support them. See our [Google Business Profile service](/services/google-business-profile), or message us on WhatsApp at +91 9099245605 for a free audit.
+We set up and optimise Google Business Profiles for Surat businesses, alongside websites that support them. See our [Google Business Profile service](/services/google-business-profile) and [local SEO services in Surat](/services/seo), or message us on WhatsApp at +91 9099245605 for a free audit.
