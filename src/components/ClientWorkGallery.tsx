@@ -319,7 +319,7 @@ export default function ClientWorkGallery({ onOpenCaseStudy }: ClientWorkGallery
       {/* Rest of the work, compact row */}
       {rest.length > 0 && (
         <>
-          <p className="text-xs font-bold font-mono tracking-widest text-neutral-400 uppercase text-center pt-2">
+          <p className="text-xs font-bold font-mono tracking-widest text-neutral-500 uppercase text-center pt-2">
             More Client Work
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

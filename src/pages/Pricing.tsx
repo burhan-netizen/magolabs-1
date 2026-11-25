@@ -378,7 +378,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
                     {isPicked && <span className="price-match right-7 sm:right-8">Your match</span>}
 
                     <div className="flex items-baseline gap-3">
-                      <span className={`font-mono text-sm font-bold ${dark ? 'text-brand' : 'text-neutral-400'}`}>{tier.number}</span>
+                      <span className={`font-mono text-sm font-bold ${dark ? 'text-brand' : 'text-neutral-500'}`}>{tier.number}</span>
                       <h2 className={`text-2xl font-bold tracking-tight ${dark ? 'text-white' : 'text-neutral-900'}`}>{tier.name}</h2>
                     </div>
                     <p className={`mt-3 text-sm leading-relaxed min-h-[2.75rem] ${dark ? 'text-neutral-300' : 'text-neutral-600'}`}>{tier.tagline}</p>
@@ -587,7 +587,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
                       onMouseEnter={() => setHoverCol(colIdx)}
                       className={`px-5 py-4 text-base font-bold text-neutral-900 w-[20%] ${colClass(colIdx)}`}
                     >
-                      <span className="block font-mono text-[10px] font-bold tracking-wider text-neutral-400">{PACKAGES[colIdx].number}</span>
+                      <span className="block font-mono text-[10px] font-bold tracking-wider text-neutral-500">{PACKAGES[colIdx].number}</span>
                       {col}
                     </th>
                   ))}
@@ -663,7 +663,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
                     <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/[0.06] text-brand transition-colors duration-300 group-hover:bg-brand group-hover:text-ink">
                       <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
                     </span>
-                    <span className="font-mono text-sm font-bold text-neutral-600">0{idx + 1}</span>
+                    <span className="font-mono text-sm font-bold text-brand">0{idx + 1}</span>
                   </div>
                   <h3 className="mt-6 text-lg font-semibold text-white">{item.title}</h3>
                   <p className="mt-2 text-sm text-neutral-400 leading-relaxed">{item.desc}</p>
@@ -695,7 +695,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
                       className="group w-full flex items-center justify-between gap-4 py-6 text-left cursor-pointer"
                     >
                       <span className="flex items-baseline gap-4">
-                        <span className={`font-mono text-xs font-bold transition-colors duration-300 ${isOpen ? 'text-neutral-900' : 'text-neutral-400'}`}>0{idx + 1}</span>
+                        <span className={`font-mono text-xs font-bold transition-colors duration-300 ${isOpen ? 'text-neutral-900' : 'text-neutral-500'}`}>0{idx + 1}</span>
                         <span className="font-semibold text-neutral-900 text-base sm:text-lg transition-[translate] duration-300 group-hover:translate-x-1">{faq.question}</span>
                       </span>
                       <span className={`flex-shrink-0 rounded-full p-1.5 transition-colors duration-300 ${isOpen ? 'bg-brand text-ink' : 'bg-neutral-200 text-neutral-800'}`}>

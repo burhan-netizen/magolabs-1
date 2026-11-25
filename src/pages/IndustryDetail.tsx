@@ -140,7 +140,7 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
                 transition={{ duration: 0.5, delay: idx * 0.06 }}
                 className="spot-card relative border-neutral-300 space-y-2"
               >
-                <span className="font-mono text-sm font-bold text-neutral-400">0{idx + 1}</span>
+                <span className="font-mono text-sm font-bold text-neutral-500">0{idx + 1}</span>
                 <h3 className="text-lg font-semibold text-neutral-900 leading-snug">{problem.title}</h3>
                 <p className="text-sm text-neutral-600 leading-relaxed">{problem.desc}</p>
               </motion.div>

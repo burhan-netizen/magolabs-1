@@ -99,7 +99,7 @@ export default function About({ onPageChange }: AboutProps) {
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md px-5 py-4 rounded-xl border border-neutral-100">
-                  <h3 className="text-base font-semibold text-neutral-900">Burhan Kapasi</h3>
+                  <p className="text-base font-semibold text-neutral-900">Burhan Kapasi</p>
                   <p className="text-xs text-neutral-500 font-medium">Founder, Mago Labs</p>
                   <a href="tel:+919099245605" className="block text-xs text-neutral-900 font-semibold mt-1.5">+91 9099245605</a>
                   <a

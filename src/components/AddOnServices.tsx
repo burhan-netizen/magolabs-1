@@ -66,7 +66,7 @@ export default function AddOnServices({ onPageChange }: AddOnServicesProps) {
                     aria-label={`Learn more about ${item.name}`}
                     className="mt-auto pt-4 inline-flex items-center gap-1 text-xs font-semibold text-neutral-500 hover:text-neutral-900 transition-colors cursor-pointer"
                   >
-                    Learn more <ArrowRight className="h-3 w-3" />
+                    Learn more<span className="sr-only"> about {item.name}</span> <ArrowRight className="h-3 w-3" />
                   </PageLink>
                 )}
               </li>

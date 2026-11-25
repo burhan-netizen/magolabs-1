@@ -172,7 +172,7 @@ export default function Agencies({ onPageChange }: AgenciesProps) {
           <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {STEPS.map((step, idx) => (
               <li key={step.title} className="spot-card relative border-neutral-300 space-y-3">
-                <span className="font-mono text-xs font-bold text-neutral-400">0{idx + 1}</span>
+                <span className="font-mono text-xs font-bold text-neutral-500">0{idx + 1}</span>
                 <h3 className="text-lg font-semibold text-neutral-900">{step.title}</h3>
                 <p className="text-sm text-neutral-600 leading-relaxed">{step.desc}</p>
               </li>

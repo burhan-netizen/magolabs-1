@@ -116,7 +116,7 @@ export default function Contact(_props: ContactProps) {
                     href={WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 px-5 py-3.5 text-sm font-semibold text-white transition-colors"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-700 hover:bg-emerald-800 px-5 py-3.5 text-sm font-semibold text-white transition-colors"
                   >
                     <WhatsAppLogo className="h-4 w-4" />
                     WhatsApp us

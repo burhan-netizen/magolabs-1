@@ -401,15 +401,15 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
 
           {/* Slim proof strip: three plain facts, then the clients */}
           <div className="mt-20 md:mt-24 grid grid-cols-1 items-center gap-8 border-t border-white/10 py-8 lg:grid-cols-12">
-            <dl className="grid grid-cols-3 gap-4 lg:col-span-5">
+            <div className="grid grid-cols-3 gap-4 lg:col-span-5">
               {HERO_FACTS.map((fact) => {
                 const body = (
                   <>
-                    <dd className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#ffffff]">
+                    <span className="block font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#ffffff]">
                       {fact.value}
                       {fact.star && <span aria-hidden="true" className="ml-1 text-[#FBBC04]">★</span>}
-                    </dd>
-                    <dt className="mt-1 text-xs sm:text-[13px] font-medium leading-snug text-neutral-400">{fact.label}</dt>
+                    </span>
+                    <span className="block mt-1 text-xs sm:text-[13px] font-medium leading-snug text-neutral-400">{fact.label}</span>
                   </>
                 );
                 return fact.href ? (
@@ -427,7 +427,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
                   <div key={fact.label}>{body}</div>
                 );
               })}
-            </dl>
+            </div>
             <div className="lg:col-span-7">
               <LogoStrip />
             </div>

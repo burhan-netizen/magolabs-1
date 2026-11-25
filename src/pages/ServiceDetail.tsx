@@ -633,9 +633,9 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
             </div>
 
             <div className="lg:col-span-5 bg-neutral-50 rounded-2xl p-8 border border-neutral-100 space-y-6 self-center">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-500 flex items-center gap-1.5">
+              <p className="text-xs font-bold uppercase tracking-widest text-neutral-500 flex items-center gap-1.5">
                 What&rsquo;s included
-              </h3>
+              </p>
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-y-3">
                 {data.features.map((feature, idx) => (
                   <li key={idx} className="flex items-center gap-2.5">
@@ -663,9 +663,9 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
                 {data.longDesc}
               </p>
               <div className="border-l-2 border-brand pl-6 space-y-2">
-                <h4 className="font-semibold text-neutral-900 text-sm uppercase tracking-wider">
+                <h3 className="font-semibold text-neutral-900 text-sm uppercase tracking-wider">
                   How we work
-                </h4>
+                </h3>
                 <p className="text-sm text-neutral-600 leading-relaxed">
                   {data.howWeWork ?? 'Regular updates. Direct access to Burhan Kapasi, the founder. Clean code. Hosting included, and no markup on your domain.'}
                 </p>
@@ -770,7 +770,7 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
                   <div className="h-8 w-8 rounded-full bg-neutral-950 border border-brand/30 flex items-center justify-center text-xs font-bold text-brand">
                     {idx + 1}
                   </div>
-                  <h4 className="font-display text-lg font-semibold text-white">{header}</h4>
+                  <h3 className="font-display text-lg font-semibold text-white">{header}</h3>
                   <p className="text-sm text-neutral-400 leading-relaxed">{desc}</p>
                 </div>
               );

@@ -156,7 +156,7 @@ export default function Services({ onPageChange }: ServicesProps) {
                       onNavigate={() => navigateTo('pricing')}
                       className="group block h-full rounded-2xl border border-neutral-200 p-5 hover:border-neutral-900 transition-colors cursor-pointer"
                     >
-                      <span className="font-mono text-xs font-bold text-neutral-400">{pkg.number}</span>
+                      <span className="font-mono text-xs font-bold text-neutral-500">{pkg.number}</span>
                       <span className="mt-1 block text-lg font-bold text-neutral-900">{pkg.name}</span>
                       <span className="block text-sm text-neutral-600">{pkg.forWhom}</span>
                       <span className="mt-3 block text-sm font-semibold text-neutral-900">From <Price pkg={pkg} /> · live in {pkg.days} days</span>

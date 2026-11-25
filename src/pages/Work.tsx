@@ -84,7 +84,7 @@ export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
             </div>
           </div>
 
-          <dl className="mx-auto mt-12 grid max-w-3xl grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="mx-auto mt-12 grid max-w-3xl grid-cols-1 sm:grid-cols-3 gap-4">
             {HERO_STATS.map((stat, idx) => (
               <motion.div
                 key={stat.label}
@@ -101,22 +101,22 @@ export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
                     aria-label={`Rated ${stat.rating} out of 5 from ${stat.label}, opens our Google profile in a new tab`}
                     className="block px-5 py-6 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
                   >
-                    <dd className="text-4xl font-bold tracking-tight text-brand">
+                    <span className="block text-4xl font-bold tracking-tight text-brand">
                       {stat.rating}<span aria-hidden="true" className="ml-1.5 text-[#FBBC04]">★</span>
-                    </dd>
-                    <dt className="mt-2 text-sm text-neutral-300">{stat.label}</dt>
+                    </span>
+                    <span className="block mt-2 text-sm text-neutral-300">{stat.label}</span>
                   </a>
                 ) : (
                   <div className="px-5 py-6">
-                    <dd className="text-4xl font-bold tracking-tight text-brand">
+                    <span className="block text-4xl font-bold tracking-tight text-brand">
                       {stat.before}<CountUp to={stat.value} duration={1.4} />{stat.after}
-                    </dd>
-                    <dt className="mt-2 text-sm text-neutral-300">{stat.label}</dt>
+                    </span>
+                    <span className="block mt-2 text-sm text-neutral-300">{stat.label}</span>
                   </div>
                 )}
               </motion.div>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 

@@ -63,7 +63,7 @@ export default function Insights({ onOpenPost }: InsightsProps) {
               {posts.map((post, idx) => (
                 <motion.div
                   key={post.id}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={idx < 3 ? false : { opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-60px' }}
                   transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
@@ -79,8 +79,12 @@ export default function Insights({ onOpenPost }: InsightsProps) {
                     <img
                       src={post.coverImageUrl}
                       alt=""
-                      loading="lazy"
-                      className="h-44 w-full object-cover"
+                      width={1600}
+                      height={900}
+                      loading={idx < 3 ? 'eager' : 'lazy'}
+                      fetchPriority={idx === 0 ? 'high' : undefined}
+                      decoding="async"
+                      className="aspect-[16/9] w-full object-cover"
                     />
                   ) : (
                     <div className="h-44 w-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
@@ -89,7 +93,7 @@ export default function Insights({ onOpenPost }: InsightsProps) {
                   )}
                   <div className="p-6 flex flex-col gap-3 flex-grow">
                     {post.publishedDate && (
-                      <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">
+                      <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">
                         {formatPostDate(post.publishedDate)}
                       </span>
                     )}

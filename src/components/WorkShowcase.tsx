@@ -104,10 +104,10 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                 {/* Kept compact on phones, so a whole card fits on screen and can join the deck */}
                 <div className="lg:col-span-5 flex flex-col gap-3 sm:gap-5 p-4 sm:p-10">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-bold uppercase tracking-[0.16em]" style={{ color: project.accent }}>
+                    <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-neutral-500">
                       {project.industry}
                     </span>
-                    <span className="font-mono text-xs font-bold text-neutral-400">
+                    <span className="font-mono text-xs font-bold text-neutral-500">
                       0{idx + 1} / 0{featured.length}
                     </span>
                   </div>
@@ -232,7 +232,7 @@ export default function WorkShowcase({ onOpenCaseStudy }: WorkShowcaseProps) {
                     </PageLink>
 
                     <div className="flex flex-1 flex-col gap-3 p-6">
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em]" style={{ color: project.accent }}>
+                      <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-neutral-500">
                         {project.industry}
                       </span>
                       <h3 className="text-lg font-bold tracking-tight text-neutral-900">{project.clientName}</h3>

@@ -144,7 +144,8 @@ function DeckCard({ item, index, depth, total, reduced, returning, onThrown, reg
     const observer = new ResizeObserver(mark);
     observer.observe(quote);
     return () => observer.disconnect();
-  }, []);
+    // Re-number when this card comes to the top, since only the top card splits its words.
+  }, [isTop]);
 
   const onDragEnd = (_event: unknown, info: PanInfo) => {
     setDragging(false);
@@ -194,14 +195,18 @@ function DeckCard({ item, index, depth, total, reduced, returning, onThrown, reg
         <p className="deck-result">{RESULT[item.id]}</p>
 
         <blockquote ref={quoteRef} className={`deck-quote ${long ? 'is-long' : medium ? 'is-medium' : ''}`}>
-          {item.quote.split(/\s+/).map((word, w) => (
-            // The space sits outside the word's window, or it would be swallowed.
-            <Fragment key={w}>
-              <span className="deck-word">
-                <span className="deck-word-in">{word}</span>
-              </span>{' '}
-            </Fragment>
-          ))}
+          {/* Only the card on top reveals word by word; the cards under it hold plain
+              text, which keeps the page light (every split word is two elements). */}
+          {isTop
+            ? item.quote.split(/\s+/).map((word, w) => (
+                // The space sits outside the word's window, or it would be swallowed.
+                <Fragment key={w}>
+                  <span className="deck-word">
+                    <span className="deck-word-in">{word}</span>
+                  </span>{' '}
+                </Fragment>
+              ))
+            : item.quote}
         </blockquote>
 
         <footer className="deck-by">

@@ -110,7 +110,7 @@ export default function FounderStory({ onReadStory, journeyOnly = false }: Found
               <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50">
                 <img src={c.photo} alt={c.alt} width={c.w} height={c.h} loading="lazy" className="aspect-[4/3] w-full object-cover object-[50%_12%]" />
                 <div className="flex flex-1 flex-col p-7">
-                  <span className="font-mono text-xs font-bold text-neutral-400">{c.n}</span>
+                  <span className="font-mono text-xs font-bold text-neutral-500">{c.n}</span>
                   <h4 className="mt-2 text-xl font-bold tracking-tight text-neutral-900">{c.title}</h4>
                   <p className="mt-3 text-base leading-relaxed text-neutral-600">{c.text}</p>
                 </div>
