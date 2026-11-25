@@ -1797,3 +1797,6 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
 .polaroid { transform: rotate(var(--r, 0deg)); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .polaroid:hover { transform: rotate(0deg) scale(1.04); }
 @media (prefers-reduced-motion: reduce) { .polaroid { transition: none; } }
+
+/* Work reel: the giant outlined word behind the cards */
+.reel-outline { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.09); }
