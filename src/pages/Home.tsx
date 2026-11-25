@@ -1,6 +1,8 @@
 import { ArrowRight, Check, EyeOff, Plus, Minus, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
 import TestimonialDeck from '../components/TestimonialDeck';
 import WorkStack from '../components/WorkStack';
+import WorkSpiral from '../components/WorkSpiral';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { PageId } from '../types';
@@ -231,6 +233,11 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
   const { t } = useLanguage();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const toggleFaq = (idx: number) => setOpenFaq(openFaq === idx ? null : idx);
+
+  const prefersReducedMotion = useReducedMotion();
+  // Wide screens get the 3D work spiral; phones and reduced motion get the stacked cards.
+  const wideScreen = useMediaQuery('(min-width: 1024px)');
+  const spiral = wideScreen && !prefersReducedMotion;
 
   const navigateTo = (page: PageId) => {
     onPageChange(page);
@@ -583,7 +590,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       </section>
 
       {/* 4. The work and what changed: a stack of client websites with their results */}
-      <WorkStack onOpenWork={() => navigateTo('work')} />
+      {spiral ? <WorkSpiral onOpenWork={() => navigateTo('work')} /> : <WorkStack onOpenWork={() => navigateTo('work')} />}
 
       {/* 5. The person behind the work, with a link to the full story on About */}
       <FounderStory onReadStory={() => navigateTo('about')} />

@@ -1892,3 +1892,51 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
 .commerce-panel .commerce-mark { display: none !important; }
 /* Dark mode: the dust video is made for a light background */
 .dark #founder video, .dark #founder-journey video { display: none; }
+
+/* Work spiral (homepage, wide screens): client sites on a 3D helix */
+.spiral-stage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 40%;
+  perspective: 2000px;
+  perspective-origin: 50% 50%;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%), linear-gradient(to bottom, transparent 4%, #000 20%, #000 82%, transparent 98%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, #000 16%), linear-gradient(to bottom, transparent 4%, #000 20%, #000 82%, transparent 98%);
+  mask-composite: intersect;
+}
+.spiral-scene {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.spiral-card {
+  position: absolute;
+  left: -155px;
+  top: -86px;
+  width: 310px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 30px 60px -25px rgba(0, 0, 0, 0.8);
+  backface-visibility: visible;
+}
+.spiral-card img { display: block; width: 100%; aspect-ratio: 1920 / 900; object-fit: cover; object-position: top; }
+.spiral-bar { display: flex; align-items: center; gap: 6px; height: 26px; padding: 0 12px; background: #fff; border-bottom: 1px solid #e6e3dc; }
+.spiral-bar i { width: 7px; height: 7px; border-radius: 50%; background: #d4d1ca; }
+.spiral-bar span { margin-left: 8px; font-family: var(--font-mono); font-size: 10px; color: #8a877f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.spiral-floor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 65% 50%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 60% 60% at 65% 50%, #000 0%, transparent 75%);
+}
