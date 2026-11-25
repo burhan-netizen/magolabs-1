@@ -32,6 +32,8 @@ const CHAPTERS = [
     w: 900,
     h: 1601,
     alt: 'Burhan Kapasi relaxing on a swing chair',
+    // A tall photo: frame the swing, not the trees above it.
+    pos: '50% 52%',
   },
 ];
 
@@ -108,7 +110,7 @@ export default function FounderStory({ onReadStory, journeyOnly = false }: Found
           {CHAPTERS.map((c, i) => (
             <motion.li key={c.n} {...rise} transition={{ duration: 0.6, delay: i * 0.1 }}>
               <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50">
-                <img src={c.photo} alt={c.alt} width={c.w} height={c.h} loading="lazy" className="aspect-[4/3] w-full object-cover object-[50%_12%]" />
+                <img src={c.photo} alt={c.alt} width={c.w} height={c.h} loading="lazy" className="aspect-[4/3] w-full object-cover" style={{ objectPosition: c.pos ?? '50% 12%' }} />
                 <div className="flex flex-1 flex-col p-7">
                   <span className="font-mono text-xs font-bold text-neutral-500">{c.n}</span>
                   <h4 className="mt-2 text-xl font-bold tracking-tight text-neutral-900">{c.title}</h4>
