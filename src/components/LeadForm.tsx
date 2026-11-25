@@ -43,15 +43,17 @@ const AGENT_TOOL = {
 const EMPTY: LeadFormState = { name: '', phone: '', email: '', website: '', business: '', message: '' };
 
 // The words that change with the visitor's starting point.
-const MODE_COPY: Record<LeadMode, { tab: string; button: string; service: string; thanks: string }> = {
+const MODE_COPY: Record<LeadMode, { tab: string; sub: string; button: string; service: string; thanks: string }> = {
   audit: {
-    tab: 'I have a website',
+    tab: 'Yes',
+    sub: 'We’ll audit it for free',
     button: 'Get my free audit',
     service: 'Free website audit',
     thanks: 'Burhan will look at your website and get back to you within one business day.',
   },
   new: {
-    tab: 'I don’t have one yet',
+    tab: 'Not yet',
+    sub: 'We’ll plan your first one',
     button: 'Get my free website plan',
     service: 'Free website plan (no website yet)',
     thanks: 'Burhan will put together a plan for your first website and get back to you within one business day.',
@@ -161,24 +163,50 @@ export default function LeadForm({ idPrefix = 'lead', source = 'Website', mode, 
   return (
     <form onSubmit={submit} noValidate {...AGENT_TOOL} className="rounded-2xl border border-neutral-200 bg-white p-6 sm:p-8 text-left space-y-5">
       {/* Starting point: the same form serves people with a website and people without one */}
-      <div role="radiogroup" aria-label="Where are you starting from?" className="grid grid-cols-2 gap-1 rounded-full bg-neutral-100 p-1">
-        {(['audit', 'new'] as LeadMode[]).map((option) => {
-          const selected = activeMode === option;
-          return (
-            <button
-              key={option}
-              type="button"
-              role="radio"
-              aria-checked={selected}
-              onClick={() => chooseMode(option)}
-              className={`rounded-full px-3 py-3 text-sm font-semibold transition-colors cursor-pointer ${
-                selected ? 'bg-neutral-950 text-[#ffffff]' : 'text-neutral-600 hover:text-neutral-900'
-              }`}
-            >
-              {MODE_COPY[option].tab}
-            </button>
-          );
-        })}
+      <div>
+        <p id={`${idPrefix}-start`} className={labelClass}>Do you have a website?</p>
+        <div role="radiogroup" aria-labelledby={`${idPrefix}-start`} className="mt-2 grid grid-cols-2 gap-3">
+          {(['audit', 'new'] as LeadMode[]).map((option) => {
+            const selected = activeMode === option;
+            return (
+              <button
+                key={option}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                tabIndex={selected ? 0 : -1}
+                onClick={() => chooseMode(option)}
+                onKeyDown={(event) => {
+                  if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
+                    event.preventDefault();
+                    const next: LeadMode = option === 'audit' ? 'new' : 'audit';
+                    chooseMode(next);
+                    (event.currentTarget.parentElement?.querySelector(`[data-mode="${next}"]`) as HTMLElement | null)?.focus();
+                  }
+                }}
+                data-mode={option}
+                className={`flex items-start gap-3 rounded-xl border px-4 py-3.5 text-left transition-[border-color,box-shadow,background-color] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 ${
+                  selected
+                    ? 'border-neutral-900 bg-white shadow-[0_0_0_1px_#0D0D0D]'
+                    : 'border-neutral-200 bg-neutral-50 hover:border-neutral-400'
+                }`}
+              >
+                <span
+                  aria-hidden="true"
+                  className={`mt-0.5 flex h-[18px] w-[18px] flex-none items-center justify-center rounded-full border-2 transition-colors ${
+                    selected ? 'border-neutral-900 bg-neutral-900' : 'border-neutral-300 bg-white'
+                  }`}
+                >
+                  <span className={`h-2 w-2 rounded-full bg-brand transition-transform ${selected ? 'scale-100' : 'scale-0'}`} />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[15px] font-semibold leading-tight text-neutral-900">{MODE_COPY[option].tab}</span>
+                  <span className="mt-1 block text-[13px] leading-snug text-neutral-500">{MODE_COPY[option].sub}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
