@@ -50,10 +50,10 @@ export default function StickyCTA() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 16, scale: 0.9 }}
           transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-          className="group fixed bottom-4 right-4 z-50 flex h-12 items-center gap-2 rounded-full bg-[#1FA855] pl-3.5 pr-3.5 text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.45)] transition-[padding] hover:pr-5 sm:bottom-6 sm:right-6 sm:h-14 sm:pl-4"
+          className="group fixed bottom-4 right-4 z-50 flex h-12 min-w-12 items-center justify-center rounded-full bg-[#1FA855] px-3.5 text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.45)] ring-1 ring-black/5 transition-[padding,background-color] hover:bg-[#1a9a4d] sm:bottom-6 sm:right-6 sm:h-14 sm:min-w-14 sm:px-4 sm:hover:pr-5"
         >
           <WhatsAppLogo className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
-          <span className="hidden max-w-0 overflow-hidden whitespace-nowrap text-sm font-semibold transition-[max-width] duration-300 group-hover:max-w-[10rem] sm:inline">
+          <span className="hidden max-w-0 overflow-hidden whitespace-nowrap text-sm font-semibold transition-[max-width,margin] duration-300 group-hover:ml-2 group-hover:max-w-[10rem] sm:inline-block">
             Chat with Burhan
           </span>
         </motion.a>
