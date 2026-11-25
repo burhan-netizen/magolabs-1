@@ -26,9 +26,9 @@ export default function Footer({ onPageChange }: FooterProps) {
   return (
     <footer id="main-footer" className="bg-white dark:bg-[#1A1A1A] text-neutral-600 dark:text-neutral-400 border-t border-neutral-200 dark:border-neutral-800 pt-20 pb-12 font-sans transition-colors duration-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-[1.4fr_1fr_1fr_0.8fr_1.2fr] gap-12 lg:gap-8 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-[1.4fr_1fr_1fr_0.8fr_1.2fr] gap-x-6 gap-y-10 lg:gap-8 mb-16">
           {/* Brand Column */}
-          <div className="space-y-6">
+          <div className="col-span-2 md:col-span-3 lg:col-span-1 space-y-6">
             <PageLink page="home"
               onNavigate={() => handleLinkClick('home')}
               className="flex items-center focus:outline-none transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
@@ -236,7 +236,7 @@ export default function Footer({ onPageChange }: FooterProps) {
           </div>
 
           {/* Contact Details Column */}
-          <div className="space-y-6">
+          <div className="col-span-2 md:col-span-1 space-y-6">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-900 dark:text-white mb-6">Get In Touch</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3">

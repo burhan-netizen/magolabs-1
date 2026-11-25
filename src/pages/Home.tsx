@@ -409,7 +409,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
                       {fact.value}
                       {fact.star && <span aria-hidden="true" className="ml-1 text-[#FBBC04]">★</span>}
                     </dd>
-                    <dt className="mt-1 font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-neutral-400">{fact.label}</dt>
+                    <dt className="mt-1 text-xs sm:text-[13px] font-medium leading-snug text-neutral-400">{fact.label}</dt>
                   </>
                 );
                 return fact.href ? (

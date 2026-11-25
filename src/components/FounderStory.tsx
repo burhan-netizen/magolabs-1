@@ -75,7 +75,7 @@ export default function FounderStory({ onReadStory, journeyOnly = false }: Found
               width={1100}
               height={1258}
               loading="lazy"
-              className="aspect-[4/5] w-full max-w-md mx-auto rounded-3xl object-cover object-[50%_20%] shadow-2xl shadow-neutral-900/15"
+              className="aspect-[4/3] sm:aspect-[4/5] w-full max-w-md mx-auto rounded-3xl object-cover object-[50%_22%] shadow-2xl shadow-neutral-900/15"
             />
           </motion.figure>
           <div className="lg:col-span-7 space-y-5">
