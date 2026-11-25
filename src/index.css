@@ -2000,7 +2000,7 @@ html.motion-ok .logo-strip-track { animation: logoStrip 50s linear infinite; }
 .dark .bg-white .ed-list { --ed-bg: #1F1F1F; }
 .dark :is(.bg-neutral-50, .bg-neutral-100) .ed-list { --ed-bg: #262626; }
 @media (min-width: 640px) { .ed-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1024px) { .ed-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .ed-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } .ed-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
 .ed-item {
   position: relative;
@@ -2097,7 +2097,8 @@ html.motion-ok .ed-list[data-armed]:not([data-seen]) .ed-item::before { transfor
 }
 
 /* Reviews: shared "who said it" line (src/components/reviewBits.tsx). */
-.review-by { display: flex; align-items: center; gap: 0.875rem; min-width: 0; }
+.review-by { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 0.875rem; min-width: 0; }
+.review-by > .min-w-0 { flex: 1 1 9rem; }
 .review-logo {
   display: flex; flex: none; align-items: center; justify-content: center;
   width: 5.5rem; height: 2.75rem; padding: 0.4rem 0.6rem;
@@ -2319,3 +2320,45 @@ a.review-source:focus-visible { outline: 2px solid var(--color-ink); outline-off
   transition: width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .dark .swipe-bar > span { background: var(--color-brand); }
+
+/* Pricing: the dark opening runs behind the top of the package cards. */
+.pricing-hero-overlap { padding-bottom: clamp(9rem, 16vw, 12rem) !important; }
+.pricing-packages-lift {
+  --lift: clamp(7rem, 13vw, 10rem);
+  margin-top: calc(var(--lift) * -1);
+  background: linear-gradient(to bottom, transparent var(--lift), #FFFFFF var(--lift));
+}
+.dark .pricing-packages-lift { background: linear-gradient(to bottom, transparent var(--lift), #1F1F1F var(--lift)); }
+
+/* Pricing: how you pay, what costs extra, how to choose. */
+.pricing-terms {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid rgba(13, 13, 13, 0.1);
+}
+@media (min-width: 768px) { .pricing-terms { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pricing-term { padding: 1.5rem 0; border-bottom: 1px solid rgba(13, 13, 13, 0.1); }
+@media (min-width: 768px) {
+  .pricing-term { padding: 1.75rem 2rem 0.25rem 0; border-bottom: 0; }
+  .pricing-term + .pricing-term { padding-left: 2rem; border-left: 1px solid rgba(13, 13, 13, 0.1); }
+}
+.pricing-term dt {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: var(--h-weight, 750);
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+.pricing-term dd { margin-top: 0.5rem; font-size: 0.9375rem; line-height: 1.6; color: #525252; }
+.dark .pricing-terms, .dark .pricing-term, .dark .pricing-term + .pricing-term { border-color: rgba(255, 255, 255, 0.12); }
+.dark .pricing-term dt { color: #FFFFFF; }
+.dark .pricing-term dd { color: #A3A3A3; }
+.dark .pricing-pick { background: #262626 !important; color: #D4D4D4 !important; border-color: rgba(255, 255, 255, 0.1) !important; }
+/* Phones: numbered lists stay compact so long sections do not run on. */
+@media (max-width: 639px) {
+  .ed-list { row-gap: 2rem; }
+  .ed-item { padding-top: 1.25rem; }
+  .ed-num { font-size: 2.5rem; -webkit-text-stroke-width: 2px; }
+  .ed-text { margin-top: 1rem; }
+  .ed-desc { margin-top: 0.5rem; }
+}

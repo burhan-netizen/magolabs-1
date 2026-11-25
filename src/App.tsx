@@ -303,7 +303,16 @@ function AppContent({ initialPath }: AppProps) {
 
       {/* Strategic Call To Action Banner (show on all pages except Contact itself) */}
       {currentPage !== 'contact' && currentPage !== 'home' && currentPage !== 'insights-detail' && (
-        <ContactCTA onPageChange={handlePageChange} />
+        <ContactCTA
+          onPageChange={handlePageChange}
+          {...(currentPage === 'pricing'
+            ? {
+                title: 'Get your fixed quote.',
+                description: 'Tell us what you need. Burhan replies within one business day with a fixed price and a clear plan, and the price only changes if you ask for more.',
+                buttonLabel: 'Get my fixed quote',
+              }
+            : {})}
+        />
       )}
 
       {/* Dynamic Footer */}

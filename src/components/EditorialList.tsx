@@ -12,7 +12,7 @@ interface EditorialListProps {
   /** Light for off-white sections, dark for ink sections. */
   tone?: 'light' | 'dark';
   /** Columns on wide screens. Two columns put the number beside the text. */
-  cols?: 2 | 4;
+  cols?: 2 | 3 | 4;
   as?: 'ul' | 'ol';
   className?: string;
 }

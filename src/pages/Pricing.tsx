@@ -30,6 +30,8 @@ interface Tier {
   inherits?: string;
   features: string[];
   popular?: boolean;
+  /** One line on who this package is for. */
+  pickIf: string;
 }
 
 type PackageId = PackageInfo['id'];
@@ -52,24 +54,22 @@ const TIERS: Tier[] = [
     name: 'Launch',
     tagline: 'For businesses ready to build a professional online presence.',
     pkg: getPackage('launch'),
-    facts: ['Up to 5 pages', 'Live in 5 days', '1 year free support'],
+    facts: ['Up to 5 pages', 'Live in 5 days'],
+    pickIf: 'Pick this if you mainly need to look credible when people search your name.',
     features: [
       'Up to 5 pages',
-      'Custom UI/UX design',
-      'Mobile responsive',
+      'Designed from scratch for you',
+      'Works perfectly on phones',
       'Contact form',
-      'WhatsApp integration',
-      'Social media integration',
-      'Google Maps',
-      'Basic on-page SEO',
-      'Speed optimization',
-      'SSL setup',
-      'Easy-edit CMS',
-      'Free hosting for life, no monthly fees',
-      'Google Analytics & Search Console',
-      'Basic animations',
-      '2 revision rounds',
-      '1 year free support',
+      'WhatsApp button',
+      'Links to your social pages',
+      'Google Maps location',
+      'Set up to be found on Google',
+      'Fast loading',
+      'Secure padlock (SSL)',
+      'Edit text and photos yourself',
+      'Visitor tracking with Google Analytics',
+      'Subtle animations',
     ],
   },
   {
@@ -77,23 +77,21 @@ const TIERS: Tier[] = [
     name: 'Growth',
     tagline: 'For businesses that want their website to generate enquiries.',
     pkg: getPackage('growth'),
-    facts: ['Up to 10 pages', 'Live in 14 days', '1 year free support'],
+    facts: ['Up to 10 pages', 'Live in 14 days'],
     inherits: 'Everything in Launch, plus:',
     popular: true,
+    pickIf: 'Pick this if you want the website to bring in calls and enquiries every month.',
     features: [
       'Up to 10 pages',
-      'Conversion-focused design',
-      'Advanced animations & interactions',
-      'Lead capture forms',
-      'Multiple WhatsApp CTAs',
-      'Local SEO setup',
-      'Google Business Profile integration',
-      'Blog / Insights section',
-      'Editable blog & pages',
-      'Testimonials & case studies',
-      'Basic schema markup',
-      '2 revision rounds',
-      '1 year free support',
+      'Designed to turn visitors into enquiries',
+      'Richer animations',
+      'Enquiry forms on every key page',
+      'WhatsApp buttons throughout',
+      'Set up to rank in your city',
+      'Linked to your Google Business Profile',
+      'A blog you can post to yourself',
+      'Reviews and case study pages',
+      'Set up for richer Google results',
     ],
   },
   {
@@ -101,23 +99,21 @@ const TIERS: Tier[] = [
     name: 'Scale',
     tagline: 'For established businesses that need a premium digital presence.',
     pkg: getPackage('scale'),
-    facts: ['15+ pages', 'Live in 21 days', '1 year free support'],
+    facts: ['15+ pages', 'Live in 21 days'],
     inherits: 'Everything in Growth, plus:',
+    pickIf: 'Pick this if you have many services or locations and want a showpiece website.',
     features: [
       '15+ pages',
-      'Bespoke UI/UX',
-      'Premium motion design',
-      'Advanced GSAP interactions',
-      'Advanced CMS integration',
-      'Technical SEO',
-      'Advanced schema markup',
-      'Conversion tracking',
-      'CRM / automation integration',
-      'Advanced lead routing',
-      'Custom functionality',
-      'Advanced performance optimization',
-      '2 revision rounds',
-      '1 year free support',
+      'A showpiece design',
+      'Smooth, premium animations',
+      'Interactive sections that stand out',
+      'A more powerful editor for big sites',
+      'Built to rank for competitive searches',
+      'Every call and enquiry tracked',
+      'Enquiries sent to your CRM or sheet',
+      'Enquiries routed to the right person',
+      'Custom features, like calculators or booking',
+      'Top speed scores',
     ],
   },
 ];
@@ -128,16 +124,16 @@ const COMMERCE = {
   name: 'Commerce',
   tagline: 'For businesses ready to sell online.',
   pkg: getPackage('commerce'),
-  facts: ['Up to 50 products initially', 'Live in 28 days', '1 year free support'],
+  facts: ['Up to 50 products initially', 'Live in 28 days'],
+  pickIf: 'Pick this if you want to take orders and payments online.',
   groups: [
     {
       title: 'Your store',
       icon: Store,
       items: [
-        'Custom e-commerce website',
+        'Your own online store, designed from scratch',
         'Up to 50 products initially',
-        'Custom UI/UX design',
-        'Mobile responsive',
+        'Works perfectly on phones',
         'Product & category pages',
         'Product search & filtering',
       ],
@@ -161,21 +157,18 @@ const COMMERCE = {
       items: [
         'Order management',
         'Basic inventory management',
-        'Admin panel / CMS',
-        'Google Analytics & Search Console',
-        'Social media integration',
+        'Admin panel to manage products',
+        'Sales and visitor tracking',
+        'Links to your social pages',
       ],
     },
     {
       title: 'Foundation',
       icon: ShieldCheck,
       items: [
-        'Basic on-page SEO',
-        'SSL configuration',
-        'Performance optimization',
-        'Free hosting for life',
-        '2 revision rounds',
-        '1 year free support',
+        'Set up to be found on Google',
+        'Secure checkout (SSL)',
+        'Fast loading',
       ],
     },
   ],
@@ -186,11 +179,9 @@ const COMPARE_COLUMNS = ['Launch', 'Growth', 'Scale', 'Commerce'];
 const COMPARE_ROWS: { label: string; values: string[] }[] = [
   { label: 'Best for', values: ['A professional presence', 'Generating enquiries', 'A premium presence', 'Selling online'] },
   { label: 'Size', values: ['Up to 5 pages', 'Up to 10 pages', '15+ pages', 'Up to 50 products'] },
-  { label: 'SEO', values: ['Basic on-page', 'Local SEO setup', 'Technical SEO', 'Basic on-page'] },
-  { label: 'Edit it yourself', values: ['Easy-edit CMS', 'Easy-edit CMS', 'Advanced CMS', 'Admin panel / CMS'] },
-  { label: 'Revision rounds', values: ['2', '2', '2', '2'] },
-  { label: 'Hosting', values: ['Free for life', 'Free for life', 'Free for life', 'Free for life'] },
-  { label: 'Free support', values: ['1 year', '1 year', '1 year', '1 year'] },
+  { label: 'On Google', values: ['Found by name', 'Ranks in your city', 'Built for competitive searches', 'Products found by name'] },
+  { label: 'You can edit', values: ['Text and photos', 'Pages and blog', 'The whole site', 'Products and orders'] },
+  { label: 'Enquiries', values: ['Contact form', 'Forms on every key page', 'Tracked and routed', 'Orders and payments'] },
   { label: 'Live in', values: PACKAGES.map((pkg) => `${pkg.days} days`) },
 ];
 
@@ -200,6 +191,15 @@ const ALWAYS = [
   { title: 'Yours to own', icon: KeyRound, desc: 'Your domain and your code stay in your name. Hosting is free for life, with no monthly fees.' },
   { title: 'A fixed quote first', icon: BadgeCheck, desc: 'You know the exact price before any work starts.' },
   { title: 'Direct with the founder', icon: Handshake, desc: 'You work with Burhan from the first call to launch.' },
+  { title: 'A year of free support', icon: ShieldCheck, desc: 'Bug fixes and small edits are on us for the first year after launch.' },
+  { title: 'Two rounds of changes', icon: Sparkles, desc: 'Two rounds of revisions on the design and the build, so it ends up exactly right.' },
+];
+
+// Straight facts on paying, extras and choosing, shown under the packages.
+const TERMS = [
+  { title: 'How you pay', text: '50% to start and 50% at launch. One payment for the website, no monthly fees.' },
+  { title: 'What costs extra', text: 'Your domain (bought and renewed in your name), plus copywriting, photography or branding if you want them.' },
+  { title: 'Not sure which?', text: 'Tell Burhan about your business. He will recommend one, and say so when the smaller package is enough.' },
 ];
 
 const FAQS = [
@@ -218,6 +218,10 @@ const FAQS = [
   {
     question: 'Are there any monthly fees?',
     answer: 'No. You pay once: 50% to start and 50% at launch. Hosting is free for life, and the first year of support (bug fixes and small edits) is free too.',
+  },
+  {
+    question: 'What is not included?',
+    answer: 'Your domain is bought in your name and renewed by you each year. Copywriting, photography and branding are optional extras if you need them. Payment gateways and paid apps charge their own fees, paid directly to them.',
   },
   {
     question: 'What happens after the first year?',
@@ -315,7 +319,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
       <SEO path="pricing" schemas={pricingSchemas} />
 
       {/* Hero */}
-      <section id="pricing-hero" className="page-hero relative pt-32 pb-14 md:pt-40 md:pb-16 bg-white font-sans overflow-hidden">
+      <section id="pricing-hero" className="page-hero pricing-hero-overlap relative pt-32 md:pt-40 bg-white font-sans overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none opacity-60" />
         <div className="pricing-aurora" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -330,9 +334,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
             <div className="price-rise flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-sm font-medium text-neutral-700" style={{ '--i': 3 } as CSSProperties}>
               {['No templates', 'No monthly fees', 'You own everything'].map((item) => (
                 <span key={item} className="inline-flex items-center gap-2">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand text-ink">
-                    <Check className="h-3 w-3" strokeWidth={3} />
-                  </span>
+                  <span className="h-2 w-2 bg-brand" aria-hidden="true" />
                   {item}
                 </span>
               ))}
@@ -343,7 +345,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
       </section>
 
       {/* Website packages */}
-      <section id="pricing-packages" className="pt-6 pb-10 bg-white font-sans">
+      <section id="pricing-packages" className="pricing-packages-lift relative z-10 pb-10 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-5 items-start">
             {TIERS.map((tier, idx) => {
@@ -424,6 +426,9 @@ export default function Pricing({ onPageChange }: PricingProps) {
                       <WhatsAppLogo className="h-4 w-4" />
                       Ask on WhatsApp
                     </a>
+                    <p className={`mt-6 rounded-2xl px-4 py-3 text-sm leading-snug lg:min-h-[4.25rem] ${dark ? 'bg-white/[0.06] text-neutral-200' : 'pricing-pick bg-white text-neutral-700 border border-neutral-200'}`}>
+                      {tier.pickIf}
+                    </p>
 
                     <div className={`mt-7 pt-7 border-t ${dark ? 'border-white/10' : 'border-neutral-200'}`}>
                       <p className={`text-xs font-bold uppercase tracking-wider ${dark ? 'text-brand' : 'text-neutral-900'}`}>
@@ -473,6 +478,16 @@ export default function Pricing({ onPageChange }: PricingProps) {
             </p>
             <ReviewCards ids={['manav-shah']} className="lg:col-span-8" />
           </div>
+
+          {/* What buyers ask before they pay */}
+          <dl className="pricing-terms mt-12">
+            {TERMS.map((term) => (
+              <div key={term.title} className="pricing-term">
+                <dt>{term.title}</dt>
+                <dd>{term.text}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
@@ -513,6 +528,8 @@ export default function Pricing({ onPageChange }: PricingProps) {
                     </span>
                   ))}
                 </div>
+
+                <p className="relative mt-6 text-sm leading-snug text-ink/80">{COMMERCE.pickIf}</p>
 
                 <div className="relative mt-8 lg:mt-auto lg:pt-10 flex flex-col">
                   <PageLink
@@ -577,12 +594,40 @@ export default function Pricing({ onPageChange }: PricingProps) {
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900 leading-tight">The four packages at a glance.</h2>
           </div>
 
+          {/* Phones: the differences as a short list, one package per row */}
+          <ul className="lg:hidden divide-y divide-neutral-200 border-y border-neutral-200">
+            {PACKAGES.map((pkg, colIdx) => (
+              <li key={pkg.id}>
+                <PageLink
+                  href={quoteHref(pkg.name)}
+                  onNavigate={() => goToQuote(pkg.name)}
+                  className="group flex items-center gap-4 py-5 cursor-pointer"
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-baseline gap-2">
+                      <span className="font-mono text-xs font-bold text-neutral-500">{pkg.number}</span>
+                      <span className="text-lg font-bold text-neutral-900">{pkg.name}</span>
+                    </span>
+                    <span className="mt-1 block text-sm text-neutral-600">
+                      {COMPARE_ROWS[0].values[colIdx]} · {COMPARE_ROWS[1].values[colIdx]} · Live in {pkg.days} days
+                    </span>
+                  </span>
+                  <span className="flex-none text-right">
+                    <span className="block text-[11px] font-semibold uppercase tracking-wider text-neutral-500">From</span>
+                    <span className="block text-base font-bold text-neutral-900"><Price pkg={pkg} /></span>
+                  </span>
+                  <ArrowRight className="h-4 w-4 flex-none text-neutral-400 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </PageLink>
+              </li>
+            ))}
+          </ul>
+
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6, ease: [0.2, 0.7, 0.2, 1] }}
-            className="overflow-x-auto rounded-2xl border border-neutral-200 shadow-[0_30px_70px_-50px_rgba(13,13,13,0.45)]"
+            className="hidden lg:block overflow-x-auto rounded-2xl border border-neutral-200 shadow-[0_30px_70px_-50px_rgba(13,13,13,0.45)]"
           >
             <table className="w-full min-w-[720px] text-left text-sm" onMouseLeave={() => setHoverCol(null)}>
               <thead>
@@ -657,7 +702,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
             <span className="eyebrow eyebrow-on-dark">In every package</span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight">Whatever you choose, these do not change.</h2>
           </div>
-          <EditorialList tone="dark" items={ALWAYS.map(({ title, desc }) => ({ title, desc }))} />
+          <EditorialList tone="dark" cols={3} items={ALWAYS.map(({ title, desc }) => ({ title, desc }))} />
         </div>
       </section>
 

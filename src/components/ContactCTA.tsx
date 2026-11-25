@@ -7,12 +7,15 @@ import { useLanguage } from '../context/LanguageContext';
 interface ContactCTAProps {
   title?: string;
   description?: string;
+  /** Label for the main button. */
+  buttonLabel?: string;
   onPageChange: (page: PageId) => void;
 }
 
 export default function ContactCTA({
   title,
   description,
+  buttonLabel,
   onPageChange,
 }: ContactCTAProps) {
   const { t } = useLanguage();
@@ -57,7 +60,7 @@ export default function ContactCTA({
               }}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 text-base font-bold text-ink hover:bg-brand-deep transition-all cursor-pointer"
             >
-              {t('cta.btn')}
+              {buttonLabel || t('cta.btn')}
             </motion.button>
 
             {/* WhatsApp */}
