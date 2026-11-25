@@ -70,14 +70,14 @@ export default function Contact(_props: ContactProps) {
       <SEO path="contact" schemas={contactSchemas} />
 
       {/* The form is the page. Everything a visitor needs is visible without scrolling far. */}
-      <section id="contact-hero" className="relative pt-32 pb-20 md:pt-40 md:pb-24 bg-neutral-50 font-sans border-b border-neutral-200/50">
+      <section id="contact-hero" className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-neutral-950 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Why, and the direct routes */}
-            <div className="lg:col-span-5 space-y-8">
+            <div className="on-dark lg:col-span-5 space-y-8">
               <div className="space-y-5">
                 <span className="eyebrow">{copy.eyebrow}</span>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
+                <h1 className="text-[clamp(2.4rem,4.6vw,4rem)] font-bold text-neutral-900 leading-[1]">
                   {copy.headline} <span className="marker">{copy.highlight}</span>
                 </h1>
                 <p className="text-neutral-600 text-base sm:text-lg leading-relaxed">
@@ -107,7 +107,10 @@ export default function Contact(_props: ContactProps) {
 
               {/* Prefer to talk */}
               <div className="pt-8 border-t border-neutral-200 space-y-4">
-                <h2 className="text-lg font-semibold text-neutral-900">Prefer to talk? You will reach Burhan directly.</h2>
+                <h2 className="flex items-center gap-3 text-lg font-semibold text-neutral-900">
+                  <img src="/founder/portrait.webp" alt="" width={1100} height={1258} className="h-11 w-11 rounded-full object-cover object-[50%_20%] ring-2 ring-white/15" />
+                  Prefer to talk? You will reach Burhan directly.
+                </h2>
                 <div className="flex flex-wrap gap-3">
                   <a
                     href={WHATSAPP_URL}

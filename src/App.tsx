@@ -302,7 +302,7 @@ function AppContent({ initialPath }: AppProps) {
       </main>
 
       {/* Strategic Call To Action Banner (show on all pages except Contact itself) */}
-      {currentPage !== 'contact' && currentPage !== 'home' && (
+      {currentPage !== 'contact' && currentPage !== 'home' && currentPage !== 'insights-detail' && (
         <ContactCTA onPageChange={handlePageChange} />
       )}
 

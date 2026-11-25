@@ -47,7 +47,7 @@ export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
       <SEO path="/work" schemas={workSchemas} />
 
       {/* Hero: the headline over a slow-moving wall of the websites themselves */}
-      <section id="work-hero" className="glow-follow relative pt-36 pb-20 md:pt-44 md:pb-24 bg-neutral-950 text-[#ffffff] font-sans overflow-hidden">
+      <section id="work-hero" className="relative pt-36 pb-20 md:pt-44 md:pb-24 bg-neutral-950 text-[#ffffff] font-sans overflow-hidden">
         <div className="work-wall" aria-hidden="true">
           {[WALL_ROW_A, WALL_ROW_B].map((row, rowIdx) => (
             <div key={rowIdx} className={`work-wall-row ${rowIdx === 1 ? 'is-reverse' : ''}`}>
@@ -63,7 +63,7 @@ export default function Work({ onPageChange, onOpenCaseStudy }: WorkProps) {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <div className="mx-auto max-w-3xl space-y-5">
             <span className="eyebrow eyebrow-on-dark">Client work</span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.08]">
+            <h1 className="text-[clamp(2.8rem,6.5vw,5.75rem)] font-bold leading-[0.98]">
               Real businesses. <span className="marker whitespace-nowrap">Real results.</span>
             </h1>
             <p className="text-neutral-300 text-base sm:text-lg leading-relaxed">

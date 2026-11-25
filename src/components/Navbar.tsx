@@ -48,7 +48,7 @@ export default function Navbar({
   const [overDark, setOverDark] = useState(false);
   useEffect(() => {
     const check = () => {
-      const first = document.querySelector('main section');
+      const first = document.querySelector('main :is(section, header)');
       if (!first) return setOverDark(false);
       const match = getComputedStyle(first).backgroundColor.match(/\d+(\.\d+)?/g);
       if (!match) return setOverDark(false);
@@ -58,13 +58,19 @@ export default function Navbar({
       setOverDark(alpha > 0.5 && luminance < 0.25);
     };
     check();
+    // Pages load in after the menu, so look again whenever the page content changes.
+    let queued = 0;
+    const later = () => {
+      if (!queued) queued = requestAnimationFrame(() => { queued = 0; check(); });
+    };
     const main = document.querySelector('main');
-    const observer = main ? new MutationObserver(check) : null;
-    if (main && observer) observer.observe(main, { childList: true, subtree: false });
+    const observer = main ? new MutationObserver(later) : null;
+    if (main && observer) observer.observe(main, { childList: true, subtree: true });
     const late = window.setTimeout(check, 450);
     return () => {
       observer?.disconnect();
       window.clearTimeout(late);
+      if (queued) cancelAnimationFrame(queued);
     };
   }, [currentPage]);
   const clear = overDark && !scrolled && !isOpen;

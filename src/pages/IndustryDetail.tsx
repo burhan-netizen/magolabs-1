@@ -124,7 +124,7 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
       )}
 
       {/* The problem */}
-      <section id="industry-problems" className="py-20 bg-white font-sans">
+      <section id="industry-problems" className="py-20 bg-neutral-50 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12 space-y-4">
             <span className="eyebrow">The problem</span>
@@ -150,7 +150,7 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
       </section>
 
       {/* What we build */}
-      <section id="industry-builds" className="py-20 bg-neutral-50 font-sans border-y border-neutral-200/60">
+      <section id="industry-builds" className="py-20 bg-neutral-50 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-5 space-y-4">
@@ -164,7 +164,7 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
             </div>
             <ul className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {industry.builds.map((item) => (
-                <li key={item} className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white p-5 text-sm font-medium text-neutral-800 leading-snug">
+                <li key={item} className="flex items-start gap-3 border-t border-neutral-300 pt-4 text-base font-medium text-neutral-800 leading-snug">
                   <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand text-ink">
                     <Check className="h-3 w-3" strokeWidth={3} />
                   </span>
@@ -177,7 +177,7 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
       </section>
 
       {/* Work in this industry */}
-      <section id="industry-work" className="py-20 bg-white font-sans">
+      <section id="industry-work" className="py-20 bg-neutral-50 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12 space-y-4">
             <span className="eyebrow">Our work</span>
@@ -191,7 +191,7 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
                 key={cs.id}
                 href={getWorkDetailPath(cs.id)}
                 onNavigate={() => onOpenCaseStudy(cs.id)}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-neutral-200 hover:border-neutral-900 transition-colors cursor-pointer"
+                className="group flex flex-col cursor-pointer"
               >
                 {cs.screenshotUrl && (
                   <img
@@ -199,10 +199,10 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
                     alt={`${cs.clientName} website`}
                     loading="lazy"
                     decoding="async"
-                    className="aspect-[16/9] w-full object-cover object-top border-b border-neutral-200"
+                    className="aspect-[1920/900] w-full rounded-[22px] object-cover object-top ring-1 ring-black/10 transition-transform duration-700 group-hover:scale-[1.02]"
                   />
                 )}
-                <span className="flex flex-col gap-2 p-6">
+                <span className="flex flex-col gap-2 pt-5">
                   <span className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-500">{cs.industry}</span>
                   <span className="text-xl font-bold text-neutral-900">{cs.clientName}</span>
                   <span className="text-sm text-neutral-600 leading-relaxed">{cs.outcome}</span>
@@ -217,7 +217,7 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
       </section>
 
       {/* FAQ. Answers stay in the markup (collapsed with CSS) so search engines can read them. */}
-      <section id="industry-faq" className="py-20 bg-neutral-50 font-sans border-t border-neutral-200/60">
+      <section id="industry-faq" className="py-20 bg-neutral-50 font-sans">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="space-y-4 mb-10">
             <span className="eyebrow">Questions</span>

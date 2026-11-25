@@ -417,19 +417,29 @@ body::after {
 }
 
 /* Styling for the blog post body (from content/insights Markdown) on the Insights detail page */
+.insight-body { font-size: 1.125rem; line-height: 1.75; }
 .insight-body > * + * {
   margin-top: 1.25em;
 }
 .insight-body h1, .insight-body h2, .insight-body h3, .insight-body h4 {
-  font-weight: 800;
-  color: #171717;
-  line-height: 1.3;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #0D0D0D;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
 }
+.insight-body h2 { margin-top: 2.2em; }
+.insight-body h3 { margin-top: 1.8em; }
+.insight-body strong { color: #0D0D0D; font-weight: 650; }
+.dark .insight-body strong { color: #fff; }
+.insight-body table { width: 100%; border-collapse: collapse; font-size: 0.95em; display: block; overflow-x: auto; }
+.insight-body th, .insight-body td { border-bottom: 1px solid #E4E1D9; padding: 0.7em 0.8em 0.7em 0; text-align: left; vertical-align: top; }
+.insight-body th { font-weight: 650; color: #0D0D0D; }
 .dark .insight-body h1, .dark .insight-body h2, .dark .insight-body h3, .dark .insight-body h4 {
   color: #F8F9FA;
 }
-.insight-body h2 { font-size: 1.5em; }
-.insight-body h3 { font-size: 1.25em; }
+.insight-body h2 { font-size: 1.75em; }
+.insight-body h3 { font-size: 1.3em; }
 .insight-body h4 { font-size: 1.1em; }
 .insight-body a {
   color: inherit;
@@ -1947,3 +1957,11 @@ html.motion-ok .logo-strip-track { animation: logoStrip 50s linear infinite; }
 .logo-strip:hover .logo-strip-track { animation-play-state: paused; }
 @keyframes logoStrip { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .logo-strip-track { animation: none !important; } }
+
+/* Contact page: the left column sits on dark, the form stays a white card */
+.on-dark .eyebrow { color: #A8A6A0; }
+.on-dark .text-neutral-900, .on-dark .text-neutral-800 { color: #fff !important; }
+.on-dark .text-neutral-600 { color: #BDBAB3 !important; }
+.on-dark .border-neutral-200 { border-color: rgba(255,255,255,0.12) !important; }
+.on-dark a.bg-neutral-950 { background: #fff !important; color: #0D0D0D !important; }
+.on-dark a.bg-white { background: transparent !important; border-color: rgba(255,255,255,0.25) !important; color: #fff !important; }

@@ -650,19 +650,19 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
       </section>
 
       {/* Deep Dive Copy & Benefits */}
-      <section id="service-benefits" className="py-24 bg-white font-sans">
+      <section id="service-benefits" className="py-24 bg-neutral-50 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             {/* Long Copy Column */}
             <div className="lg:col-span-6 space-y-6">
               <span className="eyebrow">Why it matters</span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 leading-tight">
                 {data.headline}
               </h2>
-              <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">
+              <p className="text-neutral-600 text-base sm:text-lg leading-relaxed">
                 {data.longDesc}
               </p>
-              <div className="p-6 rounded-2xl bg-neutral-50 border border-neutral-100 space-y-4">
+              <div className="border-l-2 border-brand pl-6 space-y-2">
                 <h4 className="font-semibold text-neutral-900 text-sm uppercase tracking-wider">
                   How we work
                 </h4>
@@ -676,20 +676,16 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
             <div className="lg:col-span-6 space-y-6">
               <span className="eyebrow">What you get</span>
               <h3 className="text-xl font-bold text-neutral-900">What this does for your business</h3>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {data.benefits.map((bn, idx) => {
                   const parts = bn.split(':');
                   const header = parts[0];
                   const desc = parts.slice(1).join(':');
                   return (
-                    <motion.div
-                      key={idx}
-                      whileHover={{ scale: 1.025, y: -2 }}
-                      className="p-5 rounded-xl border border-neutral-100 bg-neutral-50/50 hover:bg-neutral-50 transition-all space-y-1 cursor-default"
-                    >
-                      <h4 className="text-sm sm:text-base font-bold text-neutral-900">{header}</h4>
-                      <p className="text-xs sm:text-sm text-neutral-500 leading-relaxed">{desc}</p>
-                    </motion.div>
+                    <div key={idx} className="border-t border-neutral-300 pt-4 space-y-1">
+                      <h4 className="font-display text-lg font-semibold tracking-tight text-neutral-900">{header}</h4>
+                      <p className="text-base text-neutral-600 leading-relaxed">{desc}</p>
+                    </div>
                   );
                 })}
               </div>
@@ -756,9 +752,9 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
         transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="max-w-3xl mb-14 space-y-4">
             <span className="eyebrow eyebrow-on-dark">How it works</span>
-            <h2 className="text-3xl font-bold tracking-tight text-white">Five steps, in order.</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">Five steps, in order.</h2>
             <p className="text-neutral-400 text-sm leading-relaxed">
               You always know what is happening now and what comes next.
             </p>
@@ -770,17 +766,13 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
               const header = parts[0];
               const desc = parts.slice(1).join(':');
               return (
-                <motion.div
-                  key={idx}
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  className="p-6 rounded-xl border border-neutral-900 bg-neutral-900/40 hover:bg-neutral-900 hover:border-neutral-800 transition-all space-y-3 cursor-default"
-                >
+                <div key={idx} className="border-t border-white/15 pt-6 space-y-3">
                   <div className="h-8 w-8 rounded-full bg-neutral-950 border border-brand/30 flex items-center justify-center text-xs font-bold text-brand">
                     {idx + 1}
                   </div>
-                  <h4 className="text-sm font-bold text-white">{header}</h4>
-                  <p className="text-xs text-neutral-500 leading-relaxed">{desc}</p>
-                </motion.div>
+                  <h4 className="font-display text-lg font-semibold text-white">{header}</h4>
+                  <p className="text-sm text-neutral-400 leading-relaxed">{desc}</p>
+                </div>
               );
             })}
           </div>
@@ -789,28 +781,31 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
 
       {/* Related Work: real proof this service was actually delivered, not just pitched */}
       {relatedWork.length > 0 && (
-        <section id="service-related-work" className="py-20 bg-white font-sans border-t border-neutral-200/50">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-center mb-8">
-              <span className="eyebrow">Related work</span>
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <section id="service-related-work" className="py-24 bg-neutral-50 font-sans">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <span className="eyebrow">Related work</span>
+            <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900">Done for businesses like yours.</h2>
+            <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
               {relatedWork.map((cs) => (
                 <PageLink
                   key={cs.id}
                   href={getWorkDetailPath(cs.id)}
                   onNavigate={() => onOpenCaseStudy(cs.id)}
-                  className="block text-left p-6 rounded-2xl border border-neutral-200 bg-neutral-50 hover:bg-white hover:border-neutral-900 transition-colors cursor-pointer space-y-2"
+                  className="group block text-left cursor-pointer"
                 >
-                  {cs.logoUrl && <img src={cs.logoUrl} alt={`${cs.clientName} logo`} className="h-6 w-auto max-w-[100px] object-contain" />}
-                  <span className="text-[10px] font-bold uppercase tracking-widest block" style={{ color: cs.accent }}>
-                    {cs.industry}
+                  <span className="block overflow-hidden rounded-[22px] ring-1 ring-black/10">
+                    <img
+                      src={cs.screenshotUrl ?? `/screenshots/${cs.id}.webp`}
+                      alt={`${cs.clientName} website`}
+                      width={900}
+                      height={422}
+                      loading="lazy"
+                      className="block aspect-[1920/900] w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                    />
                   </span>
-                  <h3 className="text-sm font-bold text-neutral-900">{cs.clientName}</h3>
-                  <p className="text-xs text-neutral-500 leading-relaxed">{cs.outcome}</p>
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-neutral-900">
-                    Read the case study <ArrowRight className="h-3 w-3" />
-                  </span>
+                  <span className="mt-5 block font-mono text-xs uppercase tracking-[0.16em] text-neutral-500">{cs.industry}</span>
+                  <span className="mt-1 block font-display text-2xl font-semibold tracking-tight text-neutral-950">{cs.clientName}</span>
+                  <span className="mt-2 block text-base leading-relaxed text-neutral-600">{cs.outcome}</span>
                 </PageLink>
               ))}
             </div>
@@ -819,22 +814,22 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
       )}
 
       {/* Service Specific FAQ */}
-      <section id="service-faq" className="py-24 bg-neutral-50 font-sans border-t border-neutral-200/50">
+      <section id="service-faq" className="pt-8 pb-24 bg-neutral-50 font-sans">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="max-w-3xl mb-10 space-y-4">
             <span className="eyebrow">Questions</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900">Straight answers about {data.title}</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900">Straight answers about {data.title}</h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="border-t border-neutral-300">
             {data.faqs.map((faq, idx) => {
               const isOpen = openFaq === idx;
               return (
-                <div key={idx} className="bg-white border border-neutral-200/60 rounded-xl overflow-hidden shadow-sm transition-all">
+                <div key={idx} className="border-b border-neutral-300">
                   <button
                     onClick={() => toggleFaq(idx)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between p-5 text-left font-bold text-neutral-900 hover:bg-neutral-50 transition-colors text-sm sm:text-base focus:outline-none"
+                    className="flex w-full items-center justify-between gap-6 py-6 text-left font-semibold text-neutral-900 text-base sm:text-lg cursor-pointer focus-visible:outline-2 focus-visible:outline-brand"
                   >
                     <span>{faq.question}</span>
                     {isOpen ? <Minus className="h-5 w-5 text-neutral-500" /> : <Plus className="h-5 w-5 text-neutral-500" />}
@@ -842,7 +837,7 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
                   {/* Always in the markup (collapsed with CSS) so search engines can read every answer */}
                   <div className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
                     <div className="overflow-hidden">
-                      <p className="px-5 pb-5 text-neutral-600 text-sm leading-relaxed">{faq.answer}</p>
+                      <p className="pb-6 pr-10 text-neutral-600 text-base leading-relaxed">{faq.answer}</p>
                     </div>
                   </div>
                 </div>
