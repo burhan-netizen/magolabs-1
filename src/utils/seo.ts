@@ -49,7 +49,7 @@ export const SEO_CONFIG_MAP: Record<PageId, SEOConfig> = {
   },
   'service-web-design': {
     title: 'Website Design Services in Surat, Custom-Coded | Mago Labs',
-    description: 'Website design company in Surat building custom, hand-coded websites that bring enquiries. Published prices from ₹17,999, live in 5 to 28 days.',
+    description: 'Website design company in Surat building custom, hand-coded websites that bring enquiries. Published prices from ₹24,999, live in 5 to 28 days.',
     ogTitle: 'Website Design Services in Surat, Custom-Coded | Mago Labs',
     ogDescription: 'Custom-coded websites built for speed, mobile experience, and conversions, not templates.',
     ogImage: 'https://www.magolabs.in/og-image-web-design.jpg',

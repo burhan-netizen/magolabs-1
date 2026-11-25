@@ -96,4 +96,4 @@ The platform matters less than getting these basics right:
 
 ## Want a store built for how you sell?
 
-Our Commerce package is a custom ecommerce website with product and category pages, search and filters, cart, checkout and payment gateway integration, starting at ₹64,999 and live in about 28 days. See the details on our [pricing page](/pricing) or our [web design service](/services/web-design). Message us on WhatsApp at +91 9099245605, tell us what you sell and who buys it, and we will tell you honestly whether Shopify, WooCommerce or a custom store suits you best.
+Our Commerce package is a custom ecommerce website with product and category pages, search and filters, cart, checkout and payment gateway integration, starting at ₹94,999 and live in about 28 days. See the details on our [pricing page](/pricing) or our [web design service](/services/web-design). Message us on WhatsApp at +91 9099245605, tell us what you sell and who buys it, and we will tell you honestly whether Shopify, WooCommerce or a custom store suits you best.

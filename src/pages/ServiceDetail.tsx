@@ -74,7 +74,7 @@ const SERVICES_DATA: Record<string, Service> = {
         {
           heading: 'Website design cost in Surat',
           paragraphs: [
-            'Our prices are published, so you know the number before the first call. A Launch website starts at ₹17,999 and is live in 5 days. Growth starts at ₹29,999 and takes 14 days. Scale starts at ₹49,999 and takes 21 days. An online store (Commerce) starts at ₹64,999 and takes 28 days. Hosting on fast cloud servers is included for standard business websites, and your domain and email stay in your name.',
+            'Our prices are published, so you know the number before the first call. A Launch website starts at ₹24,999 and is live in 5 days. Growth starts at ₹44,999 and takes 14 days. Scale starts at ₹74,999 and takes 21 days. An online store (Commerce) starts at ₹94,999 and takes 28 days. Hosting on fast cloud servers is included for standard business websites, and your domain and email stay in your name.',
             'You will find cheaper websites in Surat, sometimes for a few thousand rupees. Those are usually a template with your logo dropped in. The difference shows up later: slow pages, no enquiries, and a redesign within two years. Our full breakdown of what websites cost in Surat is in the guide linked below.'
           ]
         },
@@ -129,7 +129,7 @@ const SERVICES_DATA: Record<string, Service> = {
     faqs: [
       {
         question: 'How much does website design cost in Surat?',
-        answer: 'Our websites start at ₹17,999 for a Launch site, ₹29,999 for Growth, ₹49,999 for Scale and ₹64,999 for an online store. Every price is published on our pricing page, and hosting is included for standard business websites.'
+        answer: 'Our websites start at ₹24,999 for a Launch site, ₹44,999 for Growth, ₹74,999 for Scale and ₹94,999 for an online store. Every price is published on our pricing page, and hosting is included for standard business websites.'
       },
       {
         question: 'Do you only work with businesses in Surat?',

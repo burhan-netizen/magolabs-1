@@ -144,6 +144,6 @@ If you can tick every box, you are in a strong position to make a good decision.
 
 ### How Mago Labs can help
 
-At Mago Labs, we build custom websites for businesses that want more enquiries, not just a nicer look. Every site is designed around your customers, written to convert, set up for Google from day one, and delivered with clear pricing and timelines. Packages start from ₹17,999 as a one-off price with no monthly fees, and every project includes free hosting for life and 1 year of free support.
+At Mago Labs, we build custom websites for businesses that want more enquiries, not just a nicer look. Every site is designed around your customers, written to convert, set up for Google from day one, and delivered with clear pricing and timelines. Packages start from ₹24,999 as a one-off price with no monthly fees, and every project includes free hosting for life and 1 year of free support.
 
 Want an honest opinion on your current website, or planning your first one? [See our packages](https://www.magolabs.in/pricing), [get in touch](https://www.magolabs.in/contact), or call us directly on +91 90992 45605.
