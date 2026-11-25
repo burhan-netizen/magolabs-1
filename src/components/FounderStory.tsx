@@ -25,7 +25,7 @@ const CHAPTERS = [
   },
   {
     n: '03',
-    title: 'The client who cried',
+    title: 'Why I do this',
     text: 'One of my first clients could not afford any agency. I built him far more than he asked for, within his budget. "You took all my worries away," he said. He still sends people my way.',
     photo: '/founder/portrait.webp',
     w: 1100,
@@ -75,7 +75,7 @@ export default function FounderStory() {
               Built by a person, <span className="marker">not a factory.</span>
             </h2>
             <p className="text-neutral-600 text-base sm:text-lg leading-relaxed max-w-2xl">
-              Mago Labs is not a big agency. It's me, in Surat, treating every website like it's for my own business. I get attached to every project, big or small. A happy client who sends their friends my way is how I measure a win.
+              Every Mago Labs website is built like it's for my own business. I obsess over the details your customers notice, and I don't stop until the phone starts ringing.
             </p>
           </div>
         </div>
