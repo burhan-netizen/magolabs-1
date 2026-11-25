@@ -608,7 +608,7 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
                     onPageChange('contact');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className="inline-flex items-center justify-center rounded-full bg-brand hover:bg-brand-deep px-6 py-3.5 text-sm font-bold text-ink transition-all shadow-lg shadow-brand/10 cursor-pointer"
+                  className="inline-flex items-center justify-center rounded-full bg-brand hover:bg-brand-deep px-6 py-3.5 text-sm font-bold text-ink transition-all cursor-pointer"
                 >
                   {data.ctaLabel ?? 'Get a free website audit'}
                 </motion.button>

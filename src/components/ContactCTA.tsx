@@ -24,10 +24,7 @@ export default function ContactCTA({
 
   return (
     <section id="reusable-contact-cta" className="glow-follow relative py-24 overflow-hidden bg-neutral-950 text-white font-sans">
-      <div className="cta-aurora" aria-hidden="true" />
       {/* Decorative gradient overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,197,61,0.08),transparent_50%)] pointer-events-none" />
-      <div className="absolute -bottom-48 -left-48 h-96 w-96 rounded-full bg-brand/5 blur-3xl pointer-events-none" />
 
       <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -58,7 +55,7 @@ export default function ContactCTA({
                 onPageChange('contact');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 text-base font-bold text-ink hover:bg-brand-deep shadow-lg shadow-brand/20 hover:shadow-xl hover:shadow-brand/25 transition-all cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 text-base font-bold text-ink hover:bg-brand-deep transition-all cursor-pointer"
             >
               {t('cta.btn')}
             </motion.button>

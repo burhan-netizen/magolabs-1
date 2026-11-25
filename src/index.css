@@ -1800,3 +1800,15 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
 
 /* Work reel: the giant outlined word behind the cards */
 .reel-outline { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.09); }
+
+/* No yellow glows anywhere on the site: the soft amber lights, cursor halos and
+   glowing shadows are switched off. Yellow stays for buttons, text and lines only. */
+#cursor-spotlight-halo,
+.pricing-aurora,
+.price-card-glow,
+.cta-aurora,
+.versus-glow { display: none !important; }
+.glow-follow::after,
+.price-card::after,
+.spot-card::after,
+.work-card::after { background: none !important; }
