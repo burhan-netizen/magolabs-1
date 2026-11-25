@@ -2,9 +2,6 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import PageLink from '../../PageLink';
 import BgVideo from '../BgVideo';
 
-/* Five client sites, waiting in the dark like shop windows. They switch on, one
-   after another, when the page opens. */
-const WINDOWS = ['drmihirshah', 'ladsonconcrete', 'darshangalani', 'jaymocivil', 'centurion'];
 
 export default function NightHero({ onAudit }: { onAudit: () => void }) {
   return (
@@ -14,7 +11,7 @@ export default function NightHero({ onAudit }: { onAudit: () => void }) {
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,23,51,0.7),rgba(10,23,51,0.45)_40%,rgba(10,23,51,0.96))]" />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pb-10 pt-32 md:px-8">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pb-16 pt-32 md:px-8">
         <p className="n-in flex items-center gap-3 text-[15px] text-white/70" style={{ animationDelay: '0.1s' }}>
           <img src="/founder/portrait.webp" alt="" width={1100} height={1258} className="h-10 w-10 rounded-full object-cover object-[50%_22%] ring-2 ring-brand" />
           <span>Hi, I'm Burhan. I build websites from Surat.</span>
@@ -34,14 +31,6 @@ export default function NightHero({ onAudit }: { onAudit: () => void }) {
         </div>
       </div>
 
-      {/* The dark shop windows */}
-      <div aria-hidden="true" className="relative z-10 mx-auto mb-[-3vw] grid w-full max-w-[1500px] grid-cols-5 items-end gap-[1.4vw] px-[2vw]">
-        {WINDOWS.map((id, i) => (
-          <div key={id} className="n-window" style={{ animationDelay: `${1 + i * 0.35}s`, transform: `translateY(${[34, 12, 0, 12, 34][i]}px)` }}>
-            <img src={`/screenshots/${id}.webp`} alt="" width={900} height={422} loading="eager" className="block aspect-[1920/900] w-full rounded-t-[10px] object-cover object-top" />
-          </div>
-        ))}
-      </div>
     </section>
   );
 }
