@@ -12,54 +12,54 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
   const categories = [
     {
       title: 'Core Navigation',
-      description: 'The main paths to explore our agency, our ethos, and direct communications.',
+      description: 'The main pages of the site.',
       icon: Home,
       links: [
-        { name: 'Home / Agency Overview', id: 'home' as PageId, description: 'High-speed, custom-engineered landing experience' },
-        { name: 'About & Why Choose Us', id: 'about' as PageId, description: 'Get to know Burhan Kapasi, our commitments, and our direct client partnership model' },
+        { name: 'Home', id: 'home' as PageId, description: 'What we do and the results we get' },
+        { name: 'About', id: 'about' as PageId, description: 'Burhan Kapasi, the founder, and how we work' },
         { name: 'Pricing', id: 'pricing' as PageId, description: 'Four website packages with clear starting prices' },
         { name: 'For Agencies', id: 'agencies' as PageId, description: 'White label website design and development for agencies' },
-        { name: 'Book Consultation / Audits', id: 'contact' as PageId, description: 'Request a free 30-min performance and local search SEO checkup' },
+        { name: 'Contact and free audit', id: 'contact' as PageId, description: 'Ask for a free website audit, or get in touch' },
       ]
     },
     {
-      title: 'Our Core Services',
-      description: 'Custom-coded performance marketing and high-ROI local ranking strategies.',
+      title: 'Services',
+      description: 'Websites, Google, words and marketing.',
       icon: Settings,
       links: [
-        { name: 'All Services Overview', id: 'services' as PageId, description: 'Complete map of our bespoke digital business systems' },
-        { name: 'Bespoke Web Design & Dev', id: 'service-web-design' as PageId, description: 'Hand-coded TypeScript and React applications without template bloat' },
-        { name: 'Technical SEO & PageSpeed', id: 'service-seo' as PageId, description: 'In-built schema structures engineered for fast, search-friendly performance' },
-        { name: 'Google Business Profile SEO', id: 'service-gbp' as PageId, description: 'Dominating local geo-targeted queries and maps for local leads' },
+        { name: 'All services', id: 'services' as PageId, description: 'Everything we offer, in one place' },
+        { name: 'Website design and development', id: 'service-web-design' as PageId, description: 'Custom websites, designed and coded from a blank page' },
+        { name: 'SEO', id: 'service-seo' as PageId, description: 'Get found on Google by people searching for what you sell' },
+        { name: 'Google Business Profile', id: 'service-gbp' as PageId, description: 'Show up on Google Maps when someone nearby needs you' },
         { name: 'Websites for Dentists and Clinics', id: 'industry-dentists' as PageId, description: 'Appointment booking, local SEO and a clinic result' },
         { name: 'Websites for CA Firms', id: 'industry-ca-firms' as PageId, description: 'Trust-focused websites for chartered accountants' },
         { name: 'Websites for Manufacturers', id: 'industry-manufacturers' as PageId, description: 'Catalogues, enquiry forms and admin panels for B2B suppliers' },
         { name: 'Websites for Textile Businesses', id: 'industry-textile' as PageId, description: 'Product ranges, capacity and admin panels for mills, processors and traders' },
         { name: 'Websites for Consultants', id: 'industry-consultants' as PageId, description: 'Service pages, credentials and consultation booking' },
         { name: 'Sales Pages for Digital Products', id: 'industry-digital-products' as PageId, description: 'Sales pages for coaches, courses and digital products' },
-        { name: 'High-Converting Copywriting', id: 'service-copywriting' as PageId, description: 'Direct sales copy designed specifically to drive inbound phone calls' },
+        { name: 'Copywriting', id: 'service-copywriting' as PageId, description: 'Words that make visitors trust you and get in touch' },
         { name: 'Social Media Management', id: 'service-social-media' as PageId, description: 'Instagram, Facebook and LinkedIn planned, designed and posted for you' },
         { name: 'Lead Generation', id: 'service-lead-generation' as PageId, description: 'Researched prospects, verified contacts and personalised outreach' },
         { name: 'Paid Ads (Meta and Google)', id: 'service-paid-ads' as PageId, description: 'Facebook, Instagram and Google ads managed around enquiries' },
       ]
     },
     {
-      title: 'Proof & Insights',
-      description: 'Real client work, reviews, and engineering updates.',
+      title: 'Work and guides',
+      description: 'Client work, results and plain-English guides.',
       icon: FolderKanban,
       links: [
-        { name: 'Our Work & Case Studies', id: 'work' as PageId, description: 'Real client websites Mago Labs has designed and built, with testimonials, from timber trading to chartered accountancy' },
-        { name: 'Insights & Resources', id: 'insights' as PageId, description: 'Our blog covering local SEO, web performance, and marketing guides' },
+        { name: 'Our work', id: 'work' as PageId, description: 'Real client websites Mago Labs has designed and built, with testimonials, from timber trading to chartered accountancy' },
+        { name: 'Insights & Resources', id: 'insights' as PageId, description: 'Guides on websites, Google and getting more enquiries' },
       ]
     },
     {
-      title: 'Legal & Search Engines',
-      description: 'Legal pages and direct files for bots.',
+      title: 'Legal',
+      description: 'Privacy, terms and the sitemap file.',
       icon: FileCode,
       links: [
         { name: 'Privacy Policy', id: 'privacy' as PageId, description: 'How we collect, use, and protect your information' },
         { name: 'Terms of Service', id: 'terms' as PageId, description: 'The terms that govern using this site and working with us' },
-        { name: 'XML Sitemap (Technical)', external: true, path: '/sitemap.xml', description: 'Raw crawler sitemap optimized for Googlebot indexing' },
+        { name: 'XML sitemap', external: true, path: '/sitemap.xml', description: 'The sitemap file for search engines' },
       ]
     }
   ];
@@ -71,7 +71,7 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
       '@id': 'https://www.magolabs.in/sitemap/#webpage',
       'url': 'https://www.magolabs.in/sitemap',
       'name': 'Website Sitemap and Architecture | Mago Labs',
-      'description': 'A comprehensive, human-readable outline of Mago Labs pages, services, case studies, and indexing sitemaps.'
+      'description': 'Every page on the Mago Labs website, in one list.'
     }
   ];
 
@@ -86,13 +86,13 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
           <div className="text-center space-y-4 max-w-3xl mx-auto">
             <span className="inline-flex items-center gap-1.5 eyebrow dark:text-brand">
               <Map className="h-4.5 w-4.5" />
-              Directory Structure
+              Sitemap
             </span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-tight">
-              Website Sitemap & Directory
+              Every page, in one place.
             </h1>
             <p className="text-neutral-500 dark:text-neutral-400 text-sm sm:text-base leading-relaxed">
-              Explore our core framework, premium custom-coded services, and technical search-engine indexes in one clean, transparent interface.
+              Find any page on the Mago Labs website.
             </p>
           </div>
         </div>
@@ -174,20 +174,6 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
             })}
           </div>
 
-          {/* Verification Badge Section */}
-          <div className="mt-16 p-8 rounded-2xl border border-emerald-500/20 dark:border-emerald-500/10 bg-emerald-50/10 dark:bg-emerald-950/5 max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-6 text-left">
-            <div className="h-12 w-12 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-              <CheckCircle2 className="h-6 w-6" />
-            </div>
-            <div>
-              <h4 className="text-base font-bold text-neutral-900 dark:text-white">
-                Technical Index Verification
-              </h4>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1 leading-relaxed">
-                Our dynamic XML generation script syncs perfectly with this page structure and auto-notifies search crawlers like Googlebot to ensure near-instant page indexing. Every single page is fully hand-optimized to guarantee 100% Core Web Vitals compatibility.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
     </>

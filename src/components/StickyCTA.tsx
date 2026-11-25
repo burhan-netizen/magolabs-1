@@ -1,143 +1,63 @@
-import { useState, useEffect } from 'react';
-import { Phone, Sparkles, X, MessageSquare } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { WhatsAppLogo } from './BrandIcons';
-import { motion, AnimatePresence } from 'motion/react';
-import { useMediaQuery } from '../hooks/useMediaQuery';
+import { WHATSAPP_URL } from '../utils/contactLinks';
 
-interface StickyCTAProps {
-}
+/**
+ * One quiet floating WhatsApp button, bottom right.
+ *
+ * It stays out of the way on the first screen, appears once the visitor scrolls,
+ * and hides again over the footer and the closing call to action, where the same
+ * options are already on screen.
+ */
+export default function StickyCTA() {
+  const [show, setShow] = useState(false);
 
-const TEXTS = {
-  callTitle: 'Call Burhan Kapasi',
-  whatsappTitle: 'Chat on WhatsApp',
-  menuOpen: 'Quick Contact Options',
-  menuClose: 'Close Menu'
-};
-
-export default function StickyCTA({}: StickyCTAProps) {
-  const t = TEXTS;
-  
-  const isDesktop = useMediaQuery('(min-width: 640px)');
-  const [isExpanded, setIsExpanded] = useState(true);
-
-  const whatsappUrl = 'https://wa.me/919099245605?text=Hi%20Mago%20Labs%2C%20I%20would%20like%20to%20discuss%20my%20website.';
-  const callUrl = 'tel:+919099245605';
-
-  // Sync expanded state with screen size changes
   useEffect(() => {
-    if (isDesktop) {
-      setIsExpanded(true);
-    } else {
-      setIsExpanded(false); // Collapsed on mobile for space discipline
-    }
-  }, [isDesktop]);
-
-  const toggleMenu = () => {
-    if (!isDesktop) {
-      setIsExpanded((prev) => !prev);
-    }
-  };
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const scrolled = window.scrollY > window.innerHeight * 0.6;
+      const end = document.querySelector('#reusable-contact-cta, footer');
+      const nearEnd = end ? end.getBoundingClientRect().top < window.innerHeight - 80 : false;
+      setShow(scrolled && !nearEnd);
+    };
+    const onScroll = () => {
+      if (!queued) {
+        queued = true;
+        requestAnimationFrame(update);
+      }
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
 
   return (
-    <div
-      id="sticky-cta-container"
-      className={`fixed z-50 flex flex-col items-center transition-all duration-300 ${
-        isDesktop 
-          ? 'bottom-6 right-6 gap-3' 
-          : 'bottom-4 right-4 gap-2'
-      }`}
-    >
-      {/* Expanded Button Stack with Animation */}
-      <AnimatePresence>
-        {isExpanded && (
-          <div className={`flex flex-col items-center ${isDesktop ? 'gap-3' : 'gap-2'}`}>
-            {/* WhatsApp Button */}
-            <motion.a
-              id="sticky-whatsapp-btn"
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, translateY: -2 }}
-              whileTap={{ scale: 0.95 }}
-              initial={isDesktop ? { opacity: 0, y: 20 } : { opacity: 0, scale: 0.8, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 15 }}
-              transition={{ duration: 0.2, delay: isDesktop ? 0.4 : 0.05 }}
-              className={`flex items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 border border-emerald-500 cursor-pointer relative group ${
-                isDesktop ? 'h-12 w-12' : 'h-9.5 w-9.5'
-              }`}
-              title={t.whatsappTitle}
-            >
-              <WhatsAppLogo className={isDesktop ? 'h-5 w-5' : 'h-4.5 w-4.5'} />
-              
-              {/* Desktop Hover Tooltip */}
-              {isDesktop && (
-                <span className="absolute right-14 scale-0 group-hover:scale-100 transition-all duration-150 origin-right bg-neutral-950 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-xl border border-neutral-800/85 whitespace-nowrap mr-1">
-                  {t.whatsappTitle}
-                </span>
-              )}
-            </motion.a>
-
-            {/* Call Button */}
-            <motion.a
-              id="sticky-call-btn"
-              href={callUrl}
-              whileHover={{ scale: 1.1, translateY: -2 }}
-              whileTap={{ scale: 0.95 }}
-              initial={isDesktop ? { opacity: 0, y: 20 } : { opacity: 0, scale: 0.8, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 10 }}
-              transition={{ duration: 0.2, delay: isDesktop ? 0.2 : 0.1 }}
-              className={`flex items-center justify-center rounded-full bg-brand text-ink shadow-lg hover:bg-brand-deep focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 border border-brand cursor-pointer relative group ${
-                isDesktop ? 'h-12 w-12' : 'h-9.5 w-9.5'
-              }`}
-              title={t.callTitle}
-            >
-              <Phone className={isDesktop ? 'h-5 w-5' : 'h-4.5 w-4.5'} />
-              
-              {/* Desktop Hover Tooltip */}
-              {isDesktop && (
-                <span className="absolute right-14 scale-0 group-hover:scale-100 transition-all duration-150 origin-right bg-neutral-950 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-xl border border-neutral-800/85 whitespace-nowrap mr-1">
-                  {t.callTitle}
-                </span>
-              )}
-            </motion.a>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* Mobile Dynamic Trigger Menu Button */}
-      {!isDesktop && (
-        <motion.button
-          id="sticky-toggle-btn"
-          onClick={toggleMenu}
-          whileTap={{ scale: 0.9 }}
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 dark:bg-neutral-800 text-white shadow-xl border border-neutral-800 dark:border-neutral-700 cursor-pointer relative"
-          aria-label={isExpanded ? t.menuClose : t.menuOpen}
-          title={isExpanded ? t.menuClose : t.menuOpen}
+    <AnimatePresence>
+      {show && (
+        <motion.a
+          id="sticky-whatsapp-btn"
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Chat with Burhan on WhatsApp (opens in a new tab)"
+          initial={{ opacity: 0, y: 16, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 16, scale: 0.9 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+          className="group fixed bottom-4 right-4 z-50 flex h-12 items-center gap-2 rounded-full bg-[#1FA855] pl-3.5 pr-3.5 text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.45)] transition-[padding] hover:pr-5 sm:bottom-6 sm:right-6 sm:h-14 sm:pl-4"
         >
-          {/* Green active ping on trigger when menu is collapsed */}
-          {!isExpanded && (
-            <span className="absolute top-0 right-0 flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-          )}
-
-          {/* Smooth Rotation Transition between Icons */}
-          <motion.div
-            animate={{ rotate: isExpanded ? 90 : 0 }}
-            transition={{ type: 'spring', damping: 15 }}
-            className="flex items-center justify-center"
-          >
-            {isExpanded ? (
-              <X className="h-5 w-5 text-neutral-400" />
-            ) : (
-              <MessageSquare className="h-4.5 w-4.5 text-brand animate-pulse" />
-            )}
-          </motion.div>
-        </motion.button>
+          <WhatsAppLogo className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
+          <span className="hidden max-w-0 overflow-hidden whitespace-nowrap text-sm font-semibold transition-[max-width] duration-300 group-hover:max-w-[10rem] sm:inline">
+            Chat with Burhan
+          </span>
+        </motion.a>
       )}
-    </div>
+    </AnimatePresence>
   );
 }

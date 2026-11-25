@@ -8,7 +8,6 @@ import { PageId } from '../types';
 import SEO from '../components/SEO';
 import PageLink from '../components/PageLink';
 import { WhatsAppLogo } from '../components/BrandIcons';
-import AddOnServices from '../components/AddOnServices';
 import Price from '../components/Price';
 import { PACKAGES, getPackage, PackageInfo, HOURLY_RATE } from '../data/packages';
 import { useCurrency } from '../hooks/useCurrency';
@@ -338,39 +337,6 @@ export default function Pricing({ onPageChange }: PricingProps) {
             </div>
           </div>
 
-          {/* Package finder: choose a goal, land on the package built for it */}
-          <div className="price-rise mt-12 max-w-5xl mx-auto" style={{ '--i': 4 } as CSSProperties}>
-            <p className="text-center font-mono text-xs font-bold uppercase tracking-[0.18em] text-neutral-500">
-              Not sure which one? Pick what matters most
-            </p>
-            <div className="mt-5 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-              {NEEDS.map((need) => {
-                const pkg = getPackage(need.id);
-                const Icon = need.icon;
-                const on = picked === need.id;
-                return (
-                  <button
-                    key={need.id}
-                    type="button"
-                    onClick={() => pickPackage(need.id)}
-                    aria-pressed={on}
-                    className={`need-pick group flex flex-col rounded-2xl border p-4 sm:p-5 text-left cursor-pointer ${
-                      on ? 'border-brand bg-neutral-950 shadow-xl shadow-neutral-900/15' : 'bg-white border-neutral-200 hover:border-neutral-400'
-                    }`}
-                  >
-                    <span className={`flex h-9 w-9 items-center justify-center rounded-xl text-ink ${on ? 'bg-brand' : 'pricing-check bg-brand-soft'}`}>
-                      <Icon className="h-4.5 w-4.5" strokeWidth={2} aria-hidden="true" />
-                    </span>
-                    <span className={`mt-4 block text-sm sm:text-base font-semibold leading-snug ${on ? 'text-white' : 'text-neutral-900'}`}>{need.label}</span>
-                    <span className={`mt-auto pt-3 flex flex-wrap items-center gap-x-1.5 text-xs font-semibold ${on ? 'text-brand' : 'text-neutral-500'}`}>
-                      {pkg.name}, from <Price pkg={pkg} />
-                      <ArrowDown className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-y-0.5" aria-hidden="true" />
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
         </div>
       </section>
 
@@ -673,8 +639,6 @@ export default function Pricing({ onPageChange }: PricingProps) {
         </div>
       </section>
 
-      {/* Supporting services, kept quiet: websites are the main service */}
-      <AddOnServices onPageChange={onPageChange} />
 
       {/* Included in every package */}
       <section id="pricing-always" className="glow-follow relative overflow-hidden py-20 bg-neutral-950 text-white font-sans">
@@ -706,50 +670,6 @@ export default function Pricing({ onPageChange }: PricingProps) {
                 </motion.div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* Something else */}
-      <section id="pricing-something-else" className="relative overflow-hidden py-20 bg-brand font-sans">
-        <div className="brand-orb brand-orb-a" aria-hidden="true" />
-        <div className="brand-orb brand-orb-b" aria-hidden="true" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            <div className="lg:col-span-8 space-y-5">
-              <span className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-ink/70">Something else?</span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-ink leading-[1.12]">
-                Your business is not a template. Your website should not be either.
-              </h2>
-              <p className="text-base sm:text-lg text-ink/80 leading-relaxed max-w-2xl">
-                Have a specific requirement, custom functionality, or something completely different in mind?
-              </p>
-            </div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 lg:items-stretch"
-            >
-              <PageLink
-                href={quoteHref('Custom')}
-                onNavigate={() => goToQuote('Custom')}
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-ink px-8 py-4 text-base font-semibold text-[#ffffff] hover:bg-neutral-800 transition-colors cursor-pointer"
-              >
-                Let&rsquo;s build it
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </PageLink>
-              <a
-                href={'https://wa.me/919099245605?text=' + encodeURIComponent('Hi Mago Labs, I have a specific requirement I would like to discuss: ')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-ink px-8 py-4 text-base font-semibold text-ink hover:bg-ink/10 transition-colors"
-              >
-                <WhatsAppLogo className="h-5 w-5" />
-                Tell us on WhatsApp
-              </a>
-            </motion.div>
           </div>
         </div>
       </section>

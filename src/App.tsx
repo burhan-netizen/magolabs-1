@@ -9,7 +9,6 @@ import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import StickyCTA from './components/StickyCTA';
-import ScrollToTop from './components/ScrollToTop';
 import ContactCTA from './components/ContactCTA';
 import Home from './pages/Home';
 
@@ -303,7 +302,7 @@ function AppContent({ initialPath }: AppProps) {
       </main>
 
       {/* Strategic Call To Action Banner (show on all pages except Contact itself) */}
-      {currentPage !== 'contact' && (
+      {currentPage !== 'contact' && currentPage !== 'home' && (
         <ContactCTA onPageChange={handlePageChange} />
       )}
 
@@ -312,7 +311,6 @@ function AppContent({ initialPath }: AppProps) {
 
       {/* Floating CTA and Scroll-to-top Buttons */}
       <StickyCTA />
-      <ScrollToTop />
       
       {/* Design Customizer Studio Hub: internal demo tool only, not for real visitors.
           Opt in during a client pitch/demo with ?demo=true, never shown by default. */}

@@ -248,28 +248,6 @@ export default function WorkDetail({ id, onPageChange, onOpenCaseStudy }: WorkDe
         </section>
       )}
 
-      {/* CTA */}
-      <section className="py-20 bg-neutral-950 text-white text-center">
-        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 space-y-6">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Want results like this for your business?</h2>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <button
-              onClick={() => onPageChange('contact')}
-              className="inline-flex items-center gap-2 rounded-full bg-brand hover:bg-brand-deep px-6 py-3.5 text-sm font-bold text-ink transition-all cursor-pointer"
-            >
-              Get a free website audit
-            </button>
-            <a
-              href="https://wa.me/919099245605?text=Hi%20Mago%20Labs%2C%20I%20would%20like%20to%20discuss%20my%20website."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-700 hover:bg-neutral-900 px-6 py-3.5 text-sm font-bold text-neutral-200 transition-all"
-            >
-              <WhatsAppLogo className="h-4 w-4 text-emerald-500" /> Chat on WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
     </article>
   );
 }
