@@ -30,6 +30,9 @@ export default function Navbar({
 }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // On the homepage the page runs from night to daylight; the bar stays dark
+  // while the page behind it is dark.
+  const [homeDark, setHomeDark] = useState(true);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [logoError, setLogoError] = useState(false);
   const { t } = useLanguage();
@@ -37,9 +40,14 @@ export default function Navbar({
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+      setHomeDark(document.documentElement.dataset.homeSky !== 'light');
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('homesky', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('homesky', handleScroll);
+    };
   }, []);
 
   const navItems: NavItem[] = [
@@ -93,8 +101,8 @@ export default function Navbar({
     <header
       id="main-navbar"
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        currentPage === 'home' && !scrolled
-          ? 'dark bg-navy border-b border-white/10 py-3 md:py-4'
+        currentPage === 'home' && homeDark
+          ? `dark border-b border-white/10 ${scrolled ? 'bg-[#070A12]/80 backdrop-blur-md py-2.5 md:py-3' : 'bg-transparent py-3 md:py-4'}`
           : scrolled
           ? 'bg-paper/85 dark:bg-[#1A1A1A]/85 border-b border-neutral-200/50 dark:border-neutral-800/50 backdrop-blur-md py-2.5 md:py-3 shadow-sm'
           : 'bg-paper dark:bg-[#1A1A1A] border-b border-transparent py-3 md:py-4'

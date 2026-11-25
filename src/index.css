@@ -2080,3 +2080,28 @@ html.motion-ok .hf-float { animation: hfDrop 1.1s cubic-bezier(0.2, 0.8, 0.2, 1)
 html.motion-ok .v3-swap { animation: v3Swap 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 @keyframes v3Swap { from { opacity: 0; transform: translateY(18px) scale(0.97); } }
 @media (prefers-reduced-motion: reduce) { .v3-polaroid { transition: none; } .v3-swap { animation: none !important; } }
+
+/* ---------- Homepage v4: night to daylight ---------- */
+.n-sky { transition: background-color 1.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.n-h1, .n-h2, .n-h3, .n-big, .n-row, .n-chosen { font-family: "Archivo Variable", var(--font-sans); font-weight: 800; letter-spacing: -0.045em; }
+.n-h1 { font-size: clamp(2.8rem, 6.6vw, 6.6rem); line-height: 0.98; text-wrap: balance; }
+.n-h2 { font-size: clamp(2.3rem, 5vw, 4.8rem); line-height: 1; text-wrap: balance; }
+.n-h3 { font-size: clamp(1.6rem, 2.4vw, 2.2rem); line-height: 1.05; }
+.n-big { font-size: clamp(3.2rem, 6vw, 6rem); line-height: 0.9; }
+.n-row { font-size: clamp(2rem, 4.4vw, 4.2rem); line-height: 1; }
+.n-chosen { font-size: clamp(3.4rem, 9vw, 9.5rem); line-height: 0.9; text-wrap: balance; }
+.n-window { overflow: hidden; border-radius: 10px 10px 0 0; box-shadow: 0 0 0 1px rgba(255,255,255,0.06); }
+html.motion-ok .n-window { animation-name: nSwitch, nGlowOn; animation-duration: 1.6s, 1.6s; animation-timing-function: linear, ease-out; animation-fill-mode: both, both; }
+html.motion-ok .n-in { animation: nIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes nIn { from { opacity: 0; transform: translateY(22px); } }
+@keyframes nSwitch {
+  0% { filter: grayscale(1) brightness(0.16); }
+  8% { filter: grayscale(0.2) brightness(1); }
+  12% { filter: grayscale(1) brightness(0.2); }
+  20% { filter: grayscale(0.1) brightness(1.05); }
+  24% { filter: grayscale(1) brightness(0.3); }
+  32%, 100% { filter: none; }
+}
+@keyframes nGlowOn { 0%, 30% { box-shadow: 0 0 0 1px rgba(255,255,255,0.06); } 100% { box-shadow: 0 -10px 70px 0 rgba(255,197,61,0.3); } }
+.n-lit { filter: none; }
+@media (prefers-reduced-motion: reduce) { .n-window { animation: none !important; } .n-in { animation: none !important; } .n-sky { transition: none; } }

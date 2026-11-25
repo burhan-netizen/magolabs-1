@@ -1,17 +1,14 @@
-import { Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
 import { LeadMode } from '../components/LeadForm';
-import HomeTop from '../components/home/HomeTop';
-import ServicesPick from '../components/home/v3/ServicesPick';
-import WorkDeck from '../components/home/v3/WorkDeck';
-import BuiltFor from '../components/home/v3/BuiltFor';
-import ProcessCards from '../components/home/v3/ProcessCards';
-import UsVsThem from '../components/home/v3/UsVsThem';
-import FounderSoul from '../components/home/v3/FounderSoul';
-import ClientWords from '../components/home/v3/ClientWords';
-import Closing from '../components/home/v3/Closing';
+import Sky from '../components/home/v4/Sky';
+import NightHero from '../components/home/v4/NightHero';
+import LightsOn from '../components/home/v4/LightsOn';
+import Switches from '../components/home/v4/Switches';
+import Dawn from '../components/home/v4/Dawn';
+import Morning from '../components/home/v4/Morning';
+import Daylight from '../components/home/v4/Daylight';
 
 interface HomeProps {
   onPageChange: (page: PageId) => void;
@@ -25,40 +22,8 @@ interface HomeProps {
    their next step. Copy lives here or in the section components as plain data.
 --------------------------------------------------------------------------- */
 
-const FAQS = [
-  {
-    question: 'What does the free audit include?',
-    answer: 'Burhan reviews your website himself: how it looks, how fast it loads, how easy it is to contact you, and how you show up on Google. You get a short, plain-English summary of what to fix first. There is no charge and no obligation.',
-  },
-  {
-    question: 'I don’t have a website yet. Where do I start?',
-    answer: 'Ask for a free website plan. Tell us what your business does, and Burhan will send you a short plan: the pages you need, what they should say, and how customers will find you. Several of our clients, including a CA firm that went on to sign 34 new clients, started with no website at all.',
-  },
-  {
-    question: 'How long does a website take to build?',
-    answer: 'It depends on the package. A Launch website is live in 5 days, Growth in 14 days, Scale in 21 days, and an online store in 28 days.',
-  },
-  {
-    question: 'How much does a custom website cost?',
-    answer: 'There are four packages, and the pricing page lists what each one includes and its starting price. You get a clear, fixed quote before any work starts. No hidden fees: hosting is included, and you keep full ownership of your domain and code.',
-  },
-  {
-    question: 'Will my website rank on Google?',
-    answer: 'Every site we build is set up to rank: clean structure, proper headings, local schema markup and fast load times. Pair that with a well-run Google Business Profile and you give yourself the best chance. Nobody can honestly promise a specific position.',
-  },
-  {
-    question: 'Can I edit the website myself later?',
-    answer: 'Yes. We set up simple content controls so you can change text, prices and photos in a couple of minutes, without touching code.',
-  },
-  {
-    question: 'What happens after launch?',
-    answer: 'We don’t disappear. Content changes, security updates and new features are a WhatsApp message or a call away.',
-  },
-];
 
 export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const toggleFaq = (idx: number) => setOpenFaq(openFaq === idx ? null : idx);
 
   const navigateTo = (page: PageId) => {
     onPageChange(page);
@@ -129,15 +94,6 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       'url': 'https://www.magolabs.in',
       'inLanguage': 'en-IN',
       'publisher': { '@id': 'https://www.magolabs.in/#localbusiness' }
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      'mainEntity': FAQS.map((faq) => ({
-        '@type': 'Question',
-        'name': faq.question,
-        'acceptedAnswer': { '@type': 'Answer', 'text': faq.answer }
-      }))
     }
   ];
 
@@ -145,52 +101,14 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
     <>
       <SEO path="/" schemas={homeSchemas} />
 
-      <HomeTop
-        onAudit={goToAudit}
-        onOpenCaseStudy={onOpenCaseStudy}
-        onSeeWork={() => navigateTo('work')}
-        onReadStory={() => navigateTo('about')}
-      />
-      <ServicesPick onNavigate={navigateTo} />
-      <WorkDeck onOpenCaseStudy={onOpenCaseStudy} onSeeWork={() => navigateTo('work')} />
-      <BuiltFor />
-      <ProcessCards />
-      <UsVsThem />
-      <FounderSoul />
-      <ClientWords />
-
-      <section id="faq" aria-labelledby="faq-title" className="bg-[#F4F3EF] py-24 md:py-32">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:px-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-          <div>
-            <p className="v3-label">Questions</p>
-            <h2 id="faq-title" className="v3-h2 mt-4 max-w-[12ch]">Asked before you ask.</h2>
-          </div>
-          <div className="border-t border-ink/15">
-            {FAQS.map((faq, idx) => {
-              const open = openFaq === idx;
-              return (
-                <div key={faq.question} className="border-b border-ink/15">
-                  <h3>
-                    <button type="button" onClick={() => toggleFaq(idx)} aria-expanded={open} aria-controls={`faq-${idx}`} className="flex w-full items-center justify-between gap-6 py-6 text-left text-[18px] font-bold tracking-[-0.01em] text-ink md:text-[20px]">
-                      {faq.question}
-                      <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors ${open ? 'bg-brand text-ink' : 'bg-white text-ink'}`}>
-                        {open ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                      </span>
-                    </button>
-                  </h3>
-                  <div id={`faq-${idx}`} className={`grid transition-[grid-template-rows] duration-500 ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
-                    <div className="overflow-hidden">
-                      <p className="max-w-[60ch] pb-6 text-[16px] leading-relaxed text-ink/70">{faq.answer}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <Closing mode={leadMode} onModeChange={setLeadMode} />
+      <Sky>
+        <NightHero onAudit={goToAudit} />
+        <LightsOn onOpenCaseStudy={onOpenCaseStudy} onSeeWork={() => navigateTo('work')} />
+        <Switches onNavigate={navigateTo} />
+        <Dawn />
+        <Morning />
+        <Daylight mode={leadMode} onModeChange={setLeadMode} />
+      </Sky>
     </>
   );
 }
