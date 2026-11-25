@@ -18,7 +18,7 @@ const TICKER = [
 /* The client sites that float around the headline. depth: how strongly a card
    reacts to the mouse and to scroll (bigger = closer to the viewer). */
 const FLOATERS = [
-  { id: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care', tag: 'Dental clinic, Surat', pos: 'left-[2.5%] top-[24%]', w: 'w-[clamp(190px,17vw,270px)]', rot: -6, depth: 1.2, delay: 0.25 },
+  { id: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care', tag: 'Dental clinic, Surat', pos: 'left-[1%] top-[25%]', w: 'w-[clamp(190px,17vw,270px)]', rot: -6, depth: 1.2, delay: 0.25 },
   { id: 'ladsonconcrete', name: 'Ladson Concrete', tag: 'Concrete, Florida', pos: 'right-[3%] top-[16%]', w: 'w-[clamp(200px,18vw,285px)]', rot: 5, depth: 1, delay: 0.35 },
   { id: 'jaymocivil', name: 'Jaymo Civil', tag: 'Civil contractor, Sydney', pos: 'left-[6%] bottom-[9%]', w: 'w-[clamp(180px,15.5vw,245px)]', rot: 4, depth: 0.7, delay: 0.45 },
   { id: 'centurion', name: 'Centurion Strategic Ventures', tag: 'Loan advisory, India', pos: 'right-[7%] bottom-[8%]', w: 'w-[clamp(185px,16vw,255px)]', rot: -4, depth: 0.85, delay: 0.55 },
@@ -54,7 +54,7 @@ function Floater({
             aria-label={`${f.name}, ${f.tag}. Open case study`}
             className={`group block ${f.w}`}
           >
-            <span className="block overflow-hidden rounded-[14px] bg-white shadow-[0_30px_60px_-30px_rgba(20,18,14,0.5),0_1px_3px_rgba(20,18,14,0.08)] ring-1 ring-black/5">
+            <span className="block overflow-hidden rounded-[14px] bg-white shadow-[0_40px_80px_-30px_rgba(0,0,0,0.75)] ring-1 ring-white/10">
               <span className="flex items-center gap-1 border-b border-black/5 bg-[#F7F6F2] px-2.5 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#DCD9D1]" />
                 <span className="h-1.5 w-1.5 rounded-full bg-[#DCD9D1]" />
@@ -70,7 +70,7 @@ function Floater({
                 className="block aspect-[16/10] w-full object-cover object-top"
               />
             </span>
-            <span className="hf-chip mt-2.5 inline-flex items-center gap-2 rounded-full bg-ink px-3 py-1.5 text-[12px] font-medium text-paper">
+            <span className="hf-chip mt-2.5 inline-flex items-center gap-2 rounded-full bg-brand px-3 py-1.5 text-[12px] font-semibold text-ink">
               {f.name}
               <ArrowUpRight className="h-3.5 w-3.5" />
             </span>
@@ -106,15 +106,15 @@ export default function HeroFloat({ onAudit, onOpenCaseStudy, onSeeWork }: { onA
   }, [reduce, rawX, rawY]);
 
   return (
-    <section ref={ref} id="hero" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-paper pt-[72px] md:pt-[84px]">
+    <section ref={ref} id="hero" className="hf-hero relative flex min-h-[100svh] flex-col overflow-hidden bg-navy pt-[72px] text-white md:pt-[84px]">
       {/* Ticker of real wins */}
-      <div className="hf-ticker relative z-20 overflow-hidden bg-ink py-2.5 text-paper" aria-label="Recent results">
+      <div className="hf-ticker relative z-20 overflow-hidden bg-brand py-2.5 text-ink" aria-label="Recent results">
         <div className="hf-ticker-track">
           {[0, 1].map((copy) => (
             <ul key={copy} className="flex shrink-0 items-center" aria-hidden={copy === 1 ? true : undefined}>
               {TICKER.map((t) => (
-                <li key={t} className="flex items-center whitespace-nowrap text-[13px] tracking-[-0.005em] text-paper/85">
-                  <span className="mx-5 h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true" />
+                <li key={t} className="flex items-center whitespace-nowrap text-[13px] font-semibold tracking-[-0.005em] text-ink">
+                  <span className="mx-5 h-1.5 w-1.5 rotate-45 bg-ink" aria-hidden="true" />
                   {t}
                 </li>
               ))}
@@ -125,7 +125,7 @@ export default function HeroFloat({ onAudit, onOpenCaseStudy, onSeeWork }: { onA
 
       <div className="relative flex flex-1 items-center justify-center">
         {/* Floating client sites (desktop) */}
-        <div className="pointer-events-none absolute inset-0 hidden lg:block [&_a]:pointer-events-auto">
+        <div className="pointer-events-none absolute inset-0 z-[1] hidden lg:block [&_a]:pointer-events-auto">
           {FLOATERS.map((f) => (
             <Floater key={f.id} f={f} mx={reduce ? still : mx} my={reduce ? still : my} scrollY={reduce ? still : scrollY} onOpenCaseStudy={onOpenCaseStudy} />
           ))}
@@ -133,7 +133,7 @@ export default function HeroFloat({ onAudit, onOpenCaseStudy, onSeeWork }: { onA
 
         {/* The words */}
         <div className="relative z-10 mx-auto w-full max-w-[1000px] px-5 py-14 text-center lg:py-0">
-          <p className="hf-in inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/60 px-3.5 py-1.5 text-[13px] text-ink/70" style={{ animationDelay: '0.05s' }}>
+          <p className="hf-in inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-1.5 text-[13px] text-white/80" style={{ animationDelay: '0.05s' }}>
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60 motion-reduce:hidden" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
@@ -141,23 +141,23 @@ export default function HeroFloat({ onAudit, onOpenCaseStudy, onSeeWork }: { onA
             Website studio in Surat. Taking new projects.
           </p>
 
-          <h1 className="mt-7 text-ink">
+          <h1 className="mt-7 text-white">
             <span className="hf-line"><span className="hf-cond" style={{ animationDelay: '0.12s' }}>Your business is great.</span></span>
-            <span className="hf-line"><span className="hf-serif" style={{ animationDelay: '0.26s' }}>Your website should say so.</span></span>
+            <span className="hf-line"><span className="hf-cond" style={{ animationDelay: '0.26s' }}>Your website should <span className="text-brand">say so.</span></span></span>
           </h1>
 
-          <p className="hf-in mx-auto mt-7 max-w-[34rem] text-[17px] leading-relaxed text-ink/65 md:text-lg" style={{ animationDelay: '0.4s' }}>
+          <p className="hf-in mx-auto mt-7 max-w-[34rem] text-[17px] leading-relaxed text-white/70 md:text-lg" style={{ animationDelay: '0.4s' }}>
             We design and build websites, SEO and Google profiles that make clients pick you over the business next door. Made from a blank page, never a template.
           </p>
 
           <div className="hf-in mt-9 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: '0.5s' }}>
-            <PageLink page="contact" onNavigate={onAudit} className="group inline-flex items-center gap-3 rounded-full bg-ink py-3 pl-6 pr-3 text-[15px] font-medium text-paper transition-colors hover:bg-black">
+            <PageLink page="contact" onNavigate={onAudit} className="group inline-flex items-center gap-3 rounded-full bg-brand py-3 pl-6 pr-3 text-[15px] font-semibold text-ink transition-colors hover:bg-white">
               Get a free website audit
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-ink transition-transform duration-300 group-hover:rotate-45">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-brand transition-transform duration-300 group-hover:rotate-45">
                 <ArrowUpRight className="h-4 w-4" />
               </span>
             </PageLink>
-            <PageLink page="work" onNavigate={onSeeWork} className="inline-flex items-center rounded-full px-5 py-3 text-[15px] font-medium text-ink underline decoration-ink/25 underline-offset-[6px] transition-colors hover:decoration-ink">
+            <PageLink page="work" onNavigate={onSeeWork} className="inline-flex items-center rounded-full px-5 py-3 text-[15px] font-medium text-white underline decoration-white/30 underline-offset-[6px] transition-colors hover:decoration-white">
               See our work
             </PageLink>
           </div>
@@ -166,11 +166,11 @@ export default function HeroFloat({ onAudit, onOpenCaseStudy, onSeeWork }: { onA
           <div className="hf-in -mx-5 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 lg:hidden" style={{ animationDelay: '0.6s' }}>
             {FLOATERS.map((f) => (
               <PageLink key={f.id} href={getWorkDetailPath(f.id)} onNavigate={() => onOpenCaseStudy(f.id)} className="w-[62vw] max-w-[260px] shrink-0 snap-center text-left">
-                <span className="block overflow-hidden rounded-xl bg-white shadow-[0_20px_40px_-24px_rgba(20,18,14,0.45)] ring-1 ring-black/5">
+                <span className="block overflow-hidden rounded-xl bg-white shadow-[0_20px_40px_-24px_rgba(0,0,0,0.7)] ring-1 ring-white/10">
                   <img src={`/screenshots/${f.id}-480.webp`} alt={`${f.name} website by Mago Labs`} width={480} height={300} loading="lazy" decoding="async" className="block aspect-[16/10] w-full object-cover object-top" />
                 </span>
-                <span className="mt-2 block text-[13px] font-medium text-ink">{f.name}</span>
-                <span className="block text-[12px] text-ink/50">{f.tag}</span>
+                <span className="mt-2 block text-[13px] font-medium text-white">{f.name}</span>
+                <span className="block text-[12px] text-white/55">{f.tag}</span>
               </PageLink>
             ))}
           </div>

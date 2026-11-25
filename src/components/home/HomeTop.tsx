@@ -26,7 +26,7 @@ export default function HomeTop({
 
   return (
     <div className="relative">
-      <div className="lg:sticky lg:top-0">
+      <div className="bg-navy lg:sticky lg:top-0">
         <motion.div style={reduce ? undefined : { scale }} className="origin-top">
           <HeroFloat onAudit={onAudit} onOpenCaseStudy={onOpenCaseStudy} onSeeWork={onSeeWork} />
         </motion.div>

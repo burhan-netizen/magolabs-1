@@ -93,7 +93,9 @@ export default function Navbar({
     <header
       id="main-navbar"
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled
+        currentPage === 'home' && !scrolled
+          ? 'dark bg-navy border-b border-white/10 py-3 md:py-4'
+          : scrolled
           ? 'bg-paper/85 dark:bg-[#1A1A1A]/85 border-b border-neutral-200/50 dark:border-neutral-800/50 backdrop-blur-md py-2.5 md:py-3 shadow-sm'
           : 'bg-paper dark:bg-[#1A1A1A] border-b border-transparent py-3 md:py-4'
       }`}
@@ -246,7 +248,7 @@ export default function Navbar({
               whileHover={{ y: -1, scale: 1.02, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
               whileTap={{ scale: 0.98, y: 0 }}
               onClick={() => handleNavClick('contact')}
-              className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper cursor-pointer hover:bg-black transition-all"
+              className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper cursor-pointer hover:bg-black dark:bg-brand dark:text-ink dark:font-semibold dark:hover:bg-white transition-all"
             >
               <PhoneCall className="h-4 w-4" />
               {t('nav.cta')}

@@ -33,7 +33,7 @@ function Word({ word, i, progress, reduce }: { word: string; i: number; progress
   }
   const muted = i < MUTED_UNTIL;
   return (
-    <motion.span style={{ opacity: reduce ? 1 : opacity }} className={muted ? 'font-serif-accent text-ink/55' : undefined}>
+    <motion.span style={{ opacity: reduce ? 1 : opacity }} className={muted ? 'text-ink/40' : undefined}>
       {word}
     </motion.span>
   );
@@ -48,7 +48,7 @@ export default function IntroSheet({ onReadStory, progressRef }: { onReadStory: 
     <section
       ref={progressRef as RefObject<HTMLElement>}
       aria-label="About Mago Labs"
-      className="relative z-10 -mt-8 rounded-t-[28px] bg-sheet shadow-[0_-30px_60px_-40px_rgba(20,18,14,0.35)] md:-mt-10 md:rounded-t-[40px]"
+      className="relative z-10 -mt-8 rounded-t-[28px] bg-white shadow-[0_-30px_60px_-40px_rgba(20,18,14,0.35)] md:-mt-10 md:rounded-t-[40px]"
     >
       <div className="mx-auto max-w-[1100px] px-5 pb-28 pt-24 md:px-8 md:pb-40 md:pt-36">
         <p ref={textRef} className="hf-sheet-text text-ink">

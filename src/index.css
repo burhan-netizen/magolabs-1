@@ -19,6 +19,7 @@
   --color-ink: #16130F;
   --color-paper: #ECEBE6;
   --color-sheet: #FAF9F6;
+  --color-navy: #0A1733;
   --color-hairline: #E4E1D9;
   --color-slate: #7E7E7E;
 
@@ -2002,11 +2003,11 @@ html.motion-ok .reveal[data-in], html.motion-ok.reveal-all .reveal { opacity: 1;
 .hf-cond, .hf-serif { display: inline-block; }
 .hf-cond {
   font-family: "Archivo Variable", var(--font-sans);
-  font-stretch: 68%;
-  font-weight: 760;
-  font-size: clamp(2.9rem, 6.4vw, 6.9rem);
-  line-height: 0.92;
-  letter-spacing: -0.02em;
+  font-stretch: 100%;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 4.9vw, 5.3rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
 }
 .hf-serif {
   font-family: var(--font-serif);
@@ -2019,11 +2020,11 @@ html.motion-ok .reveal[data-in], html.motion-ok.reveal-all .reveal { opacity: 1;
 }
 .hf-sheet-text {
   font-family: "Archivo Variable", var(--font-sans);
-  font-stretch: 82%;
-  font-weight: 560;
+  font-stretch: 100%;
+  font-weight: 700;
   font-size: clamp(1.9rem, 4.3vw, 4.1rem);
   line-height: 1.08;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 .hf-sheet-text .font-serif-accent { font-weight: 400; font-style: italic; letter-spacing: -0.02em; }
@@ -2044,4 +2045,15 @@ html.motion-ok .hf-float { animation: hfDrop 1.1s cubic-bezier(0.2, 0.8, 0.2, 1)
 @media (prefers-reduced-motion: reduce) {
   .hf-ticker-track, .hf-cond, .hf-serif, .hf-in, .hf-float { animation: none !important; }
   .hf-tilt { transition: none; }
+}
+
+.hf-hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 80%);
+}
+.hf-hero::after {
+  content: ""; position: absolute; left: 50%; top: 42%; width: 900px; height: 520px; transform: translate(-50%, -50%); pointer-events: none; z-index: 0;
+  background: radial-gradient(closest-side, rgba(58, 98, 255, 0.28), transparent);
 }
