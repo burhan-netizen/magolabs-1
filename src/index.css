@@ -77,10 +77,10 @@ body::before {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  letter-spacing: -0.03em;
+  letter-spacing: var(--h-track, -0.03em);
   font-variation-settings: "opsz" 96;
 }
-h1, h2 { font-weight: 750; line-height: 1.02; text-wrap: balance; }
+h1, h2 { font-weight: var(--h-weight, 750); line-height: 1.02; text-wrap: balance; }
 h3, h4 { letter-spacing: -0.02em; }
 
 /* Glassmorphism utility */
@@ -1864,7 +1864,7 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
   color: #fff !important;
   font-size: clamp(2.6rem, 6.2vw, 5.75rem) !important;
   line-height: 0.98 !important;
-  letter-spacing: -0.045em !important;
+  letter-spacing: calc(var(--h-track, -0.03em) - 0.015em) !important;
   max-width: 16ch;
 }
 .page-hero .text-center h1, .page-hero h1 { margin-left: 0; }
