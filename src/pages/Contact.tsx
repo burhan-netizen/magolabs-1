@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Phone, Mail } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Navigation, Star } from 'lucide-react';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
 import LeadForm, { LeadMode } from '../components/LeadForm';
-import { CALL_URL, EMAIL, EMAIL_URL, PHONE_DISPLAY, WHATSAPP_URL } from '../utils/contactLinks';
+import { CALL_URL, EMAIL, EMAIL_URL, PHONE_DISPLAY, WHATSAPP_URL, GOOGLE_PROFILE_URL, GOOGLE_REVIEW_URL, GOOGLE_MAP_EMBED_URL } from '../utils/contactLinks';
 
 interface ContactProps {
   onPageChange: (page: PageId) => void;
@@ -139,7 +139,7 @@ export default function Contact(_props: ContactProps) {
                 <p className="text-sm text-neutral-600">
                   Monday to Saturday, 9:00 AM to 7:00 PM. Surat, Gujarat.{' '}
                   <a
-                    href="https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8"
+                    href={GOOGLE_PROFILE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4"
@@ -153,6 +153,60 @@ export default function Contact(_props: ContactProps) {
             {/* The form */}
             <div className="lg:col-span-7">
               <LeadForm idPrefix="contact" source="Contact page" mode={mode} onModeChange={setMode} presetMessage={preset} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Find us */}
+      <section aria-labelledby="find-us" className="bg-[#f4f3ef] py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-10 lg:grid-cols-12 lg:items-center">
+          <div className="lg:col-span-4 space-y-6">
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-neutral-500">Find us</p>
+            <h2 id="find-us" className="font-display text-3xl md:text-4xl font-bold tracking-tight text-neutral-950">
+              Based in Surat. Working with businesses everywhere.
+            </h2>
+            <ul className="space-y-4 text-neutral-700">
+              <li className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 mt-0.5 shrink-0 text-neutral-900" aria-hidden="true" />
+                <span>Surat, Gujarat, India</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock className="h-5 w-5 mt-0.5 shrink-0 text-neutral-900" aria-hidden="true" />
+                <span>Monday to Saturday: 9:00 AM to 7:00 PM<br />Sunday: closed</span>
+              </li>
+            </ul>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={GOOGLE_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-neutral-950 hover:bg-neutral-800 px-5 py-3.5 text-sm font-semibold text-white transition-colors"
+              >
+                <Navigation className="h-4 w-4" aria-hidden="true" />
+                Get directions
+              </a>
+              <a
+                href={GOOGLE_REVIEW_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white hover:border-neutral-900 px-5 py-3.5 text-sm font-semibold text-neutral-900 transition-colors"
+              >
+                <Star className="h-4 w-4" aria-hidden="true" />
+                Leave a review
+              </a>
+            </div>
+          </div>
+          <div className="lg:col-span-8">
+            <div className="overflow-hidden rounded-[28px] border border-neutral-200 bg-neutral-200 aspect-[4/3] sm:aspect-[16/9]">
+              <iframe
+                src={GOOGLE_MAP_EMBED_URL}
+                title="Mago Labs on Google Maps, Surat"
+                className="h-full w-full border-0"
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>

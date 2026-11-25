@@ -212,7 +212,7 @@ const FAQS = [
 const HERO_FACTS = [
   { value: '75+', label: 'Businesses helped' },
   { value: '5 to 28', label: 'Days to launch' },
-  { value: '5.0', star: true, label: '8 Google reviews', href: 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8' },
+  { value: '5.0', star: true, label: '8 Google reviews', href: 'https://maps.app.goo.gl/Y9vwQeL9Msypoez88' },
 ];
 
 /** The one primary action on the page, repeated wherever a visitor might be ready. */
@@ -293,10 +293,10 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
         { '@type': 'Country', 'name': 'India' }
       ],
       'knowsAbout': ['Website design', 'Website development', 'Local SEO', 'Google Business Profile optimisation', 'Conversion copywriting'],
-      'hasMap': 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8',
+      'hasMap': 'https://maps.app.goo.gl/Y9vwQeL9Msypoez88',
       // Every profile that is this business, so search engines can join them up.
       'sameAs': [
-        'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8',
+        'https://maps.app.goo.gl/Y9vwQeL9Msypoez88',
         'https://www.instagram.com/magolabs.in/',
         'https://www.threads.com/@magolabs.in',
         'https://www.facebook.com/profile.php?id=61591983492179',

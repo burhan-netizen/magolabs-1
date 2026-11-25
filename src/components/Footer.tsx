@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Phone, Mail, Clock, MapPin, Linkedin, Instagram, ArrowUpRight } from 'lucide-react';
+import { Phone, Mail, Clock, MapPin, Linkedin, Instagram, ArrowUpRight, Star } from 'lucide-react';
 import { XLogo } from './BrandIcons';
 import { PageId } from '../types';
+import { GOOGLE_PROFILE_URL, GOOGLE_REVIEW_URL } from '../utils/contactLinks';
 import PageLink from './PageLink';
 
 interface FooterProps {
@@ -262,12 +263,26 @@ export default function Footer({ onPageChange }: FooterProps) {
                 <div>
                   <p className="text-xs text-neutral-500 dark:text-neutral-500 uppercase font-medium">Surat, Gujarat</p>
                   <a
-                    href="https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8"
+                    href={GOOGLE_PROFILE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-neutral-800 dark:text-white hover:text-neutral-600 dark:hover:text-brand transition-colors font-medium"
                   >
                     View on Google Maps
+                  </a>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <Star className="h-4 w-4 text-neutral-900 shrink-0 mt-1" />
+                <div>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-500 uppercase font-medium">Worked with us?</p>
+                  <a
+                    href={GOOGLE_REVIEW_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-800 dark:text-white hover:text-neutral-600 dark:hover:text-brand transition-colors font-medium"
+                  >
+                    Leave a Google review
                   </a>
                 </div>
               </li>

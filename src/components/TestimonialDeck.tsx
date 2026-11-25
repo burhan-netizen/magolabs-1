@@ -1,4 +1,5 @@
 import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
+import { GOOGLE_PROFILE_URL, GOOGLE_REVIEW_URL } from '../utils/contactLinks';
 import { animate, motion, useMotionValue, useReducedMotion, useSpring, useTransform, type PanInfo } from 'motion/react';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { TESTIMONIALS, TESTIMONIAL_INDUSTRIES, type Testimonial } from '../data/testimonials';
@@ -7,7 +8,7 @@ import { getWorkDetailPath } from '../utils/pageRoutes';
 import PageLink from './PageLink';
 
 /** Mago Labs on Google. Update the rating and count here when new reviews come in. */
-const GOOGLE_PROFILE = 'https://maps.app.goo.gl/zSRNvN1V2VWFsnSb8';
+const GOOGLE_PROFILE = GOOGLE_PROFILE_URL;
 const GOOGLE_RATING = '5.0';
 const GOOGLE_REVIEWS = 8;
 /** Client logos drawn for a dark background (same as the home page logo wall). */
@@ -368,6 +369,17 @@ export default function TestimonialDeck({ eyebrow = 'In their words', heading = 
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </span>
             </a>
+            <p className="mt-3 text-sm text-neutral-600">
+              Worked with us?{' '}
+              <a
+                href={GOOGLE_REVIEW_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4"
+              >
+                Leave a review<span className="sr-only"> on Google (opens in a new tab)</span>
+              </a>
+            </p>
           </div>
 
           {/* Under the cards on a phone, where a thumb can reach them */}
