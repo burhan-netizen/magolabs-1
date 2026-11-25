@@ -12,6 +12,7 @@ import '@fontsource/poppins/latin-700.css';
 import '@fontsource/poppins/latin-800.css';
 import '@fontsource/jetbrains-mono/latin-500.css';
 import '@fontsource/jetbrains-mono/latin-700.css';
+import '@fontsource/caveat/latin-600.css';
 import './index.css';
 
 const container = document.getElementById('root')!;

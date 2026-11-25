@@ -9,6 +9,7 @@ import PageLink from '../components/PageLink';
 import LogoWall from '../components/LogoWall';
 import LeadForm, { LeadMode } from '../components/LeadForm';
 import HeroShowcase from '../components/HeroShowcase';
+import FounderStory from '../components/FounderStory';
 import CountUp from '../components/CountUp';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import { useLanguage } from '../context/LanguageContext';
@@ -255,7 +256,6 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
   const [searchSeen, setSearchSeen] = useState(false);
   const { scrollY } = useScroll();
   const cardsY = useTransform(scrollY, [0, 700], [0, reduceMotion ? 0 : -48]);
-  const glowY = useTransform(scrollY, [0, 700], [0, reduceMotion ? 0 : 90]);
   const steps = [{ title: firstStep.title, desc: firstStep.desc }, ...NEXT_STEPS];
 
   // Structured data: the business, the organisation, and the FAQ on this page.
@@ -336,14 +336,9 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       {/* 1. Hero: the promise, one action, and proof beside it. Dark, with glass cards.
           The text has no entrance animation: it is in the page HTML and should be
           visible the instant it paints. */}
-      <section id="hero" className="glow-follow relative pt-32 pb-14 md:pt-40 md:pb-16 bg-neutral-950 text-[#ffffff] overflow-hidden font-sans">
-        {/* Background: a faint grid and one amber glow that drifts on scroll */}
+      <section id="hero" className="relative pt-32 pb-14 md:pt-40 md:pb-16 bg-neutral-950 text-[#ffffff] overflow-hidden font-sans">
+        {/* Background: a faint grid */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:44px_44px] pointer-events-none [mask-image:linear-gradient(180deg,black_0%,black_70%,transparent_100%)]" />
-        <motion.div
-          style={{ y: glowY }}
-          className="absolute -top-40 right-[-10%] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(255,197,61,0.20),transparent_65%)] pointer-events-none"
-          aria-hidden="true"
-        />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
@@ -695,6 +690,9 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
 
       {/* What clients say: a pile of review cards to drag through */}
       <TestimonialDeck onOpenCaseStudy={onOpenCaseStudy} />
+
+      {/* The person behind the work: founder story and photos */}
+      <FounderStory />
 
       {/* 6. What the customer gets, against the common alternative */}
       <section id="why-choose-us-overview" className="py-24 bg-neutral-50 font-sans border-y border-neutral-200/50">

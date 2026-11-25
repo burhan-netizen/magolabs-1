@@ -1791,3 +1791,9 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
   .work-card::after { display: none; }
   .work-wall-row { animation: none; }
 }
+
+/* Founder story: handwriting and taped photos */
+.hand { font-family: "Caveat", cursive; font-weight: 600; }
+.polaroid { transform: rotate(var(--r, 0deg)); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.polaroid:hover { transform: rotate(0deg) scale(1.04); }
+@media (prefers-reduced-motion: reduce) { .polaroid { transition: none; } }
