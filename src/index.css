@@ -1965,3 +1965,133 @@ html.motion-ok .logo-strip-track { animation: logoStrip 50s linear infinite; }
 .on-dark .border-neutral-200 { border-color: rgba(255,255,255,0.12) !important; }
 .on-dark a.bg-neutral-950 { background: #fff !important; color: #0D0D0D !important; }
 .on-dark a.bg-white { background: transparent !important; border-color: rgba(255,255,255,0.25) !important; color: #fff !important; }
+
+/* Editorial numbered lists (src/components/EditorialList.tsx): a rule above each
+   point, a large outlined number, a big headline. Yellow line and filled number
+   on hover; items rise in one after another the first time they are seen. */
+.ed-list {
+  --ed-rule: rgba(13, 13, 13, 0.12);
+  --ed-stroke: rgba(13, 13, 13, 0.3);
+  --ed-fill-hover: var(--color-brand);
+  --ed-stroke-hover: #0D0D0D;
+  --ed-title: #0D0D0D;
+  --ed-desc: #525252;
+  --ed-bg: var(--color-neutral-50);
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: clamp(1.75rem, 3vw, 3rem);
+  row-gap: clamp(2.75rem, 5vw, 4.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ed-dark,
+.dark .ed-light {
+  --ed-rule: rgba(255, 255, 255, 0.12);
+  --ed-stroke: rgba(255, 255, 255, 0.32);
+  --ed-stroke-hover: var(--color-brand);
+  --ed-title: #FFFFFF;
+  --ed-desc: #A3A3A3;
+  --ed-bg: var(--color-neutral-950);
+}
+/* The number's fill must match the section behind it. */
+.bg-white .ed-list { --ed-bg: #FFFFFF; }
+.bg-neutral-950 .ed-list { --ed-bg: var(--color-neutral-950); }
+.dark .bg-white .ed-list { --ed-bg: #1F1F1F; }
+.dark :is(.bg-neutral-50, .bg-neutral-100) .ed-list { --ed-bg: #262626; }
+@media (min-width: 640px) { .ed-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .ed-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.ed-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(1.5rem, 2.4vw, 2.25rem);
+  border-top: 1px solid var(--ed-rule);
+}
+/* The yellow line that draws across the rule. */
+.ed-item::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.ed-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(3.25rem, 5vw, 5rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  /* The fill matches the section so the font's overlapping inner contours
+     stay hidden: only the outer outline shows (stroke is painted under the fill). */
+  color: var(--ed-bg);
+  -webkit-text-stroke: 2.5px var(--ed-stroke);
+  paint-order: stroke fill;
+  transition: color 0.45s ease, -webkit-text-stroke-color 0.45s ease, translate 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  user-select: none;
+}
+.ed-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-top: clamp(1.5rem, 2.5vw, 2.25rem);
+}
+.ed-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 1.9vw, 1.75rem);
+  font-weight: var(--h-weight, 750);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--ed-title);
+  text-wrap: balance;
+}
+.ed-desc {
+  margin-top: 0.875rem;
+  max-width: 36ch;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ed-desc);
+  text-wrap: pretty;
+}
+.ed-footer { margin-top: auto; padding-top: 1.5rem; }
+
+/* Two columns: the number sits beside the text. */
+@media (min-width: 768px) {
+  .ed-cols-2 .ed-item { flex-direction: row; gap: clamp(1.75rem, 3vw, 3rem); }
+  .ed-cols-2 .ed-num { font-size: clamp(4rem, 6vw, 6rem); min-width: 2.2ch; }
+  .ed-cols-2 .ed-text { margin-top: 0.35rem; }
+  .ed-cols-2 .ed-desc { max-width: 44ch; }
+}
+
+@media (hover: hover) {
+  .ed-item:hover::before { transform: scaleX(1); }
+  .ed-item:hover .ed-num {
+    color: var(--ed-fill-hover);
+    -webkit-text-stroke-color: var(--ed-stroke-hover);
+    translate: 0 -4px;
+  }
+}
+
+/* Rise in once, one after another. */
+html.motion-ok .ed-list .ed-item {
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), translate 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+html.motion-ok .ed-list[data-armed]:not([data-seen]) .ed-item {
+  opacity: 0;
+  translate: 0 28px;
+}
+html.motion-ok .ed-list[data-armed]:not([data-seen]) .ed-item::before { transform: scaleX(0); }
+@media (prefers-reduced-motion: reduce) {
+  .ed-item,
+  .ed-item::before,
+  .ed-num { transition: none !important; translate: none !important; }
+}

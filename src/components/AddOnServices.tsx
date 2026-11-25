@@ -1,6 +1,7 @@
 import { ArrowRight, Search, MapPin, PenTool, Palette, Wrench, Share2, Target, Megaphone } from 'lucide-react';
 import { PageId } from '../types';
 import PageLink from './PageLink';
+import EditorialList from './EditorialList';
 import { WhatsAppLogo } from './BrandIcons';
 
 interface AddOnServicesProps {
@@ -49,30 +50,24 @@ export default function AddOnServices({ onPageChange }: AddOnServicesProps) {
           </p>
         </div>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {ADD_ONS.map((item) => {
-            const Icon = item.icon;
-            return (
-              <li key={item.name} className="spot-card relative group flex flex-col border-neutral-300">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100 text-neutral-600 transition-colors duration-300 group-hover:bg-brand group-hover:text-ink">
-                  <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
-                </span>
-                <h3 className="mt-4 text-sm font-semibold text-neutral-900">{item.name}</h3>
-                <p className="mt-1.5 text-sm text-neutral-600 leading-relaxed">{item.desc}</p>
-                {item.page && (
-                  <PageLink
-                    page={item.page}
-                    onNavigate={() => goTo(item.page as PageId)}
-                    aria-label={`Learn more about ${item.name}`}
-                    className="mt-auto pt-4 inline-flex items-center gap-1 text-xs font-semibold text-neutral-500 hover:text-neutral-900 transition-colors cursor-pointer"
-                  >
-                    Learn more<span className="sr-only"> about {item.name}</span> <ArrowRight className="h-3 w-3" />
-                  </PageLink>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+        <EditorialList
+          as="ul"
+          items={ADD_ONS.map((item) => ({
+            title: item.name,
+            desc: item.desc,
+            footer: item.page ? (
+              <PageLink
+                page={item.page}
+                onNavigate={() => goTo(item.page as PageId)}
+                className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-900 dark:text-white cursor-pointer"
+              >
+                <span className="underline decoration-neutral-300 decoration-1 underline-offset-[6px] transition-colors group-hover/link:decoration-brand">Learn more</span>
+                <span className="sr-only"> about {item.name}</span>
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" aria-hidden="true" />
+              </PageLink>
+            ) : undefined,
+          }))}
+        />
 
         <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
           <p className="text-sm text-neutral-600">Priced on what you need, so there is no fixed package.</p>

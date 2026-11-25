@@ -12,6 +12,7 @@ import Price from '../components/Price';
 import { PACKAGES, getPackage, PackageInfo, HOURLY_RATE } from '../data/packages';
 import { useCurrency } from '../hooks/useCurrency';
 import { spotlight } from '../utils/tilt';
+import EditorialList from '../components/EditorialList';
 
 interface PricingProps {
   onPageChange: (page: PageId) => void;
@@ -647,30 +648,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
             <span className="eyebrow eyebrow-on-dark">In every package</span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight">Whatever you choose, these do not change.</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {ALWAYS.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  className="spot-card relative group border-white/15"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/[0.06] text-brand transition-colors duration-300 group-hover:bg-brand group-hover:text-ink">
-                      <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
-                    </span>
-                    <span className="font-mono text-sm font-bold text-brand">0{idx + 1}</span>
-                  </div>
-                  <h3 className="mt-6 text-lg font-semibold text-white">{item.title}</h3>
-                  <p className="mt-2 text-sm text-neutral-400 leading-relaxed">{item.desc}</p>
-                </motion.div>
-              );
-            })}
-          </div>
+          <EditorialList tone="dark" items={ALWAYS.map(({ title, desc }) => ({ title, desc }))} />
         </div>
       </section>
 

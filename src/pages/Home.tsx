@@ -19,29 +19,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { getWorkDetailPath } from '../utils/pageRoutes';
 import { WHATSAPP_URL } from '../utils/contactLinks';
 import { spotlight } from '../utils/tilt';
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const fadeUpItem = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.215, 0.61, 0.355, 1],
-    },
-  },
-};
+import EditorialList from '../components/EditorialList';
 
 interface HomeProps {
   onPageChange: (page: PageId) => void;
@@ -448,37 +426,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
             </p>
           </div>
 
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {PROBLEMS.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={idx}
-                  variants={fadeUpItem}
-                  onPointerMove={spotlight}
-                  className="spot-card group p-6 rounded-2xl border border-neutral-200 bg-neutral-50 hover:border-neutral-300"
-                >
-                  {/* An amber line draws across the top on hover */}
-                  <span className="absolute inset-x-0 top-0 h-1 bg-brand origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" aria-hidden="true" />
-                  <span className="spot-number spot-number-light" aria-hidden="true">0{idx + 1}</span>
-                  <div className="relative flex items-center justify-between">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white border border-neutral-200 text-neutral-700 transition-[background-color,color,border-color,rotate] duration-300 group-hover:bg-brand group-hover:border-brand group-hover:text-ink group-hover:-rotate-6">
-                      <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
-                    </span>
-                    <span className="font-mono text-xs font-bold text-neutral-500">0{idx + 1}</span>
-                  </div>
-                  <h3 className="relative mt-5 text-base font-semibold text-neutral-900 leading-snug">{item.title}</h3>
-                  <p className="relative mt-3 text-sm text-neutral-600 leading-relaxed">{item.desc}</p>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+          <EditorialList items={PROBLEMS.map(({ title, desc }) => ({ title, desc }))} />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}

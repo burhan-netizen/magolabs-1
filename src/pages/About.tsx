@@ -4,7 +4,7 @@ import { PageId } from '../types';
 import SEO from '../components/SEO';
 import FounderStory from '../components/FounderStory';
 import PageLink from '../components/PageLink';
-import { spotlight } from '../utils/tilt';
+import EditorialList from '../components/EditorialList';
 
 interface AboutProps {
   onPageChange: (page: PageId) => void;
@@ -174,32 +174,7 @@ export default function About({ onPageChange }: AboutProps) {
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight">Four things we do not compromise on.</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {PRINCIPLES.map((val, idx) => {
-              const Icon = val.icon;
-              return (
-                <motion.div
-                  key={val.title}
-                  initial={{ opacity: 0, y: 32 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.2, 0.7, 0.2, 1] }}
-                  onPointerMove={spotlight}
-                  className="spot-card group flex gap-5 sm:gap-6 p-8 rounded-2xl border border-white/10 bg-neutral-950/70 backdrop-blur-sm hover:border-brand/60"
-                >
-                  <span className="spot-number" aria-hidden="true">0{idx + 1}</span>
-                  <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-brand transition-[background-color,color,rotate] duration-300 group-hover:bg-brand group-hover:text-ink group-hover:-rotate-6">
-                    <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
-                  </span>
-                  <div className="relative space-y-2">
-                    <span className="font-mono text-xs font-bold text-brand">0{idx + 1}</span>
-                    <h3 className="text-lg font-semibold text-white">{val.title}</h3>
-                    <p className="text-sm text-neutral-400 leading-relaxed transition-colors duration-300 group-hover:text-neutral-300">{val.desc}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
+          <EditorialList tone="dark" cols={2} items={PRINCIPLES.map(({ title, desc }) => ({ title, desc }))} />
         </div>
       </section>
 
