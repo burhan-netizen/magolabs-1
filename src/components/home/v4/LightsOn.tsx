@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react';
 import PageLink from '../../PageLink';
+import BgVideo from '../BgVideo';
 import { getWorkDetailPath } from '../../../utils/pageRoutes';
 
 const SITES = [
@@ -58,6 +59,8 @@ export default function LightsOn({ onOpenCaseStudy, onSeeWork }: { onOpenCaseStu
       {!reduce && (
         <div ref={ref} className="relative hidden h-[520vh] lg:block">
           <div className="sticky top-0 h-[100svh] overflow-hidden">
+            <BgVideo name="sweep" className="absolute inset-0 h-full w-full opacity-45" />
+            <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(10,23,51,0.25),rgba(10,23,51,0.92)_78%)]" />
             <motion.div style={{ opacity: introOpacity }} className="absolute inset-0 flex items-center justify-center text-center">
               <h2 id="lights-title" className="n-h2 max-w-[16ch]">This is what happens when the lights come on.</h2>
             </motion.div>
@@ -67,7 +70,9 @@ export default function LightsOn({ onOpenCaseStudy, onSeeWork }: { onOpenCaseStu
       )}
 
       {/* Phones, tablets and reduced motion: each site lights up as it scrolls into view */}
-      <div className={`mx-auto max-w-3xl px-5 py-24 ${reduce ? '' : 'lg:hidden'}`}>
+      <div className={`relative overflow-hidden ${reduce ? '' : 'lg:hidden'}`}>
+      <BgVideo name="sweep" className="absolute inset-0 h-full w-full opacity-35" />
+      <div className="relative mx-auto max-w-3xl px-5 py-24">
         <h2 className="n-h2">This is what happens when the lights come on.</h2>
         <div className="mt-14 space-y-16">
           {SITES.map((s) => (
@@ -80,6 +85,7 @@ export default function LightsOn({ onOpenCaseStudy, onSeeWork }: { onOpenCaseStu
             </PageLink>
           ))}
         </div>
+      </div>
       </div>
 
       <div className="mx-auto max-w-7xl px-5 pb-24 md:px-8">

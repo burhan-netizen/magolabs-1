@@ -2105,3 +2105,5 @@ html.motion-ok .n-in { animation: nIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 @keyframes nGlowOn { 0%, 30% { box-shadow: 0 0 0 1px rgba(255,255,255,0.06); } 100% { box-shadow: 0 -10px 70px 0 rgba(255,197,61,0.3); } }
 .n-lit { filter: none; }
 @media (prefers-reduced-motion: reduce) { .n-window { animation: none !important; } .n-in { animation: none !important; } .n-sky { transition: none; } }
+
+.n-glow { color: var(--color-brand); text-shadow: 0 0 30px rgba(255, 197, 61, 0.45), 0 0 90px rgba(255, 197, 61, 0.25); }

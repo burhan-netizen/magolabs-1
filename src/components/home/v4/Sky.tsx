@@ -1,15 +1,17 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 
-/* Each section names the sky behind it. As a section takes over the middle of the
-   screen, the whole page background eases to its colour: night, dusk, dawn,
-   morning, daylight. The navigation bar follows whether the sky is light. */
+/* Each section names the colour behind it: navy for the dark story, off-white for
+   the one light section. 70% navy, 20% off-white and white, 10% Mago yellow.
+   The navigation bar follows whether the background is light. */
+const NAVY = '#0A1733';
+const PAPER = '#F5F4F0';
 export const SKY: Record<string, { color: string; light: boolean }> = {
-  hero: { color: '#070A12', light: false },
-  lights: { color: '#0A1430', light: false },
-  services: { color: '#151B45', light: false },
-  founder: { color: '#3A2147', light: false },
-  proof: { color: '#F6EEE2', light: true },
-  'next-step': { color: '#FFC53D', light: true },
+  hero: { color: NAVY, light: false },
+  lights: { color: NAVY, light: false },
+  services: { color: NAVY, light: false },
+  founder: { color: NAVY, light: false },
+  proof: { color: PAPER, light: true },
+  'next-step': { color: NAVY, light: false },
 };
 
 export default function Sky({ children }: { children: ReactNode }) {

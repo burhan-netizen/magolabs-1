@@ -11,7 +11,7 @@ export default function NightHero({ onAudit }: { onAudit: () => void }) {
     <section id="hero" className="relative flex min-h-[100svh] flex-col overflow-hidden text-white">
       <div aria-hidden="true" className="absolute inset-0">
         <BgVideo name="street" className="absolute inset-0 h-full w-full opacity-45" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,10,18,0.55),rgba(7,10,18,0.35)_40%,rgba(7,10,18,0.95))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,23,51,0.7),rgba(10,23,51,0.45)_40%,rgba(10,23,51,0.96))]" />
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pb-10 pt-32 md:px-8">

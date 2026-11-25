@@ -1,14 +1,16 @@
 import ScrollFillText from '../ScrollFillText';
 import Reveal from '../Reveal';
+import BgVideo from '../BgVideo';
 
 /* The light arrives with the person behind the work. */
 export default function Dawn() {
   return (
     <section id="founder" aria-labelledby="founder-title" className="relative overflow-x-clip py-24 text-white md:py-36">
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 md:px-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
+      <BgVideo name="dust" className="absolute inset-0 h-full w-full opacity-30 mix-blend-screen invert" />
+      <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 md:px-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
         <Reveal>
           <figure className="relative">
-            <div aria-hidden="true" className="absolute -inset-10 rounded-full bg-[radial-gradient(closest-side,rgba(255,197,61,0.45),transparent)] blur-2xl" />
+            <div aria-hidden="true" className="absolute -inset-10 rounded-full bg-[radial-gradient(closest-side,rgba(255,197,61,0.3),transparent)] blur-2xl" />
             <img src="/founder/portrait.webp" alt="Burhan Kapasi, founder of Mago Labs" width={1100} height={1258} loading="lazy" className="relative aspect-[4/5] w-full rounded-[28px] object-cover object-[50%_20%]" />
             <figcaption className="relative mt-4 text-[15px] text-white/70">Burhan Kapasi, founder</figcaption>
           </figure>
