@@ -3,11 +3,6 @@ import { motion } from 'motion/react';
 import {
   ArrowLeft,
   ArrowRight,
-  Building2,
-  Target,
-  Lightbulb,
-  Wrench,
-  TrendingUp,
   ExternalLink,
   Check,
   Quote,
@@ -19,7 +14,6 @@ import { TESTIMONIALS } from '../data/testimonials';
 import { screenshotSrcSet } from '../utils/images';
 import { updateDocumentSEO } from '../utils/seo';
 import { getWorkDetailPath } from '../utils/pageRoutes';
-import { WhatsAppLogo } from '../components/BrandIcons';
 import Breadcrumbs from '../components/Breadcrumbs';
 import PageLink from '../components/PageLink';
 
@@ -64,140 +58,147 @@ export default function WorkDetail({ id, onPageChange, onOpenCaseStudy }: WorkDe
   }
 
   const testimonial = TESTIMONIALS.find((t) => t.company === project.clientName);
-  const related = CASE_STUDIES.filter((cs) => cs.id !== project.id).slice(0, 2);
+  // Other projects, the ones with measured results first.
+  const related = [...CASE_STUDIES.filter((cs) => cs.id !== project.id)]
+    .sort((x, y) => Number(Boolean(y.results)) - Number(Boolean(x.results)))
+    .slice(0, 2);
 
   const storyRows = [
-    { label: 'The Business', icon: Building2, text: project.business },
-    { label: 'The Challenge', icon: Target, text: project.challenge },
-    { label: 'The Mago Approach', icon: Lightbulb, text: project.approach },
-    { label: 'The Build', icon: Wrench, text: project.build },
-    { label: 'The Outcome', icon: TrendingUp, text: project.outcome },
-  ].filter((row): row is { label: string; icon: typeof Building2; text: string } => Boolean(row.text));
+    { label: 'The business', text: project.business },
+    { label: 'The challenge', text: project.challenge },
+    { label: 'Our approach', text: project.approach },
+    { label: 'The build', text: project.build },
+    { label: 'The outcome', text: project.outcome },
+  ].filter((row): row is { label: string; text: string } => Boolean(row.text));
+
+  const shot = project.screenshotUrl ?? `/screenshots/${project.id}.webp`;
 
   return (
     <article className="font-sans">
-      {/* Hero */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-20 bg-white overflow-hidden border-b border-neutral-200/50">
-        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40" />
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-6">
-          <Breadcrumbs
-            onPageChange={onPageChange}
-            items={[
-              { label: 'Home', page: 'home' },
-              { label: 'Work', page: 'work' },
-              { label: project.clientName, path: getWorkDetailPath(project.id) },
-            ]}
-          />
-
-          <div className="flex items-center gap-3">
-            {project.logoUrl && (
-              <img src={project.logoUrl} alt={`${project.clientName} logo`} className="h-8 w-auto max-w-[120px] object-contain" />
-            )}
-            <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: project.accent }}>
-              {project.industry}
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-emerald-600">
-              <Check className="h-2.5 w-2.5" /> Live
-            </span>
+      {/* Opening: who it was for, big, on dark */}
+      <section className="relative bg-neutral-950 text-white pt-32 md:pt-40 pb-[18vw] lg:pb-72 overflow-hidden">
+        <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:linear-gradient(180deg,#000_0%,#000_55%,transparent_100%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="case-crumbs">
+            <Breadcrumbs
+              onPageChange={onPageChange}
+              items={[
+                { label: 'Home', page: 'home' },
+                { label: 'Work', page: 'work' },
+                { label: project.clientName, path: getWorkDetailPath(project.id) },
+              ]}
+            />
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 leading-[1.15]">
-            {project.clientName}: Website Design &amp; Development Case Study
+          <p className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.18em] text-neutral-400">
+            <span className="inline-flex items-center gap-2"><span className="h-2 w-2 bg-brand" aria-hidden="true" />{project.industry}</span>
+            <span className="inline-flex items-center gap-1.5 text-emerald-400"><Check className="h-3.5 w-3.5" /> Live</span>
+          </p>
+
+          <h1 className="mt-5 max-w-[18ch] text-[clamp(2.6rem,6.5vw,6rem)] font-bold leading-[0.96] tracking-[-0.045em] text-white">
+            {project.clientName}
+            <span className="mt-4 block text-[clamp(1rem,1.6vw,1.35rem)] font-medium leading-snug tracking-normal text-neutral-400">
+              Website design and development case study
+            </span>
           </h1>
 
-          {project.business && (
-            <p className="text-neutral-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl">{project.business}</p>
-          )}
-
-          <div className="flex flex-wrap gap-4 pt-2">
-            {project.url && (
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-neutral-900 hover:bg-neutral-800 px-6 py-3 text-sm font-bold text-white transition-all"
-              >
-                Visit Live Site <ExternalLink className="h-4 w-4" />
-              </a>
+          <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            {project.challenge && (
+              <p className="max-w-2xl text-lg leading-relaxed text-neutral-300">{project.challenge}</p>
             )}
-            <button
-              onClick={backToWork}
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-200 hover:bg-neutral-50 px-6 py-3 text-sm font-bold text-neutral-800 transition-all cursor-pointer"
-            >
-              <ArrowLeft className="h-4 w-4" /> Back to All Work
-            </button>
+            <div className="flex flex-wrap items-center gap-5">
+              {project.url && (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 rounded-full bg-brand hover:bg-brand-deep px-6 py-3.5 text-sm font-bold text-ink transition-colors"
+                >
+                  Visit the live site <ExternalLink className="h-4 w-4" />
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              )}
+              <button
+                onClick={backToWork}
+                className="inline-flex items-center gap-2 text-sm font-semibold text-white underline decoration-brand decoration-2 underline-offset-4 cursor-pointer"
+              >
+                <ArrowLeft className="h-4 w-4" /> All work
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Measured results, when the project has them: the numbers come before the story */}
-      {project.results && project.results.length > 0 && (
-        <section className="bg-neutral-950 text-white">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-14">
-            <span className="eyebrow eyebrow-on-dark">What happened after launch</span>
-            <dl className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {project.results.map((r) => (
-                <div key={r.label} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-                  <dd className="text-3xl sm:text-4xl font-extrabold tracking-tight text-brand">{r.value}</dd>
-                  <dt className="mt-2 text-sm text-neutral-300">{r.label}</dt>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </section>
-      )}
-
-      {project.screenshotUrl && (
-        <section className="py-12 bg-neutral-50 border-b border-neutral-200/50">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      {/* The website, big, rising out of the dark opening */}
+      <section className="relative bg-neutral-50 pb-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.figure
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
+            className="-mt-[15vw] lg:-mt-60 overflow-hidden rounded-[20px] sm:rounded-[28px] bg-white shadow-[0_40px_90px_-40px_rgba(0,0,0,0.55)] ring-1 ring-black/10"
+          >
+            <div className="flex items-center gap-2 border-b border-neutral-200 bg-white px-4 py-3">
+              <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
+              <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
+              <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
+              <span className="ml-3 truncate font-mono text-xs text-neutral-500">{project.domain.replace(/^www\./, '')}</span>
+            </div>
             <img
-              src={project.screenshotUrl}
-              srcSet={screenshotSrcSet(project.screenshotUrl)}
-              sizes="(max-width: 1024px) 100vw, 960px"
-              alt={`${project.clientName} website homepage`}
+              src={shot}
+              srcSet={screenshotSrcSet(shot)}
+              sizes="(max-width: 1280px) 100vw, 1216px"
+              alt={`${project.clientName} website homepage, designed by Mago Labs`}
               width={1920}
               height={900}
-              loading="lazy"
-              className="w-full rounded-2xl border border-neutral-200 shadow-sm object-cover"
+              className="block aspect-[1920/900] w-full object-cover object-top"
             />
-          </div>
-        </section>
-      )}
+          </motion.figure>
 
-      {/* The story */}
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 space-y-8">
-          {storyRows.map((row) => {
-            const Icon = row.icon;
-            return (
+          {/* Measured results: the numbers before the story */}
+          {project.results && project.results.length > 0 && (
+            <div className="mt-20">
+              <span className="eyebrow">What happened after launch</span>
+              <dl className="mt-8 grid grid-cols-1 gap-10 sm:grid-cols-3">
+                {project.results.map((r) => (
+                  <div key={r.label} className="border-t border-neutral-300 pt-6">
+                    <dd className="font-display text-[clamp(2.75rem,5vw,4.5rem)] font-bold leading-none tracking-[-0.04em] text-neutral-950">{r.value}</dd>
+                    <dt className="mt-3 text-base text-neutral-600">{r.label}</dt>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* The story: label on the left, the words given room on the right */}
+      <section className="bg-neutral-50 pb-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <span className="eyebrow">The story</span>
+          <div className="mt-8">
+            {storyRows.map((row, i) => (
               <motion.div
                 key={row.label}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.4 }}
-                className="flex gap-4"
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 gap-3 border-t border-neutral-300 py-8 md:grid-cols-12 md:gap-8"
               >
-                <div
-                  className="h-9 w-9 rounded-lg flex items-center justify-center shrink-0"
-                  style={{ backgroundColor: `${project.accent}14`, color: project.accent }}
-                >
-                  <Icon className="h-4.5 w-4.5" />
-                </div>
-                <div>
-                  <h2 className="text-sm font-bold uppercase tracking-wide text-neutral-900 mb-1.5">{row.label}</h2>
-                  <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">{row.text}</p>
-                </div>
+                <h2 className="md:col-span-4 flex items-baseline gap-4 font-display text-xl font-semibold tracking-tight text-neutral-950">
+                  <span className="font-mono text-sm font-medium text-neutral-500">0{i + 1}</span>
+                  {row.label}
+                </h2>
+                <p className="md:col-span-8 text-lg leading-relaxed text-neutral-700">{row.text}</p>
               </motion.div>
-            );
-          })}
+            ))}
+          </div>
 
-          <div className="flex flex-wrap gap-2 pt-4">
+          <div className="flex flex-wrap gap-2 border-t border-neutral-300 pt-8">
             {project.scope.map((s) => (
-              <span
-                key={s}
-                className="text-xs font-medium bg-neutral-50 border border-neutral-200 rounded-full px-3 py-1 text-neutral-600"
-              >
+              <span key={s} className="rounded-full border border-neutral-300 px-3.5 py-1.5 text-sm font-medium text-neutral-700">
                 {s}
               </span>
             ))}
@@ -205,41 +206,59 @@ export default function WorkDetail({ id, onPageChange, onOpenCaseStudy }: WorkDe
         </div>
       </section>
 
-      {/* Real client testimonial, matched from the site's own verified reviews */}
+      {/* The client, in their own words */}
       {testimonial && (
-        <section className="py-20 bg-neutral-50 border-y border-neutral-200/50">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center space-y-5">
-            <Quote className="h-7 w-7 mx-auto opacity-20" style={{ color: project.accent }} />
-            <p className="text-lg sm:text-xl font-medium text-neutral-800 leading-relaxed">"{testimonial.quote}"</p>
-            <div>
-              <p className="text-sm font-bold text-neutral-900">{testimonial.name}</p>
-              <p className="text-xs text-neutral-500">{testimonial.role}, {testimonial.company}</p>
-            </div>
+        <section className="bg-neutral-950 py-24 text-white">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <Quote className="h-10 w-10 text-brand" aria-hidden="true" />
+            <blockquote className="mt-8 font-display text-[clamp(1.5rem,2.8vw,2.4rem)] font-medium leading-[1.25] tracking-[-0.02em]">
+              {testimonial.quote}
+            </blockquote>
+            <p className="mt-10 text-base font-semibold">{testimonial.name}</p>
+            <p className="text-sm text-neutral-400">{testimonial.role}, {testimonial.company}</p>
           </div>
         </section>
       )}
 
-      {/* Related projects */}
+      {/* More work */}
       {related.length > 0 && (
-        <section className="py-20 bg-white">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-neutral-400 text-center mb-8">
-              Related Projects
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <section className="bg-neutral-50 py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-end justify-between gap-6">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">More work</h2>
+              <button onClick={backToWork} className="group inline-flex items-center gap-2 font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4 cursor-pointer">
+                All work <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </button>
+            </div>
+            <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
               {related.map((cs) => (
-                <PageLink href={getWorkDetailPath(cs.id)}
+                <PageLink
+                  href={getWorkDetailPath(cs.id)}
                   key={cs.id}
                   onNavigate={() => onOpenCaseStudy(cs.id)}
-                  className="text-left p-6 rounded-2xl border border-neutral-200/80 bg-white hover:shadow-lg transition-all cursor-pointer space-y-2"
+                  className="group block text-left cursor-pointer"
                 >
-                  {cs.logoUrl && <img src={cs.logoUrl} alt={`${cs.clientName} logo`} className="h-6 w-auto max-w-[100px] object-contain" />}
-                  <span className="text-[10px] font-bold uppercase tracking-widest block" style={{ color: cs.accent }}>
-                    {cs.industry}
+                  <span className="block overflow-hidden rounded-[22px] ring-1 ring-black/10">
+                    <img
+                      src={cs.screenshotUrl ?? `/screenshots/${cs.id}.webp`}
+                      alt={`${cs.clientName} website`}
+                      width={900}
+                      height={422}
+                      loading="lazy"
+                      className="block aspect-[1920/900] w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                    />
                   </span>
-                  <h3 className="text-sm font-bold text-neutral-900">{cs.clientName}</h3>
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-neutral-900">
-                    Read Case Study <ArrowRight className="h-3 w-3" />
+                  <span className="mt-5 flex items-start justify-between gap-6">
+                    <span>
+                      <span className="block font-mono text-xs uppercase tracking-[0.16em] text-neutral-500">{cs.industry}</span>
+                      <span className="mt-1 block font-display text-2xl font-semibold tracking-tight text-neutral-950">{cs.clientName}</span>
+                    </span>
+                    {cs.results?.[0] && (
+                      <span className="shrink-0 text-right">
+                        <span className="block font-display text-2xl font-bold text-neutral-950">{cs.results[0].value}</span>
+                        <span className="block text-xs text-neutral-500">{cs.results[0].label}</span>
+                      </span>
+                    )}
                   </span>
                 </PageLink>
               ))}
@@ -247,7 +266,6 @@ export default function WorkDetail({ id, onPageChange, onOpenCaseStudy }: WorkDe
           </div>
         </section>
       )}
-
     </article>
   );
 }

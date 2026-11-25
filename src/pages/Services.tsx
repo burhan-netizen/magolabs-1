@@ -70,7 +70,7 @@ export default function Services({ onPageChange }: ServicesProps) {
       <SEO path="services" schemas={servicesSchemas} />
 
       {/* Hero Header */}
-      <section id="services-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-20 bg-white font-sans overflow-hidden border-b border-neutral-200/50">
+      <section id="services-hero" className="page-hero relative pt-32 pb-16 md:pt-40 md:pb-20 bg-white font-sans overflow-hidden border-b border-neutral-200/50">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 max-w-3xl mx-auto">
@@ -173,10 +173,18 @@ export default function Services({ onPageChange }: ServicesProps) {
       <AddOnServices onPageChange={onPageChange} />
 
       {/* Interactive Website Health Check Section */}
-      <section id="services-health-check-section" className="py-24 bg-neutral-100/40 font-sans border-t border-neutral-200/60 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808005_1px,transparent_1px),linear-gradient(to_bottom,#80808005_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none" />
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-          <SiteHealthCheck />
+      <section id="services-health-check-section" className="py-24 bg-neutral-950 text-white font-sans">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 space-y-5">
+            <span className="eyebrow eyebrow-on-dark">Quick check</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.05]">Not sure where your website stands?</h2>
+            <p className="text-lg leading-relaxed text-neutral-300">
+              Answer five honest questions. No email, no sign-up. You get a quick read on what is working and what is costing you enquiries.
+            </p>
+          </div>
+          <div className="lg:col-span-7 text-left">
+            <SiteHealthCheck />
+          </div>
         </div>
       </section>
     </>

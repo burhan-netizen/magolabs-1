@@ -94,7 +94,7 @@ export default function Agencies({ onPageChange }: AgenciesProps) {
       <SEO path="agencies" schemas={agencySchemas} />
 
       {/* Hero */}
-      <section id="agencies-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white font-sans overflow-hidden border-b border-neutral-200/50">
+      <section id="agencies-hero" className="page-hero relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white font-sans overflow-hidden border-b border-neutral-200/50">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none opacity-60" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-5 max-w-3xl mx-auto">
@@ -171,7 +171,7 @@ export default function Agencies({ onPageChange }: AgenciesProps) {
           </div>
           <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {STEPS.map((step, idx) => (
-              <li key={step.title} className="rounded-2xl border border-neutral-200 p-6 space-y-3">
+              <li key={step.title} className="spot-card relative border-neutral-300 space-y-3">
                 <span className="font-mono text-xs font-bold text-neutral-400">0{idx + 1}</span>
                 <h3 className="text-lg font-semibold text-neutral-900">{step.title}</h3>
                 <p className="text-sm text-neutral-600 leading-relaxed">{step.desc}</p>

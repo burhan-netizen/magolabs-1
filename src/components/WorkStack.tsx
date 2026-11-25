@@ -2,13 +2,15 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion, MotionValue } from 'motion/react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import PageLink from './PageLink';
-import { CASE_STUDIES, FEATURED_CASE_STUDY_IDS } from '../data/caseStudies';
+import { CASE_STUDIES } from '../data/caseStudies';
 
 interface WorkStackProps {
   onOpenWork: () => void;
 }
 
-const SITES = FEATURED_CASE_STUDY_IDS.map((id) => CASE_STUDIES.find((cs) => cs.id === id)).filter(
+// The sites with the strongest results, plus the clients Burhan most wants seen.
+const HOME_IDS = ['drmihirshah', 'darshangalani', 'ladsonconcrete', 'jaymocivil', 'centurion', 'prabhakarprocessors'];
+const SITES = HOME_IDS.map((id) => CASE_STUDIES.find((cs) => cs.id === id)).filter(
   (cs): cs is (typeof CASE_STUDIES)[number] => Boolean(cs)
 );
 

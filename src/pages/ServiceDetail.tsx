@@ -565,7 +565,7 @@ export default function ServiceDetail({ serviceId, onPageChange, onOpenCaseStudy
       <ReadingProgress />
 
       {/* Hero Header */}
-      <section id="service-detail-hero" className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-white overflow-hidden font-sans border-b border-neutral-200/50">
+      <section id="service-detail-hero" className="page-hero relative pt-32 pb-20 md:pt-40 md:pb-28 bg-white overflow-hidden font-sans border-b border-neutral-200/50">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-6">

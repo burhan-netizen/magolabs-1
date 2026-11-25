@@ -80,7 +80,7 @@ export default function Sitemap({ onPageChange }: SitemapProps) {
       <SEO path="sitemap" schemas={sitemapSchemas} />
 
       {/* Hero Header */}
-      <section id="sitemap-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white dark:bg-[#1A1A1A] font-sans overflow-hidden border-b border-neutral-200/50 dark:border-neutral-800/30 transition-colors duration-300">
+      <section id="sitemap-hero" className="page-hero relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white dark:bg-[#1A1A1A] font-sans overflow-hidden border-b border-neutral-200/50 dark:border-neutral-800/30 transition-colors duration-300">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-60" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 max-w-3xl mx-auto">

@@ -37,7 +37,7 @@ export default function AddOnServices({ onPageChange }: AddOnServicesProps) {
   };
 
   return (
-    <section id="alongside-your-website" className="py-20 bg-white font-sans border-t border-neutral-200/60">
+    <section id="alongside-your-website" className="py-20 bg-neutral-50 font-sans">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mb-10 space-y-3">
           <span className="eyebrow">Alongside your website</span>
@@ -53,7 +53,7 @@ export default function AddOnServices({ onPageChange }: AddOnServicesProps) {
           {ADD_ONS.map((item) => {
             const Icon = item.icon;
             return (
-              <li key={item.name} className="group flex flex-col rounded-2xl border border-neutral-200 p-5 transition-[translate,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-[0_22px_44px_-28px_rgba(13,13,13,0.4)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <li key={item.name} className="spot-card relative group flex flex-col border-neutral-300">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100 text-neutral-600 transition-colors duration-300 group-hover:bg-brand group-hover:text-ink">
                   <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
                 </span>

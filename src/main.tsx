@@ -3,13 +3,8 @@ import App, { preloadPageForPath } from './App.tsx';
 // Brand fonts are bundled with the site (no third-party font request).
 // Latin only: the site is written in English, and the full files also declare
 // Devanagari and extended-Latin faces that tripled the size of the font CSS.
-import '@fontsource/poppins/latin-300.css';
-import '@fontsource/poppins/latin-400.css';
-import '@fontsource/poppins/latin-400-italic.css';
-import '@fontsource/poppins/latin-500.css';
-import '@fontsource/poppins/latin-600.css';
-import '@fontsource/poppins/latin-700.css';
-import '@fontsource/poppins/latin-800.css';
+import '@fontsource-variable/bricolage-grotesque/wght.css';
+import '@fontsource-variable/instrument-sans/wght.css';
 import '@fontsource/jetbrains-mono/latin-500.css';
 import '@fontsource/jetbrains-mono/latin-700.css';
 import '@fontsource/caveat/latin-600.css';

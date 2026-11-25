@@ -354,7 +354,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
                 <span className="block mb-4 font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-brand leading-snug">
                   Website Design &amp; Development Company in Surat
                 </span>
-                Websites that turn visitors into <span className="marker">customers.</span>
+                Websites that turn visitors into <span className="marker marker-on">customers.</span>
               </h1>
 
               <p className="text-base sm:text-lg text-neutral-300 max-w-xl mx-auto lg:mx-0 leading-relaxed">
@@ -372,32 +372,14 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
                   <WhatsAppLogo className="h-5 w-5 text-emerald-400" />
                   {t('hero.cta.secondary')}
                 </a>
-                {/* Phones get the portfolio link as a third button; wider screens get it as a text link below */}
-                <PageLink
-                  page="work"
-                  onNavigate={() => navigateTo('work')}
-                  className="group sm:hidden w-full inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-4 text-base font-semibold text-[#ffffff] hover:bg-white/10 hover:border-white/30 transition-colors"
-                >
-                  See our work
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </PageLink>
               </div>
 
               <p className="flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-neutral-400">
-                <span>
-                  <a
-                    href="#next-step"
-                    onClick={(e) => { e.preventDefault(); startWithoutWebsite(); }}
-                    className="font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
-                  >
-                    No website yet? Start here
-                  </a>
-                </span>
                 {/* Straight to the portfolio, for visitors who want to see the work first */}
                 <PageLink
                   page="work"
                   onNavigate={() => navigateTo('work')}
-                  className="group hidden sm:inline-flex items-center gap-1.5 font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
+                  className="group inline-flex items-center gap-1.5 font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
                 >
                   See our work
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -450,7 +432,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       </section>
 
       {/* 2. The problem, in the customer's words */}
-      <section id="problem-section" className="py-24 bg-white font-sans">
+      <section id="problem-section" className="py-24 bg-neutral-50 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-14 space-y-4">
             <span className="eyebrow">The problem</span>
@@ -502,75 +484,22 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
             className="mt-12 flex flex-col sm:flex-row sm:items-center gap-5"
           >
             <AuditButton onNavigate={goToAudit} label="Find out what yours is costing you" />
-            <p className="text-sm text-neutral-600">A free review of your website, in plain English.</p>
+            <p className="text-sm text-neutral-600">
+              A free review of your website, in plain English.{' '}
+              <a
+                href="#next-step"
+                onClick={(e) => { e.preventDefault(); startWithoutWebsite(); }}
+                className="font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
+              >
+                No website yet? Get a free plan
+              </a>
+            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* For businesses with no website at all: their own problem, proof and action */}
-      <section id="no-website" className="relative overflow-hidden bg-brand text-ink font-sans">
-        <div className="brand-orb brand-orb-a" aria-hidden="true" />
-        <div className="brand-orb brand-orb-b" aria-hidden="true" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-            <div className="lg:col-span-7 space-y-4">
-              <span className="font-mono text-xs font-bold uppercase tracking-widest">No website yet?</span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-                Then customers are finding nothing when they look for you.
-              </h2>
-              <p className="text-base sm:text-lg leading-relaxed max-w-2xl">
-                People search for a business before they call it. When nothing comes up, many assume you are small, new, or no longer around, and they call the next name on the list.
-              </p>
-              {/* What a customer sees today: a search that finds nothing */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-                onViewportEnter={() => setSearchSeen(true)}
-                data-seen={searchSeen || undefined}
-                className="search-mock mt-3 flex flex-wrap items-center gap-x-4 gap-y-3"
-                aria-hidden="true"
-              >
-                <span className="inline-flex items-center gap-3 rounded-full bg-[#ffffff] px-5 py-3 shadow-[0_18px_40px_-22px_rgba(13,13,13,0.55)]">
-                  <Search className="h-4 w-4 text-neutral-500" />
-                  <span className="search-mock-text font-mono text-sm text-neutral-900">your business name</span>
-                </span>
-                <span className="search-mock-result inline-flex items-center gap-2 rounded-full bg-ink/10 px-4 py-2 text-sm font-semibold text-ink">
-                  <SearchX className="h-4 w-4" />
-                  No results found
-                </span>
-              </motion.div>
-            </div>
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.7, ease: [0.2, 0.7, 0.2, 1] }}
-              className="lg:col-span-5 space-y-5"
-            >
-              <div onPointerMove={spotlight} className="spot-card rounded-2xl bg-neutral-950 text-[#ffffff] p-6 sm:p-7 shadow-2xl shadow-neutral-900/30">
-                <p className="relative text-3xl sm:text-4xl font-bold tracking-tight text-brand leading-none">
-                  <CountUp to={34} duration={1.6} /> new clients
-                </p>
-                <p className="relative mt-3 text-sm sm:text-base text-neutral-300 leading-relaxed">
-                  Darshan Galani &amp; Co. had never had a website. Three months after their first one launched, enquiries from Google had turned into 34 new clients.
-                </p>
-              </div>
-              <button
-                onClick={startWithoutWebsite}
-                className="group w-full inline-flex items-center justify-center gap-2 rounded-full bg-neutral-950 hover:bg-neutral-800 px-7 py-4 text-base font-semibold text-[#ffffff] transition-colors cursor-pointer"
-              >
-                Get a free website plan
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* 3. How we fix it: what the customer gets, with the service as a small label */}
-      <section id="services-overview" className="py-24 bg-neutral-50 font-sans border-b border-neutral-200/50">
+      <section id="services-overview" className="pt-8 pb-24 bg-neutral-50 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-14 space-y-4">
             <span className="eyebrow">How we fix it</span>
@@ -653,59 +582,17 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
         </div>
       </section>
 
-      {/* 4. Results */}
-      <section id="results" className="relative py-24 bg-neutral-950 text-white font-sans overflow-hidden">
-        {/* Background: a slow beam of light through the dark */}
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-          <BgVideo name="sweep" className="absolute inset-0 h-full w-full opacity-60" />
-          <div className="absolute inset-0 bg-neutral-950/45" />
-        </div>
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl space-y-4 mb-12">
-            <span className="eyebrow eyebrow-on-dark">The results</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-              Here is what changed for our clients.
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {RESULTS.map((r) => (
-              <PageLink
-                key={r.label}
-                href={getWorkDetailPath(r.caseStudyId)}
-                onNavigate={() => onOpenCaseStudy(r.caseStudyId)}
-                className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/20 transition-colors p-7 sm:p-8"
-              >
-                <p className="text-5xl sm:text-6xl font-bold tracking-tight text-brand leading-none" aria-label={r.value}>
-                  <span aria-hidden="true">
-                    {r.count.prefix}
-                    <CountUp from={r.count.from} to={r.count.to} />
-                    {r.count.suffix}
-                  </span>
-                </p>
-                <p className="mt-3 text-lg font-semibold text-white">{r.label}</p>
-                <p className="mt-3 text-sm text-neutral-400 leading-relaxed flex-1">{r.detail}</p>
-                <p className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between gap-3 text-xs font-medium text-neutral-300">
-                  {r.client}
-                  <ArrowRight className="h-4 w-4 shrink-0 text-brand transition-transform group-hover:translate-x-1" />
-                </p>
-              </PageLink>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. The work behind the results: a selection of websites, on a tilted wall that turns to face the visitor */}
+      {/* 4. The work and what changed: a stack of client websites with their results */}
       <WorkStack onOpenWork={() => navigateTo('work')} />
 
-      {/* What clients say: a pile of review cards to drag through */}
+      {/* 5. The person behind the work, with a link to the full story on About */}
+      <FounderStory onReadStory={() => navigateTo('about')} />
+
+      {/* 6. What clients say: a pile of review cards to drag through */}
       <TestimonialDeck onOpenCaseStudy={onOpenCaseStudy} />
 
-      {/* The person behind the work: founder story and photos */}
-      <FounderStory />
-
-      {/* 6. What the customer gets, against the common alternative */}
-      <section id="why-choose-us-overview" className="py-24 bg-neutral-50 font-sans border-y border-neutral-200/50">
+      {/* 7. What the customer gets, against the common alternative */}
+      <section id="why-choose-us-overview" className="py-24 bg-neutral-50 font-sans">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-14 space-y-4">
             <span className="eyebrow">What you get</span>
@@ -798,8 +685,8 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
         </div>
       </section>
 
-      {/* 7. The next step, with the form right here so nobody has to go looking for it */}
-      <section id="next-step" className="py-24 bg-white font-sans scroll-mt-20">
+      {/* 8. The next step, with the form right here so nobody has to go looking for it */}
+      <section id="next-step" className="py-24 bg-neutral-50 font-sans scroll-mt-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             <div className="lg:col-span-5 space-y-8">
@@ -845,9 +732,9 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
         </div>
       </section>
 
-      {/* 8. FAQ. Every answer stays in the page markup (collapsed with CSS, not
+      {/* 9. FAQ. Every answer stays in the page markup (collapsed with CSS, not
           removed), so search engines and assistants can read them. */}
-      <section id="faq-section" className="py-24 bg-neutral-50 font-sans border-t border-neutral-200/50">
+      <section id="faq-section" className="pt-8 pb-28 bg-neutral-50 font-sans">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="space-y-4 mb-12">
             <span className="eyebrow">Questions</span>

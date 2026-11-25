@@ -313,7 +313,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
       <SEO path="pricing" schemas={pricingSchemas} />
 
       {/* Hero */}
-      <section id="pricing-hero" className="relative pt-32 pb-14 md:pt-40 md:pb-16 bg-white font-sans overflow-hidden">
+      <section id="pricing-hero" className="page-hero relative pt-32 pb-14 md:pt-40 md:pb-16 bg-white font-sans overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none opacity-60" />
         <div className="pricing-aurora" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -483,7 +483,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
               onPointerMove={spotlight}
               className="price-card rounded-3xl border border-neutral-200 pricing-surface bg-[#FAFAF8] overflow-hidden grid grid-cols-1 lg:grid-cols-12"
             >
-              <div className="relative lg:col-span-4 p-7 sm:p-10 bg-brand text-ink flex flex-col overflow-hidden">
+              <div className="commerce-panel relative lg:col-span-4 p-7 sm:p-10 bg-neutral-950 text-white flex flex-col overflow-hidden">
                 <span className="commerce-mark" aria-hidden="true">{COMMERCE.number}</span>
                 <div className="relative flex items-baseline gap-3">
                   <span className="font-mono text-sm font-bold text-ink/60">{COMMERCE.number}</span>
@@ -657,7 +657,7 @@ export default function Pricing({ onPageChange }: PricingProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-60px' }}
                   transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  className="group p-7 rounded-2xl border border-white/10 bg-white/[0.03] transition-[translate,border-color,background-color] duration-300 hover:-translate-y-1.5 hover:border-brand/60 hover:bg-white/[0.06]"
+                  className="spot-card relative group border-white/15"
                 >
                   <div className="flex items-center justify-between">
                     <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/[0.06] text-brand transition-colors duration-300 group-hover:bg-brand group-hover:text-ink">

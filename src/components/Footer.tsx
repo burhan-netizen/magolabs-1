@@ -26,7 +26,7 @@ export default function Footer({ onPageChange }: FooterProps) {
   return (
     <footer id="main-footer" className="bg-white dark:bg-[#1A1A1A] text-neutral-600 dark:text-neutral-400 border-t border-neutral-200 dark:border-neutral-800 pt-20 pb-12 font-sans transition-colors duration-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-[1.4fr_1fr_1fr_0.8fr_1.2fr] gap-12 lg:gap-8 mb-16">
           {/* Brand Column */}
           <div className="space-y-6">
             <PageLink page="home"
@@ -81,7 +81,7 @@ export default function Footer({ onPageChange }: FooterProps) {
           {/* Services Column */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-900 dark:text-white mb-6">Websites</h3>
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-3 text-sm">
               <li>
                 <PageLink page="service-web-design"
                   onNavigate={() => handleLinkClick('service-web-design')}
@@ -126,7 +126,13 @@ export default function Footer({ onPageChange }: FooterProps) {
                   Sales pages
                 </PageLink>
               </li>
-              <li className="pt-2 text-[11px] font-semibold uppercase tracking-wider text-neutral-500">Alongside your website</li>
+            </ul>
+          </div>
+
+          {/* Services that support the website */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-900 dark:text-white mb-6">Alongside your website</h3>
+            <ul className="space-y-3 text-sm">
               <li>
                 <PageLink page="service-seo"
                   onNavigate={() => handleLinkClick('service-seo')}
@@ -187,7 +193,7 @@ export default function Footer({ onPageChange }: FooterProps) {
           {/* Agency Links Column */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-900 dark:text-white mb-6">Company</h3>
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-3 text-sm">
               <li>
                 <PageLink page="about" onNavigate={() => handleLinkClick('about')} className="hover:text-neutral-900 dark:hover:text-white transition-colors text-left">
                   About
@@ -232,7 +238,7 @@ export default function Footer({ onPageChange }: FooterProps) {
           {/* Contact Details Column */}
           <div className="space-y-6">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-900 dark:text-white mb-6">Get In Touch</h3>
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3">
                 <Phone className="h-4 w-4 text-neutral-900 shrink-0 mt-1" />
                 <div>

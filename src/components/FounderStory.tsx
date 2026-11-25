@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
 import { WhatsAppLogo } from './BrandIcons';
 import { WHATSAPP_URL } from '../utils/contactLinks';
 import BgVideo from './BgVideo';
@@ -27,10 +28,10 @@ const CHAPTERS = [
     n: '03',
     title: 'Why I do this',
     text: 'One of my first clients could not afford any agency. I built him far more than he asked for, within his budget. "You took all my worries away," he said. He still sends people my way.',
-    photo: '/founder/portrait.webp',
-    w: 1100,
-    h: 1258,
-    alt: 'Burhan Kapasi sitting in an armchair',
+    photo: '/founder/swing.webp',
+    w: 900,
+    h: 1601,
+    alt: 'Burhan Kapasi relaxing on a swing chair',
   },
 ];
 
@@ -50,13 +51,22 @@ const rise = {
   viewport: { once: true, margin: '-80px' },
 };
 
-export default function FounderStory() {
+interface FounderStoryProps {
+  /** On the homepage: a shorter version that links to the full story on About. */
+  onReadStory?: () => void;
+  /** On About: leave out the portrait introduction, which the page already has. */
+  journeyOnly?: boolean;
+}
+
+export default function FounderStory({ onReadStory, journeyOnly = false }: FounderStoryProps) {
+  const short = Boolean(onReadStory);
   return (
-    <section id="founder" aria-labelledby="founder-title" className="relative py-24 bg-white font-sans overflow-x-clip">
+    <section id={journeyOnly ? 'founder-journey' : 'founder'} aria-label="Burhan Kapasi, founder of Mago Labs" className="relative py-24 bg-neutral-50 font-sans overflow-x-clip">
       {/* Background: soft dust drifting through the air */}
       <BgVideo name="dust" className="absolute inset-0 h-full w-full opacity-50 mix-blend-multiply" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Meet Burhan */}
+        {!journeyOnly && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           <motion.figure {...rise} transition={{ duration: 0.6 }} className="lg:col-span-5">
             <img
@@ -77,11 +87,23 @@ export default function FounderStory() {
             <p className="text-neutral-600 text-base sm:text-lg leading-relaxed max-w-2xl">
               Every Mago Labs website is built like it's for my own business. I obsess over the details your customers notice, and I don't stop until the phone starts ringing.
             </p>
+            {short && (
+              <button
+                type="button"
+                onClick={onReadStory}
+                className="group inline-flex items-center gap-2 pt-2 font-semibold text-neutral-900 underline decoration-brand decoration-2 underline-offset-4 cursor-pointer"
+              >
+                Read my story <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </button>
+            )}
           </div>
         </div>
+        )}
 
         {/* How I got here */}
-        <h3 className="mt-24 text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900">How I got here</h3>
+        {!short && (
+        <>
+        <h3 className={`${journeyOnly ? '' : 'mt-24 '} text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900`}>How I got here</h3>
         <ol className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           {CHAPTERS.map((c, i) => (
             <motion.li key={c.n} {...rise} transition={{ duration: 0.6, delay: i * 0.1 }}>
@@ -96,6 +118,8 @@ export default function FounderStory() {
             </motion.li>
           ))}
         </ol>
+        </>
+        )}
 
         {/* Off the clock */}
         <div className="mt-24 flex flex-wrap items-end justify-between gap-6">

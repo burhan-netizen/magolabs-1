@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 /* Mago Labs brand system (see the brand style guide):
-   Poppins throughout, uppercase mono labels, an ink and paper base,
+   Bricolage Grotesque headlines, Instrument Sans text, uppercase mono labels, an ink and paper base,
    and Signal Amber as the single accent. Never add a second accent. */
 @theme {
   /* Plain values on purpose: writing these as var(--font-sans, ...) makes the
      variable refer to itself, which browsers treat as invalid, so the whole
      site silently falls back to the system font. */
-  --font-sans: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-display: "Poppins", system-ui, sans-serif;
+  --font-sans: "Instrument Sans Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Instrument Sans Variable", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   /* Signal Amber: highlights, tags, primary buttons. Always paired with ink text. */
@@ -24,6 +24,10 @@
   --color-neutral-50: #FAFAF8;
   --color-neutral-100: #F3F1EC;
   --color-neutral-200: #E4E1D9;
+  /* Body greys a step darker than default, so small text stays readable. */
+  --color-neutral-500: #686560;
+  --color-neutral-600: #4D4A45;
+  --color-neutral-700: #3A3834;
   --color-neutral-950: #0D0D0D;
 
   --color-accent: #FFC53D;
@@ -73,8 +77,11 @@ body::before {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 96;
 }
+h1, h2 { font-weight: 750; line-height: 1.02; text-wrap: balance; }
+h3, h4 { letter-spacing: -0.02em; }
 
 /* Glassmorphism utility */
 .glass-panel {
@@ -531,7 +538,8 @@ body::after {
 }
 
 /* Brand highlight: a solid amber marker block behind ink text. */
-.marker {
+.marker { color: inherit; }
+.marker-on {
   /* The block is drawn only behind the letters (cap top to descender). A plain
      background fills the font's full line box, which is taller than the heading's
      tight line spacing, so it ran into the line above. */
@@ -1812,3 +1820,75 @@ html.motion-ok .search-mock[data-seen] .search-mock-result {
 .price-card::after,
 .spot-card::after,
 .work-card::after { background: none !important; }
+
+/* Readable small text: Instrument Sans runs a little smaller than Poppins did. */
+.text-sm { font-size: 0.9375rem; line-height: 1.55; }
+.text-xs { font-size: 0.8125rem; }
+
+/* Feature points: an editorial list with a rule above each point, in place of the
+   boxed card with an icon tile and a faded number that every page used to repeat. */
+.spot-card {
+  background: transparent !important;
+  border-width: 1px 0 0 0 !important;
+  border-radius: 0 !important;
+  padding: 1.75rem 0 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+.spot-card .spot-number,
+.spot-card .rounded-xl:has(> svg) { display: none !important; }
+.spot-card h3 { font-family: var(--font-display); font-size: 1.375rem; line-height: 1.2; letter-spacing: -0.02em; font-weight: 650; }
+.spot-card > p, .spot-card div > p { font-size: 1rem; }
+.spot-card .font-mono { font-size: 0.8125rem; }
+
+/* Inner page openings: one bold, dark, left-aligned opening for every page, so
+   they match the homepage instead of a small centred heading on white. */
+.page-hero {
+  background: #0D0D0D !important;
+  color: #fff;
+  border: 0 !important;
+  padding-top: clamp(8.5rem, 14vw, 11rem) !important;
+  padding-bottom: clamp(4rem, 8vw, 6.5rem) !important;
+}
+.page-hero > .absolute:not(.page-hero-keep) {
+  background-image: linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px) !important;
+  background-size: 56px 56px !important;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%) !important;
+  mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%) !important;
+  opacity: 1 !important;
+}
+.page-hero .text-center { text-align: left !important; margin-left: 0 !important; max-width: 60rem !important; }
+.page-hero .justify-center { justify-content: flex-start !important; }
+.page-hero .items-center.text-center, .page-hero .text-center .items-center { align-items: flex-start; }
+.page-hero h1 {
+  color: #fff !important;
+  font-size: clamp(2.6rem, 6.2vw, 5.75rem) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.045em !important;
+  max-width: 16ch;
+}
+.page-hero .text-center h1, .page-hero h1 { margin-left: 0; }
+.page-hero p { color: #BDBAB3 !important; font-size: clamp(1.05rem, 1.4vw, 1.25rem); max-width: 42rem; margin-left: 0 !important; }
+.page-hero p strong { color: #fff !important; }
+.page-hero .eyebrow { color: #A8A6A0; }
+.page-hero .text-neutral-700, .page-hero .text-neutral-800, .page-hero .text-neutral-900 { color: #E8E6E1 !important; }
+.page-hero .text-neutral-500 { color: #A8A6A0 !important; }
+.page-hero a.border, .page-hero button.border { border-color: rgba(255,255,255,0.22) !important; color: #fff !important; }
+.page-hero a.border:hover, .page-hero button.border:hover { background: rgba(255,255,255,0.08) !important; }
+.page-hero .bg-neutral-50 { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; }
+.page-hero .bg-brand-soft { background: rgba(255,197,61,0.12) !important; color: var(--color-brand) !important; }
+.page-hero nav a, .page-hero nav span, .page-hero nav li { color: #A8A6A0; }
+.page-hero h1[class] { color: #fff !important; }
+.case-crumbs nav a, .case-crumbs nav span, .case-crumbs nav li { color: #A8A6A0; }
+.case-crumbs nav [aria-current], .case-crumbs nav li:last-child span { color: #fff; }
+.font-display { font-family: var(--font-display); }
+
+/* Pricing: the Commerce panel in ink, like the Growth card, not a full yellow block */
+.commerce-panel .text-ink { color: #fff !important; }
+.commerce-panel [class*="text-ink/"] { color: #BDBAB3 !important; }
+.commerce-panel [class*="bg-ink/"] { background: rgba(255,255,255,0.1) !important; }
+.commerce-panel a.bg-ink { background: var(--color-brand) !important; color: var(--color-ink) !important; }
+.commerce-panel a.bg-ink:hover { background: var(--color-brand-deep) !important; }
+.commerce-panel .commerce-mark { display: none !important; }
+/* Dark mode: the dust video is made for a light background */
+.dark #founder video, .dark #founder-journey video { display: none; }

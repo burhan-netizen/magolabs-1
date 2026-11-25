@@ -2,6 +2,7 @@ import { ArrowUpRight, ArrowRight, MessageCircle, PencilRuler, Target, Zap } fro
 import { motion } from 'motion/react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
+import FounderStory from '../components/FounderStory';
 import PageLink from '../components/PageLink';
 import { spotlight } from '../utils/tilt';
 
@@ -65,7 +66,7 @@ export default function About({ onPageChange }: AboutProps) {
       <SEO path="about" schemas={aboutSchemas} />
 
       {/* Hero Header */}
-      <section id="about-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white font-sans overflow-hidden border-b border-neutral-200/50">
+      <section id="about-hero" className="page-hero relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white font-sans overflow-hidden border-b border-neutral-200/50">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none opacity-60" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-5 max-w-3xl mx-auto">
@@ -160,6 +161,9 @@ export default function About({ onPageChange }: AboutProps) {
           </div>
         </div>
       </section>
+
+      {/* How I got here, and life outside work */}
+      <FounderStory journeyOnly />
 
       {/* Principles */}
       <section id="values-grid" className="glow-follow relative overflow-hidden py-24 bg-neutral-950 text-white font-sans">

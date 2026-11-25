@@ -54,7 +54,7 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
       <SEO path={industry.id} schemas={schemas} />
 
       {/* Hero */}
-      <section id="industry-hero" className="relative pt-32 pb-16 md:pt-40 md:pb-20 bg-white font-sans overflow-hidden border-b border-neutral-200/50">
+      <section id="industry-hero" className="page-hero relative pt-32 pb-16 md:pt-40 md:pb-20 bg-white font-sans overflow-hidden border-b border-neutral-200/50">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none opacity-60" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 flex justify-center">
@@ -138,7 +138,7 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: idx * 0.06 }}
-                className="pricing-surface rounded-2xl border border-neutral-200 bg-[#FAFAF8] p-7 space-y-2"
+                className="spot-card relative border-neutral-300 space-y-2"
               >
                 <span className="font-mono text-sm font-bold text-neutral-400">0{idx + 1}</span>
                 <h3 className="text-lg font-semibold text-neutral-900 leading-snug">{problem.title}</h3>

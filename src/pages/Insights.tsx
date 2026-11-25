@@ -38,17 +38,14 @@ export default function Insights({ onOpenPost }: InsightsProps) {
     <>
       <SEO path="/insights" schemas={[blogSchema]} />
 
-      <section className="pt-32 pb-16 sm:pt-40 sm:pb-20 font-sans">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand-soft dark:bg-brand/10 dark:border-brand/20 px-4 py-1.5 text-xs font-bold text-neutral-900 dark:text-brand uppercase tracking-widest">
-            <BookOpen className="h-3.5 w-3.5" />
-            Insights
-          </div>
-          <h1 className="mt-6 text-3xl sm:text-5xl font-extrabold text-neutral-900 dark:text-white leading-tight">
+      <section id="insights-hero" className="page-hero pt-32 pb-16 sm:pt-40 sm:pb-20 font-sans">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <span className="eyebrow">Insights</span>
+          <h1 className="mt-4 text-3xl sm:text-5xl font-extrabold text-neutral-900 dark:text-white leading-tight">
             Plain-English guides to help your business grow.
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-neutral-600 dark:text-neutral-400 text-sm sm:text-base leading-relaxed">
-            Strategic, jargon-free articles on local search optimization, conversion-focused copywriting, and web speed.
+            Straight answers on websites, Google and getting more enquiries. Written for business owners, not developers.
           </p>
         </div>
       </section>
