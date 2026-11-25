@@ -5,6 +5,7 @@ import App, { preloadPageForPath } from './App.tsx';
 // Devanagari and extended-Latin faces that tripled the size of the font CSS.
 import '@fontsource-variable/inter-tight/wght.css';
 import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource/caveat/latin-600.css';
 import '@fontsource/instrument-serif/latin-400-italic.css';
 import '@fontsource/jetbrains-mono/latin-500.css';
 import '@fontsource/jetbrains-mono/latin-700.css';

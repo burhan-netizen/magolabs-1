@@ -1,21 +1,17 @@
-import { ArrowRight, Check, Minus, Phone, Plus, X } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { PageId } from '../types';
 import SEO from '../components/SEO';
-import PageLink from '../components/PageLink';
-import LeadForm, { LeadMode } from '../components/LeadForm';
-import { WhatsAppLogo } from '../components/BrandIcons';
-import { WHATSAPP_URL, CALL_URL, PHONE_DISPLAY } from '../utils/contactLinks';
+import { LeadMode } from '../components/LeadForm';
 import HomeTop from '../components/home/HomeTop';
-import CurveMarquee from '../components/home/CurveMarquee';
-import ProblemScroll from '../components/home/ProblemScroll';
-import NoWebsite from '../components/home/NoWebsite';
-import ServicesTilt from '../components/home/ServicesTilt';
-import WorkFlyover from '../components/home/WorkFlyover';
-import ResultsBig from '../components/home/ResultsBig';
-import TestimonialColumns from '../components/home/TestimonialColumns';
-import FounderStory from '../components/home/FounderStory';
-import Reveal from '../components/home/Reveal';
+import ServicesPick from '../components/home/v3/ServicesPick';
+import WorkDeck from '../components/home/v3/WorkDeck';
+import BuiltFor from '../components/home/v3/BuiltFor';
+import ProcessCards from '../components/home/v3/ProcessCards';
+import UsVsThem from '../components/home/v3/UsVsThem';
+import FounderSoul from '../components/home/v3/FounderSoul';
+import ClientWords from '../components/home/v3/ClientWords';
+import Closing from '../components/home/v3/Closing';
 
 interface HomeProps {
   onPageChange: (page: PageId) => void;
@@ -28,51 +24,6 @@ interface HomeProps {
    what we do, the work, the results, what clients say, who is behind it, then
    their next step. Copy lives here or in the section components as plain data.
 --------------------------------------------------------------------------- */
-
-const WITH_MAGO = [
-  'A design made for your business, from a blank canvas.',
-  'A site that loads fast on any phone and any network.',
-  'Copy written by a human who has studied your buyers.',
-  'One person to talk to, the founder, from start to finish.',
-  'Your domain and code in your name, with hosting included.',
-  'A fixed quote before any work starts.',
-];
-
-const THE_USUAL = [
-  'A template that other clients also get.',
-  'Page builders and plug-ins that slow everything down.',
-  'Generic filler text that could describe anyone.',
-  'Your project passed between account managers.',
-  'Your own domain and code kept out of your reach.',
-  'A scope and a bill that shift after you sign.',
-];
-
-// The first step differs by starting point; the rest is the same for everyone.
-const FIRST_STEP: Record<LeadMode, { heading: string; intro: string; title: string; desc: string }> = {
-  audit: {
-    heading: 'Start with a free audit.',
-    intro: 'It takes a minute to ask, and you will know exactly where your website stands.',
-    title: 'Send us your website address.',
-    desc: 'We review it for free and tell you plainly what is costing you enquiries.',
-  },
-  new: {
-    heading: 'Start with a free website plan.',
-    intro: 'It takes a minute to ask, and you will know exactly what your first website needs.',
-    title: 'Tell us what your business does.',
-    desc: 'We send you a free plan: the pages you need, what they should say, and how customers will find you.',
-  },
-};
-
-const NEXT_STEPS = [
-  {
-    title: 'Get a fixed quote.',
-    desc: 'You see exactly what we would build and what it costs. No obligation to go ahead.',
-  },
-  {
-    title: 'Launch in 5 to 28 days.',
-    desc: 'You approve the design before we build it, and you own everything at the end.',
-  },
-];
 
 const FAQS = [
   {
@@ -118,12 +69,6 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
   // Which starting point the form on this page shows. The "no website yet" buttons
   // switch it and bring the form into view, so the visitor never leaves the page.
   const [leadMode, setLeadMode] = useState<LeadMode>('audit');
-  const startWithoutWebsite = () => {
-    setLeadMode('new');
-    document.getElementById('next-step')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-  const firstStep = FIRST_STEP[leadMode];
-  const steps = [{ title: firstStep.title, desc: firstStep.desc }, ...NEXT_STEPS];
 
   // Structured data: the business, the organisation, and the FAQ on this page.
   const homeSchemas = [
@@ -200,14 +145,52 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
     <>
       <SEO path="/" schemas={homeSchemas} />
 
-      {/* First look: the floating hero and the intro sheet that rises over it.
-          The remaining sections follow once these two are approved. */}
       <HomeTop
         onAudit={goToAudit}
         onOpenCaseStudy={onOpenCaseStudy}
         onSeeWork={() => navigateTo('work')}
         onReadStory={() => navigateTo('about')}
       />
+      <ServicesPick onNavigate={navigateTo} />
+      <WorkDeck onOpenCaseStudy={onOpenCaseStudy} onSeeWork={() => navigateTo('work')} />
+      <BuiltFor />
+      <ProcessCards />
+      <UsVsThem />
+      <FounderSoul />
+      <ClientWords />
+
+      <section id="faq" aria-labelledby="faq-title" className="bg-[#F4F3EF] py-24 md:py-32">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:px-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+          <div>
+            <p className="v3-label">Questions</p>
+            <h2 id="faq-title" className="v3-h2 mt-4 max-w-[12ch]">Asked before you ask.</h2>
+          </div>
+          <div className="border-t border-ink/15">
+            {FAQS.map((faq, idx) => {
+              const open = openFaq === idx;
+              return (
+                <div key={faq.question} className="border-b border-ink/15">
+                  <h3>
+                    <button type="button" onClick={() => toggleFaq(idx)} aria-expanded={open} aria-controls={`faq-${idx}`} className="flex w-full items-center justify-between gap-6 py-6 text-left text-[18px] font-bold tracking-[-0.01em] text-ink md:text-[20px]">
+                      {faq.question}
+                      <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors ${open ? 'bg-brand text-ink' : 'bg-white text-ink'}`}>
+                        {open ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                      </span>
+                    </button>
+                  </h3>
+                  <div id={`faq-${idx}`} className={`grid transition-[grid-template-rows] duration-500 ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                    <div className="overflow-hidden">
+                      <p className="max-w-[60ch] pb-6 text-[16px] leading-relaxed text-ink/70">{faq.answer}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <Closing mode={leadMode} onModeChange={setLeadMode} />
     </>
   );
 }
