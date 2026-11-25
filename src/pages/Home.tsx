@@ -1,6 +1,6 @@
 import { ArrowRight, Check, EyeOff, Plus, Minus, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
 import TestimonialDeck from '../components/TestimonialDeck';
-import WorkReel from '../components/WorkReel';
+import WorkStack from '../components/WorkStack';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { PageId } from '../types';
@@ -696,7 +696,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       </section>
 
       {/* 5. The work behind the results: a selection of websites, on a tilted wall that turns to face the visitor */}
-      <WorkReel onOpenWork={() => navigateTo('work')} />
+      <WorkStack onOpenWork={() => navigateTo('work')} />
 
       {/* What clients say: a pile of review cards to drag through */}
       <TestimonialDeck onOpenCaseStudy={onOpenCaseStudy} />
