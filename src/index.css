@@ -2362,3 +2362,8 @@ a.review-source:focus-visible { outline: 2px solid var(--color-ink); outline-off
   .ed-text { margin-top: 1rem; }
   .ed-desc { margin-top: 0.5rem; }
 }
+
+/* Keep screen-reader-only text inside its card: without a positioned ancestor it
+   is placed against the whole page, and from inside a sideways-scrolling list
+   that widened the page on phones. */
+.review-by, .wall-card, .swipe-card, .deck-source { position: relative; }
