@@ -12,7 +12,11 @@ export default function Daylight({ mode, onModeChange }: { mode: LeadMode; onMod
           <p className="mt-8 max-w-[40ch] text-[19px] leading-relaxed text-white/75">
             Send us your website, or tell us about your business if you don't have one yet. The audit is free, and so is the plan.
           </p>
-          <div className="mt-10 flex flex-wrap gap-3">
+          <div className="mt-8 flex items-center gap-4">
+            <img src="/founder/portrait.webp" alt="" width={1100} height={1258} loading="lazy" className="h-14 w-14 rounded-full object-cover object-[50%_22%] ring-2 ring-brand" />
+            <p className="text-[16px] leading-snug text-white/80"><span className="v3-hand text-[26px] text-white">Burhan</span><br />reads every message himself.</p>
+          </div>
+          <div className="mt-8 flex flex-wrap gap-3">
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 rounded-full bg-brand px-5 py-3.5 text-[15px] font-bold text-ink hover:bg-white">
               <WhatsAppLogo className="h-5 w-5" /> Chat on WhatsApp
             </a>

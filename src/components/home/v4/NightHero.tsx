@@ -15,7 +15,10 @@ export default function NightHero({ onAudit }: { onAudit: () => void }) {
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pb-10 pt-32 md:px-8">
-        <p className="n-in text-[14px] font-semibold uppercase tracking-[0.14em] text-white/45" style={{ animationDelay: '0.1s' }}>Website studio, Surat</p>
+        <p className="n-in flex items-center gap-3 text-[15px] text-white/70" style={{ animationDelay: '0.1s' }}>
+          <img src="/founder/portrait.webp" alt="" width={1100} height={1258} className="h-10 w-10 rounded-full object-cover object-[50%_22%] ring-2 ring-brand" />
+          <span>Hi, I'm Burhan. I build websites from Surat.</span>
+        </p>
         <h1 className="n-h1 mt-6 max-w-[15ch]">
           <span className="n-in block" style={{ animationDelay: '0.2s' }}>Right now, someone is searching for what you do.</span>
           <span className="n-in mt-2 block text-white/35" style={{ animationDelay: '0.45s' }}>Most of them never find you.</span>
