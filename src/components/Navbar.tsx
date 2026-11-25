@@ -246,7 +246,7 @@ export default function Navbar({
               whileHover={{ y: -1, scale: 1.02, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
               whileTap={{ scale: 0.98, y: 0 }}
               onClick={() => handleNavClick('contact')}
-              className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-ink cursor-pointer shadow-sm hover:shadow-md transition-all"
+              className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper cursor-pointer hover:bg-black transition-all"
             >
               <PhoneCall className="h-4 w-4" />
               {t('nav.cta')}

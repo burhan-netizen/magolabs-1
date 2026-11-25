@@ -7,8 +7,8 @@
   /* Plain values on purpose: writing these as var(--font-sans, ...) makes the
      variable refer to itself, which browsers treat as invalid, so the whole
      site silently falls back to the system font. */
-  --font-sans: "Bricolage Grotesque Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-display: "Bricolage Grotesque Variable", system-ui, sans-serif;
+  --font-sans: "Inter Tight Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Inter Tight Variable", system-ui, sans-serif;
   --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
@@ -17,7 +17,7 @@
   --color-brand-deep: #F0B323;
   --color-brand-soft: #FFF4D6;
   --color-ink: #16130F;
-  --color-paper: #F5F1E8;
+  --color-paper: #F1EEE8;
   --color-hairline: #E4E1D9;
   --color-slate: #7E7E7E;
 
@@ -1962,4 +1962,36 @@ html.motion-ok .reveal { opacity: 0; transform: translateY(36px); transition: op
 html.motion-ok .reveal[data-in], html.motion-ok.reveal-all .reveal { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .tcol-anim { overflow-y: auto !important; }
+}
+
+
+/* ===========================================================================
+   Studio direction (v3). Quiet paper, near-black ink, giant tight type, lots of
+   air. Yellow is kept for one or two small moments on the whole page.
+=========================================================================== */
+.studio-xl {
+  font-family: var(--font-display);
+  font-weight: 640;
+  letter-spacing: -0.06em;
+  line-height: 0.86;
+}
+.studio-lg {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+.studio-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.studio-line { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+.studio-line > span { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .studio-line > span { animation: riseIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .studio-line:nth-child(2) > span { animation-delay: 0.1s; }
+  .studio-fade { animation: fadeLate 1s 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .studio-fade-2 { animation: fadeLate 1s 0.75s cubic-bezier(0.16, 1, 0.3, 1) both; }
 }

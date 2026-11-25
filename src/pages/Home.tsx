@@ -6,7 +6,8 @@ import PageLink from '../components/PageLink';
 import LeadForm, { LeadMode } from '../components/LeadForm';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import { WHATSAPP_URL, CALL_URL, PHONE_DISPLAY } from '../utils/contactLinks';
-import HeroV2 from '../components/home/HeroV2';
+import HeroStudio from '../components/home/HeroStudio';
+import StatementsScroll from '../components/home/StatementsScroll';
 import CurveMarquee from '../components/home/CurveMarquee';
 import ProblemScroll from '../components/home/ProblemScroll';
 import NoWebsite from '../components/home/NoWebsite';
@@ -200,164 +201,10 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
     <>
       <SEO path="/" schemas={homeSchemas} />
 
-      <HeroV2 onAudit={goToAudit} onNoWebsite={startWithoutWebsite} />
-      <CurveMarquee />
-      <ProblemScroll onAudit={goToAudit} />
-      <ServicesTilt onNavigate={navigateTo} onAudit={goToAudit} />
-      <WorkFlyover onOpenCaseStudy={onOpenCaseStudy} onSeeAll={() => navigateTo('work')} />
-      <ResultsBig onOpenCaseStudy={onOpenCaseStudy} />
-      <NoWebsite onStart={startWithoutWebsite} />
-      <TestimonialColumns onOpenCaseStudy={onOpenCaseStudy} />
-
-      {/* Why us: against the usual agency */}
-      <section id="why-choose-us-overview" className="bg-paper py-24 md:py-36">
-        <div className="mx-auto max-w-[1180px] px-5 sm:px-8">
-          <span className="label-v2">Why Mago Labs</span>
-          <h2 className="display-lg mt-5 max-w-[18ch] text-[clamp(2.4rem,5.2vw,4.6rem)] text-ink">
-            Most agencies hand you a template. You deserve a <span className="font-serif-accent">website.</span>
-          </h2>
-          <div className="mt-14 grid gap-5 lg:grid-cols-2">
-            <Reveal className="rounded-[32px] bg-ink p-8 text-paper md:p-10">
-              <p className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.14em] text-brand">
-                <img src="/logo.png" alt="Mago Labs" width={300} height={200} className="h-10 w-auto invert" loading="lazy" />
-              </p>
-              <ul className="mt-6 space-y-4">
-                {WITH_MAGO.map((item) => (
-                  <li key={item} className="flex gap-3 text-paper/85">
-                    <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-brand text-ink">
-                      <Check className="h-3.5 w-3.5" strokeWidth={3} />
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-            <Reveal delay={0.1} className="rounded-[32px] border border-ink/10 bg-white/50 p-8 md:p-10">
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-ink/50 py-2.5">The usual agency</p>
-              <ul className="mt-6 space-y-4">
-                {THE_USUAL.map((item) => (
-                  <li key={item} className="flex gap-3 text-ink/55">
-                    <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-ink/8 text-ink/45">
-                      <X className="h-3.5 w-3.5" strokeWidth={3} />
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <FounderStory />
-
-      {/* Next step: how it works, and the form */}
-      <section id="next-step" className="scroll-mt-20 bg-[#EDE7DA] py-24 md:py-36">
-        <div className="mx-auto grid max-w-[1180px] gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_1.05fr]">
-          <div>
-            <span className="label-v2">Your next step</span>
-            <h2 className="display-lg mt-5 text-[clamp(2.4rem,5.2vw,4.6rem)] text-ink">{firstStep.heading}</h2>
-            <p className="mt-5 max-w-md text-lg leading-relaxed text-ink/70">{firstStep.intro}</p>
-            <ol className="mt-12 space-y-8">
-              {steps.map((step, i) => (
-                <li key={step.title} className="flex gap-5">
-                  <span className="display-lg flex h-12 w-12 flex-none items-center justify-center rounded-full bg-ink text-lg text-brand">{i + 1}</span>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink">{step.title}</h3>
-                    <p className="mt-1.5 leading-relaxed text-ink/65">{step.desc}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <p className="mt-12 text-ink/70">
-              Would you rather talk?{' '}
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="link-grow font-semibold text-ink">
-                Message Burhan on WhatsApp
-              </a>
-              .
-            </p>
-          </div>
-          <div className="rounded-[32px] bg-paper p-6 shadow-[0_40px_80px_-40px_rgba(22,19,15,0.45)] md:p-9">
-            <LeadForm idPrefix="home" source="Homepage" mode={leadMode} onModeChange={setLeadMode} />
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ. Every answer stays in the page markup (collapsed with CSS, not
-          removed), so search engines can read all of them. */}
-      <section id="faq-section" className="bg-paper py-24 md:py-36">
-        <div className="mx-auto grid max-w-[1180px] gap-12 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <span className="label-v2">Questions</span>
-            <h2 className="display-lg mt-5 text-[clamp(2.4rem,5.2vw,4.6rem)] text-ink">
-              Straight <span className="font-serif-accent">answers.</span>
-            </h2>
-          </div>
-          <div className="divide-y divide-ink/12 border-y border-ink/12">
-            {FAQS.map((faq, idx) => {
-              const open = openFaq === idx;
-              return (
-                <div key={faq.question}>
-                  <h3>
-                    <button
-                      type="button"
-                      onClick={() => toggleFaq(idx)}
-                      aria-expanded={open}
-                      aria-controls={`home-faq-panel-${idx}`}
-                      className="flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left"
-                    >
-                      <span className="text-lg font-semibold text-ink sm:text-xl">{faq.question}</span>
-                      <span className={`flex h-9 w-9 flex-none items-center justify-center rounded-full transition-colors duration-300 ${open ? 'bg-brand text-ink' : 'bg-ink/6 text-ink'}`}>
-                        {open ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                      </span>
-                    </button>
-                  </h3>
-                  <div
-                    id={`home-faq-panel-${idx}`}
-                    className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
-                  >
-                    <div className="overflow-hidden">
-                      <p className="pb-6 pr-12 leading-relaxed text-ink/70">{faq.answer}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Final call to action, in the accent colour */}
-      <section id="final-cta" className="px-3 pb-3 sm:px-5 sm:pb-5">
-        <div className="relative overflow-hidden rounded-[36px] bg-brand px-5 py-24 text-ink sm:px-10 md:py-32">
-          <div className="mx-auto max-w-[1100px]">
-            <span className="label-v2 !text-ink/70 before:!bg-ink">Let’s talk</span>
-            <h2 className="display-xl mt-6 text-[clamp(3rem,8.6vw,8.2rem)]">
-              Make your website your best <span className="font-serif-accent">salesperson.</span>
-            </h2>
-            <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink/75">
-              Send us your website address. We will tell you plainly what is stopping visitors from calling. You talk directly to Burhan, the founder.
-            </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <PageLink page="contact" onNavigate={goToAudit} className="btn-v2 btn-ink">
-                Get a free website audit
-                <ArrowRight className="arrow h-4 w-4" />
-              </PageLink>
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-v2 btn-ghost text-ink">
-                <WhatsAppLogo className="h-5 w-5" />
-                Chat on WhatsApp
-              </a>
-              <a href={CALL_URL} className="btn-v2 btn-ghost text-ink">
-                <Phone className="h-4 w-4" />
-                {PHONE_DISPLAY}
-              </a>
-            </div>
-            <button type="button" onClick={startWithoutWebsite} className="link-grow mt-8 text-sm font-semibold text-ink cursor-pointer">
-              No website yet? Get a free website plan
-            </button>
-          </div>
-        </div>
-      </section>
+      {/* Studio direction, first look: hero and the problem. The remaining
+          sections are rebuilt in this style once these two are approved. */}
+      <HeroStudio onAudit={goToAudit} onOpenCaseStudy={onOpenCaseStudy} />
+      <StatementsScroll onAudit={goToAudit} />
     </>
   );
 }

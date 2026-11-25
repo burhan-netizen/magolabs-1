@@ -3,7 +3,7 @@ import App, { preloadPageForPath } from './App.tsx';
 // Brand fonts are bundled with the site (no third-party font request).
 // Latin only: the site is written in English, and the full files also declare
 // Devanagari and extended-Latin faces that tripled the size of the font CSS.
-import '@fontsource-variable/bricolage-grotesque/opsz.css';
+import '@fontsource-variable/inter-tight/wght.css';
 import '@fontsource/instrument-serif/latin-400-italic.css';
 import '@fontsource/jetbrains-mono/latin-500.css';
 import '@fontsource/jetbrains-mono/latin-700.css';
