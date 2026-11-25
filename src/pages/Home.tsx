@@ -10,6 +10,7 @@ import LogoWall from '../components/LogoWall';
 import LeadForm, { LeadMode } from '../components/LeadForm';
 import HeroShowcase from '../components/HeroShowcase';
 import FounderStory from '../components/FounderStory';
+import BgVideo from '../components/BgVideo';
 import CountUp from '../components/CountUp';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import { useLanguage } from '../context/LanguageContext';
@@ -337,7 +338,12 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
           The text has no entrance animation: it is in the page HTML and should be
           visible the instant it paints. */}
       <section id="hero" className="relative pt-32 pb-14 md:pt-40 md:pb-16 bg-neutral-950 text-[#ffffff] overflow-hidden font-sans">
-        {/* Background: a faint grid */}
+        {/* Background: city lights at night, darkened so the text stays sharp, then a faint grid */}
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+          <BgVideo name="street" className="absolute inset-0 h-full w-full opacity-40" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,10,10,0.92)_0%,rgba(10,10,10,0.7)_55%,rgba(10,10,10,0.55)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-neutral-950" />
+        </div>
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:44px_44px] pointer-events-none [mask-image:linear-gradient(180deg,black_0%,black_70%,transparent_100%)]" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -649,7 +655,11 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
 
       {/* 4. Results */}
       <section id="results" className="relative py-24 bg-neutral-950 text-white font-sans overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
+        {/* Background: a slow beam of light through the dark */}
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+          <BgVideo name="sweep" className="absolute inset-0 h-full w-full opacity-60" />
+          <div className="absolute inset-0 bg-neutral-950/45" />
+        </div>
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl space-y-4 mb-12">
             <span className="eyebrow eyebrow-on-dark">The results</span>

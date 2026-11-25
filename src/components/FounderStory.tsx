@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { WhatsAppLogo } from './BrandIcons';
 import { WHATSAPP_URL } from '../utils/contactLinks';
+import BgVideo from './BgVideo';
 
 /* The person behind Mago Labs: who he is, how he got here, and life off the clock. */
 const CHAPTERS = [
@@ -51,8 +52,10 @@ const rise = {
 
 export default function FounderStory() {
   return (
-    <section id="founder" aria-labelledby="founder-title" className="py-24 bg-white font-sans overflow-x-clip">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="founder" aria-labelledby="founder-title" className="relative py-24 bg-white font-sans overflow-x-clip">
+      {/* Background: soft dust drifting through the air */}
+      <BgVideo name="dust" className="absolute inset-0 h-full w-full opacity-50 mix-blend-multiply" />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Meet Burhan */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           <motion.figure {...rise} transition={{ duration: 0.6 }} className="lg:col-span-5">
