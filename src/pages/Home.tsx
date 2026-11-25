@@ -6,8 +6,7 @@ import PageLink from '../components/PageLink';
 import LeadForm, { LeadMode } from '../components/LeadForm';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import { WHATSAPP_URL, CALL_URL, PHONE_DISPLAY } from '../utils/contactLinks';
-import HeroStudio from '../components/home/HeroStudio';
-import StatementsScroll from '../components/home/StatementsScroll';
+import HomeTop from '../components/home/HomeTop';
 import CurveMarquee from '../components/home/CurveMarquee';
 import ProblemScroll from '../components/home/ProblemScroll';
 import NoWebsite from '../components/home/NoWebsite';
@@ -201,10 +200,14 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
     <>
       <SEO path="/" schemas={homeSchemas} />
 
-      {/* Studio direction, first look: hero and the problem. The remaining
-          sections are rebuilt in this style once these two are approved. */}
-      <HeroStudio onAudit={goToAudit} onOpenCaseStudy={onOpenCaseStudy} />
-      <StatementsScroll onAudit={goToAudit} />
+      {/* First look: the floating hero and the intro sheet that rises over it.
+          The remaining sections follow once these two are approved. */}
+      <HomeTop
+        onAudit={goToAudit}
+        onOpenCaseStudy={onOpenCaseStudy}
+        onSeeWork={() => navigateTo('work')}
+        onReadStory={() => navigateTo('about')}
+      />
     </>
   );
 }
