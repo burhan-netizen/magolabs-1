@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ReviewCards from '../components/ReviewCards';
 import { Phone, Mail, MapPin, Clock, Navigation, Star } from 'lucide-react';
 import { WhatsAppLogo } from '../components/BrandIcons';
 import { PageId } from '../types';
@@ -148,6 +149,9 @@ export default function Contact(_props: ContactProps) {
                   </a>
                 </p>
               </div>
+
+              {/* One client, in their own words, beside the form */}
+              <ReviewCards ids={['denish-dalal']} />
             </div>
 
             {/* The form */}

@@ -13,6 +13,7 @@ import { PACKAGES, getPackage, PackageInfo, HOURLY_RATE } from '../data/packages
 import { useCurrency } from '../hooks/useCurrency';
 import { spotlight } from '../utils/tilt';
 import EditorialList from '../components/EditorialList';
+import ReviewCards from '../components/ReviewCards';
 
 interface PricingProps {
   onPageChange: (page: PageId) => void;
@@ -463,6 +464,14 @@ export default function Pricing({ onPageChange }: PricingProps) {
                 </motion.div>
               );
             })}
+          </div>
+
+          {/* What a client said about the value */}
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <p className="lg:col-span-4 text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 leading-tight">
+              What clients say about the value.
+            </p>
+            <ReviewCards ids={['manav-shah']} className="lg:col-span-8" />
           </div>
         </div>
       </section>

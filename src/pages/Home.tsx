@@ -1,5 +1,5 @@
 import { ArrowRight, Check, EyeOff, Plus, Minus, Search, SearchX, ShieldAlert, Trophy, X } from 'lucide-react';
-import TestimonialDeck from '../components/TestimonialDeck';
+import TestimonialWall from '../components/TestimonialWall';
 import WorkStack from '../components/WorkStack';
 import WorkSpiral from '../components/WorkSpiral';
 import { useMediaQuery } from '../hooks/useMediaQuery';
@@ -541,7 +541,7 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
       <FounderStory onReadStory={() => navigateTo('about')} />
 
       {/* 6. What clients say: a pile of review cards to drag through */}
-      <TestimonialDeck onOpenCaseStudy={onOpenCaseStudy} />
+      <TestimonialWall onOpenCaseStudy={onOpenCaseStudy} />
 
       {/* 7. What the customer gets, against the common alternative */}
       <section id="why-choose-us-overview" className="py-24 bg-neutral-50 font-sans">

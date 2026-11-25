@@ -9,6 +9,15 @@ import PageLink from '../components/PageLink';
 import { getIndustry } from '../data/industries';
 import { getCaseStudyById } from '../data/caseStudies';
 import { getWorkDetailPath } from '../utils/pageRoutes';
+import ReviewCards from '../components/ReviewCards';
+
+/** Reviews from clients in each industry (ids from src/data/testimonials.ts). */
+const INDUSTRY_REVIEWS: Partial<Record<string, string[]>> = {
+  'industry-dentists': ['mihir-shah'],
+  'industry-ca-firms': ['darshan-galani', 'manish-khandelwal', 'jay-mehta'],
+  'industry-manufacturers': ['smit-antala', 'manav-shah'],
+  'industry-consultants': ['denish-dalal', 'juhi-bais'],
+};
 
 interface IndustryDetailProps {
   industryId: PageId;
@@ -215,6 +224,21 @@ export default function IndustryDetail({ industryId, onPageChange, onOpenCaseStu
           </div>
         </div>
       </section>
+
+      {/* Clients in this industry, in their own words */}
+      {INDUSTRY_REVIEWS[industry.id] && (
+        <section id="industry-reviews" className="pb-20 bg-neutral-50 font-sans">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mb-10 space-y-4">
+              <span className="eyebrow">In their own words</span>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900 leading-tight">
+                What they told us.
+              </h2>
+            </div>
+            <ReviewCards ids={INDUSTRY_REVIEWS[industry.id]!} />
+          </div>
+        </section>
+      )}
 
       {/* FAQ. Answers stay in the markup (collapsed with CSS) so search engines can read them. */}
       <section id="industry-faq" className="py-20 bg-neutral-50 font-sans">

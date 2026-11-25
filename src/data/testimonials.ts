@@ -48,6 +48,7 @@ export const TESTIMONIALS: Testimonial[] = [
     accent: '#D97706',
     initials: 'MS',
     caseStudyId: 'solway',
+    source: 'google',
   },
   {
     id: 'jay-mehta',
