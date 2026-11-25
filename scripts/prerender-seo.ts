@@ -73,7 +73,7 @@ function inlineCriticalAssets(html: string): string {
   const assetsDir = path.join(distDir, 'assets');
   const assetFiles = fs.readdirSync(assetsDir);
 
-  const preloads = ['bricolage-grotesque-latin-wght-normal', 'instrument-sans-latin-wght-normal']
+  const preloads = ['plus-jakarta-sans-latin-wght-normal', 'inter-latin-wght-normal']
     .map((name) => assetFiles.find((file) => file.startsWith(`${name}-`) && file.endsWith('.woff2')))
     .filter((file): file is string => Boolean(file))
     .map((file) => `<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/${file}">`)
