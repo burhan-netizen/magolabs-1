@@ -8,7 +8,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import { PageId } from '../types';
 import SEO from '../components/SEO';
 import PageLink from '../components/PageLink';
-import LogoWall from '../components/LogoWall';
+import LogoStrip from '../components/LogoStrip';
 import LeadForm, { LeadMode } from '../components/LeadForm';
 import HeroShowcase from '../components/HeroShowcase';
 import FounderStory from '../components/FounderStory';
@@ -341,98 +341,95 @@ export default function Home({ onPageChange, onOpenCaseStudy }: HomeProps) {
     <>
       <SEO path="/" schemas={homeSchemas} />
 
-      {/* 1. Hero: the promise, one action, and proof beside it. Dark, with glass cards.
+      {/* 1. Hero: one promise, one action, one visual, and a slim strip of proof.
           The text has no entrance animation: it is in the page HTML and should be
           visible the instant it paints. */}
-      <section id="hero" className="relative pt-32 pb-14 md:pt-40 md:pb-16 bg-neutral-950 text-[#ffffff] overflow-hidden font-sans">
-        {/* Background: city lights at night, darkened so the text stays sharp, then a faint grid */}
+      <section id="hero" className="relative pt-36 md:pt-44 bg-neutral-950 text-[#ffffff] overflow-hidden font-sans">
+        {/* Background: city lights at night in black and white, darkened so the text stays sharp */}
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-          <BgVideo name="street" className="absolute inset-0 h-full w-full opacity-40" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,10,10,0.92)_0%,rgba(10,10,10,0.7)_55%,rgba(10,10,10,0.55)_100%)]" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-neutral-950" />
+          <BgVideo name="street" className="absolute inset-0 h-full w-full opacity-30 grayscale" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(13,13,13,0.94)_0%,rgba(13,13,13,0.78)_50%,rgba(13,13,13,0.6)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-neutral-950" />
         </div>
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:44px_44px] pointer-events-none [mask-image:linear-gradient(180deg,black_0%,black_70%,transparent_100%)]" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
-            <div className="lg:col-span-6 space-y-7 text-center lg:text-left">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#ffffff] leading-[1.08]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-10 items-center">
+            <div className="lg:col-span-7">
+              <h1 className="font-bold text-[#ffffff]">
                 {/* The search phrase this page targets, set small above the promise. */}
-                <span className="block mb-4 font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-brand leading-snug">
+                <span className="block mb-6 font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-brand leading-snug">
                   Website Design &amp; Development Company in Surat
                 </span>
-                Websites that turn visitors into <span className="marker marker-on">customers.</span>
+                <span className="block max-w-[12ch] text-[clamp(2.9rem,7vw,6.4rem)] leading-[0.98]">
+                  Websites that turn visitors into <span className="marker marker-on">customers.</span>
+                </span>
               </h1>
 
-              <p className="text-base sm:text-lg text-neutral-300 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="mt-8 text-lg sm:text-xl text-neutral-300 max-w-xl leading-relaxed">
                 {t('hero.desc')}
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-1">
+              <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-x-7 gap-y-5">
                 <AuditButton onNavigate={goToAudit} label={t('hero.cta.primary')} className="w-full sm:w-auto" />
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-7 py-4 text-base font-semibold text-[#ffffff] backdrop-blur-sm hover:bg-white/10 hover:border-white/30 transition-colors"
-                >
-                  <WhatsAppLogo className="h-5 w-5 text-emerald-400" />
-                  {t('hero.cta.secondary')}
-                </a>
+                <div className="flex items-center justify-center gap-6 sm:justify-start">
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 font-semibold text-[#ffffff] underline decoration-white/30 decoration-2 underline-offset-4 hover:decoration-brand"
+                  >
+                    <WhatsAppLogo className="h-5 w-5 text-emerald-400" />
+                    WhatsApp Burhan
+                  </a>
+                  <PageLink
+                    page="work"
+                    onNavigate={() => navigateTo('work')}
+                    className="group inline-flex items-center gap-1.5 font-semibold text-[#ffffff] underline decoration-white/30 decoration-2 underline-offset-4 hover:decoration-brand whitespace-nowrap"
+                  >
+                    See our work
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </PageLink>
+                </div>
               </div>
-
-              <p className="flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-neutral-400">
-                {/* Straight to the portfolio, for visitors who want to see the work first */}
-                <PageLink
-                  page="work"
-                  onNavigate={() => navigateTo('work')}
-                  className="group inline-flex items-center gap-1.5 font-semibold text-[#ffffff] underline decoration-brand decoration-2 underline-offset-4 whitespace-nowrap"
-                >
-                  See our work
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </PageLink>
-              </p>
             </div>
 
-            {/* Proof: real client websites on a 3D rail, then three plain facts */}
-            <motion.div style={{ y: cardsY }} className="lg:col-span-6 space-y-7">
+            {/* The one visual: real client websites, with what changed */}
+            <motion.div style={{ y: cardsY }} className="lg:col-span-5 lg:-mr-[calc(max(0px,(100vw-80rem)/2)+2rem)]">
               <HeroShowcase onOpenCaseStudy={onOpenCaseStudy} />
-
-              <dl className="grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-6 text-center">
-                {HERO_FACTS.map((fact) => {
-                  const body = (
-                    <>
-                      <dd className="text-xl sm:text-2xl font-bold text-[#ffffff]">
-                        {fact.value}
-                        {fact.star && <span aria-hidden="true" className="ml-1 text-[#FBBC04]">★</span>}
-                      </dd>
-                      <dt className="mt-1 font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-neutral-400">{fact.label}</dt>
-                    </>
-                  );
-                  return fact.href ? (
-                    <a
-                      key={fact.label}
-                      href={fact.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Rated ${fact.value} out of 5 from ${fact.label}, opens our Google profile in a new tab`}
-                      className="group block px-2 rounded-md transition-colors hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
-                    >
-                      {body}
-                    </a>
-                  ) : (
-                    <div key={fact.label} className="px-2">{body}</div>
-                  );
-                })}
-              </dl>
             </motion.div>
           </div>
 
-          {/* Who already trusts us */}
-          <div className="mt-14 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl pt-7 pb-3 sm:pb-4">
-            <p className="px-7 mb-5 text-sm font-medium text-neutral-400">Trusted by businesses across Surat and beyond</p>
-            <div className="px-3 sm:px-4">
-              <LogoWall onOpenCaseStudy={onOpenCaseStudy} onOpenContact={() => onPageChange('contact')} />
+          {/* Slim proof strip: three plain facts, then the clients */}
+          <div className="mt-20 md:mt-24 grid grid-cols-1 items-center gap-8 border-t border-white/10 py-8 lg:grid-cols-12">
+            <dl className="grid grid-cols-3 gap-4 lg:col-span-5">
+              {HERO_FACTS.map((fact) => {
+                const body = (
+                  <>
+                    <dd className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#ffffff]">
+                      {fact.value}
+                      {fact.star && <span aria-hidden="true" className="ml-1 text-[#FBBC04]">★</span>}
+                    </dd>
+                    <dt className="mt-1 font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-neutral-400">{fact.label}</dt>
+                  </>
+                );
+                return fact.href ? (
+                  <a
+                    key={fact.label}
+                    href={fact.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Rated ${fact.value} out of 5 from ${fact.label}, opens our Google profile in a new tab`}
+                    className="block rounded-md transition-colors hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+                  >
+                    {body}
+                  </a>
+                ) : (
+                  <div key={fact.label}>{body}</div>
+                );
+              })}
+            </dl>
+            <div className="lg:col-span-7">
+              <LogoStrip />
             </div>
           </div>
         </div>

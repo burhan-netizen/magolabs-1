@@ -38,9 +38,36 @@ export default function Navbar({
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Over a dark page opening the bar goes see-through with light text, so the top
+  // of the page reads as one piece. It turns solid again as soon as you scroll.
+  const [overDark, setOverDark] = useState(false);
+  useEffect(() => {
+    const check = () => {
+      const first = document.querySelector('main section');
+      if (!first) return setOverDark(false);
+      const match = getComputedStyle(first).backgroundColor.match(/\d+(\.\d+)?/g);
+      if (!match) return setOverDark(false);
+      const [r, g, b, a = '1'] = match.map(String);
+      const alpha = Number(a);
+      const luminance = (0.2126 * Number(r) + 0.7152 * Number(g) + 0.0722 * Number(b)) / 255;
+      setOverDark(alpha > 0.5 && luminance < 0.25);
+    };
+    check();
+    const main = document.querySelector('main');
+    const observer = main ? new MutationObserver(check) : null;
+    if (main && observer) observer.observe(main, { childList: true, subtree: false });
+    const late = window.setTimeout(check, 450);
+    return () => {
+      observer?.disconnect();
+      window.clearTimeout(late);
+    };
+  }, [currentPage]);
+  const clear = overDark && !scrolled && !isOpen;
 
   const navItems: NavItem[] = [
     {
@@ -93,7 +120,9 @@ export default function Navbar({
     <header
       id="main-navbar"
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled
+        clear
+          ? 'dark bg-transparent border-b border-white/10 py-3 md:py-4'
+          : scrolled
           ? 'bg-white/85 dark:bg-[#1A1A1A]/85 border-b border-neutral-200/50 dark:border-neutral-800/50 backdrop-blur-md py-2.5 md:py-3 shadow-sm'
           : 'bg-white dark:bg-[#1A1A1A] border-b border-transparent py-3 md:py-4'
       }`}
@@ -238,7 +267,7 @@ export default function Navbar({
                 aria-label="Toggle night-owl mode"
                 title="Toggle night-owl mode"
               >
-                {isDarkMode ? <Sun className="h-4 w-4 text-amber-500 fill-amber-500/20" /> : <Moon className="h-4 w-4 text-neutral-600" />}
+                {isDarkMode ? <Sun className="h-4 w-4 text-amber-500 fill-amber-500/20" /> : <Moon className="h-4 w-4 text-neutral-600 dark:text-neutral-300" />}
               </button>
             )}
             <motion.button
@@ -261,13 +290,13 @@ export default function Navbar({
                 className="p-2.5 rounded-full text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white transition-all cursor-pointer flex items-center justify-center"
                 aria-label="Toggle night-owl mode"
               >
-                {isDarkMode ? <Sun className="h-5 w-5 text-amber-500 fill-amber-500/20" /> : <Moon className="h-5 w-5 text-neutral-600" />}
+                {isDarkMode ? <Sun className="h-5 w-5 text-amber-500 fill-amber-500/20" /> : <Moon className="h-5 w-5 text-neutral-600 dark:text-neutral-300" />}
               </button>
             )}
             <button
               id="mobile-menu-toggle"
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center rounded-md p-2.5 text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none"
+              className="inline-flex items-center justify-center rounded-md p-2.5 text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 dark:text-white dark:hover:bg-white/10 focus:outline-none"
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

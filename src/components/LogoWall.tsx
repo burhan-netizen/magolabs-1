@@ -31,9 +31,9 @@ interface WallLogo {
 
 /** Bump when any wall image changes, so browsers and the CDN fetch the new file
  *  instead of a copy cached during an earlier deploy. */
-const WALL_VERSION = 3;
+export const WALL_VERSION = 3;
 
-const LOGOS: WallLogo[] = [
+export const LOGOS: WallLogo[] = [
   { caseId: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care Clinic', file: 'drmihirshah', width: 428, height: 113, h: 54, proof: '25 to 58 patients a day' },
   { caseId: 'darshangalani', name: 'Darshan Galani & Co.', file: 'darshangalani', width: 512, height: 90, h: 41, proof: '34 new clients in 3 months' },
   { caseId: 'jaymocivil', name: 'Jaymo Civil', file: 'jaymocivil', width: 481, height: 84, h: 34, proof: 'A Sydney civil crew, back online', dark: true },
