@@ -1,4 +1,5 @@
-import { ArrowUpRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { getCaseStudyById } from '../data/caseStudies';
 import type { Testimonial } from '../data/testimonials';
 import { getWorkDetailPath } from '../utils/pageRoutes';
@@ -11,6 +12,10 @@ const FEATURED = 'darshan-galani';
 const REST = ORDER.filter((id) => id !== FEATURED)
   .map(getReview)
   .filter((t): t is Testimonial => Boolean(t));
+/** Everything for the phone carousel, the lead review first. */
+const ALL = [FEATURED, ...ORDER.filter((id) => id !== FEATURED)]
+  .map(getReview)
+  .filter((t): t is Testimonial => Boolean(t));
 const ROWS = [REST.filter((_, i) => i % 2 === 0), REST.filter((_, i) => i % 2 === 1)];
 
 function WallCard({ item }: { key?: string; item: Testimonial }) {
@@ -20,6 +25,85 @@ function WallCard({ item }: { key?: string; item: Testimonial }) {
       <blockquote className="wall-quote">&ldquo;{item.quote}&rdquo;</blockquote>
       <ReviewBy item={item} />
     </article>
+  );
+}
+
+/** A phone card: long reviews fold to a few lines with a button to read the rest. */
+function SwipeCard({ item, index }: { key?: string; item: Testimonial; index: number }) {
+  const [open, setOpen] = useState(false);
+  const long = item.quote.length > 190;
+  return (
+    <li className={`swipe-card ${index === 0 ? 'is-lead' : ''}`} aria-label={`Review ${index + 1} of ${ALL.length}`}>
+      <p className="wall-result">{RESULT[item.id]}</p>
+      <blockquote className={`wall-quote ${long && !open ? 'is-folded' : ''}`} id={`swipe-q-${item.id}`}>
+        &ldquo;{item.quote}&rdquo;
+      </blockquote>
+      {long && (
+        <button type="button" className="swipe-more" aria-expanded={open} aria-controls={`swipe-q-${item.id}`} onClick={() => setOpen((v) => !v)}>
+          {open ? 'Show less' : 'Read full review'}
+        </button>
+      )}
+      <ReviewBy item={item} tone={index === 0 ? 'dark' : 'light'} />
+    </li>
+  );
+}
+
+/** Phones: one card at a time, swiped sideways, with the next card peeking in. */
+function ReviewSwipe() {
+  const listRef = useRef<HTMLOListElement>(null);
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const card = list.firstElementChild as HTMLElement | null;
+        if (!card) return;
+        const step = card.offsetWidth + 12;
+        setCurrent(Math.min(ALL.length - 1, Math.max(0, Math.round(list.scrollLeft / step))));
+      });
+    };
+    list.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      list.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  const go = (to: number) => {
+    const list = listRef.current;
+    const card = list?.children[Math.max(0, Math.min(ALL.length - 1, to))] as HTMLElement | undefined;
+    if (list && card) list.scrollTo({ left: card.offsetLeft - list.offsetLeft - 16, behavior: 'smooth' });
+  };
+  const pad = (n: number) => String(n).padStart(2, '0');
+
+  return (
+    <div className="review-swipe lg:hidden">
+      <ol ref={listRef} className="swipe-list" aria-label="Client reviews">
+        {ALL.map((item, i) => (
+          <SwipeCard key={item.id} item={item} index={i} />
+        ))}
+      </ol>
+      <div className="mt-6 flex items-center justify-between px-4 sm:px-6">
+        <span className="swipe-count" aria-hidden="true">
+          <span className="text-neutral-900 dark:text-white">{pad(current + 1)}</span> / {pad(ALL.length)}
+        </span>
+        <span className="swipe-bar" aria-hidden="true">
+          <span style={{ width: `${((current + 1) / ALL.length) * 100}%` }} />
+        </span>
+        <span className="flex gap-2">
+          <button type="button" className="deck-button" onClick={() => go(current - 1)} disabled={current === 0} aria-label="Previous review">
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <button type="button" className="deck-button" onClick={() => go(current + 1)} disabled={current === ALL.length - 1} aria-label="Next review">
+            <ArrowRight className="h-5 w-5" />
+          </button>
+        </span>
+      </div>
+    </div>
   );
 }
 
@@ -54,7 +138,7 @@ export default function TestimonialWall({ onOpenCaseStudy }: TestimonialWallProp
           </div>
 
           {featured && (
-            <figure className="wall-featured lg:col-span-7">
+            <figure className="wall-featured hidden lg:block lg:col-span-7">
               <span className="wall-mark" aria-hidden="true">&ldquo;</span>
               <p className="wall-featured-result">{RESULT[featured.id]}</p>
               <blockquote className="wall-featured-quote">{featured.quote}</blockquote>
@@ -75,7 +159,9 @@ export default function TestimonialWall({ onOpenCaseStudy }: TestimonialWallProp
         </div>
       </div>
 
-      <div className="wall-rows mt-16 sm:mt-20" aria-label="More client reviews">
+      <ReviewSwipe />
+
+      <div className="wall-rows mt-20 hidden lg:grid" aria-label="More client reviews">
         {ROWS.map((row, r) => (
           <div key={r} className={`wall-row ${r === 1 ? 'is-reverse' : ''}`}>
             <div className="wall-track">
