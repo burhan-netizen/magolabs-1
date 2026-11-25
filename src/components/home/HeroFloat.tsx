@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from 'motion/react';
 import PageLink from '../PageLink';
+import BgVideo from './BgVideo';
 import { getWorkDetailPath } from '../../utils/pageRoutes';
 
 /* Real wins only. The Google rating line is added once Burhan sends the numbers. */
@@ -18,11 +19,11 @@ const TICKER = [
 /* The client sites that float around the headline. depth: how strongly a card
    reacts to the mouse and to scroll (bigger = closer to the viewer). */
 const FLOATERS = [
-  { id: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care', tag: 'Dental clinic, Surat', pos: 'left-[1%] top-[25%]', w: 'w-[clamp(190px,17vw,270px)]', rot: -6, depth: 1.2, delay: 0.25 },
-  { id: 'ladsonconcrete', name: 'Ladson Concrete', tag: 'Concrete, Florida', pos: 'right-[3%] top-[16%]', w: 'w-[clamp(200px,18vw,285px)]', rot: 5, depth: 1, delay: 0.35 },
-  { id: 'jaymocivil', name: 'Jaymo Civil', tag: 'Civil contractor, Sydney', pos: 'left-[6%] bottom-[9%]', w: 'w-[clamp(180px,15.5vw,245px)]', rot: 4, depth: 0.7, delay: 0.45 },
-  { id: 'centurion', name: 'Centurion Strategic Ventures', tag: 'Loan advisory, India', pos: 'right-[7%] bottom-[8%]', w: 'w-[clamp(185px,16vw,255px)]', rot: -4, depth: 0.85, delay: 0.55 },
-  { id: 'prabhakarprocessors', name: 'Prabhakar Processors', tag: 'Textile mill, Surat', pos: 'left-[17%] top-[3%] hidden xl:block', w: 'w-[clamp(130px,10vw,165px)]', rot: -9, depth: 0.45, delay: 0.65 },
+  { id: 'drmihirshah', name: 'Dr. Mihir Shah Smile Care', tag: 'Dental clinic, Surat', pos: 'left-[1%] top-[25%]', w: 'w-[clamp(200px,17vw,310px)]', rot: -4, depth: 1.2, delay: 0.25 },
+  { id: 'ladsonconcrete', name: 'Ladson Concrete', tag: 'Concrete, Florida', pos: 'right-[3%] top-[16%]', w: 'w-[clamp(230px,20vw,330px)]', rot: 3, depth: 1, delay: 0.35 },
+  { id: 'jaymocivil', name: 'Jaymo Civil', tag: 'Civil contractor, Sydney', pos: 'left-[6%] bottom-[9%]', w: 'w-[clamp(210px,17.5vw,290px)]', rot: 3, depth: 0.7, delay: 0.45 },
+  { id: 'centurion', name: 'Centurion Strategic Ventures', tag: 'Loan advisory, India', pos: 'right-[7%] bottom-[8%]', w: 'w-[clamp(215px,18vw,300px)]', rot: -4, depth: 0.85, delay: 0.55 },
+  { id: 'prabhakarprocessors', name: 'Prabhakar Processors', tag: 'Textile mill, Surat', pos: 'left-[17%] top-[3%] hidden xl:block', w: 'w-[clamp(170px,13vw,215px)]', rot: -5, depth: 0.45, delay: 0.65 },
 ];
 
 function Floater({
@@ -61,13 +62,15 @@ function Floater({
                 <span className="h-1.5 w-1.5 rounded-full bg-[#DCD9D1]" />
               </span>
               <img
-                src={`/screenshots/${f.id}-480.webp`}
+                src={`/screenshots/${f.id}.webp`}
+                srcSet={`/screenshots/${f.id}.webp 900w, /screenshots/${f.id}-1920.webp 1920w`}
+                sizes="(min-width: 1024px) 340px, 0px"
                 alt={`${f.name} website by Mago Labs`}
-                width={480}
-                height={300}
+                width={900}
+                height={422}
                 loading="eager"
                 decoding="async"
-                className="block aspect-[16/10] w-full object-cover object-top"
+                className="block aspect-[1920/900] w-full object-cover object-top"
               />
             </span>
             <span className="hf-chip mt-2.5 inline-flex items-center gap-2 rounded-full bg-brand px-3 py-1.5 text-[12px] font-semibold text-ink">
@@ -106,7 +109,13 @@ export default function HeroFloat({ onAudit, onOpenCaseStudy, onSeeWork }: { onA
   }, [reduce, rawX, rawY]);
 
   return (
-    <section ref={ref} id="hero" className="hf-hero relative flex min-h-[100svh] flex-col overflow-hidden bg-navy pt-[72px] text-white md:pt-[84px]">
+    <section ref={ref} id="hero" className="hf-hero isolate relative flex min-h-[100svh] flex-col overflow-hidden bg-navy pt-[72px] text-white md:pt-[84px]">
+      {/* Night street in Surat-style bokeh: the city that's searching for you */}
+      <div aria-hidden="true" className="absolute inset-0 z-0">
+        <BgVideo name="street" className="absolute inset-0 h-full w-full opacity-70" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,23,51,0.72)_0%,rgba(10,23,51,0.55)_45%,rgba(10,23,51,0.92)_100%)]" />
+      </div>
+
       {/* Ticker of real wins */}
       <div className="hf-ticker relative z-20 overflow-hidden bg-brand py-2.5 text-ink" aria-label="Recent results">
         <div className="hf-ticker-track">
@@ -167,7 +176,7 @@ export default function HeroFloat({ onAudit, onOpenCaseStudy, onSeeWork }: { onA
             {FLOATERS.map((f) => (
               <PageLink key={f.id} href={getWorkDetailPath(f.id)} onNavigate={() => onOpenCaseStudy(f.id)} className="w-[62vw] max-w-[260px] shrink-0 snap-center text-left">
                 <span className="block overflow-hidden rounded-xl bg-white shadow-[0_20px_40px_-24px_rgba(0,0,0,0.7)] ring-1 ring-white/10">
-                  <img src={`/screenshots/${f.id}-480.webp`} alt={`${f.name} website by Mago Labs`} width={480} height={300} loading="lazy" decoding="async" className="block aspect-[16/10] w-full object-cover object-top" />
+                  <img src={`/screenshots/${f.id}.webp`} srcSet={`/screenshots/${f.id}.webp 900w, /screenshots/${f.id}-1920.webp 1920w`} sizes="70vw" alt={`${f.name} website by Mago Labs`} width={900} height={422} loading="lazy" decoding="async" className="block aspect-[1920/900] w-full object-cover object-top" />
                 </span>
                 <span className="mt-2 block text-[13px] font-medium text-white">{f.name}</span>
                 <span className="block text-[12px] text-white/55">{f.tag}</span>

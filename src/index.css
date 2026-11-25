@@ -2028,7 +2028,7 @@ html.motion-ok .reveal[data-in], html.motion-ok.reveal-all .reveal { opacity: 1;
   text-wrap: balance;
 }
 .hf-sheet-text .font-serif-accent { font-weight: 400; font-style: italic; letter-spacing: -0.02em; }
-.hf-tilt { transform: rotate(var(--r)); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.hf-tilt { transform: rotate(var(--r)); backface-visibility: hidden; will-change: transform; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .hf-tilt:hover { transform: rotate(0deg) translateY(-6px) scale(1.04); }
 .hf-chip { opacity: 0; transform: translateY(-4px); transition: opacity 0.25s ease, transform 0.25s ease; }
 .hf-tilt:hover .hf-chip, .hf-tilt:focus-within .hf-chip { opacity: 1; transform: none; }
