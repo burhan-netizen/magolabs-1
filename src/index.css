@@ -2180,7 +2180,7 @@ a.review-source:focus-visible { outline: 2px solid var(--color-ink); outline-off
   padding-inline: max(1rem, calc((100vw - 80rem) / 2 + 2rem));
 }
 .wall-row::-webkit-scrollbar { display: none; }
-.wall-track { display: flex; width: max-content; align-items: flex-start; }
+.wall-track { display: flex; width: max-content; align-items: stretch; }
 .wall-copy { display: none; }
 .wall-card {
   display: flex;
@@ -2289,8 +2289,11 @@ a.review-source:focus-visible { outline: 2px solid var(--color-ink); outline-off
 .swipe-card .review-by { margin-top: auto; padding-top: 1.25rem; }
 .swipe-card .review-by::before { content: none; }
 .swipe-card > .review-by { border-top: 1px solid rgba(13, 13, 13, 0.08); margin-top: auto; }
+/* Name and logo always sit at the bottom, so they line up across cards with or without "Read full review". */
+.swipe-card .wall-quote,
+.swipe-card .swipe-more { margin-bottom: 1.25rem; }
 .swipe-card .wall-quote + .review-by,
-.swipe-card .swipe-more + .review-by { margin-top: 1.25rem; }
+.swipe-card .swipe-more + .review-by { margin-top: auto; }
 /* The lead review is the dark one, as on desktop. */
 .swipe-card.is-lead { background: var(--color-ink); box-shadow: none; }
 .swipe-card.is-lead .wall-result { color: var(--color-brand); }
