@@ -87,7 +87,7 @@ export default function Navbar({
         { label: t('nav.services.social'), id: 'service-social-media' as PageId },
         { label: t('nav.services.leads'), id: 'service-lead-generation' as PageId },
         { label: t('nav.services.ads'), id: 'service-paid-ads' as PageId },
-        { label: 'For agencies (white label)', id: 'agencies' as PageId },
+        { label: 'For Agencies (White Label)', id: 'agencies' as PageId },
       ],
     },
     { label: t('nav.work'), id: 'work' as PageId },

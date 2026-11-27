@@ -212,7 +212,7 @@ export default function Footer({ onPageChange }: FooterProps) {
               </li>
               <li>
                 <PageLink page="agencies" onNavigate={() => handleLinkClick('agencies')} className="hover:text-neutral-900 dark:hover:text-white transition-colors text-left">
-                  For agencies
+                  For Agencies (White Label)
                 </PageLink>
               </li>
               <li>

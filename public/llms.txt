@@ -12,7 +12,7 @@ Key facts:
 
 ## Services
 
-- [Services overview](https://www.magolabs.in/services): Everything Mago Labs offers and how the services fit together.
+- [Services Overview](https://www.magolabs.in/services): Everything Mago Labs offers and how the services fit together.
 - [Website design and development](https://www.magolabs.in/services/web-design): Custom websites, hand-coded from a blank canvas, never a template.
 - [SEO](https://www.magolabs.in/services/seo): Technical, on-page and local SEO.
 - [Google Business Profile](https://www.magolabs.in/services/google-business-profile): Profile setup and optimisation for Google Maps visibility.

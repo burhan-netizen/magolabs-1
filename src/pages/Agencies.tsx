@@ -98,7 +98,7 @@ export default function Agencies({ onPageChange }: AgenciesProps) {
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none opacity-60" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-5 max-w-3xl mx-auto">
-            <span className="eyebrow">For agencies</span>
+            <span className="eyebrow">For Agencies</span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.12]">
               Your white label <span className="marker">web development partner.</span>
             </h1>
